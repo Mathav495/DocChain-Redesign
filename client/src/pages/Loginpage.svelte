@@ -35,7 +35,7 @@
         password: Password,
       }
       const { data } = await axios.post(
-        "http://localhost:5000/auth/login",
+        "https://test.swagger.print2block.in/auth/login",
         sampleData
       )
       console.log(data)
@@ -68,29 +68,34 @@
         <div class="w-96 mt-10 group">
           <label
             for="Email"
-            class="text-xl text-gray-400 group-hover:text-white tracking-wide"
+            class="text-xl after:content-['*'] after:ml-1 after:text-red-500  text-gray-400 group-hover:text-white tracking-wide"
             >Email</label
           >
           <input
             bind:value={Email}
             type="email"
             id="Email"
-            class="w-full mt-2 bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
+            placeholder="Enter your Email..."
+            class="w-full mt-2 placeholder:italic placeholder:text-sm bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
           />
           <h1 class="pl-3 text-sm font-semibold text-white md:text-base">
             {error.Email}
           </h1>
         </div>
 
-        <div class="w-96 mt-10">
-          <label for="Password" class="text-xl text-gray-400 tracking-wide"
+        <div class="relative block w-96 mt-10 group">
+          <label
+            for="Password"
+            class="text-xl after:content-['*'] after:ml-1 group-hover:text-white  after:text-red-500 text-gray-400 tracking-wide"
             >Password</label
           >
+
           <input
             bind:value={Password}
             type="Password"
             id="Password"
-            class="w-full mt-2 bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8"
+            placeholder="Enter your Password..."
+            class="w-full mt-2 bg-black placeholder:italic placeholder:text-sm focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8"
           />
           <h1 class="pl-3 text-sm font-semibold text-white md:text-base">
             {error.Password}
@@ -98,13 +103,13 @@
         </div>
 
         <h1
-          class="text-gray-600 underline underline-offset-4 text-base tracking-wide mt-5 mb-5 cursor-pointer font-normal"
+          class="text-gray-600 hover:text-white underline underline-offset-4 text-base tracking-wide mt-5 mb-5 cursor-pointer font-normal"
         >
           Forgot Password?
         </h1>
         <div>
           <button
-            class="w-96 mt-10 text-white bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800  rounded text-lg"
+            class="w-96 mt-10 text-white active:bg-violet-700 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800  rounded text-lg"
             >LOGIN</button
           >
         </div>
