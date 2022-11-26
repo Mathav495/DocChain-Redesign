@@ -1,5 +1,5 @@
 <div class="flex">
-  <div class=" w-1/3 p-10 h-screen bg-black">
+  <div class=" w-1/3 p-10 h-screen bg-black relative">
     <div class="flex">
       <img
         class=" mr-2 inline-block animate-pulse align-top "
@@ -10,7 +10,7 @@
     </div>
 
     <div class="mt-20">
-      <h1 class="text-white text-6xl font-bold">Sign In</h1>
+      <h1 class="text-white text-4xl font-bold">Login</h1>
     </div>
     <div>
       <form>
@@ -31,17 +31,20 @@
           />
         </div>
         <h1
-          class="text-white text-base underline mt-5 cursor-pointer font-normal"
+          class="text-gray-600 text-base underline mt-5 mb-5 cursor-pointer font-normal"
         >
           Forgot Password?
         </h1>
         <div>
           <button
             class="w-96 mt-10 text-white bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800  rounded text-lg"
-            >Submit</button
+            >LOGIN</button
           >
         </div>
       </form>
+      <h1 class="text-slate-400 font-medium text-base absolute bottom-0 pb-10">
+        Don't have an account? Contact us
+      </h1>
     </div>
   </div>
 
