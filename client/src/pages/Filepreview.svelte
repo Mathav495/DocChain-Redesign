@@ -2,38 +2,51 @@
   import axios from "axios";
   import { createEventDispatcher, onMount } from "svelte";
   const dispatch = createEventDispatcher();
-  let documentID,
-    signature,
+  let signature,
     error = "";
-  // disabled = false,;
-  // let element = document.getElementById("Load");
-  // element.classList.remove("hidden");
 
   let Token = localStorage.getItem("token");
   console.log("token", Token);
-  let fileHash = localStorage.getItem("filehash");
-  console.log("filehash", fileHash);
   let dataHash = localStorage.getItem("datahash");
   console.log("datahash", dataHash);
+  let documentID = localStorage.getItem("documentID");
+  console.log("documentID", documentID);
 
-  // /**
-  //  * function to generate 6 digits otp
-  //  */
-  // const generateOTP = () => {
-  //   // Declare a digits variable
-  //   // which stores all digits
-  //   var digits = '0123456789';
-  //   let OTP = '';
-  //   for (let i = 0; i < 6; i++) {
-  //     OTP += digits[Math.floor(Math.random() * 10)];
-  //   }
-  //   return OTP;
-  // };
-  // document.write('OTP of 6 digits: ');
-  // document.write(generateOTP());
-  // console.log(generateOTP());
+  /**
+   * getting filedetails to publish
+   * this route used to get the filehash which is used
+   */
+  onMount(async () => {
+    const data = {
+      documentID: documentID,
+      signature: signature,
+    };
+    const { addfile } = await axios.post(
+      "https://test.swagger.print2block.in/docs/add-file",
+      data
+    );
+    console.log(addfile);
+    localStorage.setItem("filehash", addfile.fileHash);
+    let fileHash = localStorage.getItem("filehash");
+    console.log(fileHash);
+  });
 
-  // let URL = 'http://localhost:5000/sign/publish';
+  // getting signature Id from the user
+  const getsignature = async () => {
+    const hash = {
+      fileHash: fileHash,
+      dataHash: dataHash,
+    };
+
+    const { sign } = await axios.post(
+      "https://localhost:8080/sign/<fileHash><dataHash>",
+      hash
+    );
+    console.log(sign);
+    localStorage.setItem("signature", sign.signature);
+    let signature = localStorage.getItem("signature");
+    console.log(signature);
+  };
 
   // publishing documents
   const publishdoc = async () => {
@@ -46,7 +59,7 @@
         signature: signature,
       };
       const { data } = await axios.post(
-        "http://localhost:5000/docs/publish",
+        "https://test.swagger.print2block.in/docs/publish",
         sample
       );
       console.log(data);
@@ -125,7 +138,7 @@
       <div class="mx-auto mt-10 flex justify-between">
         <button
           class="rounded-lg bg-teal-500 px-6 py-2 text-lg text-white"
-          on:click={signature}>sign</button
+          on:click={getsignature}>get-sign</button
         >
         <button
           href="/blockchain"
