@@ -3,49 +3,19 @@
   import { navigate } from "svelte-routing"
   let Email = "",
     Password = ""
-  let error = {
-    Email: "",
-    Password: "",
-  }
+
   const onLogin = async () => {
     console.log(Email)
     console.log(Password)
-    valid = true
-    const mail = /\S+@\S+\.\S+/g
-    const result1 = mail.test(Email)
-    if (Email == "") {
-      error.Email = "Email can't be empty"
-      valid = false
-    } else if (!result1) {
-      error.Email = "Please Enter valid mail id"
-      valid = false
-    } else {
-      error.Email = ""
-    }
-    if (Password == "") {
-      error.Password = "Password can't be empty"
-      valid = false
-    } else {
-      error.Password = ""
-    }
 
-    if (valid) {
-      let sampleData = {
-        email: Email,
-        password: Password,
-      }
-      const { data } = await axios.post(
-        "http://localhost:5000/auth/login",
-        sampleData
-      )
-      console.log(data)
-      localStorage.setItem("token", data.token)
-      let token = localStorage.getItem("token")
-      console.log(token)
-      if (token) {
-        navigate("/Dash")
-      }
+    let sampleData = {
+      email: Email,
+      password: Password,
     }
+    const { data } = await axios.post(
+      "http://localhost:5000/auth/login",
+      sampleData
+    )
   }
 </script>
 
@@ -71,19 +41,14 @@
             class="text-xl text-gray-400 group-hover:text-white tracking-wide"
             >Email</label
           >
-          <h1 class="pl-3 text-sm font-semibold text-black md:text-base">
-            {error.Email}
-          </h1>
           <input
             bind:value={Email}
             type="email"
             id="Email"
             class="w-full mt-2 bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
           />
-          <h1 class="pl-3 text-sm font-semibold text-black md:text-base">
-            {error.Password}
-          </h1>
         </div>
+
         <div class="w-96 mt-10">
           <label for="Password" class="text-xl text-gray-400 tracking-wide"
             >Password</label
@@ -95,6 +60,7 @@
             class="w-full mt-2 bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8"
           />
         </div>
+
         <h1
           class="text-gray-600 underline underline-offset-4 text-base tracking-wide mt-5 mb-5 cursor-pointer font-normal"
         >
