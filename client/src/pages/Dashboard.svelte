@@ -1,1 +1,11 @@
-<h1 class="text-3xl font-bold p-3 text-green-400">Dashboard page</h1>
+<div class="h-screen w-screen p-2">
+  <div class="bg-black round text-white text-center h-full w-full">
+    dashboard
+  </div>
+</div>
+
+<style>
+.round {
+  border-radius: 3rem;
+}
+</style>
