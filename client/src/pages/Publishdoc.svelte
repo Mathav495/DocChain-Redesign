@@ -1,5 +1,7 @@
 <script>
   import axios from "axios"
+  import { createEventDispatcher } from "svelte"
+  const dispatch = createEventDispatcher()
   let fileName,
     docValue,
     documentID,
@@ -54,6 +56,7 @@
     )
 
     console.log(data)
+    dispatch("filehash", data.fileHash)
   }
 
   const onsubmitdata = async () => {
@@ -90,6 +93,7 @@
       }
     )
     console.log(data)
+    dispatch("datahash", data.dataHash)
   }
 </script>
 
