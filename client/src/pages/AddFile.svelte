@@ -6,8 +6,8 @@
     signature,
     error = "";
   // disabled = false,;
-  let element = document.getElementById("Load");
-  element.classList.remove("hidden");
+  // let element = document.getElementById("Load");
+  // element.classList.remove("hidden");
 
   let Token = localStorage.getItem("token");
   console.log("token", Token);
@@ -61,13 +61,11 @@
       console.log(doc);
 
       dispatch("push", data);
-      element.classList.add("hidden");
-      let element2 = document.getElementById("Preview");
-      element2.classList.remove("hidden");
+      // element.classList.add("hidden");
+      // let element2 = document.getElementById("Preview");
+      // element2.classList.remove("hidden");
       console.log(element);
     }
-
-    const 
   };
 </script>
 
@@ -113,6 +111,7 @@
         <div class="mt-1">
           <textarea
             name="signature"
+            bind:value={signature}
             class=" mt-5 w-full rounded-md border-2 
                border-gray-300 px-4 py-2
                  placeholder:text-lg 
@@ -126,7 +125,7 @@
       <div class="mx-auto mt-10 flex justify-between">
         <button
           class="rounded-lg bg-teal-500 px-6 py-2 text-lg text-white"
-          on:click={getSignature}>sign</button
+          on:click={signature}>sign</button
         >
         <button
           href="/blockchain"
