@@ -9,7 +9,7 @@
 <Router {url}>
   <main>
     <Route path="/"><Loginpage /></Route>
-    <Route path="dash"><Dashboard /></Route>
+    <Route path="/dash"><Dashboard /></Route>
   </main>
 </Router>
 
