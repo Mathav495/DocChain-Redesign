@@ -1,6 +1,13 @@
 <script>
   import axios from "axios"
-  let fileName, docValue, documentID, dateissued
+  let fileName,
+    docValue,
+    documentID,
+    dateexpired,
+    issuer,
+    doctype,
+    docTitle,
+    signatory
 
   const submitdocid = async () => {
     console.log(docValue)
@@ -87,16 +94,49 @@
 </div>
 
 <div class="bg-slate-200 w-3/5 mx-5 mt-5 p-2 rounded-lg">
-  <form>
-    <div class="flex flex-col">
-      <label for="docid">Date issued</label>
-      <input
-        bind:value={dateissued}
-        type="datetime-local"
-        name="docid"
-        id="docid"
-      />
-      <button>Submit</button>
+  <form on:submit|preventDefault={onsubmitdata}>
+    <div class="flex flex-col gap-4">
+      <div class="flex gap-6">
+        <label for="docid">Date Expired</label>
+        <input
+          bind:value={dateexpired}
+          type="datetime-local"
+          name="docid"
+          id="docid"
+        />
+      </div>
+
+      <div class="flex gap-6">
+        <label for="issuer">Issued to</label>
+        <input bind:value={issuer} type="text" name="issuer" id="issuer" />
+      </div>
+
+      <div class="flex gap-6">
+        <label for="doctype">Document Type</label>
+        <input bind:value={doctype} type="text" name="doctype" id="doctype" />
+      </div>
+
+      <div class="flex gap-6">
+        <label for="signatory">Signatory</label>
+        <input
+          bind:value={signatory}
+          type="text"
+          name="signatory"
+          id="signatory"
+        />
+      </div>
+
+      <div class="flex gap-6">
+        <label for="docTitle">Document Title</label>
+        <input
+          bind:value={docTitle}
+          type="text"
+          name="docTitle"
+          id="docTitle"
+        />
+      </div>
+
+      <button class="bg-slate-400 px-2 py-1 rounded-lg">Submit</button>
     </div>
   </form>
 </div>
