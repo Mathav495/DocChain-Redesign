@@ -1,17 +1,18 @@
 <div class="flex flex-row">
-  <div class="flex flex-col w-6/12 mr-10 gap-2">
+  <div class="flex flex-col w-6/12 mr-10 gap-5">
     <h1 class="text-2xl font-bold">Documents</h1>
     <div
-      class="w-full bg-blue-100 h-60 text-2xl rounded-3xl p-5 flex justify-center items-center font-bold text-blue-500">
+      class="w-full bg-blue-100 h-52 text-2xl rounded-3xl p-5 flex justify-center items-center font-bold text-blue-500">
       graph
     </div>
   </div>
-  <div class="w-6/12 flex flex-col gap-2">
+  <div class="w-6/12 flex flex-col gap-5">
     <h1 class="text-2xl font-bold">Documents Status</h1>
     <div class="flex flex-row gap-5">
       <div
-        class="w-1/2 bg-red-100 h-60 rounded-3xl p-5 flex flex-col justify-between">
-        <p class="text-2xl font-bold text-center">Issued</p>
+        class="w-1/2 bg-red-100 h-52 rounded-3xl p-5 flex flex-col justify-between">
+        <p class="text-xl font-bold text-center">Document <br /> Issued</p>
+        <p class="text-xl font-bold text-center" />
         <div class="flex flex-row gap-2 items-center justify-between">
           <div
             class="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
@@ -32,8 +33,10 @@
         </div>
       </div>
       <div
-        class="w-1/2 bg-yellow-100 h-60 rounded-3xl p-5 flex flex-col justify-between">
-        <p class="text-2xl font-bold text-center">Viewed</p>
+        class="w-1/2 bg-yellow-100 h-52 rounded-3xl p-5 flex flex-col justify-between">
+        <p class="text-xl font-bold text-center">Document <br /> Viewed</p>
+
+        <!-- <p class="text-xl font-bold text-center" /> -->
         <div class="flex flex-row gap-2 items-center justify-between">
           <div
             class="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
@@ -53,8 +56,10 @@
         </div>
       </div>
       <div
-        class="w-1/2 bg-green-100 h-60 rounded-3xl p-5 flex flex-col justify-between">
-        <p class="text-2xl font-bold text-center">Verified</p>
+        class="w-1/2 bg-green-100 h-52 rounded-3xl p-5 flex flex-col justify-between">
+        <p class="text-xl font-bold text-center">Document <br />Verified</p>
+
+        <!-- <p class="text-xl font-bold text-center" /> -->
 
         <div class="flex flex-row gap-2 items-center justify-between">
           <div
