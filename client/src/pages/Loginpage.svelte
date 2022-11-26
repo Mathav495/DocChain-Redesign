@@ -3,6 +3,10 @@
   import { navigate } from "svelte-routing"
   let Email = "",
     Password = ""
+  let error = {
+    Email: "",
+    Password: "",
+  }
   let valid = false
   const onLogin = async () => {
     console.log(Email)
@@ -19,11 +23,11 @@
     } else {
       error.Email = ""
     }
-    if (password == "") {
-      error.password = "password can't be empty"
+    if (Password == "") {
+      error.Password = "Password can't be empty"
       valid = false
     } else {
-      error.password = ""
+      error.Password = ""
     }
     if (valid) {
       let sampleData = {
@@ -73,6 +77,9 @@
             id="Email"
             class="w-full mt-2 bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
           />
+          <h1 class="pl-3 text-sm font-semibold text-white md:text-base">
+            {error.Email}
+          </h1>
         </div>
 
         <div class="w-96 mt-10">
@@ -85,6 +92,9 @@
             id="Password"
             class="w-full mt-2 bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8"
           />
+          <h1 class="pl-3 text-sm font-semibold text-white md:text-base">
+            {error.Password}
+          </h1>
         </div>
 
         <h1
