@@ -1,0 +1,1 @@
+<h1 class="text-3xl font-bold p-3 underline text-blue-400">Publish Doc</h1>
