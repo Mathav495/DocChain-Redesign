@@ -3,20 +3,45 @@
   import { navigate } from "svelte-routing"
   let Email = "",
     Password = ""
-
+  let valid = false
   const onLogin = async () => {
     console.log(Email)
     console.log(Password)
-
-    let sampleData = {
-      email: Email,
-      password: Password,
+    valid = true
+    const mail = /\S+@\S+\.\S+/g
+    const result1 = mail.test(Email)
+    if (Email == "") {
+      error.Email = "Email can't be empty"
+      valid = false
+    } else if (!result1) {
+      error.Email = "Please Enter valid mail id"
+      valid = false
+    } else {
+      error.Email = ""
     }
-    const { data } = await axios.post(
-      "http://localhost:5000/auth/login",
-      sampleData
-    )
-    console.log(data)
+    if (password == "") {
+      error.password = "password can't be empty"
+      valid = false
+    } else {
+      error.password = ""
+    }
+    if (valid) {
+      let sampleData = {
+        email: Email,
+        password: Password,
+      }
+      const { data } = await axios.post(
+        "http://localhost:5000/auth/login",
+        sampleData
+      )
+      console.log(data)
+      localStorage.setItem("token", data.token)
+      let token = localStorage.getItem("token")
+      console.log(token)
+      if (token) {
+        navigate("/dash")
+      }
+    }
   }
 </script>
 
