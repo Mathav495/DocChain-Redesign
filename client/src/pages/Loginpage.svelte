@@ -1,3 +1,12 @@
+<script>
+  let Email, Password
+
+  const onLogin = () => {
+    console.log(Email)
+    console.log(Password)
+  }
+</script>
+
 <div class="flex">
   <div class=" w-1/3 p-10 h-screen bg-black relative">
     <div class="flex">
@@ -13,25 +22,33 @@
       <h1 class="text-white text-4xl font-bold">Login</h1>
     </div>
     <div>
-      <form>
-        <div class="w-96 mt-10 ">
-          <label for="Email" class="text-xl text-gray-400">Email</label>
+      <form on:submit|preventDefault={onLogin}>
+        <div class="w-96 mt-10 group">
+          <label
+            for="Email"
+            class="text-xl text-gray-400 group-hover:text-white tracking-wide"
+            >Email</label
+          >
           <input
+            bind:value={Email}
             type="email"
             id="Email"
-            class="w-full mt-2 bg-black rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8"
+            class="w-full mt-2 bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
           />
         </div>
         <div class="w-96 mt-10">
-          <label for="Password" class="text-xl text-gray-400">Password</label>
+          <label for="Password" class="text-xl text-gray-400 tracking-wide"
+            >Password</label
+          >
           <input
+            bind:value={Password}
             type="Password"
             id="Password"
-            class="w-full mt-2 bg-black rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8"
+            class="w-full mt-2 bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8"
           />
         </div>
         <h1
-          class="text-gray-600 text-base underline mt-5 mb-5 cursor-pointer font-normal"
+          class="text-gray-600 underline underline-offset-4 text-base tracking-wide mt-5 mb-5 cursor-pointer font-normal"
         >
           Forgot Password?
         </h1>
@@ -42,8 +59,13 @@
           >
         </div>
       </form>
-      <h1 class="text-slate-400 font-medium text-base absolute bottom-0 pb-10">
-        Don't have an account? Contact us
+      <h1
+        class="text-slate-400 tracking-wide  font-medium text-base absolute bottom-0 pb-10"
+      >
+        Don't have an account? <span
+          class="text-gray-600 tracking-wide cursor-pointer underline underline-offset-4"
+          >Contact us</span
+        >
       </h1>
     </div>
   </div>
