@@ -32,7 +32,6 @@
   }
 
   const onSubmitFile = async () => {
-    console.log("Data submitted", dateissued)
     const form = document.getElementById("form")
     const formData = new FormData(form)
     console.log([...formData])
@@ -54,6 +53,42 @@
       }
     )
 
+    console.log(data)
+  }
+
+  const onsubmitdata = async () => {
+    console.log(dateexpired, issuer, signatory, docTitle, doctype)
+    const date = new Date(dateexpired).toISOString()
+    let sampleData = {
+      receiver: {
+        name: issuer,
+      },
+      document: {
+        type: doctype,
+      },
+      issuer: {
+        signatory: signatory,
+      },
+    }
+    let options = {
+      title: docTitle,
+      expireOn: date,
+    }
+    console.log(documentID)
+    const { data } = await axios.post(
+      "https://test.swagger.print2block.in/docs/add-data",
+      {
+        documentID: documentID,
+        metadata: sampleData,
+        options: options,
+      },
+      {
+        headers: {
+          "x-access-token":
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTU4MWUyYWFlYWNmZjYzOTlkYjYxZSIsImlhdCI6MTY2OTQ1MDUwNiwiZXhwIjoxNjY5NTM2OTA2fQ.f-jWsn2PjD7vjWX-cW_GCXuZnMUEtnJvRr51w0bZ2tw",
+        },
+      }
+    )
     console.log(data)
   }
 </script>
