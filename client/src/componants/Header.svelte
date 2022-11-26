@@ -1,14 +1,15 @@
 <script>
-let hide = false
+let hidden = false
 const showCard = () => {
-  if (hide == false) {
-    hide = true
+  console.log("clicked")
+  if (hidden == false) {
+    hidden = true
   } else {
-    hide = false
+    hidden = false
   }
 }
 const hideCard = () => {
-  hide = false
+  hidden = false
 }
 </script>
 
@@ -43,7 +44,7 @@ const hideCard = () => {
         </h1>
       </div>
       <div
-        class:opacity-100={hide}
+        class:show={hidden}
         class="transition-opacity duration-300 ease-in-out opacity-0 bg-black shadow-md shadow-gray-700 text-white absolute top-12 px-3 py-2 flex flex-col items-center justify-center rounded-2xl w-36 card-width">
         <p class="text-xs">Welcome,</p>
         <h1 class="text-md font-semibold">Mr. Joji Varghese</h1>
@@ -58,5 +59,8 @@ const hideCard = () => {
 <style>
 .card-width {
   width: 9.15rem /* 144px */;
+}
+.show {
+  opacity: 100%;
 }
 </style>

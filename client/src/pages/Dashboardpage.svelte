@@ -1,7 +1,8 @@
 <script>
+import Dashboard from "../componants/Dashboard.svelte"
 import Header from "../componants/Header.svelte"
-import Logo from "../componants/Logo.svelte"
-import Logout from "../componants/Logout.svelte"
+import Logo from "../componants/logo.svelte"
+import Logout from "../componants/logout.svelte"
 import Nav from "../componants/Nav.svelte"
 </script>
 
@@ -17,6 +18,9 @@ import Nav from "../componants/Nav.svelte"
       </div>
       <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3">
         <Header />
+        <div class="mt-3">
+          <Dashboard />
+        </div>
       </div>
     </div>
   </div>
