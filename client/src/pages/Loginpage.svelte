@@ -9,6 +9,9 @@
       <h1 class="text-2xl text-white font-normal">DocChain</h1>
     </div>
 
+    <div class="mt-20">
+      <h1 class="text-white text-6xl font-bold">Sign In</h1>
+    </div>
     <div>
       <form />
     </div>
