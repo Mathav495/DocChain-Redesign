@@ -1,1 +1,0 @@
-<h1 class="text-3xl font-bold p-3 text-green-400">Dashboard page</h1>
