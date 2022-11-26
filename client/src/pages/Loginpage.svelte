@@ -22,6 +22,14 @@
             class="w-full mt-2 bg-black rounded border border-white focus:border-white focus:ring-2  text-lg text-white outline-none py-1 px-3 leading-8 "
           />
         </div>
+        <div class="w-96 mt-10">
+          <label for="Password" class="text-xl text-gray-400">Password</label>
+          <input
+            type="Password"
+            id="Password"
+            class="w-full mt-2 bg-black rounded border border-white focus:border-white focus:ring-2  text-lg text-white outline-none py-1 px-3 leading-8 "
+          />
+        </div>
       </form>
     </div>
   </div>
