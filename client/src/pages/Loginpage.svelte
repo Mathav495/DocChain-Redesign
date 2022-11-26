@@ -14,12 +14,12 @@
     </div>
     <div>
       <form>
-        <div class="w-96 mt-10">
+        <div class="w-96 mt-10 ">
           <label for="Email" class="text-xl text-gray-400">Email</label>
           <input
             type="email"
             id="Email"
-            class="w-full mt-2 bg-black rounded border border-white focus:border-white focus:ring-2  text-lg text-white outline-none py-1 px-3 leading-8 "
+            class="w-full mt-2 bg-black rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8"
           />
         </div>
         <div class="w-96 mt-10">
@@ -27,9 +27,14 @@
           <input
             type="Password"
             id="Password"
-            class="w-full mt-2 bg-black rounded border border-white focus:border-white focus:ring-2  text-lg text-white outline-none py-1 px-3 leading-8 "
+            class="w-full mt-2 bg-black rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8"
           />
         </div>
+        <h1
+          class="text-white text-base underline mt-5 cursor-pointer font-normal"
+        >
+          Forgot Password?
+        </h1>
       </form>
     </div>
   </div>
