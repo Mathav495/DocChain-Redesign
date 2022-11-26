@@ -1,3 +1,7 @@
+<script>
+import Header from "../componants/Header.svelte"
+</script>
+
 <div class="h-screen w-screen p-1">
   <div class="bg-black dash-bg-edge text-white h-full w-full">
     <div class="flex flex-row h-full py-3">
@@ -7,8 +11,8 @@
           <img src="assets\logo.png" alt="logo" class="h-10 w-10 shrink-0" />
         </div>
       </div>
-      <div class="width-2 bg-white text-gray-700 content-bg-edge py-5 mr-3">
-        cont
+      <div class="width-2 bg-white text-gray-700 content-bg-edge p-10 mr-3">
+        <Header />
       </div>
     </div>
   </div>
