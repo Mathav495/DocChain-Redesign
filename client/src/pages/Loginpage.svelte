@@ -35,6 +35,12 @@
         >
           Forgot Password?
         </h1>
+        <div>
+          <button
+            class="w-96 mt-10 text-white bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800  rounded text-lg"
+            >Submit</button
+          >
+        </div>
       </form>
     </div>
   </div>
