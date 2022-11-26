@@ -1,6 +1,6 @@
 <script>
   import axios from "axios"
-  let fileName, docValue
+  let fileName, docValue, documentID
 
   const submitdata = () => {
     console.log(fileName)
@@ -22,6 +22,9 @@
         }
       )
       console.log(data)
+      localStorage.setItem("documentID", data.documentID)
+      documentID = localStorage.getItem("documentID")
+      console.log(documentID)
     }
   }
 </script>
