@@ -1,13 +1,9 @@
 <script>
-  import { claim_space, globals } from "svelte/internal"
-
 
 </script>
 
 <main>
-	<h1 class="text-3xl text-red-500 font-bold underline">
-		Hello world!
-	</h1>
+	<h2 class="text-3xl font-bold p-4">kalaiyarasi</h2>
 </main>
 
 <style global lang="postcss">
