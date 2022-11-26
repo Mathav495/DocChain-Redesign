@@ -1,14 +1,14 @@
 <script>
-let hidden = true
+let hide = false
 const showCard = () => {
-  if (hidden == false) {
-    hidden = true
+  if (hide == false) {
+    hide = true
   } else {
-    hidden = false
+    hide = false
   }
 }
 const hideCard = () => {
-  hidden = true
+  hide = false
 }
 </script>
 
@@ -43,10 +43,10 @@ const hideCard = () => {
         </h1>
       </div>
       <div
-        class:hidden
-        class="bg-black shadow-md shadow-gray-700 text-white absolute top-12 px-3 py-2 flex flex-col items-center justify-center rounded-2xl w-36 card-width">
+        class:opacity-100={hide}
+        class="transition-opacity duration-300 ease-in-out opacity-0 bg-black shadow-md shadow-gray-700 text-white absolute top-12 px-3 py-2 flex flex-col items-center justify-center rounded-2xl w-36 card-width">
         <p class="text-xs">Welcome,</p>
-        <h1 class="text-md font-semibold">Mr.Joji Varghese</h1>
+        <h1 class="text-md font-semibold">Mr. Joji Varghese</h1>
         <a
           href="https://mail.google.com/mail/"
           class="text-sm text-blue-400 underline">test@email.com</a>

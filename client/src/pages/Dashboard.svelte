@@ -15,15 +15,8 @@ import Nav from "../componants/Nav.svelte"
         </div>
         <Logout />
       </div>
-      <div class="width-2 bg-white text-gray-700 content-bg-edge p-8 mr-3">
+      <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3">
         <Header />
-        <button
-          class="transition-opacity duration-500 ease-in-out 
-        bg-green-300 hover:opacity-100 opacity-0 transform 
-        hover:-translate-y-1 hover:scale-110 
-        rounded-lg p-4 border border-green-900">
-          Hover me
-        </button>
       </div>
     </div>
   </div>
