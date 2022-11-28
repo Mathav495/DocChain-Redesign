@@ -1,12 +1,9 @@
 <script>
-  import { onMount } from 'svelte';
   import Dashboard from '../components/Dashboard.svelte';
   import Header from '../components/Header.svelte';
   import Logo from '../components/logo.svelte';
   import Logout from '../components/logout.svelte';
   import Nav from '../components/Nav.svelte';
-  let token = localStorage.getItem('token');
-  console.log(token);
 </script>
 
 <div class="h-screen w-screen p-1">
@@ -21,7 +18,7 @@
       </div>
       <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3">
         <Header />
-        <div class="mt-5">
+        <div class="mt-10">
           <Dashboard />
         </div>
       </div>
