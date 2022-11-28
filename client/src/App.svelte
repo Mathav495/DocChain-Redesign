@@ -4,8 +4,9 @@
   import { Route, Router } from 'svelte-routing';
   import Publishdoc from './pages/Publishdoc.svelte';
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
-  export let url = '';
+  import Filepreview from './pages/Filepreview.svelte';
   let fileHash, dataHash;
+  export let url = '';
   const getDataHash = (e) => {
     dataHash = e.detail;
     console.log(dataHash);
@@ -22,6 +23,7 @@
     <Route path="/dash"><Dashboardpage /></Route>
     <Route path="/publish"><Publishdoc /></Route>
     <Route path="/add-file"><Fileuploadpage on:datahash={getDataHash} on:filehash={getFileHash} /></Route>
+    <Route path="/preview"><Filepreview /></Route>
   </main>
 </Router>
 

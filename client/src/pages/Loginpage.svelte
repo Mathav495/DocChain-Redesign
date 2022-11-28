@@ -1,6 +1,12 @@
 <script>
   import axios from "axios"
   import { navigate } from "svelte-routing"
+  import Errormsg from "../components/Errormsg.svelte"
+  import Emailicon from "../icons/Emailicon.svelte"
+  import Eye from "../icons/Eye.svelte"
+  import Eyeslash from "../icons/Eyeslash.svelte"
+  import PasswordIcons from "../icons/Password.svelte"
+  let type = "password"
   let Email = "",
     Password = ""
   let error = {
@@ -8,6 +14,7 @@
     Password: "",
   }
   let valid = false
+
   const onLogin = async () => {
     console.log(Email)
     console.log(Password)
@@ -47,23 +54,30 @@
       }
     }
   }
+  const showPassword = () => {
+    if (type == "password") {
+      type = "text"
+    } else {
+      type = "password"
+    }
+  }
 </script>
 
 <div class="flex">
   <div class=" w-full lg:w-1/3 p-10 h-screen bg-black relative">
-    <div class="flex">
+    <div class="flex justify-center lg:justify-start">
       <img
         class=" mr-2 inline-block animate-pulse align-top "
         src="assets\icon1.png"
         alt="icon1"
       />
-      <h1 class="text-2xl text-white font-normal">DocChain</h1>
+      <h1 class="text-2xl text-white tracking-wide font-normal">DocChain</h1>
     </div>
 
-    <div class="mt-20">
+    <div class="mt-20 flex justify-center lg:justify-start">
       <h1 class="text-white text-4xl font-bold">Login</h1>
     </div>
-    <div>
+    <div class="flex justify-center lg:justify-start">
       <form on:submit|preventDefault={onLogin}>
         <div class="w-96 mt-10 group">
           <label
@@ -73,18 +87,7 @@
           >
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                class="w-5 h-5  fill-gray-400 mt-3 group-hover:fill-blue-700"
-              >
-                <path
-                  d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"
-                />
-                <path
-                  d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"
-                />
-              </svg>
+              <Emailicon />
             </span>
             <input
               bind:value={Email}
@@ -94,11 +97,8 @@
               class="w-full mt-2 pl-9 placeholder:text-sm bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
             />
           </div>
-          <h1 class="pt-1 text-sm font-semibold text-blue-500 md:text-base">
-            {error.Email}
-          </h1>
+          <Errormsg errormsg={error.Email} />
         </div>
-
         <div class="w-96 mt-8 group">
           <label
             for="Password"
@@ -107,31 +107,39 @@
           >
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                class="w-5 h-5 fill-gray-400 mt-2 group-hover:fill-blue-700"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z"
-                  clip-rule="evenodd"
-                />
-              </svg>
+              <PasswordIcons />
             </span>
+            {#if type == "password"}
+              <input
+                bind:value={Password}
+                type="password"
+                id="Password"
+                placeholder="Enter your Password..."
+                class="w-full mt-2 bg-black pl-10 placeholder:text-sm focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8"
+              />
+            {:else}
+              <input
+                bind:value={Password}
+                type="text"
+                id="Password"
+                placeholder="Enter your Password..."
+                class="w-full mt-2 bg-black pl-10 placeholder:text-sm focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8"
+              />
+            {/if}
 
-            <input
-              bind:value={Password}
-              type="Password"
-              id="Password"
-              placeholder="Enter your Password..."
-              class="w-full mt-2 bg-black pl-10 placeholder:text-sm focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8"
-            />
+            <button
+              on:click|preventDefault={showPassword}
+              class="absolute inset-y-0 right-4 flex items-center pl-2"
+            >
+              {#if type == "password"}
+                <Eye />
+              {:else}
+                <Eyeslash />
+              {/if}
+            </button>
           </div>
 
-          <h1 class="pt-1 text-sm font-semibold text-blue-500 md:text-base">
-            {error.Password}
-          </h1>
+          <Errormsg errormsg={error.Password} />
         </div>
 
         <h1
@@ -158,6 +166,132 @@
   </div>
 
   <div
-    class="w-full lg:w-2/3 h-screen bg-gradient-to-r from-gray-500  to-black"
-  />
+    class="w-full hidden lg:block lg:w-2/3 relative h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black "
+  >
+    <ul class="circles">
+      <li />
+      <li />
+      <li />
+      <li />
+      <li />
+      <li />
+      <li />
+      <li />
+      <li />
+      <li />
+    </ul>
+  </div>
 </div>
+
+<style>
+  @import url("https://fonts.googleapis.com/css?family=Exo:400,700");
+
+  .circles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(183, 170, 170, 0.562);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+  }
+
+  .circles li:nth-child(1) {
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+  }
+
+  .circles li:nth-child(2) {
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+  }
+
+  .circles li:nth-child(3) {
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+  }
+
+  .circles li:nth-child(4) {
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+  }
+
+  .circles li:nth-child(5) {
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+  }
+
+  .circles li:nth-child(6) {
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+  }
+
+  .circles li:nth-child(7) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+  }
+
+  .circles li:nth-child(8) {
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+  }
+
+  .circles li:nth-child(9) {
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+  }
+
+  .circles li:nth-child(10) {
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+  }
+
+  @keyframes animate {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+      border-radius: 0;
+    }
+
+    100% {
+      transform: translateY(-1000px) rotate(720deg);
+      opacity: 0;
+      border-radius: 50%;
+    }
+  }
+</style>
