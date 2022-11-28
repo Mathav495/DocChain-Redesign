@@ -7,6 +7,7 @@
   import Filepreview from './pages/Filepreview.svelte';
   let fileHash, dataHash;
   export let url = '';
+
   const getDataHash = (e) => {
     dataHash = e.detail;
     console.log(dataHash);
@@ -31,4 +32,8 @@
   @tailwind base;
   @tailwind components;
   @tailwind utilities;
+
+  main {
+    font-family: 'Nunito', sans-serif;
+  }
 </style>
