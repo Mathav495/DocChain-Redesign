@@ -2,6 +2,7 @@
   import axios from "axios"
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
+  import {navigate} from "svelte-routing"
   let fileName,
     docValue,
     documentID,
@@ -101,6 +102,9 @@
     localStorage.setItem("datahash", data.dataHash)
     let dataHash = localStorage.getItem('datahash');
   console.log('datahash', dataHash);
+  if(dataHash) {
+    navigate ("/preview")
+  }
   }
 </script>
 

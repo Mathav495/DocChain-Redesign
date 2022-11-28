@@ -91,15 +91,17 @@
 
   // publishing documents
   const publishdoc = async () => {
-    let sign = localStorage.getItem('signature');
-    console.log('signature', sign);
-    if (sign == null) {
+    let signature = localStorage.getItem('signature');
+    console.log(signature);
+    let documentID = localStorage.getItem('documentID');
+    console.log('documentID', documentID);
+    if (signature == null) {
       error = "signature can't be empty";
       console.log(error);
     } else {
       const sample = {
         documentID: documentID,
-        signature: sign,
+        signature: signature,
       };
       const { data } = await axios.post('https://test.swagger.print2block.in/docs/publish', sample, {
         headers: {
@@ -107,16 +109,6 @@
         },
       });
       console.log(data);
-
-      // let getData = {
-      //   docID: data.documentID,
-      //   sign: data.signature,
-      //   // filehash: data.filehash,
-      // };
-      localStorage.setItem('dataKey', JSON.stringify(getData));
-      let doc = localStorage.getItem('dataKey');
-      console.log(doc);
-
       dispatch('push', data);
       // element.classList.add("hidden");
       // let element2 = document.getElementById("Preview");
@@ -168,7 +160,8 @@
                   </div>
 
                   <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
-                    <label for="signature" class="text-md block font-medium text-gray-500 ">signature</label>
+                    <label for="signature" class="text-md block font-medium text-gray-500 ">signature:</label>
+                    <!-- <div  bind:value={signature}> </div> -->
                     <div class="mt-1">
                       <textarea
                         name="signature"
