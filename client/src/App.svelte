@@ -27,6 +27,7 @@
   @tailwind base;
   @tailwind components;
   @tailwind utilities;
+
   main {
     font-family: 'Nunito', sans-serif;
   }
