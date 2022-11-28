@@ -1,9 +1,9 @@
 <script>
-import Dashboard from "../componants/Dashboard.svelte"
-import Header from "../componants/Header.svelte"
-import Logo from "../componants/logo.svelte"
-import Logout from "../componants/logout.svelte"
-import Nav from "../componants/Nav.svelte"
+  import Dashboard from "../components/Dashboard.svelte"
+  import Header from "../components/Header.svelte"
+  import Logo from "../components/logo.svelte"
+  import Logout from "../components/logout.svelte"
+  import Nav from "../components/Nav.svelte"
 </script>
 
 <div class="h-screen w-screen p-1">
@@ -26,17 +26,17 @@ import Nav from "../componants/Nav.svelte"
   </div>
 </div>
 
-<style>
-.dash-bg-edge {
-  border-radius: 3rem;
-}
-.content-bg-edge {
-  border-radius: 3rem;
-}
-.width-1 {
-  width: 10%;
-}
-.width-2 {
-  width: 90%;
-}
+<style global>
+  .dash-bg-edge {
+    border-radius: 3rem;
+  }
+  .content-bg-edge {
+    border-radius: 3rem;
+  }
+  .width-1 {
+    width: 10%;
+  }
+  .width-2 {
+    width: 90%;
+  }
 </style>

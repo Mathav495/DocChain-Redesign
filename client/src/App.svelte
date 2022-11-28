@@ -1,6 +1,6 @@
 <script>
   import Loginpage from "./pages/Loginpage.svelte"
-  import Dashboardpage from "./pages/Dashboard.svelte"
+  import Dashboardpage from "./pages/Dashboardpage.svelte"
   import { Route, Router } from "svelte-routing"
   import Publishdoc from "./pages/Publishdoc.svelte"
   export let url = ""
