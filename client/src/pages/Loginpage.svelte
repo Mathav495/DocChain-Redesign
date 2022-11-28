@@ -99,7 +99,6 @@
           </div>
           <Errormsg errormsg={error.Email} />
         </div>
-
         <div class="w-96 mt-8 group">
           <label
             for="Password"
