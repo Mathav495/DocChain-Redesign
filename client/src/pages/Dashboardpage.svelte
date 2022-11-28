@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<style>
+<style global>
   .dash-bg-edge {
     border-radius: 3rem;
   }
