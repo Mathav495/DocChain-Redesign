@@ -3,6 +3,7 @@
   import Dashboardpage from "./pages/Dashboardpage.svelte"
   import { Route, Router } from "svelte-routing"
   import Publishdoc from "./pages/Publishdoc.svelte"
+  import Filepreview from "./pages/Filepreview.svelte";
   export let url = ""
   let fileHash, dataHash
   const getDataHash = (e) => {
@@ -20,8 +21,10 @@
     <Route path="/"><Loginpage /></Route>
     <Route path="/dash"><Dashboardpage /></Route>
     <Route path="/publish"
-      ><Publishdoc on:datahash={getDataHash} on:filehash={getFileHash} /></Route
-    >
+      ><Publishdoc on:datahash={getDataHash} on:filehash={getFileHash} />
+    
+    </Route>
+    <Route path="/preview">  <Filepreview /></Route>
   </main>
 </Router>
 

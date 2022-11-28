@@ -1,9 +1,9 @@
 <script>
-  import Dashboard from "../components/Dashboard.svelte"
-  import Header from "../components/Header.svelte"
-  import Logo from "../components/logo.svelte"
-  import Logout from "../components/logout.svelte"
-  import Nav from "../components/Nav.svelte"
+import Dashboard from "../components/Dashboard.svelte"
+import Header from "../components/Header.svelte"
+import Logo from "../components/logo.svelte"
+import Logout from "../components/logout.svelte"
+import Nav from "../components/Nav.svelte"
 </script>
 
 <div class="h-screen w-screen p-1">
