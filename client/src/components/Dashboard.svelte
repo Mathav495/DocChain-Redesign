@@ -14,10 +14,16 @@
     });
     usage = data;
     console.log(usage);
+    let loader = document.getElementById('load');
+    loader.classList.add('hidden');
+    let home = document.getElementById('homepage');
+    home.classList.remove('hidden');
+    let dash = document.getElementById('dashboard');
+    dash.classList.remove('hidden');
   });
 </script>
 
-<div class="flex flex-col gap-10 justify-center">
+<div class="flex flex-col gap-10 justify-center" id="dashboard">
   <div class="flex flex-col lg:flex-row">
     <div class="flex order-2 lg:order-1 flex-col w-full lg:w-6/12 lg:gap-3">
       <h1 class="text-2xl font-bold">Documents</h1>
@@ -116,7 +122,7 @@
         </div>
       </div>
     </div>
-    <div class="w-4/12 bg-black rounded-3xl text-white p-7 md:hidden lg:flex flex-col gap-6">
+    <div class="w-4/12 bg-black rounded-3xl text-white p-7 sm:hidden lg:flex flex-col gap-6">
       <span class="leading-10 text-2xl font-bold"
         >The <div class="transform -skew-y-6 inline-flex">
           <span class="text-lg font-bold border-2 bg-gray-300 text-black hover:bg-black hover:text-gray-300 border-gray-300 rounded-lg px-2">Print2Block</span>
