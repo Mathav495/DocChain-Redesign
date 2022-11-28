@@ -136,18 +136,18 @@
 
                   <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
                     <label for="signature" class="text-md block font-medium text-gray-500 ">signature:</label>
-                    <div class="w-full px-4 py-6 text-gray-900 font-bold text-xs  border-2 rounded-lg text-center flex-wrap flex-1">{signature}</div>
-                    <!-- <div class="mt-1">
+                    <!-- <div class="w-full px-4 py-6 text-gray-900 font-bold text-xs  border-2 rounded-lg text-center flex-wrap flex-1">{signature}</div> -->
+                    <div class="mt-1">
                       <textarea
                         name="signature"
-                        bind:value={signature}
+                     
                         class=" mt-5 w-full rounded-md border-2 
                          border-gray-300 px-4 py-2
                            placeholder:text-lg 
                              focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         placeholder="ECDSA Signature obtained"
                       />
-                    </div> -->
+                    </div>
                   </div>
                   <h1 class="text-md font-semibold text-rose-500">{error}</h1>
 
