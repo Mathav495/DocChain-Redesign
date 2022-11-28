@@ -37,6 +37,17 @@
         class="text-lg font-semibold tracking-wide text-blue-600"
         >Do you have Document ID</label
       >
+      <div class="flex mt-3 gap-5">
+        <select
+          name="docid"
+          class="w-1/2 pl-2 p-2 rounded-lg"
+          bind:value={docValue}
+        >
+          <option class="pl-5">select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
     </div>
   </form>
 </div>
