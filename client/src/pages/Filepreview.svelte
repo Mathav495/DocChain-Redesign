@@ -8,13 +8,15 @@
   import Modal from '../components/Modal.svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
-  let signature,
-    error = '';
 
-  let showModal = false;
+  let signature,
+    error = ""
+
+  let showModal = false
   const toggleModal = () => {
-    showModal = !showModal;
-  };
+    showModal = !showModal
+  }
+
 
   let Token = localStorage.getItem('token');
   console.log('token', Token);
@@ -28,6 +30,7 @@
   /**
    * releasing document before publish
    */
+
   const releaseDoc = async () => {
     console.log(documentID);
     const { data } = await axios.get(
@@ -47,12 +50,14 @@
     }
   };
 
+
   // getting signature Id from the user
   const getsignature = async () => {
     let showModal = true
     const sample = {
       fileHash: fileHash,
       dataHash: dataHash,
+
     };
 
     const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/${fileHash}+${dataHash}`, sample, {
@@ -69,6 +74,7 @@
    
   };
 
+
   // publishing documents
   const publishdoc = async () => {
     let signature = localStorage.getItem('signature');
@@ -76,12 +82,13 @@
     let documentID = localStorage.getItem('documentID');
     console.log('documentID', documentID);
     if (signature == null) {
-      error = "signature can't be empty";
-      console.log(error);
+      error = "signature can't be empty"
+      console.log(error)
     } else {
       const sample = {
         documentID: documentID,
         signature: signature,
+
       };
       const { data } = await axios.post('https://test.swagger.print2block.in/docs/publish', sample, {
         headers: {
@@ -91,11 +98,12 @@
       console.log(data);
       dispatch('push', data);
     }
-  };
+  }
 </script>
 
 <Modal {showModal} on:click={toggleModal} />
 <main>
+
   <div class="h-screen w-screen p-1">
     <div class="bg-black dash-bg-edge text-white h-full w-full">
       <div class="flex flex-row h-full py-3">
@@ -133,7 +141,6 @@
                     <img src="https://th.bing.com/th/id/OIP._jpRnHasO03ZqTHB-S77ewHaFC?pid=ImgDet&rs=1" alt="document" class="relative mx-auto mt-10 h-[200px] w-[300px] rounded-md " />
                     <img class="absolute ml-40 h-16 w-16  rounded-lg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" alt="qrcode" />
                   </div>
-
                   <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
                     <label for="signature" class="text-md block font-medium text-gray-500 ">signature:</label>
                     <!-- <div class="w-full px-4 py-6 text-gray-900 font-bold text-xs  border-2 rounded-lg text-center flex-wrap flex-1">{signature}</div> -->
@@ -169,6 +176,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>

@@ -26,17 +26,17 @@ import Nav from "../components/Nav.svelte"
   </div>
 </div>
 
-<style>
-.dash-bg-edge {
-  border-radius: 3rem;
-}
-.content-bg-edge {
-  border-radius: 3rem;
-}
-.width-1 {
-  width: 10%;
-}
-.width-2 {
-  width: 90%;
-}
+<style global>
+  .dash-bg-edge {
+    border-radius: 3rem;
+  }
+  .content-bg-edge {
+    border-radius: 3rem;
+  }
+  .width-1 {
+    width: 10%;
+  }
+  .width-2 {
+    width: 90%;
+  }
 </style>
