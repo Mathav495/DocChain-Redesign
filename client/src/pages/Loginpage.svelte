@@ -71,7 +71,7 @@
         src="assets\icon1.png"
         alt="icon1"
       />
-      <h1 class="text-2xl text-white font-normal">DocChain</h1>
+      <h1 class="text-2xl text-white tracking-wide font-normal">DocChain</h1>
     </div>
 
     <div class="mt-20 flex justify-center lg:justify-start">
