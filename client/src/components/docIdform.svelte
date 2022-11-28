@@ -2,6 +2,7 @@
   import axios from 'axios';
   let docValue, documentID, token;
   token = localStorage.getItem('token');
+  import { navigate } from 'svelte-routing';
 
   const submitdocid = async () => {
     console.log(docValue);
@@ -21,6 +22,9 @@
       localStorage.setItem('documentID', data.documentID);
       documentID = localStorage.getItem('documentID');
       console.log(documentID);
+      if (documentID) {
+        navigate('/add-file');
+      }
     }
   };
 </script>

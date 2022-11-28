@@ -20,8 +20,8 @@
   <main>
     <Route path="/"><Loginpage /></Route>
     <Route path="/dash"><Dashboardpage /></Route>
-    <Route path="/publish"><Publishdoc on:datahash={getDataHash} on:filehash={getFileHash} /></Route>
-    <Route path="/add-file"><Fileuploadpage /></Route>
+    <Route path="/publish"><Publishdoc /></Route>
+    <Route path="/add-file"><Fileuploadpage on:datahash={getDataHash} on:filehash={getFileHash} /></Route>
   </main>
 </Router>
 

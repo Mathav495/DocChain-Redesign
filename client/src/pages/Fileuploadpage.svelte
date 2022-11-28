@@ -19,7 +19,7 @@
       <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3">
         <Header />
         <div class="mt-3">
-          <Addfile />
+          <Addfile on:datahash on:filehash />
         </div>
       </div>
     </div>
