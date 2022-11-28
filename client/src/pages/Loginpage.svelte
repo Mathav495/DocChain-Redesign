@@ -65,7 +65,7 @@
 
 <div class="flex">
   <div class=" w-full lg:w-1/3 p-10 h-screen bg-black relative">
-    <div class="flex">
+    <div class="flex justify-center lg:justify-start">
       <img
         class=" mr-2 inline-block animate-pulse align-top "
         src="assets\icon1.png"
@@ -74,10 +74,10 @@
       <h1 class="text-2xl text-white font-normal">DocChain</h1>
     </div>
 
-    <div class="mt-20">
+    <div class="mt-20 flex justify-center lg:justify-start">
       <h1 class="text-white text-4xl font-bold">Login</h1>
     </div>
-    <div>
+    <div class="flex justify-center lg:justify-start">
       <form on:submit|preventDefault={onLogin}>
         <div class="w-96 mt-10 group">
           <label
@@ -129,7 +129,7 @@
             {/if}
 
             <button
-              on:click={showPassword}
+              on:click|preventDefault={showPassword}
               class="absolute inset-y-0 right-4 flex items-center pl-2"
             >
               {#if type == "password"}
@@ -167,7 +167,7 @@
   </div>
 
   <div
-    class="w-full lg:w-2/3 relative h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black "
+    class="w-full hidden lg:block lg:w-2/3 relative h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black "
   >
     <ul class="circles">
       <li />
