@@ -8,7 +8,8 @@
   // import Modal from '../components/Modal.svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
-  let sign, error = '';
+  let signature,
+    error = '';
 
   let showModal = false;
   const toggleModal = () => {
@@ -20,7 +21,7 @@
   let dataHash = localStorage.getItem('datahash');
   console.log('datahash', dataHash);
   let documentID = localStorage.getItem('documentID');
-  console.log("documentID",documentID);
+  console.log('documentID', documentID);
   let fileHash = localStorage.getItem('filehash');
   console.log('filehash', fileHash);
 
@@ -72,32 +73,26 @@
       dataHash: dataHash,
     };
 
-    const { data } = await axios.get(
-      `https://ecdsa.test.print2block.in/sign/e766204b7ecbd9f0dff6c91fac24acfffa20ddd54fcd24b7444316c29743ebe8bab103c6bfe4bd6a22f775a5e9a121339b1147ea90b55fa537fe5d85fa1570ae`,
-      sample,
-      {
-        headers: {
-          'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTU4MWUyYWFlYWNmZjYzOTlkYjYxZSIsImlhdCI6MTY2OTYyNDI0NywiZXhwIjoxNjY5NzEwNjQ3fQ.VOxlCAFaTy7mGfjGIrZ62-u53Ycq7Y5GCFF1_xlJf2s",
-        },
+    const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/${fileHash}+${dataHash}`, sample, {
+      headers: {
+        'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTU4MWUyYWFlYWNmZjYzOTlkYjYxZSIsImlhdCI6MTY2OTYyNDI0NywiZXhwIjoxNjY5NzEwNjQ3fQ.VOxlCAFaTy7mGfjGIrZ62-u53Ycq7Y5GCFF1_xlJf2s',
       },
-    );
+    });
+    //   console.log(data);
+    // localStorage.setItem("sign", data.signature)
+    //     signature = localStorage.getItem("sign")
+    //     console.log(signature)
     console.log(data);
-    dispatch("sign", data.signature)
-    localStorage.setItem("sign", data.signature)
-    // let signature = localStorage.getItem('sign');
-  console.log('Signature',data.signature); 
-
-  // console.log(data)
-  //   dispatch("filehash", data.fileHash)
-  //   localStorage.setItem("filehash", data.fileHash)
-  //   // let fileHash = localStorage.getItem('filehash');
-  // console.log('filehash', data.fileHash);
-  }
+    dispatch('signature', data);
+    localStorage.setItem('signature', data);
+    let signature = localStorage.getItem('signature');
+    console.log(signature);
+  };
 
   // publishing documents
   const publishdoc = async () => {
     let sign = localStorage.getItem('signature');
-  console.log('signature', sign);
+    console.log('signature', sign);
     if (sign == null) {
       error = "signature can't be empty";
       console.log(error);
@@ -146,7 +141,7 @@
         </div>
         <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3">
           <Header />
-          <div >
+          <div>
             <div class=" flex w-full bg-transparent">
               <div class=" mx-auto flex items-center md:flex-row">
                 <div class="overflow-x-auto">
@@ -177,7 +172,7 @@
                     <div class="mt-1">
                       <textarea
                         name="signature"
-                        bind:value={sign}
+                        bind:value={signature}
                         class=" mt-5 w-full rounded-md border-2 
                          border-gray-300 px-4 py-2
                            placeholder:text-lg 
