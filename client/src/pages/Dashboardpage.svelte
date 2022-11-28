@@ -6,7 +6,7 @@
   import Nav from '../components/Nav.svelte';
 </script>
 
-<div class="h-full lg:h-screen w-screen p-1 hidden" id="homepage">
+<div class="h-auto lg:h-screen w-screen p-1 hidden" id="homepage">
   <div class="bg-black dash-bg-edge text-white h-full w-full">
     <div class="flex flex-row h-full py-3">
       <div class="width-1 md:w-2/12 sm:hidden medium-width py-5 md:flex flex-col items-center justify-between">
@@ -34,11 +34,11 @@
     border-radius: 3rem;
   }
   .width-2 {
-    width: 90%;
+    width: 89%;
   }
-  @media (min-width: 1024px) {
-    .width-1 {
-      width: 10%;
-    }
+  /* @media (min-width: 1024px) { */
+  .width-1 {
+    width: 11%;
   }
+  /* } */
 </style>

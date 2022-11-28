@@ -43,7 +43,7 @@
           </button>
         </h1>
       </div>
-      <div class:show={hidden} class="transition-opacity duration-300 ease-in-out opacity-0 bg-black shadow-md shadow-gray-700 text-white absolute top-12 left-14 px-3 py-2 flex flex-col items-center justify-center rounded-2xl w-36 card-width">
+      <div class:show={hidden} class="transition-opacity duration-300 ease-in-out opacity-0 bg-black shadow-md shadow-gray-700 text-white absolute top-12 sm:left-14 md:left-0 px-3 py-2 flex flex-col items-center justify-center rounded-2xl w-36 card-width">
         <p class="text-xs">Welcome,</p>
         <h1 class="text-md font-semibold">Mr. Joji Varghese</h1>
         <a href="https://mail.google.com/mail/" class="text-sm text-blue-400 underline">test@email.com</a>

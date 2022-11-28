@@ -93,7 +93,7 @@
           <input type="date" class="mb-2 h-8 rounded-r-md border-2 border-black bg-white px-2 outline-none md:mb-0 md:w-52" />
         </div>
       </div>
-      <div class="flex flex-col gap-9">
+      <div class="flex flex-col gap-8">
         <div class="flex items-center font-bold gap-3">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
             <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0118 9.375v9.375a3 3 0 003-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 00-.673-.05A3 3 0 0015 1.5h-1.5a3 3 0 00-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6zM13.5 3A1.5 1.5 0 0012 4.5h4.5A1.5 1.5 0 0015 3h-1.5z" clip-rule="evenodd" />
