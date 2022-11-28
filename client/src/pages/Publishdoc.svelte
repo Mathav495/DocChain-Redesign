@@ -98,6 +98,9 @@
     )
     console.log(data)
     dispatch("datahash", data.dataHash)
+    localStorage.setItem("datahash", data.dataHash)
+    let dataHash = localStorage.getItem('datahash');
+  console.log('datahash', dataHash);
   }
 </script>
 
