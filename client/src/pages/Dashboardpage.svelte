@@ -6,7 +6,7 @@
   import Nav from '../components/Nav.svelte';
 </script>
 
-<div class="h-screen w-screen p-1">
+<div class="h-full lg:h-screen w-screen p-1">
   <div class="bg-black dash-bg-edge text-white h-full w-full">
     <div class="flex flex-row h-full py-3">
       <div class="width-1 py-5 flex flex-col items-center">
