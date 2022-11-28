@@ -1,6 +1,7 @@
 <script>
   import axios from "axios"
   import { navigate } from "svelte-routing"
+  import Errormsg from "../components/Errormsg.svelte"
   import Emailicon from "../icons/Emailicon.svelte"
   import Eye from "../icons/Eye.svelte"
   import Eyeslash from "../icons/Eyeslash.svelte"
@@ -95,9 +96,7 @@
               class="w-full mt-2 pl-9 placeholder:text-sm bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
             />
           </div>
-          <h1 class="pt-1 text-sm font-semibold text-blue-500 md:text-base">
-            {error.Email}
-          </h1>
+          <Errormsg errormsg={error.Email} />
         </div>
 
         <div class="w-96 mt-8 group">
