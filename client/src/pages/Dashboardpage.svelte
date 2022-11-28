@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from 'svelte';
   import Dashboard from '../components/Dashboard.svelte';
   import Header from '../components/Header.svelte';
   import Logo from '../components/logo.svelte';
@@ -18,7 +19,7 @@
       </div>
       <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3">
         <Header />
-        <div class="mt-3">
+        <div class="mt-5">
           <Dashboard />
         </div>
       </div>
@@ -26,7 +27,7 @@
   </div>
 </div>
 
-<style>
+<style global>
   .dash-bg-edge {
     border-radius: 3rem;
   }
