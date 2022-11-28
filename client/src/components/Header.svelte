@@ -1,4 +1,6 @@
 <script>
+  import Logo from './logo.svelte';
+
   let hidden = false;
   const showCard = () => {
     console.log('clicked');
@@ -15,7 +17,12 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="flex justify-between items-center" on:click|self={hideCard}>
-  <h1 class="text-3xl font-boldness">DocChain.io</h1>
+  <div class="text-3xl flex items-center font-boldness gap-2">
+    <div class="bg-black lg:hidden h-14 w-14 rounded-3xl flex items-center justify-center">
+      <img src="assets\logo2.png" alt="logo" class="h-10 w-10 animate-pulse lg:animate-none" />
+    </div>
+    <h1>DocChain.io</h1>
+  </div>
 
   <div class="flex flex-row gap-5">
     <div class="relative flex-flex-col">
