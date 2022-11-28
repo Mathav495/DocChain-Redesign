@@ -40,13 +40,17 @@
       <div class="flex mt-3 gap-5">
         <select
           name="docid"
-          class="w-1/2 pl-2 p-2 rounded-lg"
+          class="w-1/2 pl-2 rounded-lg"
           bind:value={docValue}
         >
           <option class="pl-5">select</option>
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
+        <button
+          class="flex text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg"
+          >Submit</button
+        >
       </div>
     </div>
   </form>
