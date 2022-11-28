@@ -139,9 +139,7 @@
             </button>
           </div>
 
-          <h1 class="pt-1 text-sm font-semibold text-blue-500 md:text-base">
-            {error.Password}
-          </h1>
+          <Errormsg errormsg={error.Password} />
         </div>
 
         <h1
