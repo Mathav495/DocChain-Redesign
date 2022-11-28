@@ -8,9 +8,7 @@
   // import Modal from '../components/Modal.svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
-  let signature,
-    qrcode,
-    error = '';
+  let sign, error = '';
 
   let showModal = false;
   const toggleModal = () => {
@@ -22,7 +20,7 @@
   let dataHash = localStorage.getItem('datahash');
   console.log('datahash', dataHash);
   let documentID = localStorage.getItem('documentID');
-  console.log(documentID);
+  console.log("documentID",documentID);
   let fileHash = localStorage.getItem('filehash');
   console.log('filehash', fileHash);
 
@@ -48,7 +46,7 @@
   const releaseDoc = async () => {
     console.log(documentID);
     const { data } = await axios.get(
-      'https://test.swagger.print2block.in/docs/release?documentID=6384764242d47d79c84d3530',
+      'https://test.swagger.print2block.in/docs/release?documentID=6384876242d47d79c84d36d3',
       {
         documentID: documentID,
       },
@@ -64,43 +62,49 @@
     }
   };
 
-  let port = 16100;
-  let localhost = '192.168.1.2';
+  // let port = "17100";
+  // let localhost = '198.168.1.2';
 
   // getting signature Id from the user
   const getsignature = async () => {
-    const data = {
+    const sample = {
       fileHash: fileHash,
       dataHash: dataHash,
-      signingip: localhost,
-      port: port,
     };
 
-    const { sign } = await axios.post(
-      `https://${localhost}:${port}/sign/${fileHash}+${dataHash}`,
-      data,
-
+    const { data } = await axios.get(
+      `https://ecdsa.test.print2block.in/sign/e766204b7ecbd9f0dff6c91fac24acfffa20ddd54fcd24b7444316c29743ebe8bab103c6bfe4bd6a22f775a5e9a121339b1147ea90b55fa537fe5d85fa1570ae`,
+      sample,
       {
         headers: {
-          'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTU4MWUyYWFlYWNmZjYzOTlkYjYxZSIsImlhdCI6MTY2OTYyNDI0NywiZXhwIjoxNjY5NzEwNjQ3fQ.VOxlCAFaTy7mGfjGIrZ62-u53Ycq7Y5GCFF1_xlJf2s',
+          'x-access-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTU4MWUyYWFlYWNmZjYzOTlkYjYxZSIsImlhdCI6MTY2OTYyNDI0NywiZXhwIjoxNjY5NzEwNjQ3fQ.VOxlCAFaTy7mGfjGIrZ62-u53Ycq7Y5GCFF1_xlJf2s",
         },
       },
     );
-    console.log(sign);
-    localStorage.setItem('signature', sign.signature);
-    signature = localStorage.getItem('signature');
-    console.log(signature);
-  };
+    console.log(data);
+    dispatch("sign", data.signature)
+    localStorage.setItem("sign", data.signature)
+    // let signature = localStorage.getItem('sign');
+  console.log('Signature',data.signature); 
+
+  // console.log(data)
+  //   dispatch("filehash", data.fileHash)
+  //   localStorage.setItem("filehash", data.fileHash)
+  //   // let fileHash = localStorage.getItem('filehash');
+  // console.log('filehash', data.fileHash);
+  }
 
   // publishing documents
   const publishdoc = async () => {
-    if (signature == null) {
+    let sign = localStorage.getItem('signature');
+  console.log('signature', sign);
+    if (sign == null) {
       error = "signature can't be empty";
       console.log(error);
     } else {
       const sample = {
         documentID: documentID,
-        signature: signature,
+        signature: sign,
       };
       const { data } = await axios.post('https://test.swagger.print2block.in/docs/publish', sample, {
         headers: {
@@ -122,7 +126,7 @@
       // element.classList.add("hidden");
       // let element2 = document.getElementById("Preview");
       // element2.classList.remove("hidden");
-      console.log(element);
+      // console.log(element);
     }
   };
 </script>
@@ -173,7 +177,7 @@
                     <div class="mt-1">
                       <textarea
                         name="signature"
-                        bind:value={signature}
+                        bind:value={sign}
                         class=" mt-5 w-full rounded-md border-2 
                          border-gray-300 px-4 py-2
                            placeholder:text-lg 
