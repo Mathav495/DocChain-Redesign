@@ -3,7 +3,7 @@
   import Nav from '../components/Nav.svelte';
   import Logout from '../components/logout.svelte';
   import Header from '../components/Header.svelte';
-  import DocIdform from '../components/docIdform.svelte';
+  import Addfile from '../components/Addfile.svelte';
 </script>
 
 <div class="h-screen w-screen p-1">
@@ -19,7 +19,7 @@
       <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3">
         <Header />
         <div class="mt-3">
-          <DocIdform />
+          <Addfile on:datahash on:filehash />
         </div>
       </div>
     </div>

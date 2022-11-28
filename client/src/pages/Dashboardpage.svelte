@@ -36,9 +36,4 @@
   .width-2 {
     width: 89%;
   }
-  /* @media (min-width: 1024px) { */
-  .width-1 {
-    width: 11%;
-  }
-  /* } */
 </style>

@@ -1,6 +1,5 @@
 <script>
   import Logo from './logo.svelte';
-
   let hidden = false;
   const showCard = () => {
     console.log('clicked');
@@ -13,6 +12,7 @@
   const hideCard = () => {
     hidden = false;
   };
+
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -39,6 +39,7 @@
           <button on:click={showCard}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mt-1 ml-2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+
             </svg>
           </button>
         </h1>
