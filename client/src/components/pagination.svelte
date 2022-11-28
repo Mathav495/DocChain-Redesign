@@ -1,10 +1,10 @@
 <div class="flex items-start justify-center p-5">
   <div>
     <nav class="flex rounded-md shadow-sm">
-      <a href="/Dash" aria-current="page" class="items-center border border-gray-300 bg-white/50 px-2 py-1 text-xs font-medium text-gray-900 hover:border-red-600 hover:bg-gray-500 hover:text-red-600 md:px-4 md:py-2">All</a>
-      <a href="/Dash" class="items-center border border-gray-300 bg-white/50 px-2 py-1 text-xs font-medium text-gray-900 hover:border-red-600 hover:bg-gray-500 hover:text-red-600 md:px-4 md:py-2">6m</a>
-      <a href="/Dash" class="items-center border border-gray-300 bg-white/50 px-2 py-1 text-xs font-medium text-gray-900 hover:border-red-500 hover:bg-gray-500 hover:text-red-600 md:px-4 md:py-2">1m</a>
-      <a href="/Dash" class="items-center border border-gray-300 bg-white/50 px-2 py-1 text-xs font-medium text-gray-900 hover:border-red-500 hover:bg-gray-500 hover:text-red-600 md:px-4 md:py-2">7d</a>
+      <a href="/dash" aria-current="page" class="items-center border border-blue-300 bg-white/50 px-2 py-1 text-xs text-gray-900 hover:border-blue-600 hover:bg-blue-200 hover:text-white font-bold md:px-4 md:py-2">All</a>
+      <a href="/dash" class="items-center border border-blue-300 bg-white/50 px-2 py-1 text-xs text-gray-900 hover:border-blue-600 hover:bg-blue-200 hover:text-white font-bold md:px-4 md:py-2">6m</a>
+      <a href="/dash" class="items-center border border-blue-300 bg-white/50 px-2 py-1 text-xs text-gray-900 hover:border-blue-600 hover:bg-blue-200 hover:text-white font-bold md:px-4 md:py-2">1m</a>
+      <a href="/dash" class="items-center border border-blue-300 bg-white/50 px-2 py-1 text-xs text-gray-900 hover:border-blue-600 hover:bg-blue-200 hover:text-white font-bold md:px-4 md:py-2">7d</a>
     </nav>
   </div>
 </div>

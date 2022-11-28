@@ -1,6 +1,10 @@
 <script>
   import axios from 'axios';
   import { onMount } from 'svelte';
+  import Pagination from './pagination.svelte';
+
+  let element = document.getElementById('Load');
+  element.classList.remove('hidden');
 
   let token = localStorage.getItem('token');
   console.log(token);
@@ -13,14 +17,21 @@
     });
     usage = data;
     console.log(usage);
+    element.classList.add('hidden');
+    let element2 = document.getElementById('Dashboard');
+    element2.classList.remove('hidden');
+    console.log(element);
   });
 </script>
 
-<div class="flex flex-col gap-10 justify-center">
+<div class="flex flex-col gap-10 justify-center" id="Dashboard">
   <div class="flex flex-row">
     <div class="flex flex-col w-6/12 gap-3">
       <h1 class="text-2xl font-bold">Documents</h1>
-      <div class="graph-width bg-blue-100 h-60 text-2xl rounded-3xl p-5 flex justify-center items-center font-bold text-blue-500">graph</div>
+      <div class="graph-width bg-blue-100 h-60 text-2xl rounded-3xl p-5 flex flex-col justify-between items-center font-bold text-blue-500">
+        <p>graph</p>
+        <div><Pagination /></div>
+      </div>
     </div>
     <div class="w-6/12 flex flex-col gap-3">
       <h1 class="text-2xl font-bold">Documents Status</h1>
