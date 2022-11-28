@@ -5,7 +5,7 @@
   import Nav from '../components/Nav.svelte';
   import axios from 'axios';
   import { createEventDispatcher, onMount } from 'svelte';
-  // import Modal from '../components/Modal.svelte';
+  import Modal from '../components/Modal.svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   let signature,
@@ -24,22 +24,6 @@
   console.log('documentID', documentID);
   let fileHash = localStorage.getItem('filehash');
   console.log('filehash', fileHash);
-
-  /**
-   * getting filedetails to publish
-   * this route used to get the filehash which is used
-   */
-  // onMount(async () => {
-  //   const data = {
-  //     documentID: documentID,
-  //     signature: signature,
-  //   };
-  //   const { addfile } = await axios.post('https://test.swagger.print2block.in/docs/add-file', data);
-  //   console.log(addfile);
-  //   localStorage.setItem('filehash', addfile.fileHash);
-  //   let fileHash = localStorage.getItem('filehash');
-  //   console.log(fileHash);
-  // });
 
   /**
    * releasing document before publish
@@ -63,11 +47,9 @@
     }
   };
 
-  // let port = "17100";
-  // let localhost = '198.168.1.2';
-
   // getting signature Id from the user
   const getsignature = async () => {
+    let showModal = true
     const sample = {
       fileHash: fileHash,
       dataHash: dataHash,
@@ -78,15 +60,13 @@
         'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTU4MWUyYWFlYWNmZjYzOTlkYjYxZSIsImlhdCI6MTY2OTYyNDI0NywiZXhwIjoxNjY5NzEwNjQ3fQ.VOxlCAFaTy7mGfjGIrZ62-u53Ycq7Y5GCFF1_xlJf2s',
       },
     });
-    //   console.log(data);
-    // localStorage.setItem("sign", data.signature)
-    //     signature = localStorage.getItem("sign")
-    //     console.log(signature)
     console.log(data);
     dispatch('signature', data);
+    showModal = false
     localStorage.setItem('signature', data);
     let signature = localStorage.getItem('signature');
     console.log(signature);
+   
   };
 
   // publishing documents
@@ -110,16 +90,11 @@
       });
       console.log(data);
       dispatch('push', data);
-      // element.classList.add("hidden");
-      // let element2 = document.getElementById("Preview");
-      // element2.classList.remove("hidden");
-      // console.log(element);
     }
   };
 </script>
 
-<!-- <Modal {showModal} on:click={toggleModal} /> -->
-
+<Modal {showModal} on:click={toggleModal} />
 <main>
   <div class="h-screen w-screen p-1">
     <div class="bg-black dash-bg-edge text-white h-full w-full">
@@ -138,14 +113,14 @@
               <div class=" mx-auto flex items-center md:flex-row">
                 <div class="overflow-x-auto">
                   <table class="text-md w-full text-left text-gray-500">
-                    <thead class="bg-transparent text-sm uppercase text-gray-300 ">
+                    <thead class="bg-transparent text-sm uppercase text-gray-500 ">
                       <tr>
                         <th scope="col" class="w-80 py-3 px-10 md:w-40"> Name </th>
                         <th scope="col" class="w-32 py-3 px-6"> : </th>
                         <th scope="col" class="w-80 py-3 px-10 md:w-40"> John </th>
                       </tr>
                     </thead>
-                    <thead class="bg-transparent text-md uppercase text-gray-300 ">
+                    <thead class="bg-transparent text-md uppercase text-gray-500 ">
                       <tr>
                         <th scope="col" class="w-80 py-3 px-10"> Type </th>
                         <th scope="col" class="w-32 py-3 px-6"> : </th>
@@ -155,14 +130,14 @@
                     </thead>
                   </table>
                   <div class="flex justify-center">
-                    <img src="https://openclipart.org/image/2400px/svg_to_png/227926/Document-Icon.png" alt="document" class="relative mx-auto mt-10 h-[200px] w-[300px] rounded-md " />
+                    <img src="https://th.bing.com/th/id/OIP._jpRnHasO03ZqTHB-S77ewHaFC?pid=ImgDet&rs=1" alt="document" class="relative mx-auto mt-10 h-[200px] w-[300px] rounded-md " />
                     <img class="absolute ml-40 h-16 w-16  rounded-lg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" alt="qrcode" />
                   </div>
 
                   <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
                     <label for="signature" class="text-md block font-medium text-gray-500 ">signature:</label>
-                    <!-- <div  bind:value={signature}> </div> -->
-                    <div class="mt-1">
+                    <div class="w-full px-4 py-6 text-gray-900 font-bold text-xs  border-2 rounded-lg text-center flex-wrap flex-1">{signature}</div>
+                    <!-- <div class="mt-1">
                       <textarea
                         name="signature"
                         bind:value={signature}
@@ -172,12 +147,13 @@
                              focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         placeholder="ECDSA Signature obtained"
                       />
-                    </div>
+                    </div> -->
                   </div>
                   <h1 class="text-md font-semibold text-rose-500">{error}</h1>
 
                   <div class="mx-auto mt-10 flex justify-between">
-                    <button class="rounded-lg bg-teal-500 px-6 py-2 text-lg text-white" on:click={getsignature}>get-sign</button>
+                    <button class="rounded-lg bg-teal-500 px-6 py-2 text-lg text-white" on:click={getsignature} on:click={toggleModal}
+                    >get-sign</button>
                     <button
                       href="/blockchain"
                       on:click={publishdoc}
