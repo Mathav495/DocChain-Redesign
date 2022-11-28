@@ -1,67 +1,59 @@
 <script>
-  import axios from "axios"
-  import { createEventDispatcher } from "svelte"
-  const dispatch = createEventDispatcher()
-  let fileName,
-    docValue,
-    documentID,
-    dateexpired,
-    issuer,
-    doctype,
-    docTitle,
-    signatory
+  import axios from 'axios';
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
+  let fileName, docValue, documentID, dateexpired, issuer, doctype, docTitle, signatory, token;
+  token = localStorage.getItem('token');
 
   const submitdocid = async () => {
-    console.log(docValue)
-    if (docValue == "no") {
+    console.log(docValue);
+    if (docValue == 'no') {
       const { data } = await axios.post(
-        "https://test.swagger.print2block.in/docs/initiate/?qrcode=true",
+        'https://test.swagger.print2block.in/docs/initiate/?qrcode=true',
         {
-          filename: "sampledoc",
+          filename: 'sampledoc',
         },
         {
           headers: {
-            "x-access-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTU4MWUyYWFlYWNmZjYzOTlkYjYxZSIsImlhdCI6MTY2OTQ0Mzc0MywiZXhwIjoxNjY5NTMwMTQzfQ.SiCIvSaCqk1lcYXv1ebtjD-r1n7UwBNGnGZAi-Hbxko",
+            'x-access-token': token,
           },
-        }
-      )
-      console.log(data)
-      localStorage.setItem("documentID", data.documentID)
-      documentID = localStorage.getItem("documentID")
-      console.log(documentID)
+        },
+      );
+      console.log(data);
+      localStorage.setItem('documentID', data.documentID);
+      documentID = localStorage.getItem('documentID');
+      console.log(documentID);
     }
-  }
+  };
 
   const onSubmitFile = async () => {
-    const form = document.getElementById("form")
-    const formData = new FormData(form)
-    console.log([...formData])
-    let datum = [...formData][0]
-    let File = datum[1]
-    console.log(File)
+    const form = document.getElementById('form');
+    const formData = new FormData(form);
+    console.log([...formData]);
+    let datum = [...formData][0];
+    let File = datum[1];
+    console.log(File);
     const { data } = await axios.post(
-      "https://test.swagger.print2block.in/docs/add-file",
+      'https://test.swagger.print2block.in/docs/add-file',
       {
         documentID: documentID,
         file: File,
       },
       {
         headers: {
-          "Content-Type": "multipart/form-data",
-          "x-access-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTU4MWUyYWFlYWNmZjYzOTlkYjYxZSIsImlhdCI6MTY2OTQ1MDUwNiwiZXhwIjoxNjY5NTM2OTA2fQ.f-jWsn2PjD7vjWX-cW_GCXuZnMUEtnJvRr51w0bZ2tw",
+          'Content-Type': 'multipart/form-data',
+          'x-access-token': token,
         },
-      }
-    )
+      },
+    );
 
-    console.log(data)
-    dispatch("filehash", data.fileHash)
-  }
+    console.log(data);
+    dispatch('filehash', data.fileHash);
+  };
 
   const onsubmitdata = async () => {
-    console.log(dateexpired, issuer, signatory, docTitle, doctype)
-    const date = new Date(dateexpired).toISOString()
+    console.log(dateexpired, issuer, signatory, docTitle, doctype);
+    const date = new Date(dateexpired).toISOString();
     let sampleData = {
       receiver: {
         name: issuer,
@@ -72,14 +64,14 @@
       issuer: {
         signatory: signatory,
       },
-    }
+    };
     let options = {
       title: docTitle,
       expireOn: date,
-    }
-    console.log(documentID)
+    };
+    console.log(documentID);
     const { data } = await axios.post(
-      "https://test.swagger.print2block.in/docs/add-data",
+      'https://test.swagger.print2block.in/docs/add-data',
       {
         documentID: documentID,
         metadata: sampleData,
@@ -87,14 +79,13 @@
       },
       {
         headers: {
-          "x-access-token":
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTU4MWUyYWFlYWNmZjYzOTlkYjYxZSIsImlhdCI6MTY2OTQ1MDUwNiwiZXhwIjoxNjY5NTM2OTA2fQ.f-jWsn2PjD7vjWX-cW_GCXuZnMUEtnJvRr51w0bZ2tw",
+          'x-access-token': token,
         },
-      }
-    )
-    console.log(data)
-    dispatch("datahash", data.dataHash)
-  }
+      },
+    );
+    console.log(data);
+    dispatch('datahash', data.dataHash);
+  };
 </script>
 
 <h1 class="text-3xl font-bold p-3 underline text-blue-400">Publish Doc</h1>
@@ -115,19 +106,8 @@
 </div>
 
 <div class="bg-slate-200 w-3/5 mx-5 mt-10 p-2 rounded-lg">
-  <form
-    on:submit|preventDefault={onSubmitFile}
-    id="form"
-    method="post"
-    action="/docs/initiate"
-    enctype="multipart/form-data"
-  >
-    <input
-      bind:value={fileName}
-      type="file"
-      name="userimage"
-      accept="image/*,.pdf"
-    />
+  <form on:submit|preventDefault={onSubmitFile} id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
+    <input bind:value={fileName} type="file" name="userimage" accept="image/*,.pdf" />
     <button class="bg-slate-400 px-2 py-1 rounded-lg">Upload</button>
   </form>
 </div>
@@ -137,12 +117,7 @@
     <div class="flex flex-col gap-4">
       <div class="flex gap-6">
         <label for="docid">Date Expired</label>
-        <input
-          bind:value={dateexpired}
-          type="datetime-local"
-          name="docid"
-          id="docid"
-        />
+        <input bind:value={dateexpired} type="datetime-local" name="docid" id="docid" />
       </div>
 
       <div class="flex gap-6">
@@ -157,22 +132,12 @@
 
       <div class="flex gap-6">
         <label for="signatory">Signatory</label>
-        <input
-          bind:value={signatory}
-          type="text"
-          name="signatory"
-          id="signatory"
-        />
+        <input bind:value={signatory} type="text" name="signatory" id="signatory" />
       </div>
 
       <div class="flex gap-6">
         <label for="docTitle">Document Title</label>
-        <input
-          bind:value={docTitle}
-          type="text"
-          name="docTitle"
-          id="docTitle"
-        />
+        <input bind:value={docTitle} type="text" name="docTitle" id="docTitle" />
       </div>
 
       <button class="bg-slate-400 px-2 py-1 rounded-lg">Submit</button>
