@@ -5,6 +5,8 @@
   import Logo from '../components/logo.svelte';
   import Logout from '../components/logout.svelte';
   import Nav from '../components/Nav.svelte';
+  let token = localStorage.getItem('token');
+  console.log(token);
 </script>
 
 <div class="h-screen w-screen p-1">
