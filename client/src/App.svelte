@@ -5,6 +5,7 @@
   import Publishdoc from './pages/Publishdoc.svelte';
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
   import Filepreview from './pages/Filepreview.svelte';
+  import Animate from './pages/animate.svelte';
   let fileHash, dataHash;
   export let url = '';
 
