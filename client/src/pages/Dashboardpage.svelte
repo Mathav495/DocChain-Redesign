@@ -23,14 +23,14 @@
 <div class="h-auto lg:h-screen relative w-screen p-1 hidden" id="homepage">
   <div class="bg-black dash-bg-edge text-white h-full w-full">
     <div class="flex flex-row h-full py-3">
-      <div class="width-1 md:w-2/12 sm:hidden medium-width py-5 md:flex flex-col items-center justify-between">
+      <div class="md:w-4/12 lg:w-3/12  sm:hidden md-width py-5 md:flex flex-col items-center justify-between">
         <Logo />
         <div class="py-14">
           <Nav />
         </div>
         <Logout />
       </div>
-      <div class="md:width-2 sm:w-full bg-white text-gray-900 content-bg-edge p-8 sm:ml-3 md:ml-0 mr-3">
+      <div class="md:w-8/12 lg:w-9/12 sm:w-full bg-white text-gray-900 content-bg-edge p-8 sm:ml-3 md:ml-0 mr-3">
         <Header on:navShow={showNav} />
         <div class="mt-10">
           <Dashboard />
@@ -40,7 +40,7 @@
   </div>
   <!--small screen navbar-->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 absolute inset-0 p-12">
+  <div class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 hidden sm:block absolute inset-0 p-12">
     <SmallScreenNavbar />
   </div>
 </div>
@@ -52,10 +52,26 @@
   .content-bg-edge {
     border-radius: 3rem;
   }
-  .width-2 {
-    width: 89%;
+  @media (min-width: 768px) {
+    .md\:w-4\/12 {
+      width: 16%;
+    }
   }
-  .width-1 {
-    width: 11%;
+
+  @media (min-width: 768px) {
+    .md\:w-8\/12 {
+      width: 84%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lg\:w-3\/12 {
+      width: 10%;
+    }
+  }
+  @media (min-width: 1024px) {
+    .lg\:w-9\/12 {
+      width: 90%;
+    }
   }
 </style>
