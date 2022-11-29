@@ -60,10 +60,13 @@
   };
 </script>
 
-<div class="flex overflow-hidden">
-  <div class=" w-full lg:w-1/3 p-10 h-screen bg-black">
+<div class="animation relative">
+  <div class="particles" />
+  <div class="particles" />
+  <div class="particles" />
+  <div class="absolute top-0 left-0 w-full lg:w-1/3 p-10 h-screen bg-black">
     <div class="flex justify-center lg:justify-start">
-      <img class=" mr-2 inline-block animate-pulse align-top " src="assets\icon1.png" alt="icon1" />
+      <img class=" mr-2 inline-block animate-pulse align-top" src="assets\icon1.png" alt="icon1" />
       <h1 class="text-2xl text-white tracking-wide font-normal">DocChain</h1>
     </div>
 
@@ -72,7 +75,7 @@
     </div>
     <div class="flex justify-center lg:justify-start">
       <form on:submit|preventDefault={onLogin}>
-        <div class="w-96 mt-10 group">
+        <div class="w-full mt-10 group">
           <label for="Email" class="text-xl relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-400 group-hover:text-white tracking-wide">Email</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -116,25 +119,17 @@
       </h1>
     </div>
   </div>
-
-  <div class="w-full hidden lg:block lg:w-2/3 h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black ">
-    <div class="animation">
-      <div class="particles" />
-      <div class="particles" />
-      <div class="particles" />
-    </div>
-  </div>
 </div>
 
 <style>
-  .animation * {
+  * {
     box-sizing: border-box;
     position: absolute;
     transform-style: preserve-3d;
   }
 
-  .animation *:before,
-  .animation *:after {
+  *:before,
+  *:after {
     box-sizing: border-box;
     transform-style: preserve-3d;
     position: absolute;
@@ -142,7 +137,7 @@
   }
   .animation {
     margin: 0;
-    background: linear-gradient(315deg, rgb(30, 32, 33) 3%, rgb(12, 12, 12) 38%, rgb(7, 7, 7) 68%, rgb(21, 22, 22) 98%);
+    background: linear-gradient(315deg, rgba(0, 0, 0, 1) 3%, rgb(12, 12, 12) 38%, rgb(7, 7, 7) 68%, rgb(21, 22, 22) 98%);
     animation: gradient 15s ease infinite;
     background-size: 400% 400%;
     background-attachment: fixed;
@@ -180,7 +175,7 @@
     border-radius: 100%;
     opacity: 0;
     transform: translateZ(-50vmin);
-    background-image: repeating-conic-gradient(rgba(254, 12, 12, 0.533) 0%, transparent 0.0002%, transparent 0.075%, transparent 0.65%), repeating-conic-gradient(rgb(255, 255, 255) 0%, transparent 0.0004%, transparent 0.05%, transparent 0.495%);
+    background-image: repeating-conic-gradient(#fff8 0%, transparent 0.0002%, transparent 0.075%, transparent 0.65%), repeating-conic-gradient(#fff 0%, transparent 0.0004%, transparent 0.05%, transparent 0.495%);
     animation: particlesMovement 5s ease-in 0s infinite;
     z-index: 1;
   }

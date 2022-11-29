@@ -5,6 +5,7 @@
   import Publishdoc from './pages/Publishdoc.svelte';
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
   import Filepreview from './pages/Filepreview.svelte';
+  import Animated from './pages/Animated.svelte';
   let fileHash, dataHash;
   export let url = '';
 
@@ -25,6 +26,7 @@
     <Route path="/publish"><Publishdoc /></Route>
     <Route path="/add-file"><Fileuploadpage on:datahash={getDataHash} on:filehash={getFileHash} /></Route>
     <Route path="/preview"><Filepreview /></Route>
+    <Route path="/animation"><Animated /></Route>
   </main>
 </Router>
 
