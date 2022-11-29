@@ -17,13 +17,23 @@
     showModal = !showModal;
   };
 
-
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
   let fileHash = localStorage.getItem('filehash');
-  console.log('filehash', fileHash);  
+  console.log('filehash', fileHash);
   let dataHash = localStorage.getItem('datahash');
   console.log('datahash', dataHash);
+  let qr = localStorage.getItem('qrcode');
+  console.log('qrcode', qr);
+
+  const image = new Image();
+  image.onload = function () {
+    console.log(image.width); // image is loaded and we have image width
+  };
+  // image.src= document.getElementById('qrcode').innerHTML
+  image.src = qr;
+  const qrcode=document.body.appendChild(image).toString();
+  console.log(qrcode);
 
   /**
    * releasing document before publish
@@ -32,7 +42,7 @@
   const releaseDoc = async () => {
     console.log(documentID);
     const { data } = await axios.get(
-      'https://test.swagger.print2block.in/docs/release?documentID=6384876242d47d79c84d36d3',
+      `https://test.swagger.print2block.in/docs/release?documentID=${documentID}`,
       {
         documentID: documentID,
       },
@@ -67,12 +77,10 @@
     localStorage.setItem('signature', data);
     let signature = localStorage.getItem('signature');
     console.log(signature);
-    if(signature) {
-      navigate("/sign")
+    if (signature) {
+      navigate('/sign');
     }
   };
-
-  
 </script>
 
 <!-- <Modal {showModal} on:click={toggleModal} /> -->
@@ -112,13 +120,11 @@
                   </table>
                   <div class="flex justify-center">
                     <img src="https://th.bing.com/th/id/OIP._jpRnHasO03ZqTHB-S77ewHaFC?pid=ImgDet&rs=1" alt="document" class="relative mx-auto mt-10 h-[200px] w-[300px] rounded-md " />
-                    <img class="absolute ml-40 h-16 w-16  rounded-lg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" alt="qrcode" />
+                    <img class="absolute ml-40 h-16 w-16 border-2 border-blue-400  rounded-lg" src={qr} alt="qrcode" id="qrcode" />
                   </div>
-                 
 
                   <div class="mx-auto mt-10 flex justify-between">
                     <button class="rounded-lg bg-teal-500 px-6 py-2 text-lg text-white" on:click={getsignature}>get-sign</button>
-                  
 
                     <button class="rounded-lg bg-teal-500 px-6 py-2 text-lg text-white" on:click={releaseDoc}>release</button>
                   </div>
