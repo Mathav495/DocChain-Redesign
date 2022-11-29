@@ -36,6 +36,8 @@
     );
     console.log(data);
     dispatch('filehash', data.fileHash);
+    
+
   };
 
   const onChange = () => {

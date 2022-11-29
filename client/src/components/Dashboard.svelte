@@ -25,13 +25,13 @@
 
 <div class="flex flex-col gap-10 justify-center" id="dashboard">
   <div class="flex flex-col lg:flex-row">
-    <div class="flex order-2 lg:order-1 flex-col w-full lg:w-6/12 lg:gap-3">
-      <h1 class="text-2xl font-bold">Documents</h1>
+    <div class="flex order-2 lg:order-1 flex-col w-full lg:w-6/12 gap-3">
+      <h1 class="text-2xl font-bold mt-10 lg:mt-0">Documents</h1>
       <div class="graph-width lg:w-5/6 md:w-full bg-blue-100 h-60 text-2xl rounded-3xl p-1 flex flex-col justify-end items-center font-bold text-blue-500">
         <div><Pagination /></div>
       </div>
     </div>
-    <div class="lg:w-6/12 w-full order-1 lg:order-2 flex flex-col lg:gap-3">
+    <div class="lg:w-6/12 w-full order-1 lg:order-2 flex flex-col gap-3">
       <h1 class="text-2xl font-bold">Documents Status</h1>
       <div class="flex flex-row gap-5">
         <div class="w-1/2 bg-red-100 h-60 rounded-3xl p-5 flex flex-col justify-between">
@@ -77,11 +77,12 @@
     </div>
   </div>
   <div class="flex flex-row justify-between gap-5">
-    <div class="w-full lg:w-8/12 flex flex-col gap-5">
+    <!-- <div class="flex flex-col gap-3"> -->
+    <div class="flex flex-col w-full lg:w-8/12 gap-3">
       <div class="flex flex-row items-center justify-between">
         <h1 class="text-2xl font-bold">Document Access Log</h1>
         <div class="flex flex-row">
-          <div class="flex h-8 w-8 items-center justify-center rounded-l-md border-y-2 border-l-2 border-black">
+          <div class="flex h-8 w-8 items-center justify-center rounded-l-xl border-y-2 border-l-2 border-black">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
               <path
                 stroke-linecap="round"
@@ -90,10 +91,10 @@
               />
             </svg>
           </div>
-          <input type="date" class="mb-2 h-8 rounded-r-md border-2 border-black bg-white px-2 outline-none md:mb-0 md:w-52" />
+          <input type="date" class="h-8 rounded-r-xl border-2 border-black bg-white px-2 outline-none md:mb-0 md:w-52" />
         </div>
       </div>
-      <div class="flex flex-col gap-8">
+      <div class="flex flex-col justify-between h-full gap-2">
         <div class="flex items-center font-bold gap-3">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
             <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0118 9.375v9.375a3 3 0 003-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 00-.673-.05A3 3 0 0015 1.5h-1.5a3 3 0 00-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6zM13.5 3A1.5 1.5 0 0012 4.5h4.5A1.5 1.5 0 0015 3h-1.5z" clip-rule="evenodd" />
@@ -122,7 +123,8 @@
         </div>
       </div>
     </div>
-    <div class="w-4/12 bg-black rounded-3xl text-white p-7 sm:hidden lg:flex flex-col gap-6">
+    <!-- </div> -->
+    <div class="w-4/12 bg-black rounded-xl text-white p-7 sm:hidden lg:flex flex-col gap-8">
       <span class="leading-10 text-2xl font-bold"
         >The <div class="transform -skew-y-6 inline-flex">
           <span class="text-lg font-bold border-2 bg-gray-300 text-black hover:bg-black hover:text-gray-300 border-gray-300 rounded-lg px-2">Print2Block</span>

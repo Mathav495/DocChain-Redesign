@@ -1,18 +1,24 @@
 <script>
-  import Logo from './logo.svelte';
-  let hidden = false;
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
+  let card = false;
+
   const showCard = () => {
     console.log('clicked');
-    if (hidden == false) {
-      hidden = true;
+    if (card == false) {
+      card = true;
     } else {
-      hidden = false;
+      card = false;
     }
   };
+
   const hideCard = () => {
-    hidden = false;
+    card = false;
   };
 
+  const navBtn = () => {
+    dispatch('navShow');
+  };
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -32,19 +38,24 @@
         </svg>
         <span class="text-black group-hover:opacity-100 transition-opacity duration-300 ease-in-out opacity-0 absolute inset-0 -top-7 -left-1">Logout</span>
       </a>
+      <button on:click={navBtn} class="flex md:hidden relative group items-center justify-center h-10 w-10 rounded-full text-black font-semibold bg-indigo-50">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
+        </svg>
+        <span class="text-black group-hover:opacity-100 transition-opacity duration-300 ease-in-out opacity-0 absolute inset-0 -top-7 -left-1">Navbar</span>
+      </button>
       <div class="flex flex-row items-center">
         <img src="assets\profile.png" alt="profile" class="h-16 w-16 ml-1 absolute cursor-pointer" />
-        <h1 class="flex flex-row h-10 px-3 items-center bg-indigo-50 rounded-full">
+        <h1 class="flex flex-row  h-10 px-3 items-center bg-indigo-50 rounded-full">
           <p class="text-lg font-semibold ml-12">Joji V.</p>
           <button on:click={showCard}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mt-1 ml-2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-
             </svg>
           </button>
         </h1>
       </div>
-      <div class:show={hidden} class="transition-opacity duration-300 ease-in-out opacity-0 bg-black shadow-md shadow-gray-700 text-white absolute top-12 sm:left-14 md:left-0 px-3 py-2 flex flex-col items-center justify-center rounded-2xl w-36 card-width">
+      <div class:show={card} class="transition-opacity duration-300 ease-in-out opacity-0 bg-black shadow-md shadow-gray-700 text-white absolute top-12 small:left medium:left px-3 py-2 flex flex-col items-center justify-center rounded-2xl w-36 card-width">
         <p class="text-xs">Welcome,</p>
         <h1 class="text-md font-semibold">Mr. Joji Varghese</h1>
         <a href="https://mail.google.com/mail/" class="text-sm text-blue-400 underline">test@email.com</a>
@@ -62,5 +73,15 @@
   }
   .font-boldness {
     font-weight: 1000;
+  }
+  @media (min-width: 640px) {
+    .small\:left {
+      left: 7.3rem /* 112px */;
+    }
+  }
+  @media (min-width: 768px) {
+    .medium\:left {
+      left: -0.2rem /* -4px */;
+    }
   }
 </style>
