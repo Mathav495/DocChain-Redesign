@@ -7,6 +7,7 @@
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
 
   let hideNavbar = true;
+
   const hideNav = () => {
     hideNavbar = true;
   };
