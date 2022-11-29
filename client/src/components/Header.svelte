@@ -1,7 +1,7 @@
 <script>
-  import SmallScreenNavbar from './Small_screen_navbar.svelte';
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
   let card = false;
-  let hideNavbar = true;
 
   const showCard = () => {
     console.log('clicked');
@@ -16,16 +16,8 @@
     card = false;
   };
 
-  const showNavbar = () => {
-    if (hideNavbar == false) {
-      hideNavbar = true;
-    } else {
-      hideNavbar = false;
-    }
-  };
-
-  const hideNav = () => {
-    hideNavbar = true;
+  const navBtn = () => {
+    dispatch('navShow');
   };
 </script>
 
@@ -46,7 +38,7 @@
         </svg>
         <span class="text-black group-hover:opacity-100 transition-opacity duration-300 ease-in-out opacity-0 absolute inset-0 -top-7 -left-1">Logout</span>
       </a>
-      <button on:click={showNavbar} class="flex md:hidden relative group items-center justify-center h-10 w-10 rounded-full text-black font-semibold bg-indigo-50">
+      <button on:click={navBtn} class="flex md:hidden relative group items-center justify-center h-10 w-10 rounded-full text-black font-semibold bg-indigo-50">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
         </svg>
@@ -70,11 +62,6 @@
       </div>
     </div>
   </div>
-</div>
-<!--small screen navbar-->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class:hidden={hideNavbar} on:click|self={hideNav} class="h-auto w-screen bg-white/50 absolute inset-0 p-12">
-  <SmallScreenNavbar />
 </div>
 
 <style>
