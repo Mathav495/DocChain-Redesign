@@ -118,7 +118,7 @@
   </div>
 
   <div class="w-full hidden lg:block lg:w-2/3 h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black ">
-    <div class="animation">
+    <div class="animation bg-gradient-to-r from-gray-700 via-gray-900 to-black ">
       <div class="particles" />
       <div class="particles" />
       <div class="particles" />
@@ -142,7 +142,7 @@
   }
   .animation {
     margin: 0;
-    background: linear-gradient(315deg, rgb(30, 32, 33) 3%, rgb(12, 12, 12) 38%, rgb(7, 7, 7) 68%, rgb(21, 22, 22) 98%);
+    /* background: linear-gradient(315deg, rgb(30, 32, 33) 3%, rgb(12, 12, 12) 38%, rgb(7, 7, 7) 68%, rgb(21, 22, 22) 98%); */
     animation: gradient 15s ease infinite;
     background-size: 400% 400%;
     background-attachment: fixed;
@@ -180,8 +180,8 @@
     border-radius: 100%;
     opacity: 0;
     transform: translateZ(-50vmin);
-    background-image: repeating-conic-gradient(rgba(254, 12, 12, 0.533) 0%, transparent 0.0002%, transparent 0.075%, transparent 0.65%), repeating-conic-gradient(rgb(255, 255, 255) 0%, transparent 0.0004%, transparent 0.05%, transparent 0.495%);
-    animation: particlesMovement 5s ease-in 0s infinite;
+    background-image: repeating-conic-gradient(rgba(238, 232, 232, 0.533) 0%, transparent 0.0002%, transparent 0.075%, transparent 0.65%), repeating-conic-gradient(rgb(255, 255, 255) 0%, transparent 0.0004%, transparent 0.05%, transparent 0.495%);
+    animation: particlesMovement 15s linear infinite;
     z-index: 1;
   }
 
@@ -189,11 +189,9 @@
     animation-name: particlesMovement2;
     animation-delay: 1s;
   }
-
   .particles + .particles + .particles::before {
     animation-delay: 2s;
   }
-
   .particles + .particles + .particles::after {
     animation-delay: 3s;
   }
