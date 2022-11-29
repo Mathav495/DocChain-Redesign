@@ -20,17 +20,17 @@
   };
 </script>
 
-<div class="h-auto lg:h-screen relative w-screen p-1 hidden" id="homepage">
+<div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1 hidden" id="homepage">
   <div class="bg-black dash-bg-edge text-white h-full w-full">
     <div class="flex flex-row h-full py-3">
-      <div class="md:w-4/12 lg:w-3/12  sm:hidden md-width py-5 md:flex flex-col items-center justify-between">
+      <div class="md:w-4/12 lg:w-3/12 sm:hidden md-width py-5 md:flex flex-col items-center justify-between">
         <Logo />
         <div class="py-14">
           <Nav />
         </div>
         <Logout />
       </div>
-      <div class="md:w-8/12 lg:w-9/12 sm:w-full bg-white text-gray-900 content-bg-edge p-8 sm:ml-3 md:ml-0 mr-3">
+      <div class="md:w-8/12 lg:w-9/12 sm:w-full bg-white text-gray-900 content-bg-edge p-8 ml-3 md:ml-0 mr-3">
         <Header on:navShow={showNav} />
         <div class="mt-10">
           <Dashboard />
