@@ -3,6 +3,8 @@
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
 
+  let token = localStorage.getItem('token');
+
   let signature = localStorage.getItem('signature');
   console.log(signature);
   let documentID = localStorage.getItem('documentID');
@@ -12,7 +14,7 @@
   // publishing documents
   const publishdoc = async () => {
     let signature = localStorage.getItem('signature');
-  console.log(signature);
+  console.log('signature',signature);
   let documentID = localStorage.getItem('documentID');
   console.log('documentID', documentID);
 
@@ -28,7 +30,7 @@
       },
       {
         headers: {
-          'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTU4MWUyYWFlYWNmZjYzOTlkYjYxZSIsImlhdCI6MTY2OTYyNDI0NywiZXhwIjoxNjY5NzEwNjQ3fQ.VOxlCAFaTy7mGfjGIrZ62-u53Ycq7Y5GCFF1_xlJf2s',
+          'x-access-token': token,
         },
       });
       console.log(data);

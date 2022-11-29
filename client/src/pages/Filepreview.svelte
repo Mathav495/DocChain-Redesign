@@ -25,6 +25,7 @@
   console.log('datahash', dataHash);
   let qr = localStorage.getItem('qrcode');
   console.log('qrcode', qr);
+  let proposedURL=localStorage.getItem('docURL')
 
   const image = new Image();
   image.onload = function () {
@@ -119,9 +120,11 @@
                     </thead>
                   </table>
                   <div class="flex justify-center">
-                    <img src="https://th.bing.com/th/id/OIP._jpRnHasO03ZqTHB-S77ewHaFC?pid=ImgDet&rs=1" alt="document" class="relative mx-auto mt-10 h-[200px] w-[300px] rounded-md " />
+                    <img src="https://th.bing.com/th/id/OIP._jpRnHasO03ZqTHB-S77ewHaFC?pid=ImgDet&rs=1" alt="document" class="relative mx-auto mt-10 h-[200px] w-[300px] rounded-md shadow-2xl" />
                     <img class="absolute ml-40 h-16 w-16 border-2 border-blue-400  rounded-lg" src={qr} alt="qrcode" id="qrcode" />
                   </div>
+                  <div class="flex mx-auto justify-center mt-2 text-base font-bold text-gray-800 underline items-center">Document ProposedURL:</div>
+                  <div class="flex mx-auto text-base justify-center mt-2 text-blue-800 items-center text-center sm:flex-wrap underline">{proposedURL}</div>
 
                   <div class="mx-auto mt-10 flex justify-between">
                     <button class="rounded-lg bg-teal-500 px-6 py-2 text-lg text-white" on:click={getsignature}>get-sign</button>
