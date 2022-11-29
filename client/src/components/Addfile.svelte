@@ -6,7 +6,7 @@
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
   let container;
-  let image;
+  let image, showpdf, pdf;
   let showImage = false;
   let status = 'Upload';
 
@@ -36,8 +36,6 @@
     );
     console.log(data);
     dispatch('filehash', data.fileHash);
-    
-
   };
 
   const onChange = () => {
@@ -46,8 +44,8 @@
     console.log([...formData]);
     let datum = [...formData][0];
     let File = datum[1];
-    console.log(File);
-    if (File) {
+    console.log(File.type);
+    if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       showImage = true;
       const reader = new FileReader();
       reader.addEventListener('load', function () {
@@ -55,8 +53,19 @@
       });
       reader.readAsDataURL(File);
       return;
+    } else if (File.type == 'application/pdf') {
+      showpdf = true;
+      const reader = new FileReader();
+      reader.addEventListener('load', function () {
+        pdf.setAttribute('src', reader.result);
+      });
+      reader.readAsDataURL(File);
+      return;
+    } else {
+      showImage = false;
+      showpdf = false;
+      return;
     }
-    showImage = false;
   };
 </script>
 
@@ -89,7 +98,9 @@
 
     <div class="flex w-1/4 pt-3" bind:this={container}>
       {#if showImage}
-        <embed bind:this={image} class="h-48 w-full" src="" alt="Preview" />
+        <img bind:this={image} class="h-48 w-full" src="" alt="Preview" />
+      {:else if showpdf}
+        <embed bind:this={pdf} class="h-48 w-full" src="" alt="Preview" />
       {:else}
         <img class="h-48 w-full" src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns=" alt="Preview" />
       {/if}

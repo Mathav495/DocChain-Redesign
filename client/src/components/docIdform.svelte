@@ -1,6 +1,6 @@
 <script>
   import axios from 'axios';
-  let docValue, documentID, token,qr,proposedURL;
+  let docValue, documentID, token, qr, proposedURL;
   token = localStorage.getItem('token');
 
   const submitdocid = async () => {
@@ -21,13 +21,12 @@
       localStorage.setItem('documentID', data.documentID);
       documentID = localStorage.getItem('documentID');
       console.log(documentID);
-      localStorage.setItem('qrcode',data.qr)
-      qr=localStorage.getItem('qrcode')
-      console.log(qr)
-      localStorage.setItem('docURL',data.proposedURL)
-      proposedURL=localStorage.getItem('docURL')
-      console.log(proposedURL)
-
+      localStorage.setItem('qrcode', data.qr);
+      qr = localStorage.getItem('qrcode');
+      console.log(qr);
+      localStorage.setItem('docURL', data.proposedURL);
+      proposedURL = localStorage.getItem('docURL');
+      console.log(proposedURL);
     }
   };
 </script>
