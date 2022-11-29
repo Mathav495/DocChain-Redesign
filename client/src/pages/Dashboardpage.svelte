@@ -36,4 +36,7 @@
   .width-2 {
     width: 89%;
   }
+  .width-1 {
+    width: 11%;
+  }
 </style>
