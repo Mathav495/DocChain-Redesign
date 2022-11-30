@@ -17,28 +17,27 @@
     let datum = [...formData][0];
     let File = datum[1];
     console.log(File);
-    const { data } = await axios.post(
-      'https://test.swagger.print2block.in/docs/add-file',
-      {
-        documentID: documentID,
-        file: File,
-      },
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'x-access-token': token,
+    if (File.name == '') {
+      const { data } = await axios.post(
+        'https://test.swagger.print2block.in/docs/add-file',
+        {
+          documentID: documentID,
+          file: File,
         },
-      },
-    );
-    console.log(data);
-    dispatch('filehash', data.fileHash);
-    if (data.fileHash) {
-      status = 'Uploaded Sucessfully';
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'x-access-token': token,
+          },
+        },
+      );
+      console.log(data);
+      dispatch('filehash', data.fileHash);
+      if (data.fileHash) {
+        status = 'Uploaded Sucessfully';
+      }
     }
   };
-
-  let dropzone = document.querySelectorAll('#dropzone');
-  console.log(dropzone);
 
   const onChange = () => {
     const form = document.getElementById('form');

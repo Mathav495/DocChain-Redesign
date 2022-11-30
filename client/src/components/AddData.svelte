@@ -4,46 +4,86 @@
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
 
-  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID;
+  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID, valid, date, sampleData, options;
+  let error = {
+    dateexpired: '',
+    issuer: '',
+    doctype: '',
+    docTitle: '',
+    signatory: '',
+  };
   token = localStorage.getItem('token');
   documentID = localStorage.getItem('documentID');
 
   const onsubmitdata = async () => {
     console.log(dateexpired, issuer, signatory, docTitle, doctype);
-    const date = new Date(dateexpired).toISOString();
-    let sampleData = {
-      receiver: {
-        name: issuer,
-      },
-      document: {
-        type: doctype,
-      },
-      issuer: {
-        signatory: signatory,
-      },
-    };
-    let options = {
-      title: docTitle,
-      expireOn: date,
-    };
-    console.log(documentID);
-    const { data } = await axios.post(
-      'https://test.swagger.print2block.in/docs/add-data',
-      {
-        documentID: documentID,
-        metadata: sampleData,
-        options: options,
-      },
-      {
-        headers: {
-          'x-access-token': token,
+    valid = true;
+    if (!dateexpired) {
+      error.dateexpired = 'Fill the Expiry Date';
+    } else {
+      date = new Date(dateexpired).toISOString();
+      error.dateexpired = '';
+      valid = false;
+    }
+    if (!issuer) {
+      error.issuer = 'Fill the Issuer name';
+    } else {
+      error.issuer = '';
+      valid = false;
+    }
+    if (!doctype) {
+      error.doctype = 'Fill the Document Type';
+    } else {
+      error.doctype = '';
+      valid = false;
+    }
+    if (!docTitle) {
+      error.docTitle = 'Fill the Document Title';
+    } else {
+      error.docTitle = '';
+      valid = false;
+    }
+    if (!signatory) {
+      error.signatory = 'Fill the Signatory name';
+    } else {
+      error.signatory = '';
+      valid = false;
+    }
+    if (valid) {
+      sampleData = {
+        receiver: {
+          name: issuer,
         },
-      },
-    );
-    console.log(data);
-    dispatch('datahash', data.dataHash);
-    if (data.dataHash) {
-      navigate('/preview');
+        document: {
+          type: doctype,
+        },
+        issuer: {
+          signatory: signatory,
+        },
+      };
+      options = {
+        title: docTitle,
+        expireOn: date,
+      };
+      console.log(documentID);
+      const { data } = await axios.post(
+        'https://test.swagger.print2block.in/docs/add-data',
+        {
+          documentID: documentID,
+          metadata: sampleData,
+          options: options,
+        },
+        {
+          headers: {
+            'x-access-token': token,
+          },
+        },
+      );
+      console.log(data);
+      dispatch('datahash', data.dataHash);
+      if (data.dataHash) {
+        navigate('/preview');
+      }
     }
   };
 </script>
@@ -56,29 +96,44 @@
   <form on:submit|preventDefault={onsubmitdata}>
     <div class="flex">
       <div class="flex flex-col mt-2 gap-2 w-1/2">
-        <label for="docid" class="text-sm text-slate-800 tracking-wide font-bold">Date Expired</label>
+        <div class="flex w-3/5">
+          <label for="docid" class="text-sm text-slate-800 tracking-wide font-bold">Date Expired</label>
+          <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-1 px-2 rounded-lg text-red-400">{error.dateexpired}</h1>
+        </div>
         <input bind:value={dateexpired} type="date" class="input-dsn" name="docid" id="docid" />
       </div>
       <div class="flex flex-col mt-2 gap-2 w-1/2">
-        <label for="issuer" class="text-sm text-slate-800 tracking-wide font-bold">Issued to</label>
+        <div class="flex w-3/5">
+          <label for="issuer" class="text-sm text-slate-800 tracking-wide font-bold">Issued to</label>
+          <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-1 px-2 rounded-lg text-red-400">{error.issuer}</h1>
+        </div>
         <input placeholder="Enter issuer name" name="issuer" id="issuer" bind:value={issuer} type="text" class="input-dsn" />
       </div>
     </div>
 
     <div class="flex">
       <div class="flex flex-col mt-2 gap-2 w-1/2">
-        <label for="doctype" class="text-sm text-slate-800 tracking-wide font-bold">Document Type</label>
+        <div class="flex w-3/5">
+          <label for="doctype" class="text-sm text-slate-800 tracking-wide font-bold">Document Type</label>
+          <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-1 px-2 rounded-lg text-red-400">{error.doctype}</h1>
+        </div>
         <input placeholder="Enter document type" bind:value={doctype} type="text" class="input-dsn" name="doctype" id="doctype" />
       </div>
       <div class="flex flex-col mt-2 gap-2 w-1/2">
-        <label for="signatory" class="text-sm text-slate-800 tracking-wide font-bold">Signatory</label>
+        <div class="flex w-3/5">
+          <label for="signatory" class="text-sm text-slate-800 tracking-wide font-bold">Signatory</label>
+          <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-1 px-2 rounded-lg text-red-400">{error.signatory}</h1>
+        </div>
         <input placeholder="Enter signatory name" name="signatory" id="signatory" bind:value={signatory} type="text" class="input-dsn" />
       </div>
     </div>
 
     <div class="flex">
       <div class="flex flex-col mt-2 gap-2 w-1/2">
-        <label for="docTitle" class="text-sm text-slate-800 tracking-wide font-bold">Document Title</label>
+        <div class="flex w-3/5">
+          <label for="docTitle" class="text-sm text-slate-800 tracking-wide font-bold">Document Title</label>
+          <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-1 px-2 rounded-lg text-red-400">{error.docTitle}</h1>
+        </div>
         <input placeholder="Enter document title" bind:value={docTitle} type="text" class="input-dsn" name="docTitle" id="docTitle" />
       </div>
     </div>
