@@ -142,7 +142,6 @@
   }
   .animation {
     margin: 0;
-    /* background: linear-gradient(315deg, rgb(30, 32, 33) 3%, rgb(12, 12, 12) 38%, rgb(7, 7, 7) 68%, rgb(21, 22, 22) 98%); */
     animation: gradient 15s ease infinite;
     background-size: 400% 400%;
     background-attachment: fixed;

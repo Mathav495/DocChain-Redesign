@@ -1,6 +1,7 @@
 <script>
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
+  import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
 
   let dateexpired, issuer, doctype, docTitle, signatory, token, documentID;
@@ -41,6 +42,9 @@
     );
     console.log(data);
     dispatch('datahash', data.dataHash);
+    if (data.dataHash) {
+      navigate('/preview');
+    }
   };
 </script>
 
