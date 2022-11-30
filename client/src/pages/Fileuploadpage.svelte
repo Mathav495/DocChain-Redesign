@@ -22,6 +22,10 @@
   };
 </script>
 
+<svelte:head>
+  <title>Add File</title>
+</svelte:head>
+
 <div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1 ">
   <div class="bg-black dash-bg-edge text-white h-full w-full">
     <div class="flex flex-row h-full py-3">
