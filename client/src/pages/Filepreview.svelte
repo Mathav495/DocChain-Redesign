@@ -7,6 +7,9 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
+  let animate = document.querySelector('#particles-js');
+  console.log(animate);
+  animate.style.display = 'none';
   let signature,
     error = '',
     value = '';
@@ -29,6 +32,7 @@
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
 
+
   const image = new Image();
   image.onload = function () {
     console.log(image.width);
@@ -46,6 +50,7 @@
   let pdfurl = localStorage.getItem('pdf');
   console.log('pdfUrl', pdfurl);
   pdf1.src = pdfurl;
+
 
   /**
    * releasing document before publish

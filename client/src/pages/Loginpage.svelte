@@ -6,6 +6,8 @@
   import Eye from '../icons/Eye.svelte';
   import Eyeslash from '../icons/Eyeslash.svelte';
   import PasswordIcons from '../icons/Password.svelte';
+  let animate = document.querySelector('#particles-js');
+  console.log(animate);
   let type = 'password';
   let Email = '',
     Password = '';
@@ -13,8 +15,13 @@
     Email: '',
     Password: '',
   };
+  /**
+   * @type { boolean }
+   */
   let valid = false;
-
+  /**
+   * Funtion for submitting login credientials
+   */
   const onLogin = async () => {
     console.log(Email);
     console.log(Password);
@@ -51,6 +58,10 @@
       }
     }
   };
+
+  /**
+   * function for hide and show the password
+   */
   const showPassword = () => {
     if (type == 'password') {
       type = 'text';
@@ -60,8 +71,11 @@
   };
 </script>
 
-<div class="flex overflow-hidden">
-  <div class=" w-full lg:w-1/3 p-10 h-screen bg-black">
+<svelte:head>
+  <title>Loginpage</title>
+</svelte:head>
+<div class="absolute w-full top-0 left-0">
+  <div class="w-full lg:w-1/3 p-10 h-screen bg-black">
     <div class="flex justify-center lg:justify-start">
       <img class=" mr-2 inline-block animate-pulse align-top " src="assets\icon1.png" alt="icon1" />
       <h1 class="text-2xl text-white tracking-wide font-normal">DocChain</h1>
@@ -111,120 +125,10 @@
           <button class="w-96 mt-8 text-white active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800  rounded text-lg">LOGIN</button>
         </div>
       </form>
-      <h1 class="text-slate-400 tracking-wide  font-medium text-base absolute bottom-0 pb-10">
+      <h1 class="absolute bottom-0  pb-10 text-base font-medium tracking-wide text-red-400">
         Don't have an account? <span class="text-gray-600 tracking-wide cursor-pointer underline underline-offset-4">Contact us</span>
       </h1>
     </div>
   </div>
-
-  <div class="w-full hidden lg:block lg:w-2/3 h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black ">
-    <div class="animation bg-gradient-to-r from-gray-700 via-gray-900 to-black ">
-      <div class="particles" />
-      <div class="particles" />
-      <div class="particles" />
-    </div>
-  </div>
 </div>
 
-<style>
-  .animation * {
-    box-sizing: border-box;
-    position: absolute;
-    transform-style: preserve-3d;
-  }
-
-  .animation *:before,
-  .animation *:after {
-    box-sizing: border-box;
-    transform-style: preserve-3d;
-    position: absolute;
-    content: '';
-  }
-  .animation {
-    margin: 0;
-    /* background: linear-gradient(315deg, rgb(30, 32, 33) 3%, rgb(12, 12, 12) 38%, rgb(7, 7, 7) 68%, rgb(21, 22, 22) 98%); */
-    animation: gradient 15s ease infinite;
-    background-size: 400% 400%;
-    background-attachment: fixed;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    perspective: 50vmin;
-    background-size: 100vw 100vh;
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 0%;
-    }
-    50% {
-      background-position: 100% 100%;
-    }
-    100% {
-      background-position: 0% 0%;
-    }
-  }
-
-  .particles {
-    position: absolute;
-  }
-
-  .particles:before,
-  .particles:after {
-    width: 200vw;
-    height: 200vh;
-    left: -50vw;
-    top: -50vh;
-    content: '';
-    border-radius: 100%;
-    opacity: 0;
-    transform: translateZ(-50vmin);
-    background-image: repeating-conic-gradient(rgba(238, 232, 232, 0.533) 0%, transparent 0.0002%, transparent 0.075%, transparent 0.65%), repeating-conic-gradient(rgb(255, 255, 255) 0%, transparent 0.0004%, transparent 0.05%, transparent 0.495%);
-    animation: particlesMovement 15s linear infinite;
-    z-index: 1;
-  }
-
-  .particles:after {
-    animation-name: particlesMovement2;
-    animation-delay: 1s;
-  }
-  .particles + .particles + .particles::before {
-    animation-delay: 2s;
-  }
-  .particles + .particles + .particles::after {
-    animation-delay: 3s;
-  }
-
-  @keyframes particlesMovement {
-    0% {
-      transform: translateZ(-50vmin);
-      opacity: 0;
-    }
-    30%,
-    70%,
-    90% {
-      opacity: 1;
-    }
-    100% {
-      transform: translateZ(50vmin) rotate(15deg);
-      opacity: 0;
-    }
-  }
-
-  @keyframes particlesMovement2 {
-    0% {
-      transform: translateZ(-50vmin) rotate(180deg);
-      opacity: 0;
-    }
-    30%,
-    70%,
-    90% {
-      opacity: 1;
-    }
-    100% {
-      transform: translateZ(50vmin) rotate(195deg);
-      opacity: 0;
-    }
-  }
-</style>

@@ -6,7 +6,9 @@
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
-
+  let animate = document.querySelector('#particles-js');
+  console.log(animate);
+  animate.style.display = 'none';
   let token = localStorage.getItem('token');
 
   let signature = localStorage.getItem('signature');
