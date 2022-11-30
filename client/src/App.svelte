@@ -5,7 +5,8 @@
   import Publishdoc from './pages/Publishdoc.svelte';
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
   import Filepreview from './pages/Filepreview.svelte';
-  let fileHash, dataHash;
+  import Signature from './pages/signature.svelte';
+  let fileHash, dataHash,signature;
   export let url = '';
 
   const getDataHash = (e) => {
@@ -16,6 +17,11 @@
     fileHash = e.detail;
     console.log(fileHash);
   };
+
+  const getSign = (e) => {
+    signature= e.detail
+    console.log(signature);
+  }
 </script>
 
 <Router {url}>
@@ -24,7 +30,8 @@
     <Route path="/dash"><Dashboardpage /></Route>
     <Route path="/publish"><Publishdoc /></Route>
     <Route path="/add-file"><Fileuploadpage on:datahash={getDataHash} on:filehash={getFileHash} /></Route>
-    <Route path="/preview"><Filepreview /></Route>
+    <Route path="/preview"><Filepreview on:signature={getSign} /></Route>
+    <Route path="/sign"><Signature /></Route>
   </main>
 </Router>
 

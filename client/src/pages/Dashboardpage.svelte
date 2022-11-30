@@ -7,6 +7,7 @@
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
 
   let hideNavbar = true;
+
   const hideNav = () => {
     hideNavbar = true;
   };
@@ -20,7 +21,7 @@
   };
 </script>
 
-<div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1 hidden" id="homepage">
+<div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1 ">
   <div class="bg-black dash-bg-edge text-white h-full w-full">
     <div class="flex flex-row h-full py-3">
       <div class="md:w-4/12 lg:w-3/12 sm:hidden md-width py-5 md:flex flex-col items-center justify-between">
@@ -40,7 +41,7 @@
   </div>
   <!--small screen navbar-->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 hidden sm:block absolute inset-0 p-12">
+  <div class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 block md:hidden absolute inset-0 p-12">
     <SmallScreenNavbar />
   </div>
 </div>

@@ -14,16 +14,16 @@
     });
     usage = data;
     console.log(usage);
-    let loader = document.getElementById('load');
-    loader.classList.add('hidden');
-    let home = document.getElementById('homepage');
-    home.classList.remove('hidden');
-    let dash = document.getElementById('dashboard');
-    dash.classList.remove('hidden');
+    // let loader = document.getElementById('load');
+    // loader.classList.add('hidden');
+    // let home = document.getElementById('homepage');
+    // home.classList.remove('hidden');
+    // let dash = document.getElementById('dashboard');
+    // dash.classList.remove('hidden');
   });
 </script>
 
-<div class="flex flex-col gap-10 justify-center" id="dashboard">
+<div class="flex flex-col gap-10 justify-center">
   <div class="flex flex-col lg:flex-row">
     <div class="flex order-2 lg:order-1 flex-col w-full lg:w-6/12 gap-3">
       <h1 class="text-2xl font-bold mt-10 lg:mt-0">Documents</h1>
@@ -45,7 +45,7 @@
                 <path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
               </svg>
             </div>
-            <p class="text-4xl font-bold text-red-500">{usage.initiated}</p>
+            <p class="text-4xl font-bold text-red-500">23</p>
           </div>
         </div>
         <div class="w-1/2 bg-yellow-100 h-60 rounded-3xl p-5 flex flex-col justify-between">
@@ -58,7 +58,7 @@
                 <path fill-rule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clip-rule="evenodd" />
               </svg>
             </div>
-            <p class="text-4xl font-bold text-yellow-500">{usage.published}</p>
+            <p class="text-4xl font-bold text-yellow-500">23</p>
           </div>
         </div>
         <div class="w-1/2 bg-green-100 h-60 rounded-3xl p-5 flex flex-col justify-between">
@@ -70,7 +70,7 @@
                 <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
               </svg>
             </div>
-            <p class="text-4xl font-bold text-green-500">{usage.revoked}</p>
+            <p class="text-4xl font-bold text-green-500">23</p>
           </div>
         </div>
       </div>

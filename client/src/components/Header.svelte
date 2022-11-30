@@ -23,7 +23,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="flex justify-between items-center" on:click|self={hideCard}>
-  <div class="text-3xl flex items-center font-boldness gap-2">
+  <div class="text-lg md:text-3xl flex items-center font-boldness gap-2">
     <div class="bg-black md:hidden h-14 w-14 rounded-3xl flex items-center justify-center">
       <img src="assets\logo2.png" alt="logo" class="h-10 w-10 animate-pulse lg:animate-none" />
     </div>
@@ -44,7 +44,7 @@
         </svg>
         <span class="text-black group-hover:opacity-100 transition-opacity duration-300 ease-in-out opacity-0 absolute inset-0 -top-7 -left-1">Navbar</span>
       </button>
-      <div class="flex flex-row items-center">
+      <div class="hidden md:flex flex-row items-center">
         <img src="assets\profile.png" alt="profile" class="h-16 w-16 ml-1 absolute cursor-pointer" />
         <h1 class="flex flex-row  h-10 px-3 items-center bg-indigo-50 rounded-full">
           <p class="text-lg font-semibold ml-12">Joji V.</p>
