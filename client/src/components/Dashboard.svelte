@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import Pagination from './pagination.svelte';
 
+  let hidden = true;
   let token = localStorage.getItem('token');
   console.log(token);
   let usage = [];
@@ -14,16 +15,15 @@
     });
     usage = data;
     console.log(usage);
-    // let loader = document.getElementById('load');
-    // loader.classList.add('hidden');
-    // let home = document.getElementById('homepage');
-    // home.classList.remove('hidden');
-    // let dash = document.getElementById('dashboard');
-    // dash.classList.remove('hidden');
+    let loader = document.getElementById('load');
+    loader.classList.add('hidden');
+    let home = document.getElementById('homepage');
+    home.classList.remove('hidden');
+    hidden = false;
   });
 </script>
 
-<div class="flex flex-col gap-10 justify-center">
+<div class:hidden class="flex flex-col gap-10 justify-center">
   <div class="flex flex-col lg:flex-row gap-5">
     <div class="flex order-2 lg:order-1 flex-col w-full lg:w-6/12 gap-3">
       <h1 class="text-2xl font-bold mt-10 lg:mt-0">Documents</h1>
@@ -145,17 +145,14 @@
       width: 100%;
     }
   }
-
   @media (min-width: 1024px) {
     .lg\:w-8\/12 {
       width: 67.4%;
     }
   }
-
   .w-4\/12 {
     width: 32.6%;
   }
-
   .h-60 {
     height: 14.8rem /* 240px */;
   }

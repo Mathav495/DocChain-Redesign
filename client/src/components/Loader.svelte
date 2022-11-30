@@ -1,20 +1,10 @@
-<div class="div1">
+<div class="div1 h-screen w-screen flex gap-3 justify-center items-center bg-black">
   <div class="wave1" />
   <div class="wave1" />
   <div class="wave1" />
 </div>
 
 <style>
-  .div1 {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    gap: 0.5rem /* 8px */;
-    justify-content: center;
-    align-items: center;
-    --tw-bg-opacity: 2;
-    background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-  }
   .wave1 {
     background: linear-gradient(45deg, white);
     animation: wave1 1s linear infinite;
@@ -43,8 +33,5 @@
     100% {
       transform: scale(0);
     }
-  }
-  .hidden {
-    display: none;
   }
 </style>

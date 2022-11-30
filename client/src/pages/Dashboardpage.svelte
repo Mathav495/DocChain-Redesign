@@ -1,6 +1,7 @@
 <script>
   import Dashboard from '../components/Dashboard.svelte';
   import Header from '../components/Header.svelte';
+  import Loader from '../components/Loader.svelte';
   import Logo from '../components/logo.svelte';
   import Logout from '../components/logout.svelte';
   import Nav from '../components/Nav.svelte';
@@ -21,7 +22,11 @@
   };
 </script>
 
-<div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1 ">
+<div id="load">
+  <Loader />
+</div>
+
+<div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1 hidden" id="homepage">
   <div class="bg-black dash-bg-edge text-white h-full w-full">
     <div class="flex flex-row h-full py-3">
       <div class="md:w-4/12 lg:w-3/12 sm:hidden md-width py-5 md:flex flex-col items-center justify-between">
