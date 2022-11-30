@@ -125,7 +125,7 @@
           <button class="w-96 mt-8 text-white active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800  rounded text-lg">LOGIN</button>
         </div>
       </form>
-      <h1 class="text-slate-400 tracking-wide  font-medium text-base absolute bottom-0 pb-10">
+      <h1 class="absolute bottom-0  pb-10 text-base font-medium tracking-wide text-red-400">
         Don't have an account? <span class="text-gray-600 tracking-wide cursor-pointer underline underline-offset-4">Contact us</span>
       </h1>
     </div>
