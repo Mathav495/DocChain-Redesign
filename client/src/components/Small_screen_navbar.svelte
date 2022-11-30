@@ -1,7 +1,3 @@
-<script>
-  import Nav from './Nav.svelte';
-</script>
-
 <div class="bg-black p-10 width rounded-3xl">
   <div class="text-3xl flex items-center mb-10 font-boldness gap-2">
     <img src="assets\logo2.png" alt="logo" class="h-10 w-10" />
