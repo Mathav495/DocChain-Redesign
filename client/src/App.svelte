@@ -6,7 +6,7 @@
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
   import Filepreview from './pages/Filepreview.svelte';
   import Signature from './pages/signature.svelte';
-  let fileHash, dataHash,signature;
+  let fileHash, dataHash, signature;
   export let url = '';
 
   const getDataHash = (e) => {
@@ -19,9 +19,9 @@
   };
 
   const getSign = (e) => {
-    signature= e.detail
+    signature = e.detail;
     console.log(signature);
-  }
+  };
 </script>
 
 <Router {url}>

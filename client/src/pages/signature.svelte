@@ -2,7 +2,9 @@
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
-
+  let animate = document.querySelector('#particles-js');
+  console.log(animate);
+  animate.style.display = 'none';
   let token = localStorage.getItem('token');
 
   let signature = localStorage.getItem('signature');
@@ -14,25 +16,26 @@
   // publishing documents
   const publishdoc = async () => {
     let signature = localStorage.getItem('signature');
-  console.log('signature',signature);
-  let documentID = localStorage.getItem('documentID');
-  console.log('documentID', documentID);
+    console.log('signature', signature);
+    let documentID = localStorage.getItem('documentID');
+    console.log('documentID', documentID);
 
     if (signature == null) {
       error = "signature can't be empty";
       console.log(error);
     } else {
-    
-      const { data } = await axios.post('https://test.swagger.print2block.in/docs/publish',
+      const { data } = await axios.post(
+        'https://test.swagger.print2block.in/docs/publish',
         {
-        documentID: documentID,
-        signature: signature,
-      },
-      {
-        headers: {
-          'x-access-token': token,
+          documentID: documentID,
+          signature: signature,
         },
-      });
+        {
+          headers: {
+            'x-access-token': token,
+          },
+        },
+      );
       console.log(data);
       dispatch('push', data);
     }
