@@ -5,9 +5,11 @@
   import Nav from '../components/Nav.svelte';
   import axios from 'axios';
   import { createEventDispatcher, onMount } from 'svelte';
-  import Modal from '../components/Modal.svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
+  let animate = document.querySelector('#particles-js');
+  console.log(animate);
+  animate.style.display = 'none';
   let signature,
     error = '',
     value = '';
@@ -25,7 +27,7 @@
   console.log('datahash', dataHash);
   let qr = localStorage.getItem('qrcode');
   console.log('qrcode', qr);
-  let proposedURL=localStorage.getItem('docURL')
+  let proposedURL = localStorage.getItem('docURL');
 
   const image = new Image();
   image.onload = function () {
@@ -33,7 +35,7 @@
   };
   // image.src= document.getElementById('qrcode').innerHTML
   image.src = qr;
-  const qrcode=document.body.appendChild(image).toString();
+  const qrcode = document.body.appendChild(image).toString();
   console.log(qrcode);
 
   /**
