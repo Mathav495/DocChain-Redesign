@@ -3,6 +3,9 @@
   const dispatch = createEventDispatcher();
   let card = false;
 
+  /**
+   * This is the function to show and hide bio-card
+   */
   const showCard = () => {
     console.log('clicked');
     if (card == false) {
@@ -12,10 +15,16 @@
     }
   };
 
+  /**
+   * This is the function to hide bio-card
+   */
   const hideCard = () => {
     card = false;
   };
 
+  /**
+   * This is the function to change the boolean value of hideNav in dashboardpage by using dispatch property
+   */
   const navBtn = () => {
     dispatch('navShow');
   };

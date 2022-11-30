@@ -9,10 +9,16 @@
 
   let hideNavbar = true;
 
+  /**
+   * This is the function to hide a samll screen navbar
+   */
   const hideNav = () => {
     hideNavbar = true;
   };
 
+  /**
+   * This is the function to show and hide a samll screen navbar
+   */
   const showNav = () => {
     if (hideNavbar == false) {
       hideNavbar = true;

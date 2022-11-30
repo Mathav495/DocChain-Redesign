@@ -5,8 +5,11 @@
 
   let hidden = true;
   let token = localStorage.getItem('token');
-  console.log(token);
   let usage = [];
+  console.log(token);
+  /**
+   * onMount function to get a document usage details by calling api
+   */
   onMount(async () => {
     const { data } = await axios.get('https://test.swagger.print2block.in/account/usage?from=2022-01-01T00%3A00%3A00Z&to=2022-11-15T00%3A00%3A00Z', {
       headers: {
