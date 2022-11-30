@@ -20,8 +20,7 @@
         class="font-semibold text-sky-600 no-underline hover:text-blue-800 hover:underline"
         ><a href="https://print2block.com/" rel="noreferrer" target="_blank"
           >DocChain.io</a
-        ></strong
-      >
+        ></strong>
     </h1>
   </div>
 

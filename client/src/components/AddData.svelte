@@ -3,7 +3,7 @@
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
 
-  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID;
+  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID, dataHash;
   token = localStorage.getItem('token');
   documentID = localStorage.getItem('documentID');
 
@@ -41,6 +41,10 @@
     );
     console.log(data);
     dispatch('datahash', data.dataHash);
+    localStorage.setItem('datahash', data.dataHash)
+    let dataHash = localStorage.getItem('datahash');
+  console.log('datahash', dataHash);
+
   };
 </script>
 

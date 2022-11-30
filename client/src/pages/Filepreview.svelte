@@ -1,11 +1,10 @@
 <script>
   import Header from '../components/Header.svelte';
-  import Logo from '../components/logo.svelte';
-  import Logout from '../components/logout.svelte';
+  import Logo from '../components/Logo.svelte';
+  import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
   import axios from 'axios';
   import { createEventDispatcher, onMount } from 'svelte';
-  import Modal from '../components/Modal.svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   let signature,

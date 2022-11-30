@@ -36,6 +36,9 @@
     );
     console.log(data);
     dispatch('filehash', data.fileHash);
+    localStorage.setItem('filehash', data.fileHash)
+    let fileHash = localStorage.getItem('filehash');
+  console.log('filehash', fileHash);
   };
 
   const onChange = () => {
