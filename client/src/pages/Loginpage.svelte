@@ -6,7 +6,7 @@
   import Eye from '../icons/Eye.svelte';
   import Eyeslash from '../icons/Eyeslash.svelte';
   import PasswordIcons from '../icons/Password.svelte';
-  let animate = document.getElementById('particles-js');
+  let animate = document.querySelector('#particles-js');
   console.log(animate);
   let type = 'password';
   let Email = '',
@@ -15,8 +15,13 @@
     Email: '',
     Password: '',
   };
+  /**
+   * @type { boolean }
+   */
   let valid = false;
-
+  /**
+   * Funtion for submitting login credientials
+   */
   const onLogin = async () => {
     console.log(Email);
     console.log(Password);
@@ -53,6 +58,10 @@
       }
     }
   };
+
+  /**
+   * function for hide and show the password
+   */
   const showPassword = () => {
     if (type == 'password') {
       type = 'text';

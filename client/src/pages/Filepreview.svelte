@@ -5,7 +5,6 @@
   import Nav from '../components/Nav.svelte';
   import axios from 'axios';
   import { createEventDispatcher, onMount } from 'svelte';
-  import Modal from '../components/Modal.svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   let animate = document.querySelector('#particles-js');
