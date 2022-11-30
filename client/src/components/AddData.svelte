@@ -15,41 +15,45 @@
   token = localStorage.getItem('token');
   documentID = localStorage.getItem('documentID');
 
+  /**
+   * Submitting document metadata and generating datahash
+   */
   const onsubmitdata = async () => {
     console.log(dateexpired, issuer, signatory, docTitle, doctype);
     valid = true;
-    if (!dateexpired) {
+    if (dateexpired == undefined) {
       error.dateexpired = 'Fill the Expiry Date';
+      valid = false;
     } else {
       date = new Date(dateexpired).toISOString();
       error.dateexpired = '';
-      valid = false;
     }
-    if (!issuer) {
+    if (issuer == undefined) {
       error.issuer = 'Fill the Issuer name';
+      valid = false;
     } else {
       error.issuer = '';
-      valid = false;
     }
-    if (!doctype) {
+    if (doctype == undefined) {
       error.doctype = 'Fill the Document Type';
+      valid = false;
     } else {
       error.doctype = '';
-      valid = false;
     }
-    if (!docTitle) {
+    if (docTitle == undefined) {
       error.docTitle = 'Fill the Document Title';
+      valid = false;
     } else {
       error.docTitle = '';
-      valid = false;
     }
-    if (!signatory) {
+    if (signatory == undefined) {
       error.signatory = 'Fill the Signatory name';
+      valid = false;
     } else {
       error.signatory = '';
-      valid = false;
     }
-    if (valid) {
+    if (valid == true) {
+      console.log('valid');
       sampleData = {
         receiver: {
           name: issuer,
@@ -95,17 +99,21 @@
 
   <form on:submit|preventDefault={onsubmitdata}>
     <div class="flex">
-      <div class="flex flex-col mt-2 gap-2 w-1/2">
+      <div class="flex flex-col mt-1 gap-2 w-1/2">
         <div class="flex w-3/5">
           <label for="docid" class="text-sm text-slate-800 tracking-wide font-bold">Date Expired</label>
-          <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-1 px-2 rounded-lg text-red-400">{error.dateexpired}</h1>
+          {#if error.dateexpired}
+            <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-0 px-2 rounded-lg text-red-400">{error.dateexpired}</h1>
+          {/if}
         </div>
         <input bind:value={dateexpired} type="date" class="input-dsn" name="docid" id="docid" />
       </div>
       <div class="flex flex-col mt-2 gap-2 w-1/2">
         <div class="flex w-3/5">
           <label for="issuer" class="text-sm text-slate-800 tracking-wide font-bold">Issued to</label>
-          <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-1 px-2 rounded-lg text-red-400">{error.issuer}</h1>
+          {#if error.issuer}
+            <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-0 px-2 rounded-lg text-red-400">{error.issuer}</h1>
+          {/if}
         </div>
         <input placeholder="Enter issuer name" name="issuer" id="issuer" bind:value={issuer} type="text" class="input-dsn" />
       </div>
@@ -115,14 +123,18 @@
       <div class="flex flex-col mt-2 gap-2 w-1/2">
         <div class="flex w-3/5">
           <label for="doctype" class="text-sm text-slate-800 tracking-wide font-bold">Document Type</label>
-          <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-1 px-2 rounded-lg text-red-400">{error.doctype}</h1>
+          {#if error.doctype}
+            <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-0 px-2 rounded-lg text-red-400">{error.doctype}</h1>
+          {/if}
         </div>
         <input placeholder="Enter document type" bind:value={doctype} type="text" class="input-dsn" name="doctype" id="doctype" />
       </div>
       <div class="flex flex-col mt-2 gap-2 w-1/2">
         <div class="flex w-3/5">
           <label for="signatory" class="text-sm text-slate-800 tracking-wide font-bold">Signatory</label>
-          <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-1 px-2 rounded-lg text-red-400">{error.signatory}</h1>
+          {#if error.signatory}
+            <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-0 px-2 rounded-lg text-red-400">{error.signatory}</h1>
+          {/if}
         </div>
         <input placeholder="Enter signatory name" name="signatory" id="signatory" bind:value={signatory} type="text" class="input-dsn" />
       </div>
@@ -132,7 +144,9 @@
       <div class="flex flex-col mt-2 gap-2 w-1/2">
         <div class="flex w-3/5">
           <label for="docTitle" class="text-sm text-slate-800 tracking-wide font-bold">Document Title</label>
-          <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-1 px-2 rounded-lg text-red-400">{error.docTitle}</h1>
+          {#if error.docTitle}
+            <h1 class="text-sm ml-auto font-semibold bg-slate-200 py-0 px-2 rounded-lg text-red-400">{error.docTitle}</h1>
+          {/if}
         </div>
         <input placeholder="Enter document title" bind:value={docTitle} type="text" class="input-dsn" name="docTitle" id="docTitle" />
       </div>

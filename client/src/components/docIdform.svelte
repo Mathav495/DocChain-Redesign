@@ -1,5 +1,6 @@
 <script>
   import axios from 'axios';
+  import { navigate } from 'svelte-routing';
   let docValue, documentID, token, qr, proposedURL;
   token = localStorage.getItem('token');
 
@@ -27,6 +28,9 @@
       localStorage.setItem('docURL', data.proposedURL);
       proposedURL = localStorage.getItem('docURL');
       console.log(proposedURL);
+      if (data) {
+        navigate('/add-file');
+      }
     }
   };
 </script>

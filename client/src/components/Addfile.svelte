@@ -10,6 +10,9 @@
   let showImage = false;
   let status = 'Upload';
 
+  /**
+   * Submitting file for generating filehash
+   */
   const onSubmitFile = async () => {
     const form = document.getElementById('form');
     const formData = new FormData(form);
@@ -17,7 +20,7 @@
     let datum = [...formData][0];
     let File = datum[1];
     console.log(File);
-    if (File.name == '') {
+    if (File.name != '') {
       const { data } = await axios.post(
         'https://test.swagger.print2block.in/docs/add-file',
         {
@@ -39,6 +42,9 @@
     }
   };
 
+  /**
+   * Function for previewing image or pdf when uploaded
+   */
   const onChange = () => {
     const form = document.getElementById('form');
     const formData = new FormData(form);

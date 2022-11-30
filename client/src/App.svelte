@@ -9,10 +9,18 @@
   let fileHash, dataHash, signature;
   export let url = '';
 
+  /**
+   * Function in which the datahash is dispatched from the add-data page
+   * @param e {object} datahash
+   */
   const getDataHash = (e) => {
     dataHash = e.detail;
     console.log(dataHash);
   };
+  /**
+   * Function in which the filehash is dispatched from the add-file page
+   * @param e {object} filehash
+   */
   const getFileHash = (e) => {
     fileHash = e.detail;
     console.log(fileHash);
