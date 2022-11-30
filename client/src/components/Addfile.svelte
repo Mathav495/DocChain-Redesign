@@ -57,36 +57,35 @@
       reader.readAsDataURL(File);
 
       reader.addEventListener('load', function () {
-        // image.setAttribute('src', reader.result);
-        const url = reader.result
+        image.setAttribute('src', reader.result);
+        const url = reader.result;
         console.log(url);
-        // const img = new Image()
-        // img.src = url
-        // document.body.appendChild(img)
-        localStorage.setItem('img',url)
-        
+        const img = new Image();
+
+        localStorage.setItem('img', url);
+        let imgurl = localStorage.getItem('img');
+        console.log('imgUrl', imgurl);
+        img.src = imgurl;
       });
-      // reader.readAsDataURL(File);
-      const url = reader.result
-      console.log(url);
+   
       return;
     } else if (File.type == 'application/pdf') {
       showpdf = true;
       const reader = new FileReader();
       reader.readAsDataURL(File);
       reader.addEventListener('load', function () {
-        // pdf.setAttribute('src', reader.result);
-        const url = reader.result
-        // console.log(url);
-        const file = new File()
-        file.src = url
-        document.body.appendChild(file)
-      
-
+        pdf.setAttribute('src', reader.result);
+        const url1 = reader.result;
+        console.log(url1);
+        const pdf1 = new Image();
+        // image.src = url;
+        document.body.appendChild(image);
+        localStorage.setItem('pdf', url1);
+        let pdfurl = localStorage.getItem('pdf');
+        console.log('pdfUrl', pdfurl);
+        pdf1.src = pdfurl;
       });
-      // reader.readAsDataURL(File);
-      // const url = reader.result
-      // localStorage.setItem('pdf', url)
+
       return;
     } else {
       showImage = false;
@@ -94,40 +93,6 @@
       return;
     }
   };
-
-  // const file = document.getElementById('File')
-
-  // file.addEventListener('change', () => {
-  //   const fr = new FileReader()
-
-  //   fr.readAsDataURL(file.files[0])
-  //   fr.addEventListener('load', () => {
-  //     const url = fr.result
-  //     console.log();(url)
-  //     const img = new Image()
-  //     img.src = url
-  //   })
-
-  // })
-  //   let fileImage
-  //   //get file and save it to localstorage as base64
-  //  fileImage = document.getElementById('File');
-  //   fileData = getBase64Image(fileImage);
-  //   localStorage.setItem('fileData', fileData);
-
-  //   // function that converts the image to a Base64 string:
-  //   function getBase64Image(img) {
-  //     var canvas = document.createElement('canvas');
-  //     canvas.width = img.width;
-  //     canvas.height = img.height;
-
-  //     var ctx = canvas.getContext('2d');
-  //     ctx.drawImage(img, 0, 0);
-
-  //     var dataURL = canvas.toDataURL('image/png');
-  //     console.log(dataURL);
-  //     return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
-  //   }
 </script>
 
 <div>

@@ -24,10 +24,12 @@
   console.log('datahash', dataHash);
   let qr = localStorage.getItem('qrcode');
   console.log('qrcode', qr);
-  let proposedURL=localStorage.getItem('docURL')
+  let proposedURL = localStorage.getItem('docURL');
   console.log('qrcodocURL', proposedURL);
-  let imgurl = localStorage.getItem('img')
+  let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
+  // let pdfurl = localStorage.getItem('pdf');
+  // console.log('pdfUrl', pdfurl);
 
   const image = new Image();
   image.onload = function () {
@@ -35,16 +37,18 @@
   };
   image.src = qr;
   image.src = imgurl;
+  // image.src = pdfurl;
 
-
-
-  // const image = new Image();
-  // image.onload = function () {
-  //   console.log(image.width); // image is loaded and we have image width
-  // };
-  // image.src = qr;
-  // const qrcode=document.body.image.toString();
-  // console.log(qrcode);
+  const pdf1 = new Image();
+  pdf1.onload = function () {
+    console.log(pdf1); // image is loaded and we have image width
+  };
+  // image.src = url;
+  document.body.appendChild(pdf1);
+  // localStorage.setItem('pdf', url1);
+  let pdfurl = localStorage.getItem('pdf');
+  console.log('pdfUrl', pdfurl);
+  pdf1.src = pdfurl;
 
   /**
    * releasing document before publish
@@ -108,10 +112,10 @@
         <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3 w-full ml-10">
           <Header />
           <div>
-            <div class=" flex bg-transparent mx-auto w-8/12">
-              <div class=" mx-auto flex items-center md:flex-row">
+            <div class=" flex bg-transparent mx-auto w-8/12 ">
+              <div class=" mx-auto flex items-center md:flex-row ">
                 <div class="overflow-x-auto">
-                  <table class="text-md w-full text-left text-gray-900 mt-10 bg-teal-200 border-dashed border-2 border-indigo-600 rounded-lg sm:w-auto sm:mx-auto" >
+                  <table class="text-md w-full text-left text-gray-900 mt-10 bg-teal-200 border-dashed border-2 border-indigo-600 rounded-lg sm:w-auto sm:mx-auto">
                     <thead class="bg-transparent text-sm uppercase text-gray-500 bg-gray-200">
                       <tr>
                         <th scope="col" class="w-80 py-3 px-10 md:w-40 "> Name </th>
@@ -129,10 +133,14 @@
                     </thead>
                   </table>
                   <div class="flex justify-center mt-5">
-                    <img src={imgurl} alt="document" class="relative mx-auto mt-10 h-[200px] w-[300px] rounded-md shadow-2xl" />
-                    <img class="absolute ml-64 h-16 w-16 border-2 border-blue-400  rounded-lg" src={qr} alt="qrcode" id="qrcode" />
+                    {#if (image.src = imgurl)}
+                      <img src={imgurl} alt="document" class="relative mx-auto mt-10 h-[300px] w-[350px] rounded-md shadow-2xl" />
+                    {:else if (pdf1.src = pdfurl)}
+                    <iframe title="pdf" class="relative mx-auto mt-10 h-[300px] w-[350px] rounded-md shadow-2xl" type="application/pdf" id="document" src={pdfurl} alt="Preview" />
+                    {/if}
+                    <img class="absolute ml-72 h-10 w-10 mt-12 border-2 border-blue-400  rounded-lg" src={qr} alt="qrcode" id="qrcode" />
                   </div>
-                  <div class="flex mx-auto justify-center mt-5 text-lg font-bold text-indigo-800 underline items-center">Document ProposedURL : </div>
+                  <div class="flex mx-auto justify-center mt-5 text-lg font-bold text-indigo-800 underline items-center">Document ProposedURL :</div>
                   <div class="flex mx-auto text-lg justify-center mt-5 text-blue-800 items-center text-center sm:flex-wrap underline">{proposedURL}</div>
 
                   <div class="mx-auto mt-10 flex justify-between">
