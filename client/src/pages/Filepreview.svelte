@@ -99,15 +99,15 @@
             <div class=" flex bg-transparent mx-auto w-8/12">
               <div class=" mx-auto flex items-center md:flex-row">
                 <div class="overflow-x-auto">
-                  <table class="text-md w-full text-left text-gray-500">
-                    <thead class="bg-transparent text-sm uppercase text-gray-500 ">
+                  <table class="text-md w-full text-left text-gray-500 mt-10 bg-gray-200">
+                    <thead class="bg-transparent text-sm uppercase text-gray-500 bg-gray-200">
                       <tr>
-                        <th scope="col" class="w-80 py-3 px-10 md:w-40"> Name </th>
+                        <th scope="col" class="w-80 py-3 px-10 md:w-40 "> Name </th>
                         <th scope="col" class="w-32 py-3 px-6"> : </th>
                         <th scope="col" class="w-80 py-3 px-10 md:w-40"> John </th>
                       </tr>
                     </thead>
-                    <thead class="bg-transparent text-sm uppercase text-gray-500 ">
+                    <thead class="bg-transparent text-sm uppercase text-gray-500 bg-gray-200">
                       <tr>
                         <th scope="col" class="w-80 py-3 px-10"> Type </th>
                         <th scope="col" class="w-32 py-3 px-6"> : </th>
@@ -116,12 +116,12 @@
                       </tr>
                     </thead>
                   </table>
-                  <div class="flex justify-center">
+                  <div class="flex justify-center mt-5">
                     <img src="https://th.bing.com/th/id/OIP._jpRnHasO03ZqTHB-S77ewHaFC?pid=ImgDet&rs=1" alt="document" class="relative mx-auto mt-10 h-[200px] w-[300px] rounded-md shadow-2xl" />
                     <img class="absolute ml-64 h-16 w-16 border-2 border-blue-400  rounded-lg" src={qr} alt="qrcode" id="qrcode" />
                   </div>
-                  <div class="flex mx-auto justify-center mt-2 text-base font-bold text-gray-800 underline items-center">Document ProposedURL:</div>
-                  <div class="flex mx-auto text-base justify-center mt-2 text-blue-800 items-center text-center sm:flex-wrap underline">{proposedURL}</div>
+                  <div class="flex mx-auto justify-center mt-5 text-lg font-bold text-indigo-800 underline items-center">Document ProposedURL : </div>
+                  <div class="flex mx-auto text-lg justify-center mt-5 text-blue-800 items-center text-center sm:flex-wrap underline">{proposedURL}</div>
 
                   <div class="mx-auto mt-10 flex justify-between">
                     <button class="rounded-lg bg-teal-500 px-6 py-2 text-lg text-white" on:click={getsignature}>get-sign</button>

@@ -1,4 +1,8 @@
 <script>
+  import Header from '../components/Header.svelte';
+  import Logo from '../components/Logo.svelte';
+  import Logout from '../components/Logout.svelte';
+  import Nav from '../components/Nav.svelte';
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
@@ -14,66 +18,84 @@
   // publishing documents
   const publishdoc = async () => {
     let signature = localStorage.getItem('signature');
-  console.log('signature',signature);
-  let documentID = localStorage.getItem('documentID');
-  console.log('documentID', documentID);
+    console.log('signature', signature);
+    let documentID = localStorage.getItem('documentID');
+    console.log('documentID', documentID);
 
     if (signature == null) {
       error = "signature can't be empty";
       console.log(error);
     } else {
-    
-      const { data } = await axios.post('https://test.swagger.print2block.in/docs/publish',
+      const { data } = await axios.post(
+        'https://test.swagger.print2block.in/docs/publish',
         {
-        documentID: documentID,
-        signature: signature,
-      },
-      {
-        headers: {
-          'x-access-token': token,
+          documentID: documentID,
+          signature: signature,
         },
-      });
+        {
+          headers: {
+            'x-access-token': token,
+          },
+        },
+      );
       console.log(data);
       dispatch('push', data);
     }
   };
 </script>
 
-<form on:submit={publishdoc}>
-  <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
-    <label for="signature" class="text-md block font-medium text-gray-500 ">DocumentID:</label>
-    <div class="mt-1">
-      <textarea
-        name="docID"
-        bind:value={documentID}
-        class=" mt-5 w-full rounded-md border-2 
+<div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1 ">
+  <div class="bg-black dash-bg-edge text-white h-full w-full">
+    <div class="flex flex-row h-full py-3">
+      <div class="md:w-4/12 lg:w-3/12 hidden  md-width py-5 md:flex flex-col items-center justify-between">
+        <Logo />
+        <div class="md:w-4/12 lg:w-3/12 hidden md-width py-5 md:flex flex-col items-center justify-between">
+          <Nav />
+        </div>
+        <Logout />
+      </div>
+      <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3 w-full ml-10">
+        <Header />
+        <div>
+          <form on:submit={publishdoc} class="lg:w-2/3 mx-auto flex-col justify-center md:w-full">
+            <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
+              <label for="signature" class="text-md block mt-5 font-medium text-gray-500 ">DocumentID:</label>
+              <div class="mt-1">
+                <textarea
+                  name="docID"
+                  bind:value={documentID}
+                  class=" mt-5 w-full rounded-md border-2 
          border-gray-300 px-4 py-2
-           placeholder:text-lg 
-             focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        placeholder="documentID"
-      />
-    </div>
+           placeholder:text-lg placeholder:text-center text-center 
+             focus:border-indigo-500 focus:ring-indigo-500 sm:text-md"
+                  placeholder="documentID"
+                />
+              </div>
 
-    <label for="signature" class="text-md block font-medium text-gray-500 ">signature:</label>
-    <!-- <div class="w-full px-4 py-4 mt-1 ml-1 text-gray-900 font-bold text-xs  border-2 rounded-lg text-center flex-wrap flex-1" on:input={signature}>{value.signature}</div> -->
-    <div class="mt-1">
-      <textarea
-        name="signature"
-        bind:value={signature}
-        class=" mt-5 w-full rounded-md border-2 
+              <label for="signature" class="text-md mt-5 block font-medium text-gray-500 ">signature:</label>
+              <!-- <div class="w-full px-4 py-4 mt-1 ml-1 text-gray-900 font-bold text-xs  border-2 rounded-lg text-center flex-wrap flex-1" on:input={signature}>{value.signature}</div> -->
+              <div class="mt-1">
+                <textarea
+                  name="signature"
+                  bind:value={signature}
+                  class=" mt-5 w-full rounded-md border-2 
          border-gray-300 px-4 py-2
-           placeholder:text-lg 
-             focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        placeholder="ECDSA Signature obtained"
-      />
+           placeholder:text-lg text-center
+             focus:border-indigo-500 focus:ring-indigo-500 sm:text-md"
+                  placeholder="ECDSA Signature obtained"
+                />
+              </div>
+            </div>
+            <h1 class="text-md font-semibold text-rose-500">{error}</h1>
+            <button
+              on:click|preventDefault={publishdoc}
+              class="rounded-lg bg-teal-500 px-6 py-2  mt-5 text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200"
+            >
+              publish to blockchain
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-  <h1 class="text-md font-semibold text-rose-500">{error}</h1>
-  <button
-    on:click|preventDefault={publishdoc}
-    class="rounded-lg bg-teal-500 px-6 py-2 text-lg 
-    text-white disabled:cursor-not-allowed disabled:bg-teal-200"
-  >
-    publish to blockchain
-  </button>
-</form>
+</div>
