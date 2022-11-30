@@ -25,6 +25,7 @@
   let qr = localStorage.getItem('qrcode');
   console.log('qrcode', qr);
   let proposedURL=localStorage.getItem('docURL')
+  console.log('qrcodocURLde', proposedURL);
 
   const image = new Image();
   image.onload = function () {
@@ -99,7 +100,7 @@
             <div class=" flex bg-transparent mx-auto w-8/12">
               <div class=" mx-auto flex items-center md:flex-row">
                 <div class="overflow-x-auto">
-                  <table class="text-md w-full text-left text-gray-500 mt-10 bg-gray-200">
+                  <table class="text-md w-full text-left text-gray-900 mt-10 bg-teal-200 border-dashed border-2 border-indigo-600 rounded-lg sm:w-auto sm:mx-auto" >
                     <thead class="bg-transparent text-sm uppercase text-gray-500 bg-gray-200">
                       <tr>
                         <th scope="col" class="w-80 py-3 px-10 md:w-40 "> Name </th>
@@ -124,9 +125,9 @@
                   <div class="flex mx-auto text-lg justify-center mt-5 text-blue-800 items-center text-center sm:flex-wrap underline">{proposedURL}</div>
 
                   <div class="mx-auto mt-10 flex justify-between">
-                    <button class="rounded-lg bg-teal-500 px-6 py-2 text-lg text-white" on:click={getsignature}>get-sign</button>
+                    <button class="rounded-lg bg-teal-500 hover:bg-teal-900 px-6 py-2 text-lg text-white" on:click={getsignature}>get-sign</button>
 
-                    <button class="rounded-lg bg-teal-500 px-6 py-2 text-lg text-white" on:click={releaseDoc}>release</button>
+                    <button class="rounded-lg bg-teal-500 px-6 py-2 text-lg  hover:bg-teal-900 text-white" on:click={releaseDoc}>release</button>
                   </div>
                 </div>
               </div>

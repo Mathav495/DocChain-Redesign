@@ -122,13 +122,13 @@
             <div class="flex justify-between mx-auto mt-5">
               <button
               on:click|preventDefault={publishdoc}
-              class="rounded-lg bg-teal-500 px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200"
+              class="rounded-lg bg-teal-500 px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"
             >
               publish to blockchain
             </button>
             <button
               on:click|preventDefault={revoke}
-              class="rounded-lg bg-teal-500 px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200"
+              class="rounded-lg bg-teal-500 px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"
             >
              Revoke
             </button>
@@ -140,3 +140,4 @@
     </div>
   </div>
 </div>
+

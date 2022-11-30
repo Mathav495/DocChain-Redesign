@@ -54,18 +54,39 @@
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       showImage = true;
       const reader = new FileReader();
-      reader.addEventListener('load', function () {
-        image.setAttribute('src', reader.result);
-      });
       reader.readAsDataURL(File);
+
+      reader.addEventListener('load', function () {
+        // image.setAttribute('src', reader.result);
+        const url = reader.result
+        console.log(url);
+        // const img = new Image()
+        // img.src = url
+        // document.body.appendChild(img)
+        localStorage.setItem('img',url)
+        
+      });
+      // reader.readAsDataURL(File);
+      const url = reader.result
+      console.log(url);
       return;
     } else if (File.type == 'application/pdf') {
       showpdf = true;
       const reader = new FileReader();
-      reader.addEventListener('load', function () {
-        pdf.setAttribute('src', reader.result);
-      });
       reader.readAsDataURL(File);
+      reader.addEventListener('load', function () {
+        // pdf.setAttribute('src', reader.result);
+        const url = reader.result
+        // console.log(url);
+        const file = new File()
+        file.src = url
+        document.body.appendChild(file)
+      
+
+      });
+      // reader.readAsDataURL(File);
+      // const url = reader.result
+      // localStorage.setItem('pdf', url)
       return;
     } else {
       showImage = false;
@@ -73,6 +94,40 @@
       return;
     }
   };
+
+  // const file = document.getElementById('File')
+
+  // file.addEventListener('change', () => {
+  //   const fr = new FileReader()
+
+  //   fr.readAsDataURL(file.files[0])
+  //   fr.addEventListener('load', () => {
+  //     const url = fr.result
+  //     console.log();(url)
+  //     const img = new Image()
+  //     img.src = url
+  //   })
+
+  // })
+  //   let fileImage
+  //   //get file and save it to localstorage as base64
+  //  fileImage = document.getElementById('File');
+  //   fileData = getBase64Image(fileImage);
+  //   localStorage.setItem('fileData', fileData);
+
+  //   // function that converts the image to a Base64 string:
+  //   function getBase64Image(img) {
+  //     var canvas = document.createElement('canvas');
+  //     canvas.width = img.width;
+  //     canvas.height = img.height;
+
+  //     var ctx = canvas.getContext('2d');
+  //     ctx.drawImage(img, 0, 0);
+
+  //     var dataURL = canvas.toDataURL('image/png');
+  //     console.log(dataURL);
+  //     return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
+  //   }
 </script>
 
 <div>
@@ -104,9 +159,9 @@
 
     <div class="flex w-1/4 pt-3" bind:this={container}>
       {#if showImage}
-        <img bind:this={image} class="h-48 w-full" src="" alt="Preview" />
+        <img bind:this={image} class="h-48 w-full" id="File" src="" alt="Preview" />
       {:else if showpdf}
-        <embed bind:this={pdf} class="h-48 w-full" src="" alt="Preview" />
+        <embed bind:this={pdf} class="h-48 w-full" id="File" src="" alt="Preview" />
       {:else}
         <img class="h-48 w-full" src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns=" alt="Preview" />
       {/if}
