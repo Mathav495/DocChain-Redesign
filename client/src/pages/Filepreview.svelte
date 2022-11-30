@@ -28,12 +28,10 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
-  // let pdfurl = localStorage.getItem('pdf');
-  // console.log('pdfUrl', pdfurl);
 
   const image = new Image();
   image.onload = function () {
-    console.log(image.width); // image is loaded and we have image width
+    console.log(image.width);
   };
   image.src = qr;
   image.src = imgurl;
@@ -41,11 +39,10 @@
 
   const pdf1 = new Image();
   pdf1.onload = function () {
-    console.log(pdf1); // image is loaded and we have image width
+    console.log(pdf1); 
   };
-  // image.src = url;
-  document.body.appendChild(pdf1);
-  // localStorage.setItem('pdf', url1);
+  //testign image loading with appending child
+  // document.body.appendChild(pdf1);
   let pdfurl = localStorage.getItem('pdf');
   console.log('pdfUrl', pdfurl);
   pdf1.src = pdfurl;
