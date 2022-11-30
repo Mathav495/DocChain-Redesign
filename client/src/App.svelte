@@ -25,7 +25,6 @@
     fileHash = e.detail;
     console.log(fileHash);
   };
-
   const getSign = (e) => {
     signature = e.detail;
     console.log(signature);

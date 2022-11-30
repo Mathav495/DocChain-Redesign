@@ -1,8 +1,8 @@
 <script>
   import Addfile from '../components/Addfile.svelte';
   import Header from '../components/Header.svelte';
-  import Logo from '../components/logo.svelte';
-  import Logout from '../components/logout.svelte';
+  import Logo from '../components/Logo.svelte';
+  import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   let animate = document.querySelector('#particles-js');

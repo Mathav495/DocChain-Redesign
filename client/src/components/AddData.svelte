@@ -3,7 +3,6 @@
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
-
   let dateexpired, issuer, doctype, docTitle, signatory, token, documentID, valid, date, sampleData, options;
   let error = {
     dateexpired: '',

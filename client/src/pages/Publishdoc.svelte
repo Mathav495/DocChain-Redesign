@@ -1,8 +1,8 @@
 <script>
   import DocIdform from '../components/docIdform.svelte';
   import Header from '../components/Header.svelte';
-  import Logo from '../components/logo.svelte';
-  import Logout from '../components/logout.svelte';
+  import Logo from '../components/Logo.svelte';
+  import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   let animate = document.querySelector('#particles-js');
@@ -27,7 +27,7 @@
     <div class="flex flex-row h-full py-3">
       <div class="md:w-4/12 lg:w-3/12 hidden  md-width py-5 md:flex flex-col items-center justify-between">
         <Logo />
-        <div class="py-14">
+        <div class="md:w-4/12 lg:w-3/12 hidden md-width py-5 md:flex flex-col items-center justify-between">
           <Nav />
         </div>
         <Logout />

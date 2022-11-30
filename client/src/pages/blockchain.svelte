@@ -10,6 +10,7 @@
       <strong class="hidden font-normal text-slate-700 lg:inline-flex">This Document is Issued on Blockchain by</strong>
       <strong class=" hidden font-semibold text-slate-900 lg:inline-flex">Print2Block</strong>
       powered by:
+
       <strong class="font-semibold text-sky-600 no-underline hover:text-blue-800 hover:underline"><a href="https://print2block.com/" rel="noreferrer" target="_blank">DocChain.io</a></strong>
     </h1>
   </div>

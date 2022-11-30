@@ -55,18 +55,38 @@
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       showImage = true;
       const reader = new FileReader();
+      reader.readAsDataURL(File);
+
       reader.addEventListener('load', function () {
         image.setAttribute('src', reader.result);
+        const url = reader.result;
+        console.log(url);
+        const img = new Image();
+
+        localStorage.setItem('img', url);
+        let imgurl = localStorage.getItem('img');
+        console.log('imgUrl', imgurl);
+        img.src = imgurl;
       });
-      reader.readAsDataURL(File);
+   
       return;
     } else if (File.type == 'application/pdf') {
       showpdf = true;
       const reader = new FileReader();
+      reader.readAsDataURL(File);
       reader.addEventListener('load', function () {
         pdf.setAttribute('src', reader.result);
+        const url1 = reader.result;
+        console.log(url1);
+        const pdf1 = new Image();
+        // image.src = url;
+        document.body.appendChild(image);
+        localStorage.setItem('pdf', url1);
+        let pdfurl = localStorage.getItem('pdf');
+        console.log('pdfUrl', pdfurl);
+        pdf1.src = pdfurl;
       });
-      reader.readAsDataURL(File);
+
       return;
     } else {
       showImage = false;
@@ -105,9 +125,9 @@
 
     <div class="flex w-1/4 pt-3" bind:this={container}>
       {#if showImage}
-        <img bind:this={image} class="h-48 w-full" src="" alt="Preview" />
+        <img bind:this={image} class="h-48 w-full" id="File" src="" alt="Preview" />
       {:else if showpdf}
-        <embed bind:this={pdf} class="h-48 w-full" src="" alt="Preview" />
+        <embed bind:this={pdf} class="h-48 w-full" id="File" src="" alt="Preview" />
       {:else}
         <img class="h-48 w-full" src="https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns=" alt="Preview" />
       {/if}
