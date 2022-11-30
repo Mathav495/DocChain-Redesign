@@ -62,6 +62,9 @@
   };
 </script>
 
+<svelte:head>
+  <title>Loginpage</title>
+</svelte:head>
 <div class="absolute w-full top-0 left-0">
   <div class="w-full lg:w-1/3 p-10 h-screen bg-black">
     <div class="flex justify-center lg:justify-start">
