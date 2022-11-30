@@ -18,6 +18,7 @@
     });
     usage = data;
     console.log(usage);
+
     let loader = document.getElementById('load');
     loader.classList.add('hidden');
     let home = document.getElementById('homepage');
