@@ -25,13 +25,24 @@
   let qr = localStorage.getItem('qrcode');
   console.log('qrcode', qr);
   let proposedURL=localStorage.getItem('docURL')
-  console.log('qrcodocURLde', proposedURL);
+  console.log('qrcodocURL', proposedURL);
+  let imgurl = localStorage.getItem('img')
+  console.log('imgUrl', imgurl);
 
   const image = new Image();
   image.onload = function () {
     console.log(image.width); // image is loaded and we have image width
   };
   image.src = qr;
+  image.src = imgurl;
+
+
+
+  // const image = new Image();
+  // image.onload = function () {
+  //   console.log(image.width); // image is loaded and we have image width
+  // };
+  // image.src = qr;
   // const qrcode=document.body.image.toString();
   // console.log(qrcode);
 
@@ -52,7 +63,7 @@
       },
     );
     console.log(data);
-    if (documentID && Token) {
+    if (documentID && token) {
       navigate('/publish');
     }
   };
@@ -118,7 +129,7 @@
                     </thead>
                   </table>
                   <div class="flex justify-center mt-5">
-                    <img src="https://th.bing.com/th/id/OIP._jpRnHasO03ZqTHB-S77ewHaFC?pid=ImgDet&rs=1" alt="document" class="relative mx-auto mt-10 h-[200px] w-[300px] rounded-md shadow-2xl" />
+                    <img src={imgurl} alt="document" class="relative mx-auto mt-10 h-[200px] w-[300px] rounded-md shadow-2xl" />
                     <img class="absolute ml-64 h-16 w-16 border-2 border-blue-400  rounded-lg" src={qr} alt="qrcode" id="qrcode" />
                   </div>
                   <div class="flex mx-auto justify-center mt-5 text-lg font-bold text-indigo-800 underline items-center">Document ProposedURL : </div>
