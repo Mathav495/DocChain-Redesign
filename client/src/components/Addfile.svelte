@@ -6,7 +6,7 @@
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
   let container;
-  let image, showpdf, pdf;
+  let image, showpdf, pdf, fileHash;
   let showImage = false;
   let status = 'Upload';
 
@@ -36,6 +36,9 @@
       );
       console.log(data);
       dispatch('filehash', data.fileHash);
+      localStorage.setItem('filehash', data.fileHash);
+      let fileHash = localStorage.getItem('filehash');
+      console.log('filehash', fileHash);
       if (data.fileHash) {
         status = 'Uploaded Sucessfully';
       }
@@ -45,7 +48,7 @@
   /**
    * Function for previewing image or pdf when uploaded
    */
-   const onChange = () => {
+  const onChange = () => {
     const form = document.getElementById('form');
     const formData = new FormData(form);
     console.log([...formData]);
@@ -68,7 +71,7 @@
         console.log('imgUrl', imgurl);
         img.src = imgurl;
       });
-   
+
       return;
     } else if (File.type == 'application/pdf') {
       showpdf = true;

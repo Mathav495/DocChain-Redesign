@@ -3,7 +3,7 @@
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
-  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID, valid, date, sampleData, options;
+  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID, valid, date, sampleData, options, dataHash;
   let error = {
     dateexpired: '',
     issuer: '',
@@ -84,6 +84,9 @@
       );
       console.log(data);
       dispatch('datahash', data.dataHash);
+      localStorage.setItem('datahash', data.dataHash);
+      let dataHash = localStorage.getItem('datahash');
+      console.log('datahash', dataHash);
       if (data.dataHash) {
         navigate('/preview');
       }

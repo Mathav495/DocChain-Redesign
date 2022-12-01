@@ -46,7 +46,6 @@
   };
 
   //revoking route
-   // publishing documents
    const revoke = async () => {
     let signature = localStorage.getItem('signature');
     console.log('signature', signature);
@@ -99,24 +98,24 @@
                 <textarea
                   name="docID"
                   bind:value={documentID}
-                  class=" mt-5 w-full rounded-md border-2 
-         border-gray-300 px-4 py-1
+                  class=" mt-2 w-full rounded-md border-2 
+         border-gray-300 px-4 py-1 bg-black text-white
            placeholder:text-lg placeholder:text-center text-center 
              focus:border-indigo-500 focus:ring-indigo-500 sm:text-md"
                   placeholder="documentID"
                 />
               </div>
 
-              <label for="signature" class="text-xl mt-5 block font-bold text-gray-500 ">SignatureID:</label>
+              <label for="signature" class="text-xl mt-2 block font-bold text-gray-500 ">SignatureID:</label>
               <!-- <div class="w-full px-4 py-4 mt-1 ml-1 text-gray-900 font-bold text-xs  border-2 rounded-lg text-center flex-wrap flex-1" on:input={signature}>{value.signature}</div> -->
               <div class="mt-1">
                 <textarea
                   name="signature"
                   bind:value={signature}
-                  class=" mt-5 w-full rounded-md border-2 
-         border-gray-300 px-4 py-1
+                  class="mt-2  w-full rounded-md border-2 
+         border-gray-300 px-4 py-1 bg-black text-white
            placeholder:text-lg text-center
-             focus:border-indigo-500 focus:ring-indigo-500 sm:text-md"
+             focus:border-indigo-500  focus:ring-indigo-500 sm:text-md"
                   placeholder="ECDSA Signature obtained"
                 />
               </div>
@@ -125,13 +124,13 @@
             <div class="flex justify-between mx-auto mt-5">
               <button
               on:click|preventDefault={publishdoc}
-              class="rounded-lg bg-teal-500 px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"
+              class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"
             >
               publish to blockchain
             </button>
             <button
               on:click|preventDefault={revoke}
-              class="rounded-lg bg-teal-500 px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"
+              class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"
             >
              Revoke
             </button>
