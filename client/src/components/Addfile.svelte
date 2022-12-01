@@ -45,7 +45,7 @@
   /**
    * Function for previewing image or pdf when uploaded
    */
-  const onChange = () => {
+   const onChange = () => {
     const form = document.getElementById('form');
     const formData = new FormData(form);
     console.log([...formData]);
@@ -55,18 +55,38 @@
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       showImage = true;
       const reader = new FileReader();
+      reader.readAsDataURL(File);
+
       reader.addEventListener('load', function () {
         image.setAttribute('src', reader.result);
+        const url = reader.result;
+        console.log(url);
+        const img = new Image();
+
+        localStorage.setItem('img', url);
+        let imgurl = localStorage.getItem('img');
+        console.log('imgUrl', imgurl);
+        img.src = imgurl;
       });
-      reader.readAsDataURL(File);
+   
       return;
     } else if (File.type == 'application/pdf') {
       showpdf = true;
       const reader = new FileReader();
+      reader.readAsDataURL(File);
       reader.addEventListener('load', function () {
         pdf.setAttribute('src', reader.result);
+        const url1 = reader.result;
+        console.log(url1);
+        const pdf1 = new Image();
+        // image.src = url;
+        document.body.appendChild(image);
+        localStorage.setItem('pdf', url1);
+        let pdfurl = localStorage.getItem('pdf');
+        console.log('pdfUrl', pdfurl);
+        pdf1.src = pdfurl;
       });
-      reader.readAsDataURL(File);
+
       return;
     } else {
       showImage = false;
