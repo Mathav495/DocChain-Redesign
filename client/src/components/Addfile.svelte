@@ -83,7 +83,7 @@
         console.log(url1);
         const pdf1 = new Image();
         // image.src = url;
-        document.body.appendChild(image);
+        // document.body.appendChild(image);
         localStorage.setItem('pdf', url1);
         let pdfurl = localStorage.getItem('pdf');
         console.log('pdfUrl', pdfurl);

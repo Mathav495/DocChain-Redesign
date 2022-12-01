@@ -18,6 +18,7 @@
   console.log('documentID', documentID);
 
   let error = '';
+  let action = "Add to Queue"
   // publishing documents
   const publishdoc = async () => {
     let signature = localStorage.getItem('signature');
@@ -39,11 +40,10 @@
     console.log(data);
     console.log(data.state);
     dispatch('push', data);
-    // if (data.PUBLISHED) {
-    //     navigate("/block")
-    //   } else {
-    //     navigate("/sign")
-    //   }
+  if(data.state) {
+    action = "Publish"
+    // navigate("/block")
+  }
   };
 
   //revoking route
@@ -89,13 +89,13 @@
           <form on:submit={publishdoc} class="lg:w-2/3 mx-auto flex-col justify-center md:w-full mt-10">
             <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
               <label for="signature" class="text-md block text-xl mt-5 font-bold text-gray-500 ">DocumentID:</label>
-              <div class="mt-1">
+              <div class="mt-1 shadow-lg">
                 <textarea
                   name="docID"
                   bind:value={documentID}
-                  class=" mt-2 w-full rounded-md border-2 
-         border-gray-300 px-4 py-1 bg-black text-white
-           placeholder:text-lg placeholder:text-center text-center 
+                  class=" mt-2 w-full flex rounded-md border-2 
+         border-gray-300 px-4 py-2 bg-black text-white
+           placeholder:text-lg placeholder:text-center text-center text-lg
              focus:border-indigo-500 focus:ring-indigo-500 sm:text-md"
                   placeholder="documentID"
                 />
@@ -103,21 +103,21 @@
 
               <label for="signature" class="text-xl mt-2 block font-bold text-gray-500 ">SignatureID:</label>
               <!-- <div class="w-full px-4 py-4 mt-1 ml-1 text-gray-900 font-bold text-xs  border-2 rounded-lg text-center flex-wrap flex-1" on:input={signature}>{value.signature}</div> -->
-              <div class="mt-1">
+              <div class="mt-1 shadow-lg">
                 <textarea
                   name="signature"
                   bind:value={signature}
                   class="mt-2  w-full rounded-md border-2 
-         border-gray-300 px-4 py-1 bg-black text-white
+         border-gray-300 px-4 py-1 bg-black text-white text-lg
            placeholder:text-lg text-center
-             focus:border-indigo-500  focus:ring-indigo-500 sm:text-md"
+             focus:border-indigo-500  focus:ring-indigo-500"
                   placeholder="ECDSA Signature obtained"
                 />
               </div>
             </div>
             <h1 class="text-md font-semibold text-rose-500">{error}</h1>
             <div class="flex justify-between mx-auto mt-5">
-              <button on:click|preventDefault={publishdoc} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> publish to blockchain </button>
+              <a on:click|preventDefault={publishdoc} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900" href="/block"> {action} </a>
               <button on:click|preventDefault={revoke} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> Revoke </button>
             </div>
           </form>
