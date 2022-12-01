@@ -3,13 +3,15 @@
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
-  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID, valid, date, sampleData, options, dataHash;
+  export let fileavailable;
+  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID, valid, date, sampleData, options,dataHash;
   let error = {
     dateexpired: '',
     issuer: '',
     doctype: '',
     docTitle: '',
     signatory: '',
+    msg: '',
   };
   token = localStorage.getItem('token');
   documentID = localStorage.getItem('documentID');
@@ -87,8 +89,11 @@
       localStorage.setItem('datahash', data.dataHash);
       let dataHash = localStorage.getItem('datahash');
       console.log('datahash', dataHash);
-      if (data.dataHash) {
+      if (fileavailable && data.dataHash) {
+        error.msg = '';
         navigate('/preview');
+      } else {
+        error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
       }
     }
   };
@@ -157,6 +162,9 @@
     <div class="flex mt-4">
       <button class="px-4 py-1 rounded-full bg-emerald-500 font-bold text-base">Confirm and Preview</button>
     </div>
+    {#if error.msg}
+      <h1 class="mt-3 text-sm ml-auto font-semibold bg-slate-300 py-2 px-2 rounded-lg text-red-400">{error.msg}</h1>
+    {/if}
   </form>
 </div>
 
