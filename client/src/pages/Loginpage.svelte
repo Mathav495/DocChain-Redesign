@@ -76,7 +76,7 @@
   <title>Loginpage</title>
 </svelte:head>
 <div class="absolute w-full top-0 left-0">
-  <div class="w-full lg:w-1/3 p-10 h-screen bg-black">
+  <div class="w-full lg:w-1/3 p-10 h-screen bg-black/40">
     <div class="flex justify-center lg:justify-start">
       <img class=" mr-2 inline-block animate-pulse align-top " src="assets\icon1.png" alt="icon1" />
       <h1 class="text-2xl text-white tracking-wide font-normal">DocChain</h1>
@@ -126,7 +126,7 @@
           <button class="w-96 mt-8 text-white active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800  rounded text-lg">LOGIN</button>
         </div>
       </form>
-      <h1 class="absolute bottom-0  pb-10 text-base font-medium tracking-wide text-red-400">
+      <h1 class="absolute bottom-0  pb-10 text-base font-medium tracking-wide text-neutral-400">
         Don't have an account? <span class="text-gray-600 tracking-wide cursor-pointer underline underline-offset-4">Contact us</span>
       </h1>
     </div>
