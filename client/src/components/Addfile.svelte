@@ -9,6 +9,7 @@
   let image, showpdf, pdf;
   let showImage = false;
   let status = 'Upload';
+  let fileavailable = false;
 
   /**
    * Submitting file for generating filehash
@@ -37,6 +38,7 @@
       console.log(data);
       dispatch('filehash', data.fileHash);
       if (data.fileHash) {
+        fileavailable = true;
         status = 'Uploaded Sucessfully';
       }
     }
@@ -61,6 +63,7 @@
       reader.readAsDataURL(File);
       return;
     } else if (File.type == 'application/pdf') {
+      showImage = false;
       showpdf = true;
       const reader = new FileReader();
       reader.addEventListener('load', function () {
@@ -114,5 +117,5 @@
     </div>
   </div>
 
-  <AddData on:datahash />
+  <AddData on:datahash {fileavailable} />
 </div>

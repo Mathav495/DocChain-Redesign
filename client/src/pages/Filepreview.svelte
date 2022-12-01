@@ -7,7 +7,6 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
-
   let signature,
     error = '',
     value = '';
