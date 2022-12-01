@@ -1,6 +1,7 @@
 <script>
   import Addfile from '../components/Addfile.svelte';
   import Header from '../components/Header.svelte';
+  import Loader from '../components/Loader.svelte';
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';

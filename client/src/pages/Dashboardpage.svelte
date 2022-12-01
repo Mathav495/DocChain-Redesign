@@ -30,7 +30,7 @@
   };
 </script>
 
-<div id="load">
+<div id="load1">
   <Loader />
 </div>
 
