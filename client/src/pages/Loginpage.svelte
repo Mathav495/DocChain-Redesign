@@ -8,6 +8,7 @@
   import PasswordIcons from '../icons/Password.svelte';
   let animate = document.querySelector('#particles-js');
   console.log(animate);
+  animate.style.display = 'block';
   let type = 'password';
   let Email = '',
     Password = '';
@@ -131,4 +132,3 @@
     </div>
   </div>
 </div>
-

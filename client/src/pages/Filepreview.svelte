@@ -7,9 +7,6 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
-  let animate = document.querySelector('#particles-js');
-  console.log(animate);
-  animate.style.display = 'none';
   let signature,
     error = '',
     value = '';
@@ -32,7 +29,6 @@
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
 
-
   const image = new Image();
   image.onload = function () {
     console.log(image.width);
@@ -43,14 +39,13 @@
 
   const pdf1 = new Image();
   pdf1.onload = function () {
-    console.log(pdf1); 
+    console.log(pdf1);
   };
   //testign image loading with appending child
   // document.body.appendChild(pdf1);
   let pdfurl = localStorage.getItem('pdf');
   console.log('pdfUrl', pdfurl);
   pdf1.src = pdfurl;
-
 
   /**
    * releasing document before publish
@@ -138,7 +133,7 @@
                     {#if (image.src = imgurl)}
                       <img src={imgurl} alt="document" class="relative mx-auto mt-10 h-[300px] w-[350px] rounded-md shadow-2xl" />
                     {:else if (pdf1.src = pdfurl)}
-                    <iframe title="pdf" class="relative mx-auto mt-10 h-[300px] w-[350px] rounded-md shadow-2xl" type="application/pdf" id="document" src={pdfurl} alt="Preview" />
+                      <iframe title="pdf" class="relative mx-auto mt-10 h-[300px] w-[350px] rounded-md shadow-2xl" type="application/pdf" id="document" src={pdfurl} alt="Preview" />
                     {/if}
                     <img class="absolute ml-72 h-10 w-10 mt-12 border-2 border-blue-400  rounded-lg" src={qr} alt="qrcode" id="qrcode" />
                   </div>

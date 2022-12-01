@@ -6,9 +6,6 @@
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
-  let animate = document.querySelector('#particles-js');
-  console.log(animate);
-  animate.style.display = 'none';
   let token = localStorage.getItem('token');
 
   let signature = localStorage.getItem('signature');
@@ -46,8 +43,8 @@
   };
 
   //revoking route
-   // publishing documents
-   const revoke = async () => {
+  // publishing documents
+  const revoke = async () => {
     let signature = localStorage.getItem('signature');
     console.log('signature', signature);
     let documentID = localStorage.getItem('documentID');
@@ -71,9 +68,9 @@
       );
       console.log(data);
       dispatch('push', data);
-    localStorage.setItem('revID',data.txidRevoked)
-    let revID = localStorage.getItem('revID')
-    console.log(revID);
+      localStorage.setItem('revID', data.txidRevoked);
+      let revID = localStorage.getItem('revID');
+      console.log(revID);
     }
   };
 </script>
@@ -90,7 +87,7 @@
       </div>
       <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3 w-full ml-10">
         <Header />
-        <div >
+        <div>
           <div class="mx-auto text-2xl text-teal-800 font-bold text-center mt-10">Publish to BlockChain:</div>
           <form on:submit={publishdoc} class="lg:w-2/3 mx-auto flex-col justify-center md:w-full mt-10">
             <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
@@ -123,24 +120,12 @@
             </div>
             <h1 class="text-md font-semibold text-rose-500">{error}</h1>
             <div class="flex justify-between mx-auto mt-5">
-              <button
-              on:click|preventDefault={publishdoc}
-              class="rounded-lg bg-teal-500 px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"
-            >
-              publish to blockchain
-            </button>
-            <button
-              on:click|preventDefault={revoke}
-              class="rounded-lg bg-teal-500 px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"
-            >
-             Revoke
-            </button>
+              <button on:click|preventDefault={publishdoc} class="rounded-lg bg-teal-500 px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> publish to blockchain </button>
+              <button on:click|preventDefault={revoke} class="rounded-lg bg-teal-500 px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> Revoke </button>
             </div>
-            
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
-
