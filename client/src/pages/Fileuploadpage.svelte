@@ -5,9 +5,6 @@
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
-  let animate = document.querySelector('#particles-js');
-  console.log(animate);
-  animate.style.display = 'none';
   let hideNavbar = true;
   const hideNav = () => {
     hideNavbar = true;
