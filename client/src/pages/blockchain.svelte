@@ -1,4 +1,25 @@
-<div class="flex flex-col bg-gray-200">
+<script>
+  let token = localStorage.getItem('token');
+  let documentID = localStorage.getItem('documentID');
+  let fileHash = localStorage.getItem('filehash');
+  console.log('filehash', fileHash);
+  let dataHash = localStorage.getItem('datahash');
+  console.log('datahash', dataHash);
+  let qr = localStorage.getItem('qrcode');
+  console.log('qrcode', qr);
+  let proposedURL = localStorage.getItem('docURL');
+  console.log('qrcodocURL', proposedURL);
+  let imgurl = localStorage.getItem('img');
+  console.log('imgUrl', imgurl);
+
+  let animate = document.querySelector('#particles-js');
+  console.log(animate);
+  window.addEventListener('load', function () {
+    animate.style.display = 'none';
+  });
+</script>
+
+<div class="flex flex-col bg-white ">
   <div class="fixed top-0 left-0 flex w-full items-center gap-4 bg-gradient-to-r from-emerald-200 via-sky-300 to-indigo-600 p-5 shadow-lg">
     <img
       class=" object-cover object-center"
@@ -7,17 +28,18 @@
     />
 
     <h1 class="text-base tracking-normal">
-      <strong class="hidden font-normal text-slate-700 lg:inline-flex">This Document is Issued on Blockchain by</strong>
-      <strong class=" hidden font-semibold text-slate-900 lg:inline-flex">Print2Block</strong>
-      powered by:
+      <strong class="hidden font-semibold text-slate-900 lg:inline-flex text-lg">This Document is Issued on Blockchain by</strong>
+      <strong class=" hidden font-semibold text-blue-800 lg:inline-flex text-lg">Print2Block</strong>
+      <strong class="font-semibold text-slate-900 no-underline  text-lg">powered by: </strong>    
 
-      <strong class="font-semibold text-sky-600 no-underline hover:text-blue-800 hover:underline"><a href="https://print2block.com/" rel="noreferrer" target="_blank">DocChain.io</a></strong>
+      <strong class="font-semibold text-sky-600 no-underline hover:text-blue-800 hover:underline text-lg"><a href="https://print2block.com/" rel="noreferrer" target="_blank">DocChain.io</a></strong>
     </h1>
   </div>
 
-  <div class="flex flex-col gap-4 py-28 lg:flex-row">
-    <div class="order-2 flex w-full flex-col space-y-4 px-6 lg:order-none lg:block lg:w-3/5 ">
-      <img class="h-full w-full overflow-hidden rounded-lg object-cover object-center" src="/assets/images/certificate1.jpeg" alt="document" />
+  <div class="flex flex-col space-x-5 py-28 lg:flex-row">
+    <div class="order-2 flex w-full flex-col space-y-4 ml-10 lg:order-none lg:block lg:w-1/2 ">
+      <img class=" h-full w-full overflow-hidden rounded-lg object-cover object-center" src={imgurl} alt="document" />
+      <!-- <img class="absolute justify-end mr-10 h-24 w-24 overflow-hidden rounded object-cover object-center" src={qr} alt="qrcode" /> -->
 
       <div class="mx-auto flex items-center gap-4">
         <div class="flex h-11 w-11 items-center rounded-full border-2 border-sky-500 px-2 hover:scale-110 hover:bg-blue-500 lg:hidden">
@@ -30,52 +52,53 @@
       </div>
     </div>
 
-    <div class="order-1 flex w-full flex-col gap-4 px-6  lg:order-none lg:w-2/5 ">
-      <div class="flex h-52 w-full flex-col gap-4 rounded-lg bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-400 p-4">
-        <div class="order-2 flex gap-3 lg:order-none">
-          <img class="h-24 w-24 overflow-hidden rounded object-cover object-center" src="/assets/images/qrcode.png" alt="qrcode" />
-          <img class="h-24 w-24 overflow-hidden rounded object-cover object-center" src="/assets/images/logo.jpeg" alt="logo" />
+    <div class="order-1 flex w-full flex-col gap-4 px-6 lg:order-none lg:w-1/2">
+      <div class="flex h-52 w-full flex-col gap-4 rounded-lg bg-black p-4">
+        <div class="order-2 flex gap-3 mt-2 lg:order-none">
+          <img class="h-24 w-24 overflow-hidden rounded object-cover object-center ml-1" src={qr} alt="qrcode" />
+          <img class="h-24 w-24 ml-2 overflow-hidden rounded object-cover object-center border-2 border-white" src="/assets/logo.jpeg" alt="logo" />
 
           <div class="flex flex-col gap-10 lg:hidden">
             <button value="1" onclick="select(value)" class="flex  rounded-full border-2 border-white px-3 py-1 text-xs font-medium text-white">VIEW INFO</button>
             <button class="flex  rounded-full border-2 border-white px-6 py-1 text-xs font-medium uppercase text-white ">Verify</button>
           </div>
         </div>
-        <div class="order-1 flex flex-col lg:order-none">
-          <h1 class="mt-2 text-base font-normal text-white">SIDBI (DEMO)</h1>
+        <div class="order-1 flex flex-col ml-1 lg:order-none">
+          <h1 class=" mt-1 text-base font-normal text-white">SIDBI (DEMO)</h1>
           <h1 class="text-lg font-bold text-white">Fixed Deposit Report</h1>
         </div>
       </div>
 
-      <div class=" hidden space-y-3 px-4 py-2 lg:block">
-        <div>
-          <h1 class="text-base font-normal text-slate-700">Issuer</h1>
-          <h1 class="text-lg font-normal text-slate-900">SIDBI (DEMO)</h1>
+      <div class=" hidden space-y-5 px-4 py-2 lg:block bg-black rounded-lg mt-5 shadow-lg">
+        <div class="mt-5 ml-5">
+          <div class="mt-5">
+            <h1 class="text-base font-normal text-white underline">Issuer</h1>
+            <h1 class="text-lg font-normal text-white">SIDBI (DEMO)</h1>
+          </div>
+          <div class="mt-5">
+            <h1 class="text-base font-normal text-white underline">Date Published</h1>
+            <h1 class="text-lg font-normal tracking-wide text-white">Wed Aug 17 2022 22:49:04 GMT+0530 (India Standard Time)</h1>
+          </div>
+          <div class="mt-5">
+            <h1 class="text-base font-normal text-white underline">Published TXID</h1>
+            <p class="break-all text-lg font-normal leading-relaxed tracking-normal text-white">TransactionID</p>
+          </div>
+          <div class="mt-5">
+            <h1 class="text-base font-normal text-white underline">Data Hash (SHA256)</h1>
+            <p class="break-all text-lg font-normal leading-relaxed tracking-normal text-white">
+              {dataHash}
+            </p>
+          </div>
+          <div class="mt-5">
+            <h1 class="text-base font-normal text-white underline">File Hash (SHA256)</h1>
+            <p class="break-all text-lg font-normal leading-relaxed tracking-normal text-white">
+              {fileHash}
+            </p>
+          </div>
         </div>
-        <div>
-          <h1 class="text-base font-normal text-slate-700">Date Published</h1>
-          <h1 class="text-lg font-normal tracking-wide text-slate-900">Wed Aug 17 2022 22:49:04 GMT+0530 (India Standard Time)</h1>
+        <div class="mb-5 mt-5">
+          <button class="mx-auto  mb-4 hidden rounded-lg bg-white py-1 px-6 text-lg font-bold text-black lg:block">Verify</button>
         </div>
-        <div>
-          <h1 class="text-base font-normal text-slate-700">Published TXID</h1>
-          <p class="break-all text-lg font-normal leading-relaxed tracking-normal text-slate-900">
-            {txid}
-          </p>
-        </div>
-        <div>
-          <h1 class="text-base font-normal text-slate-700">Data Hash (SHA256)</h1>
-          <p class="break-all text-lg font-normal leading-relaxed tracking-normal text-slate-900">
-            {dataHash}
-          </p>
-        </div>
-        <div>
-          <h1 class="text-base font-normal text-slate-700">File Hash (SHA256)</h1>
-          <p class="break-all text-lg font-normal leading-relaxed tracking-normal text-slate-900">
-            {fileHash}
-          </p>
-        </div>
-
-        <button class="mx-auto mt-4 hidden  rounded-full border-2 border-sky-300 bg-sky-500 py-1 px-6 text-lg font-normal text-white lg:block">Verify</button>
       </div>
     </div>
   </div>
