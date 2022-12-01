@@ -9,6 +9,7 @@
   let animate = document.querySelector('#particles-js');
   console.log(animate);
   animate.style.display = 'none';
+  
   let hideNavbar = true;
 
   /**

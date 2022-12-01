@@ -56,14 +56,9 @@
    * releasing document before publish
    */
   const releaseDoc = async () => {
-    console.log(documentID);
-    let fileHash = localStorage.getItem('filehash');
-
+    let documentID = localStorage.getItem('documentID');
     const { data } = await axios.get(
       `https://test.swagger.print2block.in/docs/release?documentID=${documentID}`,
-      {
-        documentID: documentID,
-      },
       {
         headers: {
           'x-access-token': token,
