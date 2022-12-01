@@ -39,11 +39,11 @@
     console.log(data);
     console.log(data.state);
     dispatch('push', data);
-    // if (data.state = QUEUED) {
-    //   navigate('/sign');
-    // } else {
-    //   navigate("/block")
-    // }
+    // if (data.PUBLISHED) {
+    //     navigate("/block")
+    //   } else {
+    //     navigate("/sign")
+    //   }
   };
 
   //revoking route
@@ -85,7 +85,7 @@
       <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3 w-full ml-10">
         <Header />
         <div>
-          <div class="mx-auto text-2xl text-teal-800 font-bold text-center mt-10">Publish to BlockChain:</div>
+          <div class="mx-auto text-2xl text-teal-800 font-bold text-center mt-10 underline">Publish to BlockChain:</div>
           <form on:submit={publishdoc} class="lg:w-2/3 mx-auto flex-col justify-center md:w-full mt-10">
             <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
               <label for="signature" class="text-md block text-xl mt-5 font-bold text-gray-500 ">DocumentID:</label>
