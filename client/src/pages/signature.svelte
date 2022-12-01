@@ -5,6 +5,7 @@
   import Nav from '../components/Nav.svelte';
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
+  import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   let animate = document.querySelector('#particles-js');
   console.log(animate);
@@ -23,16 +24,11 @@
     console.log('signature', signature);
     let documentID = localStorage.getItem('documentID');
     console.log('documentID', documentID);
-
-    if (signature == null) {
-      error = "signature can't be empty";
-      console.log(error);
-    } else {
       const { data } = await axios.post(
         'https://test.swagger.print2block.in/docs/publish',
         {
           documentID: documentID,
-          signature: signature,
+          signature: "signature",
         },
         {
           headers: {
@@ -42,20 +38,17 @@
       );
       console.log(data);
       dispatch('push', data);
+      // if(data) {
+      //   navigate("/block")
+      // }
     }
-  };
-
+ 
   //revoking route
    const revoke = async () => {
     let signature = localStorage.getItem('signature');
     console.log('signature', signature);
     let documentID = localStorage.getItem('documentID');
     console.log('documentID', documentID);
-
-    if (signature == null) {
-      error = "signature can't be empty";
-      console.log(error);
-    } else {
       const { data } = await axios.post(
         'https://test.swagger.print2block.in/docs/revoke',
         {
@@ -74,7 +67,7 @@
     let revID = localStorage.getItem('revID')
     console.log(revID);
     }
-  };
+  
 </script>
 
 <div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1 ">
@@ -111,7 +104,6 @@
               <div class="mt-1">
                 <textarea
                   name="signature"
-                  bind:value={signature}
                   class="mt-2  w-full rounded-md border-2 
          border-gray-300 px-4 py-1 bg-black text-white
            placeholder:text-lg text-center

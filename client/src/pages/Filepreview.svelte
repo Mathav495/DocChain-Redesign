@@ -57,6 +57,8 @@
    */
   const releaseDoc = async () => {
     console.log(documentID);
+    let fileHash = localStorage.getItem('filehash');
+
     const { data } = await axios.get(
       `https://test.swagger.print2block.in/docs/release?documentID=${documentID}`,
       {
@@ -76,17 +78,12 @@
 
    // getting signature Id from the user
    const getsignature = async () => {
-    let showModal = true;
-    const sample = {
-      fileHash: fileHash,
-      dataHash: dataHash,
-    };
+    // const sample = {
+    //   fileHash: fileHash,
+    //   dataHash: dataHash,
+    // };
 
-    const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/${fileHash}+${dataHash}`, sample, {
-      headers: {
-        'x-access-token': token,
-      },
-    });
+    const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`, );
     console.log(data);
     dispatch('signature', data);
     showModal = false;

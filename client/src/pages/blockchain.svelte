@@ -1,4 +1,27 @@
-<div class="flex flex-col bg-gray-200">
+<script>
+ let token = localStorage.getItem('token');
+  let documentID = localStorage.getItem('documentID');
+  let fileHash = localStorage.getItem('filehash');
+  console.log('filehash', fileHash);
+  let dataHash = localStorage.getItem('datahash');
+  console.log('datahash', dataHash);
+  let qr = localStorage.getItem('qrcode');
+  console.log('qrcode', qr);
+  let proposedURL = localStorage.getItem('docURL');
+  console.log('qrcodocURL', proposedURL);
+  let imgurl = localStorage.getItem('img');
+  console.log('imgUrl', imgurl);
+
+  let animate = document.querySelector('#particles-js');
+  console.log(animate);
+  window.addEventListener("load", function () {
+      animate.style.display = "none";
+    })
+
+
+</script>
+
+<div class="flex flex-col bg-white">
   <div class="fixed top-0 left-0 flex w-full items-center gap-4 bg-gradient-to-r from-emerald-200 via-sky-300 to-indigo-600 p-5 shadow-lg">
     <img
       class=" object-cover object-center"
@@ -17,7 +40,8 @@
 
   <div class="flex flex-col gap-4 py-28 lg:flex-row">
     <div class="order-2 flex w-full flex-col space-y-4 px-6 lg:order-none lg:block lg:w-3/5 ">
-      <img class="h-full w-full overflow-hidden rounded-lg object-cover object-center" src="/assets/images/certificate1.jpeg" alt="document" />
+      <img class=" h-full w-full overflow-hidden rounded-lg object-cover object-center" src={imgurl} alt="document" />
+      <!-- <img class="absolute justify-end mr-10 h-24 w-24 overflow-hidden rounded object-cover object-center" src={qr} alt="qrcode" /> -->
 
       <div class="mx-auto flex items-center gap-4">
         <div class="flex h-11 w-11 items-center rounded-full border-2 border-sky-500 px-2 hover:scale-110 hover:bg-blue-500 lg:hidden">
@@ -33,8 +57,8 @@
     <div class="order-1 flex w-full flex-col gap-4 px-6  lg:order-none lg:w-2/5 ">
       <div class="flex h-52 w-full flex-col gap-4 rounded-lg bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-400 p-4">
         <div class="order-2 flex gap-3 lg:order-none">
-          <img class="h-24 w-24 overflow-hidden rounded object-cover object-center" src="/assets/images/qrcode.png" alt="qrcode" />
-          <img class="h-24 w-24 overflow-hidden rounded object-cover object-center" src="/assets/images/logo.jpeg" alt="logo" />
+          <img class="h-24 w-24 overflow-hidden rounded object-cover object-center" src={qr} alt="qrcode" />
+          <img class="h-24 w-24 overflow-hidden rounded object-cover object-center" src="/assets/logo.jpeg" alt="logo" />
 
           <div class="flex flex-col gap-10 lg:hidden">
             <button value="1" onclick="select(value)" class="flex  rounded-full border-2 border-white px-3 py-1 text-xs font-medium text-white">VIEW INFO</button>
@@ -59,19 +83,18 @@
         <div>
           <h1 class="text-base font-normal text-slate-700">Published TXID</h1>
           <p class="break-all text-lg font-normal leading-relaxed tracking-normal text-slate-900">
-            {txid}
+            TransactionID
           </p>
         </div>
         <div>
           <h1 class="text-base font-normal text-slate-700">Data Hash (SHA256)</h1>
           <p class="break-all text-lg font-normal leading-relaxed tracking-normal text-slate-900">
-            {dataHash}
-          </p>
+       {dataHash}
         </div>
         <div>
           <h1 class="text-base font-normal text-slate-700">File Hash (SHA256)</h1>
           <p class="break-all text-lg font-normal leading-relaxed tracking-normal text-slate-900">
-            {fileHash}
+       {fileHash}
           </p>
         </div>
 
