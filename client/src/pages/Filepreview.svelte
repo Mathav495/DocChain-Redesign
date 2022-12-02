@@ -72,6 +72,7 @@
     localStorage.setItem('signature', data);
     let signature = localStorage.getItem('signature');
     console.log(signature);
+
     if (signature) {
       navigate('/sign');
     }
@@ -121,8 +122,7 @@
                     {/if}
                     <img class="absolute ml-72 h-10 w-10 mt-12 border-2 border-blue-400  rounded-lg" src={qr} alt="qrcode" id="qrcode" />
                   </div>
-                  <div class="flex mx-auto justify-center mt-5 text-lg font-bold text-indigo-800 underline items-center">Document ProposedURL :</div>
-                  <div class="flex mx-auto text-lg justify-center mt-2 text-blue-800 items-center text-center sm:flex-wrap underline">{proposedURL}</div>
+                 
 
                   <div class="mx-auto mt-10 flex justify-between">
                     <button class="rounded-lg bg-black hover:bg-teal-900 px-6 py-2 text-lg text-white" on:click={getsignature}>get-sign</button>

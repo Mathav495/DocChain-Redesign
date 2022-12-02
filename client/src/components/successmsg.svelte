@@ -2,11 +2,11 @@
   export let proposedURL
 </script>
 
-<div class=" mt-5 w-full rounded-lg bg-emerald-200">
+<div class=" mt-5 w-full rounded-lg bg-black">
   <div class="mx-5 flex  items-center justify-center">
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class="h-8 w-8"
+      class="h-10 w-10"
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 15 15">
       <path
@@ -16,8 +16,8 @@
         clip-rule="evenodd" />
     </svg>
     <div >
-      <h1 class="mx-5 p-4 text-lg font-semibold text-green-900 ">
-        Document has been Published, Your DocURL is:  <a class="text-red-600 " href="{proposedURL}" rel="noreferrer" target="_blank" ><strong>{proposedURL}</strong></a> 
+      <h1 class="mx-5 p-4 text-lg font-semibold text-green-300 ">
+        Document has been Published, Your DocURL is:  <a class="text-red-300 " href="{proposedURL}" rel="noreferrer" target="_blank" ><strong>{proposedURL}</strong></a> 
       </h1>
     
     </div>

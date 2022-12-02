@@ -93,7 +93,7 @@
           <div class="mx-auto text-2xl text-teal-800 font-bold text-center mt-10 underline">Publish to BlockChain:</div>
           <form on:submit={publishdoc} class="lg:w-2/3 mx-auto flex-col justify-center md:w-full mt-10">
             <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
-              <label for="signature" class="text-md block text-xl mt-5 font-bold text-gray-500 ">DocumentID:</label>
+              <label for="signature" class="text-md block text-xl mt-5 font-bold text-teal-800 ">DocumentID:</label>
               <div class="mt-1 shadow-lg">
                 <textarea
                   name="docID"
@@ -106,7 +106,7 @@
                 />
               </div>
 
-              <label for="signature" class="text-xl mt-2 block font-bold text-gray-500 ">SignatureID:</label>
+              <label for="signature" class="text-xl mt-2 block font-bold text-teal-800 ">SignatureID:</label>
               <!-- <div class="w-full px-4 py-4 mt-1 ml-1 text-gray-900 font-bold text-xs  border-2 rounded-lg text-center flex-wrap flex-1" on:input={signature}>{value.signature}</div> -->
               <div class="mt-1 shadow-lg">
                 <textarea
