@@ -1,7 +1,7 @@
 <script>
   import Dashboard from '../components/Dashboard.svelte';
   import Header from '../components/Header.svelte';
-  import Loader from '../components/Loader.svelte';
+  // import Loader from '../components/Loader.svelte';
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
@@ -31,8 +31,8 @@
   <Loader />
 </div> -->
 
-<div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1" id="homepage">
-  <div class="bg-black dash-bg-edge text-white h-full w-full">
+<div class="h-auto lg:h-screen relative lg:w-screen w-auto" id="homepage">
+  <div class="bg-black text-white h-full w-full">
     <div class="flex flex-row h-full w-full py-3">
       <div class="md:w-4/12 lg:w-3/12 hidden md-width py-5 md:flex flex-col items-center justify-between">
         <Logo />
@@ -57,11 +57,8 @@
 </div>
 
 <style global>
-  .dash-bg-edge {
-    border-radius: 3rem;
-  }
   .content-bg-edge {
-    border-radius: 3rem;
+    border-radius: 0.5rem;
   }
   @media (min-width: 768px) {
     .md\:w-4\/12 {
