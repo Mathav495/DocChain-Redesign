@@ -32,20 +32,17 @@
 </div> -->
 
 <div class="h-auto lg:h-screen relative lg:w-screen w-auto" id="homepage">
-  <div class="bg-black text-white h-full w-full">
-    <div class="flex flex-row h-full w-full py-3">
-      <div class="md:w-4/12 lg:w-3/12 hidden md-width py-5 md:flex flex-col items-center justify-between">
+  <div class="bg-black text-white h-full w-full py-3">
+    <div class="flex flex-row h-full w-full">
+      <div class="p-8 hidden md:flex flex-col items-center justify-between">
         <Logo />
         <div class="py-14">
           <Nav />
         </div>
         <Logout />
       </div>
-      <div class="md:w-8/12 lg:w-9/12 w-full bg-white text-gray-900 content-bg-edge p-8 ml-3 md:ml-0 mr-3">
-        <Header on:navShow={showNav} />
-        <div class="mt-10">
-          <Dashboard />
-        </div>
+      <div class="w-full bg-white text-gray-900 rounded-lg p-8 ml-3 md:ml-0 mr-3">
+        <Dashboard />
       </div>
     </div>
   </div>
