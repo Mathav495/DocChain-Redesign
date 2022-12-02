@@ -34,9 +34,7 @@
 <div class="bg-black text-white h-screen w-screen flex flex-row py-3">
   <div class="width1 p-8 hidden md:flex flex-col items-center justify-between">
     <Logo />
-    <!-- <div class="w-full"> -->
     <Nav />
-    <!-- </div> -->
     <Logout />
   </div>
   <div class="width2 bg-white text-gray-900 rounded-md p-8 ml-3 md:ml-0 mr-3">
