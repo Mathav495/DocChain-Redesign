@@ -14,7 +14,7 @@
   let documentID = localStorage.getItem('documentID');
   console.log('documentID', documentID);
   let proposedURL = localStorage.getItem('docURL');
-    console.log('qrcodocURL', proposedURL);
+  console.log('qrcodocURL', proposedURL);
   let success = false;
   let error = '';
   let action = 'Add to Queue';
@@ -39,16 +39,13 @@
     console.log(data);
     console.log(data.state);
     dispatch('push', data);
-    success = true;
-    
-    if (data.state) {
-      action = 'Publish';
-      // navigate("/block")
-    } 
-    if(!data.state) {
-      navigate({proposedURL})
+    // success = true;
+    if (action = 'confirm') {
+      success = true;
+      href = "{proposedURL}"
+    } else if(action = "publish"){
+      success = false;
     }
-
   };
 
   //revoking route
@@ -122,14 +119,13 @@
             </div>
             <h1 class="text-md font-semibold text-rose-500">{error}</h1>
             <div class="flex justify-between mx-auto mt-5">
-              <button on:click|preventDefault={publishdoc} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900" > {action} </button>
+              <button on:click|preventDefault={publishdoc} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> {action} </button>
               <button on:click|preventDefault={revoke} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> Revoke </button>
             </div>
 
             {#if success}
-            <Successmsg {proposedURL} />
+              <Successmsg {proposedURL} />
             {/if}
-
           </form>
         </div>
       </div>
