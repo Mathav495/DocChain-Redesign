@@ -32,12 +32,12 @@
 </div> -->
 
 <div class="bg-black text-white h-screen w-screen flex flex-row py-3">
-  <div class="width1 p-8 hidden md:flex flex-col items-center justify-between">
+  <div class="w-2/12 p-8 hidden md:flex flex-col items-center justify-between">
     <Logo />
     <Nav />
     <Logout />
   </div>
-  <div class="width2 bg-white text-gray-900 rounded-md p-8 ml-3 md:ml-0 mr-3">
+  <div class="w-10/12 bg-white text-gray-900 rounded-md p-8 ml-3 md:ml-0 mr-3">
     <Dashboard />
   </div>
   <!--small screen navbar-->
@@ -47,10 +47,14 @@
 </div>
 
 <style>
-  .width1 {
-    width: 18%;
+  @media (min-width: 1024px) {
+    .lg\:w-2\/12 {
+      width: 18%;
+    }
   }
-  .width2 {
-    width: 82%;
+  @media (min-width: 1024px) {
+    .lg\:w-10\/12 {
+      width: 82%;
+    }
   }
 </style>
