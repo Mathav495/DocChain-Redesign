@@ -4,7 +4,10 @@ module.exports = {
   theme: {
     extend: {
       borderRadius: {
-        'rounded-0.5': '0.5rem',
+        2: '2rem',
+      },
+      fontSize: {
+        md: '1.05rem',
       },
     },
   },

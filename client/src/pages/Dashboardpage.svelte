@@ -31,17 +31,17 @@
   <Loader />
 </div> -->
 
-<div class="h-auto lg:h-screen relative lg:w-screen w-auto" id="homepage">
+<div class="h-screen relative lg:w-screen w-auto" id="homepage">
   <div class="bg-black text-white h-full w-full py-3">
     <div class="flex flex-row h-full w-full">
-      <div class="p-8 hidden md:flex flex-col items-center justify-between">
+      <div class="w-auto p-8 hidden md:flex flex-col items-center justify-between">
         <Logo />
-        <div class="py-14">
+        <div>
           <Nav />
         </div>
         <Logout />
       </div>
-      <div class="w-full bg-white text-gray-900 rounded-lg p-8 ml-3 md:ml-0 mr-3">
+      <div class="w-auto bg-white text-gray-900 rounded-md p-8 ml-3 md:ml-0 mr-3">
         <Dashboard />
       </div>
     </div>
@@ -52,31 +52,3 @@
     <SmallScreenNavbar />
   </div>
 </div>
-
-<style global>
-  .content-bg-edge {
-    border-radius: 0.5rem;
-  }
-  @media (min-width: 768px) {
-    .md\:w-4\/12 {
-      width: 16%;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .md\:w-8\/12 {
-      width: 84%;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .lg\:w-3\/12 {
-      width: 10%;
-    }
-  }
-  @media (min-width: 1024px) {
-    .lg\:w-9\/12 {
-      width: 90%;
-    }
-  }
-</style>

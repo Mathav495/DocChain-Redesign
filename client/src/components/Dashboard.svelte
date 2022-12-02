@@ -33,13 +33,13 @@
 
 <div class="flex flex-col lg:gap-10 gap-5 justify-center">
   <div class="flex flex-col lg:flex-row gap-5">
-    <div class="flex order-2 lg:order-1 flex-col w-full lg:w-6/12 gap-2">
+    <div class="flex order-2 lg:order-1 flex-col w-full gap-2">
       <h1 class="text-lg md:text-2xl font-bold lg:mt-0">Documents</h1>
       <div class="graph-width md:w-full bg-blue-100 h-40 md:h-60 text-2xl rounded-3xl p-1 flex flex-col justify-end items-center font-bold text-blue-500">
         <div><Pagination /></div>
       </div>
     </div>
-    <div class="lg:w-6/12 w-full order-1 lg:order-2 flex flex-col gap-2">
+    <div class=" w-full order-1 lg:order-2 flex flex-col gap-2">
       <h1 class="text-lg md:text-2xl font-bold">Documents Status</h1>
       <div class="flex flex-row gap-2 md:gap-5">
         <div class="w-2/6 bg-red-100 h-auto md:h-60 rounded-3xl p-2 md:p-5 flex flex-col justify-between">
@@ -86,9 +86,4 @@
 </div>
 
 <style>
-  @media (min-width: 1024px) {
-    .graph-width {
-      width: 100%;
-    }
-  }
 </style>
