@@ -4,7 +4,7 @@
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   export let fileavailable;
-  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID, valid, date, sampleData, options,dataHash;
+  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID, valid, date, sampleData, options, dataHash;
   let error = {
     dateexpired: '',
     issuer: '',

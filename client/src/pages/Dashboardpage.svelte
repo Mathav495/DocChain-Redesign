@@ -27,11 +27,11 @@
   };
 </script>
 
-<div id="load1">
+<!-- <div id="load1">
   <Loader />
-</div>
+</div> -->
 
-<div class="h-auto  relative lg:w-screen w-auto p-1 hidden" id="homepage">
+<div class="h-auto lg:screen relative lg:w-screen w-auto p-1" id="homepage">
   <div class="bg-black dash-bg-edge text-white h-full w-full">
     <div class="flex flex-row h-full w-full py-3">
       <div class="md:w-4/12 lg:w-3/12 hidden md-width py-5 md:flex flex-col items-center justify-between">
