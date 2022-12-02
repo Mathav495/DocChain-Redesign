@@ -52,28 +52,25 @@
    */
   const releaseDoc = async () => {
     let documentID = localStorage.getItem('documentID');
-    const { data } = await axios.get(
-      `https://test.swagger.print2block.in/docs/release?documentID=${documentID}`,
-      {
-        headers: {
-          'x-access-token': token,
-        },
+    const { data } = await axios.get(`https://test.swagger.print2block.in/docs/release?documentID=${documentID}`, {
+      headers: {
+        'x-access-token': token,
       },
-    );
+    });
     console.log(data);
     if (documentID && token) {
       navigate('/publish');
     }
   };
 
-   // getting signature Id from the user
-   const getsignature = async () => {
+  // getting signature Id from the user
+  const getsignature = async () => {
     // const sample = {
     //   fileHash: fileHash,
     //   dataHash: dataHash,
     // };
 
-    const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`, );
+    const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`);
     console.log(data);
     dispatch('signature', data);
     showModal = false;
