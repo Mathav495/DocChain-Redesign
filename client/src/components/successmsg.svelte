@@ -18,9 +18,9 @@
     <div >
       <h1 class="mx-5 p-4 text-lg font-semibold text-green-300 ">
         Document has been Published:  
-        <!-- <a class="text-red-300 " href="{proposedURL}" rel="noreferrer" target="_blank" ><strong>{proposedURL}</strong></a>  -->
+        <a class="text-red-300 " href="{proposedURL}" rel="noreferrer" target="_blank" ><strong>{proposedURL}</strong></a> 
 
-        <a class="text-red-300 " href="/block" rel="noreferrer" target="_blank" ><strong>Check your Document Status</strong></a>
+        <!-- <a class="text-red-300 " href="/block" rel="noreferrer" target="_blank" ><strong>Check your Document Status</strong></a> -->
       </h1>
     
     </div>
