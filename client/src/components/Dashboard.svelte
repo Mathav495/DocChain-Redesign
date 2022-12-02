@@ -5,7 +5,11 @@
 
   let hidden = true;
   let token = localStorage.getItem('token');
-  let usage = [];
+  let usage = {
+    initiated: 0,
+    published: 0,
+    revoked: 0,
+  };
   console.log(token);
   /**
    * onMount function to get a document usage details by calling api
@@ -19,15 +23,15 @@
     usage = data;
     console.log(usage);
 
-    let loader = document.getElementById('load');
-    loader.classList.add('hidden');
-    let home = document.getElementById('homepage');
-    home.classList.remove('hidden');
-    hidden = false;
+    // let loader = document.getElementById('load');
+    // loader.classList.add('hidden');
+    // let home = document.getElementById('homepage');
+    // home.classList.remove('hidden');
+    // hidden = false;
   });
 </script>
 
-<div class:hidden class="flex flex-col lg:gap-10 gap-5 justify-center">
+<div class="flex flex-col lg:gap-10 gap-5 justify-center">
   <div class="flex flex-col lg:flex-row gap-5">
     <div class="flex order-2 lg:order-1 flex-col w-full lg:w-6/12 gap-2">
       <h1 class="text-lg md:text-2xl font-bold lg:mt-0">Documents</h1>
