@@ -65,12 +65,12 @@
         </div>
         <div class="order-1 flex flex-col ml-1 lg:order-none">
           <h1 class=" mt-1 text-base font-normal text-white">SIDBI (DEMO)</h1>
-          <h1 class="text-lg font-bold text-white">Fixed Deposit Report</h1>
+          <h1 class="text-lg font-bold text-white mt-1">Fixed Deposit Report</h1>
         </div>
       </div>
 
-      <div class=" hidden space-y-5 px-4 py-2 lg:block bg-black rounded-lg mt-5 shadow-lg">
-        <div class="mt-5 ml-5">
+      <div class=" hidden space-y-5 px-4 py-2 lg:block bg-black rounded-lg mt-8 shadow-lg">
+        <div class="mt-8 ml-5">
           <div class="mt-5">
             <h1 class="text-base font-normal text-white underline">Issuer</h1>
             <h1 class="text-lg font-normal text-white">SIDBI (DEMO)</h1>
@@ -97,7 +97,7 @@
           </div>
         </div>
         <div class="mb-5 mt-5">
-          <button class="mx-auto  mb-4 hidden rounded-lg bg-white py-1 px-6 text-lg font-bold text-black lg:block">Verify</button>
+          <button class="mx-auto  mb-5 hidden rounded-lg bg-white py-1 px-6 text-lg font-bold text-black lg:block">Verify</button>
         </div>
       </div>
     </div>
