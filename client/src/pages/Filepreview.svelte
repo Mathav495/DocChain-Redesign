@@ -7,14 +7,7 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
-  let signature,
-    error = '',
-    value = '';
 
-  let showModal = false;
-  const toggleModal = () => {
-    showModal = !showModal;
-  };
 
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
@@ -37,11 +30,11 @@
   image.src = imgurl;
   // image.src = pdfurl;
 
-  const pdf1 = new Image();
+  const pdf1 = new Object();
   pdf1.onload = function () {
     console.log(pdf1);
   };
-  //testign image loading with appending child
+  //testing image loading with appending child
   // document.body.appendChild(pdf1);
   let pdfurl = localStorage.getItem('pdf');
   console.log('pdfUrl', pdfurl);
@@ -76,7 +69,6 @@
     const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`, );
     console.log(data);
     dispatch('signature', data);
-    showModal = false;
     localStorage.setItem('signature', data);
     let signature = localStorage.getItem('signature');
     console.log(signature);

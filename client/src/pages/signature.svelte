@@ -6,16 +6,18 @@
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
+  import Successmsg from '../components/successmsg.svelte';
   const dispatch = createEventDispatcher();
   let token = localStorage.getItem('token');
-
   let signature = localStorage.getItem('signature');
   console.log(signature);
   let documentID = localStorage.getItem('documentID');
   console.log('documentID', documentID);
-
+  let proposedURL = localStorage.getItem('docURL');
+    console.log('qrcodocURL', proposedURL);
+  let success = false;
   let error = '';
-  let action = "Add to Queue"
+  let action = 'Add to Queue';
   // publishing documents
   const publishdoc = async () => {
     let signature = localStorage.getItem('signature');
@@ -37,10 +39,16 @@
     console.log(data);
     console.log(data.state);
     dispatch('push', data);
-  if(data.state) {
-    action = "Publish"
-    // navigate("/block")
-  }
+    success = true;
+    
+    if (data.state) {
+      action = 'Publish';
+      // navigate("/block")
+    } 
+    if(!data.state) {
+      navigate({proposedURL})
+    }
+
   };
 
   //revoking route
@@ -114,9 +122,14 @@
             </div>
             <h1 class="text-md font-semibold text-rose-500">{error}</h1>
             <div class="flex justify-between mx-auto mt-5">
-              <a on:click|preventDefault={publishdoc} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900" href="/block"> {action} </a>
+              <button on:click|preventDefault={publishdoc} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900" > {action} </button>
               <button on:click|preventDefault={revoke} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> Revoke </button>
             </div>
+
+            {#if success}
+            <Successmsg {proposedURL} />
+            {/if}
+
           </form>
         </div>
       </div>
