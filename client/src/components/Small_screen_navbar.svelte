@@ -54,7 +54,4 @@
   svg {
     color: white;
   }
-  .width {
-    width: 44%;
-  }
 </style>
