@@ -27,12 +27,12 @@
     console.log(Email);
     console.log(Password);
     valid = true;
-    const mail = /\S+@\S+\.\S+/g;
-    const result1 = mail.test(Email);
+    // const mail = /\S+@\S+\.\S+/g;
+    // const result1 = mail.test(Email);
     if (Email == '') {
       error.Email = "Email can't be empty";
       valid = false;
-    } else if (!result1) {
+    } else if (Email != 'test@email.com') {
       error.Email = 'Please Enter valid mail id';
       valid = false;
     } else {
