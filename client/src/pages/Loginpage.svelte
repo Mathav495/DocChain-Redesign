@@ -39,7 +39,10 @@
       error.Email = '';
     }
     if (Password == '') {
-      error.Password = "Password can't be empty";
+      error.Password = "password can't be empty";
+      valid = false;
+    } else if (Password != 'password') {
+      error.Password = 'Please Enter valid password';
       valid = false;
     } else {
       error.Password = '';
