@@ -9,7 +9,7 @@
   let showImage = false;
   let status = 'Upload';
   let fileavailable = false;
-  let dateexpired, issuer, doctype, signatory, docTitle, valid, date, sampleData, options, dataHash;
+  let docTitle;
 
   let qr = localStorage.getItem('qrcode');
   onMount(async () => {
