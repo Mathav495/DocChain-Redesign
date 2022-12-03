@@ -50,16 +50,6 @@
       };
       const { data } = await axios.post('https://test.swagger.print2block.in/auth/login', sampleData);
       console.log(data);
-
-      if (!data.success) {
-        console.log(data.errorCode);
-        display = true;
-      } else {
-        localStorage.setItem('token', data.token);
-        let token = localStorage.getItem('token');
-        console.log(token);
-        navigate('/dash');
-      }
     }
   };
 
