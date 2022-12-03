@@ -24,22 +24,16 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: #171616;
-        background-image: url('');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: 50% 50%;
       }
     </style>
   </head>
-  <body>
+  <body onload="changeGradient()">
     <div class="relative" id="particles-js"></div>
     <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="particle.js"></script>
-    <script>
-      let animate = document.querySelector('#particles-js');
-      console.log(animate);
-      animate.style.display = 'none';
-    </script>
+    <script src="Animate.js"></script>
   </body>
 </html>

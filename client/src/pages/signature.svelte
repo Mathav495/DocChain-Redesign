@@ -40,38 +40,38 @@
     console.log(data.state);
     dispatch('push', data);
     // success = true;
-    if (action = 'confirm') {
+    if ((action = 'confirm')) {
       success = true;
-      href = "{proposedURL}"
-    } else if(action = "publish"){
+      href = '{proposedURL}';
+    } else if ((action = 'publish')) {
       success = false;
     }
   };
 
-  //revoking route
-  const revoke = async () => {
-    let signature = localStorage.getItem('signature');
-    console.log('signature', signature);
-    let documentID = localStorage.getItem('documentID');
-    console.log('documentID', documentID);
-    const { data } = await axios.post(
-      'https://test.swagger.print2block.in/docs/revoke',
-      {
-        documentID: documentID,
-        signature: signature,
-      },
-      {
-        headers: {
-          'x-access-token': token,
-        },
-      },
-    );
-    console.log(data);
-    dispatch('push', data);
-    localStorage.setItem('revID', data.txidRevoked);
-    let revID = localStorage.getItem('revID');
-    console.log(revID);
-  };
+  // //revoking route
+  // const revoke = async () => {
+  //   let signature = localStorage.getItem('signature');
+  //   console.log('signature', signature);
+  //   let documentID = localStorage.getItem('documentID');
+  //   console.log('documentID', documentID);
+  //   const { data } = await axios.post(
+  //     'https://test.swagger.print2block.in/docs/revoke',
+  //     {
+  //       documentID: documentID,
+  //       signature: signature,
+  //     },
+  //     {
+  //       headers: {
+  //         'x-access-token': token,
+  //       },
+  //     },
+  //   );
+  //   console.log(data);
+  //   dispatch('push', data);
+  //   localStorage.setItem('revID', data.txidRevoked);
+  //   let revID = localStorage.getItem('revID');
+  //   console.log(revID);
+  // };
 </script>
 
 <div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1 ">
@@ -120,7 +120,6 @@
             <h1 class="text-md font-semibold text-rose-500">{error}</h1>
             <div class="flex justify-between mx-auto mt-5">
               <button on:click|preventDefault={publishdoc} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> {action} </button>
-              <button on:click|preventDefault={revoke} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> Revoke </button>
             </div>
 
             {#if success}
