@@ -107,19 +107,19 @@
     <div class="flex flex-col pt-5 space-y-3">
       <div class="flex flex-col w-4/5 space-y-1">
         <label for="issuer" class="text-sm text-slate-800 tracking-wide font-bold">Issued to</label>
-        <input placeholder="Enter issuer name" bind:value={issuer} name="issuer" id="issuer" type="text" class="input-dsn" />
+        <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class="input-dsn" />
       </div>
       <div class="flex flex-col w-4/5 space-y-1">
         <label for="doctype" class="text-sm text-slate-800 tracking-wide font-bold">Document Type</label>
-        <input placeholder="Enter document type" bind:value={doctype} type="text" class="input-dsn" name="doctype" id="doctype" />
+        <input placeholder={error.doctype ? error.doctype : 'Enter document type'} bind:value={doctype} type="text" class="input-dsn" name="doctype" id="doctype" />
       </div>
       <div class="flex flex-col w-4/5 space-y-1">
         <label for="signatory" class="text-sm text-slate-800 tracking-wide font-bold">Signatory</label>
-        <input placeholder="Enter signatory name" name="signatory" bind:value={signatory} id="signatory" type="text" class="input-dsn" />
+        <input placeholder={error.signatory ? error.signatory : 'Enter signatory name'} name="signatory" bind:value={signatory} id="signatory" type="text" class="input-dsn" />
       </div>
       <div class="flex flex-col w-4/5 space-y-1">
         <label for="docid" class="text-sm text-slate-800 tracking-wide font-bold">Date Expired</label>
-        <input bind:value={dateexpired} type="date" class="input-dsn" name="docid" id="docid" />
+        <input bind:value={dateexpired} placeholder="Enter expiry date" type="text" onfocus="(this.type = 'date')" class="input-dsn" name="docid" id="docid" />
       </div>
       <div class="flex flex-col w-4/5 space-y-1">
         <label for="docTitle" class="text-sm text-slate-800 tracking-wide font-bold">Document Title</label>
@@ -202,6 +202,6 @@
 </div> -->
 <style lang="postcss">
   .input-dsn {
-    @apply w-full rounded-lg border-2 border-blue-500 bg-blue-200 p-1 pl-2 text-base font-bold placeholder:font-medium placeholder:text-slate-500 focus:outline-none;
+    @apply w-full rounded-lg border-2 border-blue-500 bg-blue-200 p-1 pl-2 text-base font-bold  placeholder:font-semibold placeholder:text-red-500  focus:outline-none;
   }
 </style>
