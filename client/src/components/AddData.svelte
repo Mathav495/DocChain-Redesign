@@ -4,7 +4,7 @@
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   export let fileavailable;
-  let dateexpired, issuer, doctype, docTitle, signatory, token, documentID, valid, date, sampleData, options, dataHash;
+  let dateexpired, issuer, doctype, signatory, token, docTitle, documentID, valid, date, sampleData, options, dataHash;
   let error = {
     dateexpired: '',
     issuer: '',
@@ -13,6 +13,7 @@
     signatory: '',
     msg: '',
   };
+
   token = localStorage.getItem('token');
   documentID = localStorage.getItem('documentID');
 
@@ -99,7 +100,39 @@
   };
 </script>
 
-<div class="flex flex-col mt-4 p-5 bg-green-100 rounded-lg w-full ">
+<div class="rounded-lg bg-blue-100 h-auto w-1/2 p-4">
+  <h1 class="text-base font-bold tracking-wide">Details about Document</h1>
+
+  <form on:submit|preventDefault={onsubmitdata}>
+    <div class="flex flex-col pt-5 space-y-3">
+      <div class="flex flex-col w-4/5 space-y-1">
+        <label for="issuer" class="text-sm text-slate-800 tracking-wide font-bold">Issued to</label>
+        <input placeholder="Enter issuer name" bind:value={issuer} name="issuer" id="issuer" type="text" class="input-dsn" />
+      </div>
+      <div class="flex flex-col w-4/5 space-y-1">
+        <label for="doctype" class="text-sm text-slate-800 tracking-wide font-bold">Document Type</label>
+        <input placeholder="Enter document type" bind:value={doctype} type="text" class="input-dsn" name="doctype" id="doctype" />
+      </div>
+      <div class="flex flex-col w-4/5 space-y-1">
+        <label for="signatory" class="text-sm text-slate-800 tracking-wide font-bold">Signatory</label>
+        <input placeholder="Enter signatory name" name="signatory" bind:value={signatory} id="signatory" type="text" class="input-dsn" />
+      </div>
+      <div class="flex flex-col w-4/5 space-y-1">
+        <label for="docid" class="text-sm text-slate-800 tracking-wide font-bold">Date Expired</label>
+        <input bind:value={dateexpired} type="date" class="input-dsn" name="docid" id="docid" />
+      </div>
+      <div class="flex flex-col w-4/5 space-y-1">
+        <label for="docTitle" class="text-sm text-slate-800 tracking-wide font-bold">Document Title</label>
+        <input placeholder="Enter document title" bind:value={docTitle} type="text" class="input-dsn" name="docTitle" id="docTitle" />
+      </div>
+    </div>
+    <div class="w-full pt-6">
+      <button class="w-2/5 bg-blue-600 px-2 py-1 text-white font-semibold text-base tracking-wide rounded-full">Confirm and Preview</button>
+    </div>
+  </form>
+</div>
+
+<!-- <div class="flex flex-col mt-4 p-5 bg-green-100 rounded-lg w-full ">
   <div>
     <h1 class="text-lg text-slate-800 tracking-wide font-bold">Document Metadata</h1>
   </div>
@@ -166,10 +199,9 @@
       <h1 class="mt-3 text-sm ml-auto font-semibold bg-slate-300 py-2 px-2 rounded-lg text-red-400">{error.msg}</h1>
     {/if}
   </form>
-</div>
-
+</div> -->
 <style lang="postcss">
   .input-dsn {
-    @apply w-3/5  rounded-lg border-2 border-green-500 bg-green-200 p-1 text-base font-bold placeholder:font-medium placeholder:text-slate-500 focus:outline-none;
+    @apply w-full rounded-lg border-2 border-blue-500 bg-blue-200 p-1 pl-2 text-base font-bold placeholder:font-medium placeholder:text-slate-500 focus:outline-none;
   }
 </style>

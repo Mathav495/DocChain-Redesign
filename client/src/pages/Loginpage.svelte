@@ -93,7 +93,7 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
               <Emailicon />
             </span>
-            <input bind:value={Email} type="email" id="Email" placeholder="Enter your Email..." class="w-full mt-2 pl-9 placeholder:text-sm bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
+            <input bind:value={Email} type="email" id="Email" placeholder="Enter your Email..." class="w-full mt-2 pl-9 placeholder:text-sm  bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
           </div>
           <Errormsg errormsg={error.Email} />
         </div>
