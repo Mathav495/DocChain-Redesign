@@ -9,6 +9,8 @@
   let animate = document.querySelector('#particles-js');
   console.log(animate);
   animate.style.display = 'block';
+  let sampleData;
+  let display = false;
   let type = 'password';
   let Email = '',
     Password = '';
@@ -42,24 +44,23 @@
       error.Password = '';
     }
     if (valid) {
-      let sampleData = {
+      sampleData = {
         email: Email,
         password: Password,
       };
       const { data } = await axios.post('https://test.swagger.print2block.in/auth/login', sampleData);
       console.log(data);
+
       if (!data.success) {
-        console.log(data.success);
         console.log(data.errorCode);
+        display = true;
       } else {
         localStorage.setItem('token', data.token);
         let token = localStorage.getItem('token');
         console.log(token);
         navigate('/dash');
       }
-
-     
- 
+    }
   };
 
   /**
@@ -125,13 +126,14 @@
 
         <h1 class="text-gray-400 hover:text-white underline underline-offset-4 text-base tracking-wide mt-5 mb-5 cursor-pointer font-normal">Forgot Password?</h1>
         <div>
-          <button class="w-96 mt-8 text-white active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800  rounded text-lg">LOGIN</button>
+          <button class="w-96 mt-5 text-white font-medium active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 tracking-wider uppercase rounded text-lg">login</button>
+        </div>
+        <div>
+          {#if display}
+            <h1 class="text-xl text-white font-medium tracking-wide  p-2 mt-7 animate-slideInLeft rounded text-center bg-red-500">Invalid Username or Password</h1>
+          {/if}
         </div>
       </form>
-
-      <div>
-        <h1 />
-      </div>
 
       <h1 class="absolute bottom-0  pb-10 text-base font-medium tracking-wide text-neutral-400">
         Don't have an account? <span class="text-gray-400 hover:text-white tracking-wide cursor-pointer underline underline-offset-4">Contact us</span>
