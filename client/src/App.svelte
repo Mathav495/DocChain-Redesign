@@ -6,7 +6,8 @@
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
   import Filepreview from './pages/Filepreview.svelte';
   import Signature from './pages/signature.svelte';
-  import Blockchain from './pages/blockchain.svelte'
+  import Blockchain from './pages/blockchain.svelte';
+  import Dashboardpage2 from './pages/Dashboardpage2.svelte';
   let fileHash, dataHash, signature;
   export let url = '';
 
@@ -37,10 +38,11 @@
     <Route path="/"><Loginpage /></Route>
     <Route path="/dash"><Dashboardpage /></Route>
     <Route path="/publish"><Publishdoc /></Route>
+    <Route path="/dash2"><Dashboardpage2 /></Route>
     <Route path="/add-file"><Fileuploadpage on:datahash={getDataHash} on:filehash={getFileHash} /></Route>
     <Route path="/preview"><Filepreview on:signature={getSign} /></Route>
     <Route path="/sign"><Signature /></Route>
-    <Route path="/block"> <Blockchain /></Route>
+    <Route path="/block"><Blockchain /></Route>
   </main>
 </Router>
 
