@@ -9,7 +9,7 @@
   let hideNavbar = true;
   const hideNav = () => {
     hideNavbar = true;
-  }; 
+  };
 
   const showNav = () => {
     if (hideNavbar == false) {
@@ -35,8 +35,7 @@
         <Logout />
       </div>
       <div class="md:w-8/12 lg:w-9/12 w-full bg-white text-gray-900 content-bg-edge p-8 ml-3 md:ml-0 mr-3">
-        <Header on:navShow={showNav} />
-        <div class="mt-4">
+        <div class="">
           <Addfile on:datahash on:filehash />
         </div>
       </div>

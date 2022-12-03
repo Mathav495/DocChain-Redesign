@@ -103,9 +103,11 @@
 </script>
 
 <div>
-  <h1 class="text-xl font-bold ">Publish Documents</h1>
+  <h1 class="text-xl font-bold ">Choose Document</h1>
 
-  <div class="flex">
+  <div class="mt-2 bg-red-300 rounded-lg h-20" />
+
+  <!-- <div class="flex">
     <div class="flex w-3/4 flex-col mt-1 pr-7">
       <div class="sm:col-span-6  mt-2">
         <div class="mt-1  flex justify-center rounded-md border-2 border-dashed border-violet-600 px-6 pt-5 pb-6 bg-violet-200">
@@ -140,5 +142,5 @@
     </div>
   </div>
 
-  <AddData on:datahash {fileavailable} />
+  <AddData on:datahash {fileavailable} /> -->
 </div>
