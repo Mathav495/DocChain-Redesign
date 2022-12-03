@@ -9,7 +9,7 @@
   let hideNavbar = true;
   const hideNav = () => {
     hideNavbar = true;
-  };
+  }; 
 
   const showNav = () => {
     if (hideNavbar == false) {
