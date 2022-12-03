@@ -96,7 +96,7 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
               <Emailicon />
             </span>
-            <input bind:value={Email} type="email" id="Email" placeholder="Enter your Email..." class="w-full mt-2 pl-9 placeholder:text-sm bg-black focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
+            <input bind:value={Email} type="email" id="Email" placeholder="Enter your Email..." class="w-full mt-2 pl-9 placeholder:text-sm bg-black focus:bg-black text-blue-500 rounded border {error.Email ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-300'} focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
           </div>
           <Errormsg errormsg={error.Email} />
         </div>
@@ -107,9 +107,9 @@
               <PasswordIcons />
             </span>
             {#if type == 'password'}
-              <input bind:value={Password} type="password" id="Password" placeholder="Enter your Password..." class="w-full mt-2 bg-black pl-10 placeholder:text-sm focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
+              <input bind:value={Password} type="password" id="Password" placeholder="Enter your Password..." class="w-full mt-2 bg-black pl-10 placeholder:text-sm focus:bg-black text-blue-500 rounded border {error.Password ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-300'} focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
             {:else}
-              <input bind:value={Password} type="text" id="Password" placeholder="Enter your Password..." class="w-full mt-2 bg-black pl-10 placeholder:text-sm focus:bg-black text-blue-500 rounded border border-gray-300 focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
+              <input bind:value={Password} type="text" id="Password" placeholder="Enter your Password..." class="w-full mt-2 bg-black pl-10 placeholder:text-sm focus:bg-black text-blue-500 rounded border {error.Password ? 'border-red-500 ring-1 ring-red-500' : 'border-gray-300'} focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
             {/if}
 
             <button on:click|preventDefault={showPassword} class="absolute inset-y-0 right-4 flex items-center pl-2">
