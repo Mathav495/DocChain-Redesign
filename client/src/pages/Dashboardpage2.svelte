@@ -1,14 +1,12 @@
 <script>
-  import Dashboard from '../components/Dashboard.svelte';
+  import Dashboard2 from '../components/Dashboard2.svelte';
   // import Loader from '../components/Loader.svelte';
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   let hideNavbar = true;
-  let animate = document.querySelector('#particles-js');
-  console.log(animate);
-  animate.style.display = 'none';
+
   /**
    * This is the function to hide a samll screen navbar
    */
@@ -39,7 +37,7 @@
     <Logout />
   </div>
   <div class="w-10/12 bg-white text-gray-900 rounded-md p-8 ml-4 md:ml-0">
-    <Dashboard />
+    <Dashboard2 />
   </div>
   <!--small screen navbar-->
   <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 block md:hidden absolute inset-0 p-12">

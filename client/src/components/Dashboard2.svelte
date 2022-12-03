@@ -31,11 +31,8 @@
   });
 </script>
 
-<div class="flex flex-col lg:flex-row gap-4">
-  <div class="lg:w-8/12 w-full h-auto lg:order-1 order-2 bg-blue-100 text-2xl p-4 rounded-md flex flex-col justify-end items-center font-bold text-blue-500">
-    <div><Pagination /></div>
-  </div>
-  <div class="flex flex-row lg:flex-col lg:order-2 order-1 w-full lg:w-4/12 gap-4">
+<div class="flex flex-col gap-4">
+  <div class="flex flex-row w-full gap-4">
     <div class="bg-red-100 rounded-md w-1/3 lg:w-full p-4 flex flex-row items-center gap-4">
       <div class="lg:w-10 lg:h-10 w-8 h-8 bg-white rounded-xl hidden md:flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="lg:w-8 lg:h-8 w-6 h-6">
@@ -65,5 +62,8 @@
       <p class="text-base lg:text-lg font-bold"><span class="hidden lg:inline-flex">Document</span> Verified</p>
       <p class="text-xl md:text-4xl font-bold text-green-500 ml-auto">{usage.revoked}</p>
     </div>
+  </div>
+  <div class="w-full bg-blue-100 h-72 text-2xl p-4 rounded-md flex flex-col justify-end items-center font-bold text-blue-500">
+    <div><Pagination /></div>
   </div>
 </div>
