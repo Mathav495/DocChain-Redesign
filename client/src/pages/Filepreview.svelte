@@ -7,14 +7,7 @@
   import { createEventDispatcher, onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
-  let signature,
-    error = '',
-    value = '';
 
-  let showModal = false;
-  const toggleModal = () => {
-    showModal = !showModal;
-  };
 
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
@@ -37,11 +30,11 @@
   image.src = imgurl;
   // image.src = pdfurl;
 
-  const pdf1 = new Image();
+  const pdf1 = new Object();
   pdf1.onload = function () {
     console.log(pdf1);
   };
-  //testign image loading with appending child
+  //testing image loading with appending child
   // document.body.appendChild(pdf1);
   let pdfurl = localStorage.getItem('pdf');
   console.log('pdfUrl', pdfurl);
@@ -73,10 +66,10 @@
     const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`);
     console.log(data);
     dispatch('signature', data);
-    showModal = false;
     localStorage.setItem('signature', data);
     let signature = localStorage.getItem('signature');
     console.log(signature);
+
     if (signature) {
       navigate('/sign');
     }
@@ -126,8 +119,7 @@
                     {/if}
                     <img class="absolute ml-72 h-10 w-10 mt-12 border-2 border-blue-400  rounded-lg" src={qr} alt="qrcode" id="qrcode" />
                   </div>
-                  <div class="flex mx-auto justify-center mt-5 text-lg font-bold text-indigo-800 underline items-center">Document ProposedURL :</div>
-                  <div class="flex mx-auto text-lg justify-center mt-2 text-blue-800 items-center text-center sm:flex-wrap underline">{proposedURL}</div>
+                 
 
                   <div class="mx-auto mt-10 flex justify-between">
                     <button class="rounded-lg bg-black hover:bg-teal-900 px-6 py-2 text-lg text-white" on:click={getsignature}>get-sign</button>

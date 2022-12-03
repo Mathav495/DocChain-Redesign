@@ -6,16 +6,18 @@
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
+  import Successmsg from '../components/successmsg.svelte';
   const dispatch = createEventDispatcher();
   let token = localStorage.getItem('token');
-
   let signature = localStorage.getItem('signature');
   console.log(signature);
   let documentID = localStorage.getItem('documentID');
   console.log('documentID', documentID);
-
+  let proposedURL = localStorage.getItem('docURL');
+  console.log('qrcodocURL', proposedURL);
+  let success = false;
   let error = '';
-  let action = "Add to Queue"
+  let action = 'Add to Queue';
   // publishing documents
   const publishdoc = async () => {
     let signature = localStorage.getItem('signature');
@@ -37,10 +39,13 @@
     console.log(data);
     console.log(data.state);
     dispatch('push', data);
-  if(data.state) {
-    action = "Publish"
-    // navigate("/block")
-  }
+    // success = true;
+    if (action = 'confirm') {
+      success = true;
+      href = "{proposedURL}"
+    } else if(action = "publish"){
+      success = false;
+    }
   };
 
   //revoking route
@@ -85,7 +90,7 @@
           <div class="mx-auto text-2xl text-teal-800 font-bold text-center mt-10 underline">Publish to BlockChain:</div>
           <form on:submit={publishdoc} class="lg:w-2/3 mx-auto flex-col justify-center md:w-full mt-10">
             <div class="mx-auto mt-1 flex-col items-center justify-center text-center ">
-              <label for="signature" class="text-md block text-xl mt-5 font-bold text-gray-500 ">DocumentID:</label>
+              <label for="signature" class="text-md block text-xl mt-5 font-bold text-teal-800 ">DocumentID:</label>
               <div class="mt-1 shadow-lg">
                 <textarea
                   name="docID"
@@ -98,7 +103,7 @@
                 />
               </div>
 
-              <label for="signature" class="text-xl mt-2 block font-bold text-gray-500 ">SignatureID:</label>
+              <label for="signature" class="text-xl mt-2 block font-bold text-teal-800 ">SignatureID:</label>
               <!-- <div class="w-full px-4 py-4 mt-1 ml-1 text-gray-900 font-bold text-xs  border-2 rounded-lg text-center flex-wrap flex-1" on:input={signature}>{value.signature}</div> -->
               <div class="mt-1 shadow-lg">
                 <textarea
@@ -114,9 +119,13 @@
             </div>
             <h1 class="text-md font-semibold text-rose-500">{error}</h1>
             <div class="flex justify-between mx-auto mt-5">
-              <a on:click|preventDefault={publishdoc} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900" href="/block"> {action} </a>
+              <button on:click|preventDefault={publishdoc} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> {action} </button>
               <button on:click|preventDefault={revoke} class="rounded-lg bg-black px-6 py-2  text-lg text-white disabled:cursor-not-allowed disabled:bg-teal-200 hover:bg-teal-900"> Revoke </button>
             </div>
+
+            {#if success}
+              <Successmsg {proposedURL} />
+            {/if}
           </form>
         </div>
       </div>
