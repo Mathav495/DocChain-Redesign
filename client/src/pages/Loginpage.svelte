@@ -32,17 +32,11 @@
     if (Email == '') {
       error.Email = "Email can't be empty";
       valid = false;
-    } else if (Email != 'test@email.com') {
-      error.Email = 'Please Enter valid mail id';
-      valid = false;
     } else {
       error.Email = '';
     }
     if (Password == '') {
       error.Password = "password can't be empty";
-      valid = false;
-    } else if (Password != 'password') {
-      error.Password = 'Please Enter valid password';
       valid = false;
     } else {
       error.Password = '';
@@ -54,13 +48,18 @@
       };
       const { data } = await axios.post('https://test.swagger.print2block.in/auth/login', sampleData);
       console.log(data);
-      localStorage.setItem('token', data.token);
-      let token = localStorage.getItem('token');
-      console.log(token);
-      if (token) {
+      if (!data.success) {
+        console.log(data.success);
+        console.log(data.errorCode);
+      } else {
+        localStorage.setItem('token', data.token);
+        let token = localStorage.getItem('token');
+        console.log(token);
         navigate('/dash');
       }
-    }
+
+     
+ 
   };
 
   /**
@@ -129,6 +128,11 @@
           <button class="w-96 mt-8 text-white active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800  rounded text-lg">LOGIN</button>
         </div>
       </form>
+
+      <div>
+        <h1 />
+      </div>
+
       <h1 class="absolute bottom-0  pb-10 text-base font-medium tracking-wide text-neutral-400">
         Don't have an account? <span class="text-gray-400 hover:text-white tracking-wide cursor-pointer underline underline-offset-4">Contact us</span>
       </h1>
