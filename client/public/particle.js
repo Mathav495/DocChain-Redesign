@@ -1,6 +1,6 @@
 particlesJS('particles-js', {
   particles: {
-    number: { value: 150, density: { enable: true, value_area: 800 } },
+    number: { value: 200, density: { enable: true, value_area: 800 } },
     color: { value: '#ffffff' },
     shape: { type: 'polygon', stroke: { width: 0, color: 'red' }, polygon: { nb_sides: 5 }, image: { src: 'img/github.svg', width: 100, height: 100 } },
     opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
