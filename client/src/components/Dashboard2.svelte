@@ -63,7 +63,7 @@
       <p class="text-xl md:text-4xl font-bold text-green-500 ml-auto">{usage.revoked}</p>
     </div>
   </div>
-  <div class="w-full h-auto bg-blue-100 h-72 text-2xl p-4 rounded-md flex flex-col justify-end items-center font-bold text-blue-500">
+  <div class="w-full bg-blue-100 h-72 text-2xl p-4 rounded-md flex flex-col justify-end items-center font-bold text-blue-500">
     <div><Pagination /></div>
   </div>
 </div>
