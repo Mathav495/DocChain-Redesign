@@ -47,7 +47,7 @@
   </button>
 </div>
 
-<style>
+<style global>
   .w-2\/12 {
     width: 18.1%;
   }
