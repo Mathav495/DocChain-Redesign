@@ -17,8 +17,8 @@
 
 <div class="mt-2 bg-blue-100 rounded-lg flex p-3">
   <div class="flex">
-    <img src={qr} alt="qrcode" class="p-1  w-20 h-20" />
-    <img src="/assets/sample.jpg" alt="qrcode" class="p-1 w-20 h-20" />
+    <img src={qr} alt="qrcode" class="p-1 w-24 h-24" />
+    <img src="/assets/sample.jpg" alt="qrcode" class="p-1 w-24 h-24" />
   </div>
   <div class="ml-auto p-3">
     <h1 class="text-lg font-semibold text-slate-500">Issuer Name : <span class="text-xl text-slate-900 capitalize">{issuerName}</span></h1>
