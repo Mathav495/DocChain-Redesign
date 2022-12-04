@@ -101,7 +101,6 @@
 </script>
 
 <div class="rounded-lg bg-blue-100 h-auto w-1/2 p-4">
-  <slot name="heading" />
   <h1 class="text-base font-bold tracking-wide">Details about Document</h1>
 
   <form on:submit|preventDefault={onsubmitdata}>
