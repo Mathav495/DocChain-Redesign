@@ -26,16 +26,12 @@
       hideNavbar = false;
     }
   };
-
   let Black = true,
     Yellow = false,
-    Red = false;
-  /**
-   * Function for change theme colour
-   * @param {string} e - selected theme colour
-   */
+    Red = false,
+    Gray = false;
   const changeClr = (e) => {
-    (Black = false), (Yellow = false), (Red = false);
+    (Black = false), (Yellow = false), (Red = false), (Gray = false);
     if (e.detail == 'Black') {
       Black = true;
     }
@@ -45,6 +41,9 @@
     if (e.detail == 'Red') {
       Red = true;
     }
+    if (e.detail == 'Gray') {
+      Gray = true;
+    }
   };
 </script>
 
@@ -52,17 +51,17 @@
   <Loader />
 </div> -->
 
-<div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-800={Red} class="text-white h-screen w-screen flex flex-row py-2 pr-2">
-  <div class="lg:w-2/7 w-3/8 p-8 hidden md:flex flex-col items-start justify-between">
+<div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="text-white h-screen w-screen flex flex-row py-2 pr-2">
+  <div class="lg:w-88 md:w-80 hidden p-8 md:flex flex-col items-start justify-between">
     <Logo />
     <Nav />
     <Logout on:theme={changeClr} />
   </div>
-  <div class="lg:w-5/7 w-5/8 bg-white text-gray-900 rounded-md p-8 ml-4 md:ml-0">
+  <div class="w-full bg-white text-gray-900 rounded-md p-8 ml-2 md:ml-0">
     <Dashboard2 />
   </div>
   <!--small screen navbar-->
-  <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 block md:hidden absolute inset-0 p-12">
-    <SmallScreenNavbar />
-  </button>
 </div>
+<button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 block md:hidden absolute inset-0 p-12">
+  <SmallScreenNavbar />
+</button>
