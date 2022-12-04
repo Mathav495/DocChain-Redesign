@@ -33,7 +33,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="flex justify-between items-center" on:click|self={hideCard}>
   <div class="text-lg md:text-3xl flex items-center font-boldness gap-2">
-    <div class="bg-black md:hidden md:h-14 md:w-14 h-10 w-10 rounded-3xl flex items-center justify-center">
+    <div class="bg-black md:hidden md:h-14 md:w-14 h-10 w-10 rounded-md flex items-center justify-center">
       <img src="assets\logo2.png" alt="logo" class="md:h-10 md:w-10 h-5 w-5 animate-pulse lg:animate-none" />
     </div>
     <h1>DocChain.io</h1>

@@ -31,11 +31,11 @@
       />
     </svg>
     <span class="lg:text-base text-sm font-semibold text-center text-white w-full rounded-md px-3 py-1 transition-all duration-500 ease-in-out">Theme</span>
-    <div class:hidden={colors} class="absolute left-28 top-1 flex flex-col gap-1 font-semibold lg:text-sm text-xs text-black items-start justify-center">
-      <button class="bg-white px-2 rounded-md w-20 shadow-sm shadow-white" on:click={() => changeTheme('Black')}>Black</button>
-      <button class="bg-white px-2 rounded-md w-20 shadow-sm shadow-white" on:click={() => changeTheme('Yellow')}>Yellow</button>
-      <button class="bg-white px-2 rounded-md w-20 shadow-sm shadow-white" on:click={() => changeTheme('Red')}>Red</button>
-      <!-- <button class="bg-white px-2 rounded-md w-20 shadow-sm shadow-white" on:click={() => changeTheme('Gray')}>Gray</button> -->
+    <div class:hidden={colors} class="absolute left-28 top-1 flex flex-row gap-2 lg:text-sm text-xs text-white font-semibold items-start justify-center">
+      <button class="bg-black px-2 rounded-md w-5 h-5 border-2 border-white" on:click={() => changeTheme('Black')} />
+      <button class="bg-yellow-700 px-2 rounded-md w-5 h-5 border-2 border-white" on:click={() => changeTheme('Yellow')} />
+      <button class="bg-red-700 px-2 rounded-md w-5 h-5 border-2 border-white" on:click={() => changeTheme('Red')} />
+      <!-- <button class="bg-white px-2 rounded-md w-20 border-2 border-white" on:click={() => changeTheme('Gray')}>Gray</button> -->
     </div>
   </button>
   <a href="/" class="group flex flex-col items-center gap-1 group">

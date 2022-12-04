@@ -1,4 +1,4 @@
-<div class="bg-black p-4 w-4/5 rounded-3xl">
+<div class="bg-black p-4 w-2/5 rounded-3xl">
   <div class="text-xl flex items-center justify-center mb-5 font-boldness gap-2">
     <img src="assets\logo2.png" alt="logo" class="h-5 w-5" />
     <h1 class="text-white">DocChain.io</h1>
