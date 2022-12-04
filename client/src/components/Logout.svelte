@@ -30,7 +30,6 @@
         clip-rule="evenodd"
       />
     </svg>
-
     <span class="text-base font-semibold text-center text-white w-full rounded-md px-3 py-1 transition-all duration-500 ease-in-out">Theme</span>
     <div class:hidden={colors} class="absolute left-28 top-1 flex flex-col gap-1 font-semibold text-sm text-black items-start justify-center">
       <button class="bg-white px-2 rounded-md w-20 shadow-sm shadow-white" on:click={() => changeTheme('Black')}>Black</button>

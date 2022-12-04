@@ -53,12 +53,12 @@
 </div> -->
 
 <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-800={Red} class="text-white h-screen w-screen flex flex-row py-2 pr-2">
-  <div class="w-2/12 p-8 hidden md:flex flex-col items-start justify-between">
+  <div class="lg:w-2/7 w-3/8 p-8 hidden md:flex flex-col items-start justify-between">
     <Logo />
     <Nav />
     <Logout on:theme={changeClr} />
   </div>
-  <div class="w-10/12 bg-white text-gray-900 rounded-md p-8 ml-4 md:ml-0">
+  <div class="lg:w-5/7 w-5/8 bg-white text-gray-900 rounded-md p-8 ml-4 md:ml-0">
     <Dashboard2 />
   </div>
   <!--small screen navbar-->
@@ -66,12 +66,3 @@
     <SmallScreenNavbar />
   </button>
 </div>
-
-<style>
-  .w-2\/12 {
-    width: 18.1%;
-  }
-  .w-10\/12 {
-    width: 81.9%;
-  }
-</style>

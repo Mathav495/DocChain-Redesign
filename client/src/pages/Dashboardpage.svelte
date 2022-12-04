@@ -52,25 +52,16 @@
 </div> -->
 
 <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="text-white h-screen w-screen flex flex-row py-2 pr-2">
-  <div class="w-2/12 p-8 hidden md:flex flex-col items-start justify-between">
+  <div class="lg:w-88 w-96 p-8 flex flex-col items-start justify-between">
     <Logo />
     <Nav />
     <Logout on:theme={changeClr} />
   </div>
-  <div class="w-10/12 bg-white text-gray-900 rounded-md p-8 ml-4 md:ml-0">
+  <div class="w-full bg-white text-gray-900 rounded-md p-8 ml-4 md:ml-0">
     <Dashboard />
   </div>
   <!--small screen navbar-->
-  <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 block md:hidden absolute inset-0 p-12">
-    <SmallScreenNavbar />
-  </button>
 </div>
-
-<style>
-  .w-2\/12 {
-    width: 18.1%;
-  }
-  .w-10\/12 {
-    width: 81.9%;
-  }
-</style>
+<button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 block md:hidden absolute inset-0 p-12">
+  <SmallScreenNavbar />
+</button>
