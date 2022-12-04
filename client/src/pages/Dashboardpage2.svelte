@@ -26,9 +26,14 @@
       hideNavbar = false;
     }
   };
+
   let Black = true,
     Yellow = false,
     Red = false;
+  /**
+   * Function for change theme colour
+   * @param {string} e - selected theme colour
+   */
   const changeClr = (e) => {
     (Black = false), (Yellow = false), (Red = false);
     if (e.detail == 'Black') {
