@@ -66,7 +66,7 @@
           <Logout />
         </div>
         <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3 w-full ml-10">
-          <Header />
+          <div class="text-xl font-bold tracking-wide">Document Preview</div>
           <Previewpage />
         </div>
       </div>
