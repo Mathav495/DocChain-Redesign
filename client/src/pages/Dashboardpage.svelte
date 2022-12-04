@@ -28,9 +28,10 @@
   };
   let Black = true,
     Yellow = false,
-    Red = false;
+    Red = false,
+    Gray = false;
   const changeClr = (e) => {
-    (Black = false), (Yellow = false), (Red = false);
+    (Black = false), (Yellow = false), (Red = false), (Gray = false);
     if (e.detail == 'Black') {
       Black = true;
     }
@@ -40,6 +41,9 @@
     if (e.detail == 'Red') {
       Red = true;
     }
+    if (e.detail == 'Gray') {
+      Gray = true;
+    }
   };
 </script>
 
@@ -47,7 +51,7 @@
   <Loader />
 </div> -->
 
-<div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-800={Red} class="text-white h-screen w-screen flex flex-row py-2 pr-2">
+<div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="text-white h-screen w-screen flex flex-row py-2 pr-2">
   <div class="w-2/12 p-8 hidden md:flex flex-col items-start justify-between">
     <Logo />
     <Nav />
