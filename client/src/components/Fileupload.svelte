@@ -20,6 +20,10 @@
 
   let fileavailable = false;
 
+  /**
+   *dispatched data whether the file uploaded or not
+   * @param e
+   */
   const onavailable = (e) => {
     fileavailable = e.detail;
   };
