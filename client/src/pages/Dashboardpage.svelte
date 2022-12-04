@@ -26,17 +26,32 @@
       hideNavbar = false;
     }
   };
+  let Black = true,
+    Yellow = false,
+    Red = false;
+  const changeClr = (e) => {
+    (Black = false), (Yellow = false), (Red = false);
+    if (e.detail == 'Black') {
+      Black = true;
+    }
+    if (e.detail == 'Yellow') {
+      Yellow = true;
+    }
+    if (e.detail == 'Red') {
+      Red = true;
+    }
+  };
 </script>
 
 <!-- <div id="load1">
   <Loader />
 </div> -->
 
-<div class="bg-black text-white h-screen w-screen flex flex-row py-2 pr-2">
+<div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-800={Red} class="text-white h-screen w-screen flex flex-row py-2 pr-2">
   <div class="w-2/12 p-8 hidden md:flex flex-col items-start justify-between">
     <Logo />
     <Nav />
-    <Logout />
+    <Logout on:theme={changeClr} />
   </div>
   <div class="w-10/12 bg-white text-gray-900 rounded-md p-8 ml-4 md:ml-0">
     <Dashboard />
