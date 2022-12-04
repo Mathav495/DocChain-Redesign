@@ -182,7 +182,4 @@
   .file-height {
     height: 22rem;
   }
-  .input-dsn {
-    @apply w-full rounded-lg border-2 border-blue-500 bg-blue-200 p-1 pl-2 text-base font-bold placeholder:font-medium placeholder:text-slate-500 focus:outline-none;
-  }
 </style>
