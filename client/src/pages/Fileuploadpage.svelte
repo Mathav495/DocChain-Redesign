@@ -2,7 +2,6 @@
   import Fileupload from '../components/Fileupload.svelte';
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
-  export let params;
   import Nav from '../components/Nav.svelte';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   let hideNavbar = true;
