@@ -2,13 +2,23 @@
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
+  export let id;
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
-  let image, showpdf, pdf, container;
+  let image, showpdf, pdf, container, docDetails;
   let showImage = false;
   let status = 'Upload';
   let fileavailable = false;
   let File;
+
+  // docDetails = JSON.parse(localStorage.getItem('docDetails'));
+  // console.log(docDetails);
+
+  // docDetails.find((docDetails) => {
+  //   if (docDetails.documentID == id) {
+  //     console.log(id);
+  //   }
+  // });
 
   /**
    * Submitting file for generating filehash

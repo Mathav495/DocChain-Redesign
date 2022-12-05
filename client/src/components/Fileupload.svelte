@@ -122,7 +122,7 @@
   </HeaderFileupload>
 
   <div class="flex gap-5 pt-4">
-    <Addfile on:fileavailable={onavailable} />
+    <Addfile on:fileavailable={onavailable} {id} />
 
     <div class="rounded-lg bg-blue-100 h-auto w-1/2 p-4">
       <h1 class="text-base font-bold tracking-wide">Details about Document</h1>

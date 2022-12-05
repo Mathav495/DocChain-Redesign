@@ -6,7 +6,8 @@
     token,
     qr,
     proposedURL,
-    docDetails = {};
+    docDetails = [];
+
   token = localStorage.getItem('token');
 
   const submitdocid = async () => {
@@ -24,13 +25,22 @@
         },
       );
       console.log(data);
-      docDetails = {
-        documentID: data.documentID,
-        datahash: false,
-        filehash: false,
-        Status: 'Not published',
-      };
-      localStorage.setItem('docDetails', JSON.stringify(docDetails));
+
+      let getdata = localStorage.getItem('docDetails');
+
+      console.log(getdata);
+      if (!getdata) {
+        docDetails = [
+          {
+            documentID: data.documentID,
+            datahash: false,
+            filehash: false,
+            Status: 'Not published',
+          },
+        ];
+        localStorage.setItem('docDetails', docDetails);
+      }
+
       localStorage.setItem('documentID', data.documentID);
       documentID = localStorage.getItem('documentID');
       console.log(documentID);
