@@ -6,7 +6,7 @@
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   export let id;
-  let dateexpired, issuer, doctype, signatory, token, docTitle, documentID, valid, date, sampleData, options;
+  let dateexpired, issuer, doctype, signatory, docTitle, valid, date, sampleData, options;
   let error = {
     dateexpired: '',
     issuer: '',
@@ -15,14 +15,11 @@
     signatory: '',
     msg: '',
   };
-
-  console.log(id);
-
-  token = localStorage.getItem('token');
-  documentID = localStorage.getItem('documentID');
-
   let fileavailable = false;
+  let token = localStorage.getItem('token');
+  let documentID = localStorage.getItem('documentID');
 
+  console.log('id get from the params', id);
   /**
    *dispatched data whether the file uploaded or not
    * @param e
@@ -100,16 +97,28 @@
         },
       );
       console.log(data);
+      if (data.dataHash) {
+        let localdata = JSON.parse(localStorage.getItem('docDetails'));
+        console.log('localdata', localdata);
+        localdata.find((localdata) => {
+          if (localdata.documentID == id) {
+            console.log(localdata);
+            console.log('same id', localdata.documentID);
+            console.log('datahash', localdata.datahash);
+            localdata.datahash = true;
+          }
+        });
+      }
       dispatch('datahash', data.dataHash);
       localStorage.setItem('datahash', data.dataHash);
       let dataHash = localStorage.getItem('datahash');
       console.log('datahash', dataHash);
-      if (fileavailable && data.dataHash) {
-        error.msg = '';
-        navigate('/preview');
-      } else {
-        error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
-      }
+      // if (fileavailable && data.dataHash) {
+      //   error.msg = '';
+      //   navigate('/preview');
+      // } else {
+      //   error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
+      // }
     }
   };
 </script>
