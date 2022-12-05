@@ -21,7 +21,8 @@
    * Submitting document metadata and generating datahash
    */
   const onsubmitdata = async () => {
-    console.log(dateexpired, issuer, signatory, docTitle, doctype);
+    console.log(dateexpired, issuer, signatory, docTitle, doctype)
+  
     valid = true;
     if (dateexpired == undefined) {
       error.dateexpired = 'Fill the Expiry Date';
@@ -90,6 +91,13 @@
       localStorage.setItem('datahash', data.dataHash);
       let dataHash = localStorage.getItem('datahash');
       console.log('datahash', dataHash);
+  
+      let dateexpired = localStorage.setItem('date', dateexpired);
+    let issuer = localStorage.setItem('issuer', issuer)
+    let signatory = localStorage.setItem('signatory', signatory)
+    let docTitle = localStorage.setItem('doctitle', docTitle)
+    let doctype = localStorage.setItem('doctype', doctype)
+
       if (fileavailable && data.dataHash) {
         error.msg = '';
         navigate('/preview');

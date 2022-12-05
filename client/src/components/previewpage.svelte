@@ -118,7 +118,7 @@
     });
     console.log(data);
     if (documentID) {
-      navigate('/add-file/{documentID}');
+      navigate(`/add-file/:${documentID}`);
     }
   };
 
