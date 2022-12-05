@@ -4,7 +4,6 @@
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
   import axios from 'axios';
-  import { createEventDispatcher, onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   import Previewpage from '../components/previewpage.svelte';
 
@@ -60,12 +59,12 @@
       <div class="flex flex-row h-full py-3">
         <div class="md:w-4/12 lg:w-3/12 hidden  md-width py-5 md:flex flex-col items-center justify-between">
           <Logo />
-          <div class="md:w-4/12 lg:w-3/12 hidden md-width py-5 md:flex flex-col items-center justify-between">
+          <div class="py-14">
             <Nav />
           </div>
           <Logout />
         </div>
-        <div class="width-2 bg-white text-gray-900 content-bg-edge p-8 mr-3 w-full ml-10">
+        <div class="md:w-8/12 lg:w-9/12 w-full bg-white text-gray-900 content-bg-edge p-8 ml-3 md:ml-0 mr-3">
           <div class="text-xl font-bold tracking-wide">Document Preview</div>
           <Previewpage />
         </div>
