@@ -5,6 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
+  export let id;
   let dateexpired, issuer, doctype, signatory, token, docTitle, documentID, valid, date, sampleData, options;
   let error = {
     dateexpired: '',
@@ -114,8 +115,8 @@
 <div>
   <h1 class="text-xl font-bold tracking-wide">Choose Document</h1>
 
-  <HeaderFileupload>
-    <h1 slot="title" class="pl-2">{docTitle ? docTitle : 'No Title given'}</h1>
+  <HeaderFileupload {id}>
+    <h1 slot="title" class="pl-2 text-xl text-slate-900">{docTitle ? docTitle : 'No Title given'}</h1>
   </HeaderFileupload>
 
   <div class="flex gap-5 pt-4">

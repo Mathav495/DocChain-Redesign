@@ -29,7 +29,7 @@
       proposedURL = localStorage.getItem('docURL');
       console.log(proposedURL);
       if (data) {
-        navigate('/add-file');
+        navigate(`/add-file/${documentID}`);
       }
     }
   };
