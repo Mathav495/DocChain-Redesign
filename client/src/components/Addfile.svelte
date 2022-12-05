@@ -175,7 +175,8 @@
                     <input on:change={onChange} id="file-upload" onchange="onUpload(this.files)" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
                     <span class="pl-1">or drag and drop</span>
                     <p class="text-xs mt-2 text-gray-600">Upload JPEG, PNG, JPG, PDF files</p>
-                  </label><br />
+                  </label>
+                {/if}
               </div>
             </div>
           </div>
