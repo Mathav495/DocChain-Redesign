@@ -99,6 +99,40 @@
         pdf1.src = pdfurl;
       });
 
+      function onUpload(files) {
+        if (files.length !== 1) return;
+        const file = files[0];
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          const data = atob(e.target.result.replace(/.*base64,/, ''));
+          renderPDF(data);
+        };
+
+        reader.readAsDataURL(file);
+      }
+
+      async function renderPDF(data) {
+        const pdf = await pdfjsLib.getDocument({ data }).promise;
+        // console.log(pdf)
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const image = document.createElement('img');
+          document.body.appendChild(image);
+          console.log(image);
+          const page = await pdf.getPage(i);
+          // console.log(page)
+          const viewport = page.getViewport({ scale: 2 });
+          const canvas = document.createElement('canvas');
+          const canvasContext = canvas.getContext('2d');
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+          await page.render({ canvasContext, viewport }).promise;
+          const data = canvas.toDataURL('image/png');
+          console.log(data);
+          image.src = data;
+          image.style.width = '100%';
+        }
+      }
       return;
     } else {
       showImage = false;
@@ -138,11 +172,10 @@
                       <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <span class="inline-flex">Upload a file</span>
-                    <input on:change={onChange} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
+                    <input on:change={onChange} id="file-upload" onchange="onUpload(this.files)" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
                     <span class="pl-1">or drag and drop</span>
                     <p class="text-xs mt-2 text-gray-600">Upload JPEG, PNG, JPG, PDF files</p>
                   </label><br />
-                {/if}
               </div>
             </div>
           </div>

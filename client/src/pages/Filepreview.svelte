@@ -32,7 +32,7 @@
   pdf1.onload = function () {
     console.log(pdf1);
   };
-  //testing image loading with appending child
+  //testing image loading with appendchild
   // document.body.appendChild(pdf1);
   let pdfurl = localStorage.getItem('pdf');
   console.log('pdfUrl', pdfurl);
