@@ -41,18 +41,18 @@
   /**
    * releasing document before publish
    */
-  const releaseDoc = async () => {
-    let documentID = localStorage.getItem('documentID');
-    const { data } = await axios.get(`https://test.swagger.print2block.in/docs/release?documentID=${documentID}`, {
-      headers: {
-        'x-access-token': token,
-      },
-    });
-    console.log(data);
-    if (documentID && token) {
-      navigate('/publish');
-    }
-  };
+  // const releaseDoc = async () => {
+  //   let documentID = localStorage.getItem('documentID');
+  //   const { data } = await axios.get(`https://test.swagger.print2block.in/docs/release?documentID=${documentID}`, {
+  //     headers: {
+  //       'x-access-token': token,
+  //     },
+  //   });
+  //   console.log(data);
+  //   if (documentID && token) {
+  //     navigate('/publish');
+  //   }
+  // };
 
   let hideNavbar = true;
   const hideNav = () => {

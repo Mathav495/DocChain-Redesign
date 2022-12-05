@@ -1,5 +1,9 @@
 <script>
+  import axios from "axios"
   import { onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
+  let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
   let fileHash = localStorage.getItem('filehash');
   console.log('filehash', fileHash);
@@ -28,10 +32,43 @@
     console.log(data.userData.name);
   });
 
+   /**
+   * Submitting file for generating filehash
+   */
+   const onSubmitFile = async () => {
+    console.log('hello');
+    console.log(File);
+    if (File.name != '') {
+      const { data } = await axios.post(
+        'https://test.swagger.print2block.in/docs/add-file',
+        {
+          documentID: documentID,
+          file: File,
+        },
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'x-access-token': token,
+          },
+        },
+      );
+      console.log(data);
+      dispatch('filehash', data.fileHash);
+      localStorage.setItem('filehash', data.fileHash);
+      let fileHash = localStorage.getItem('filehash');
+      console.log('filehash', fileHash);
+      if (data.fileHash) {
+        fileavailable = true;
+        dispatch('fileavailable', fileavailable);
+        status = 'Uploaded Sucessfully';
+      }
+    }
+  };
+
   // getting signature Id from the user
   const getsignature = async () => {
-    let fileHash = localStorage.getItem('filehash');
-    let dataHash = localStorage.getItem('datahash');
+    // let fileHash = localStorage.getItem('filehash');
+    // let dataHash = localStorage.getItem('datahash');
     const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`);
     console.log(data);
     dispatch('signature', data);
@@ -71,6 +108,38 @@
       navigate('proposedurl')
     }
   };
+
+  const releaseDoc = async () => {
+    let documentID = localStorage.getItem('documentID');
+    const { data } = await axios.get(`https://test.swagger.print2block.in/docs/release?documentID=${documentID}`, {
+      headers: {
+        'x-access-token': token,
+      },
+    });
+    console.log(data);
+    if (documentID) {
+      navigate('/add-file/{documentID}');
+    }
+  };
+
+  const grads = [
+  'linear-gradient(to right, rgb(234, 88, 12), rgb(249, 115, 22))',
+  'radial-gradient(at center bottom, rgb(120, 53, 15), rgb(253, 224, 71))',
+  'radial-gradient(at center top, rgb(209, 213, 219), rgb(192, 38, 211), rgb(234, 88, 12))',
+  'linear-gradient(to right, rgb(239, 68, 68), rgb(153, 27, 27))',
+  'linear-gradient(to right, rgb(16, 185, 129), rgb(101, 163, 13))',
+  'linear-gradient(rgb(17, 24, 39), rgb(75, 85, 99))',
+  'linear-gradient(to right, rgb(15, 23, 42), rgb(88, 28, 135), rgb(15, 23, 42))',
+  'linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%)',
+  'linear-gradient( 63.1deg,  rgba(5,23,111,1) 16.4%, rgba(24,95,240,1) 64.5% )',
+];
+
+const changeGradient = () => {
+  let random = Math.floor(Math.random() * grads.length);
+  console.log(random);
+  animate.style.background = grads[random];
+};
+
 </script>
 
 <!-- <section class="text-gray-600 relative"> -->
@@ -125,25 +194,25 @@
 
 <section class="relative text-gray-600">
 
-  <div class="md:w-flex-col container mx-auto flex flex-wrap pt-10 md:flex-nowrap">
-    <div class="flex w-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
+  <div class="md:w-flex-col container mx-auto flex flex-wrap pt-3 md:flex-nowrap">
+    <div class="flex w-full h-auto space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
       <div class="flex w-full flex-col">
-        <img class="h-full w-full rounded-md border-2 border-gray-200" src={imgurl} alt="document"  />
+        <img class="h-[600px] w-full rounded-md border-2 border-gray-200" src={imgurl} alt="document"  />
         <div class="mt-5">
           <div class="pointer-events-auto flex w-full divide-x divide-gray-200 rounded-lg border-2 border-gray-200 bg-white shadow-lg ring-1 ring-blue-500 ring-opacity-5">
             <div class="mt-1 flex w-0 flex-1 items-center p-4">
               <div class="w-full">
                 <p class="text-2xl font-medium text-rose-500">Attention</p>
-                <p class="mt-1 text-sm text-red-500">kindly verify document details before proceed. This precess cannot be reversed</p>
+                <p class="mt-1 text-lg text-red-500">kindly verify document details before proceed. This precess cannot be reversed</p>
               </div>
             </div>
             <div class="flex">
               <div class="flex flex-col divide-y divide-gray-300">
                 <div class="flex h-0 flex-1">
-                  <button type="button" class="flex w-full items-center justify-center rounded-none rounded-tr-lg border border-transparent bg-slate-200 px-6 py-3 text-lg font-medium text-black focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-500">Upload</button>
+                  <button type="button" class="flex w-full items-center justify-center rounded-none rounded-tr-lg border border-transparent bg-slate-200 px-6 py-3 text-lg font-medium text-black focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-500" on:click|preventDefault={onSubmitFile}>Upload</button>
                 </div>
                 <div class="flex h-0 flex-1">
-                  <button type="button" class="flex w-full items-center justify-center rounded-none rounded-br-lg border border-transparent bg-slate-200 px-6 py-3 text-lg font-medium text-black focus:outline-none focus:ring-2 focus:ring-indigo-500">Release</button>
+                  <button type="button" class="flex w-full items-center justify-center rounded-none rounded-br-lg border border-transparent bg-slate-200 px-6 py-3 text-lg font-medium text-black focus:outline-none focus:ring-2 focus:ring-indigo-500" on:click={releaseDoc}>Release</button>
                 </div>
               </div>
             </div>
@@ -151,7 +220,7 @@
         </div>
       </div>
     </div>
-    <div class="mt-8 flex w-full flex-col rounded-md bg-gray-50 p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5">
+    <div on:load={changeGradient()} class="mt-8 flex w-full flex-col rounded-md p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5">
     
       <div class="h-30 flex w-full flex-col gap-4 rounded-lg p-2">
         <div class="order-2 flex gap-3 lg:order-none">
@@ -194,7 +263,7 @@
       </div>
       <div class="relative mb-4">
          <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Document Title</div>
-        <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out">{Document_title}/div>
+        <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out">{Document_title}</div>
       </div>
       <div class="flex w-full justify-between p-2">
         <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-lg uppercase text-white focus:outline-none" on:click|preventDefault="{getsignature}">Sign</button>
