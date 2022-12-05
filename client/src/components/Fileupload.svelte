@@ -16,6 +16,8 @@
     msg: '',
   };
 
+  console.log(id);
+
   token = localStorage.getItem('token');
   documentID = localStorage.getItem('documentID');
 

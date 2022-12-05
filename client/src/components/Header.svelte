@@ -34,7 +34,7 @@
 <div class="flex justify-between items-center" on:click|self={hideCard}>
   <div class="text-lg md:text-3xl flex items-center font-boldness gap-2">
     <div class="bg-black md:hidden md:h-14 md:w-14 h-10 w-10 rounded-md flex items-center justify-center">
-      <img src="assets\logo2.png" alt="logo" class="md:h-10 md:w-10 h-5 w-5 animate-pulse lg:animate-none" />
+      <img src="/assets/logo2.png" alt="logo" class="md:h-10 md:w-10 h-5 w-5 animate-pulse lg:animate-none" />
     </div>
     <h1>DocChain.io</h1>
   </div>
@@ -54,7 +54,7 @@
         <span class="text-black group-hover:opacity-100 transition-opacity duration-300 ease-in-out opacity-0 absolute inset-0 -top-7 -left-1">Navbar</span>
       </button>
       <div class="hidden md:flex flex-row items-center">
-        <img src="assets\profile.png" alt="profile" class="h-16 w-16 ml-1 absolute cursor-pointer" />
+        <img src="/assets/profile.png" alt="profile" class="h-16 w-16 ml-1 absolute cursor-pointer" />
         <h1 class="flex flex-row  h-10 px-3 items-center bg-indigo-50 rounded-full">
           <p class="text-lg font-semibold ml-12">Joji V.</p>
           <button on:click={showCard}>

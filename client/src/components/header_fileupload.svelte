@@ -24,6 +24,6 @@
   <div class="ml-auto p-3">
     <h1 class="text-base font-semibold text-slate-500">Issuer Name : <span class="text-lg text-slate-900 capitalize">{issuerName}</span></h1>
     <h1 class="text-base font-semibold text-slate-500">Document ID : <span class="text-lg text-slate-900 capitalize">{id}</span></h1>
-    <h1 class="text-base font-semibold text-slate-500 inline-flex">Document Title : <slot class=" text-xl text-slate-900" name="title" /></h1>
+    <h1 class="text-base font-semibold text-slate-500 inline-flex items-center">Document Title : <slot class=" text-xl text-slate-900" name="title" /></h1>
   </div>
 </div>
