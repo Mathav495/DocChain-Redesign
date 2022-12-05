@@ -3,12 +3,6 @@
   import { navigate } from 'svelte-routing';
   let docValue, documentID, token, qr, proposedURL;
   token = localStorage.getItem('token');
-  const docDetails = {
-    documentID: '',
-    datahash: false,
-    filehash: false,
-    Status: 'Not Published',
-  };
 
   const submitdocid = async () => {
     console.log(docValue);
