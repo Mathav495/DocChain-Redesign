@@ -4,6 +4,8 @@
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
   import axios from 'axios';
+  import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import { navigate } from 'svelte-routing';
   import Previewpage from '../components/previewpage.svelte';
 
@@ -51,24 +53,56 @@
       navigate('/publish');
     }
   };
+
+  let hideNavbar = true;
+  const hideNav = () => {
+    hideNavbar = true;
+  };
+  const showNav = () => {
+    if (hideNavbar == false) {
+      hideNavbar = true;
+    } else {
+      hideNavbar = false;
+    }
+  };
+
+  let Black = true,
+    Yellow = false,
+    Red = false,
+    Gray = false;
+  const changeClr = (e) => {
+    (Black = false), (Yellow = false), (Red = false), (Gray = false);
+    if (e.detail == 'Black') {
+      Black = true;
+    }
+    if (e.detail == 'Yellow') {
+      Yellow = true;
+    }
+    if (e.detail == 'Red') {
+      Red = true;
+    }
+    if (e.detail == 'Gray') {
+      Gray = true;
+    }
+  };
 </script>
 
 <main>
-  <div class="h-auto lg:h-screen relative lg:w-screen w-auto p-1 ">
-    <div class="bg-black dash-bg-edge text-white h-full w-full">
-      <div class="flex flex-row h-full py-3">
-        <div class="md:w-4/12 lg:w-3/12 hidden  md-width py-5 md:flex flex-col items-center justify-between">
-          <Logo />
-          <div class="py-14">
-            <Nav />
-          </div>
-          <Logout />
-        </div>
-        <div class="md:w-8/12 lg:w-9/12 w-full bg-white text-gray-900 content-bg-edge p-8 ml-3 md:ml-0 mr-3">
-          <div class="text-xl font-bold tracking-wide">Document Preview</div>
-          <Previewpage />
-        </div>
-      </div>
+  <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-2 pr-2">
+    <div class="lg:w-88 md:w-3/8 hidden p-8 md:flex flex-col items-start justify-between">
+      <Logo />
+      <Nav />
+      <Logout on:theme={changeClr} />
     </div>
+    <div class="lg:w-full md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-2 md:ml-0">
+      <div class="md:hidden block">
+        <Header on:navShow={showNav} />
+      </div>
+      <Previewpage />
+    </div>
+    <!--small screen navbar-->
+    <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">
+      <SmallScreenNavbar />
+    </button>
   </div>
 </main>

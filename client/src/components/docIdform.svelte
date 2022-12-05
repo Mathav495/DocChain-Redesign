@@ -1,7 +1,13 @@
 <script>
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
-  let docValue, documentID, token, qr, proposedURL;
+  let docValue,
+    documentID,
+    token,
+    qr,
+    proposedURL,
+    docDetails = [];
+
   token = localStorage.getItem('token');
 
   const submitdocid = async () => {
@@ -19,9 +25,26 @@
         },
       );
       console.log(data);
+
+      let getdata = localStorage.getItem('docDetails');
+
+      console.log(getdata);
+      if (!getdata) {
+        docDetails = [
+          {
+            documentID: data.documentID,
+            datahash: false,
+            filehash: false,
+            Status: 'Not published',
+          },
+        ];
+        localStorage.setItem('docDetails', docDetails);
+      }
+
       localStorage.setItem('documentID', data.documentID);
       documentID = localStorage.getItem('documentID');
       console.log(documentID);
+
       localStorage.setItem('qrcode', data.qr);
       qr = localStorage.getItem('qrcode');
       console.log(qr);
@@ -29,7 +52,7 @@
       proposedURL = localStorage.getItem('docURL');
       console.log(proposedURL);
       if (data) {
-        navigate('/add-file');
+        navigate(`/add-file/${documentID}`);
       }
     }
   };
