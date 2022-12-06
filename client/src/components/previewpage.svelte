@@ -3,7 +3,7 @@
   import axios from 'axios';
   import { onMount } from 'svelte';
   import { createEventDispatcher } from 'svelte';
-  import { navigate} from "svelte-routing"
+  import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
@@ -17,7 +17,7 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
-  let signature
+  let signature;
   let issuerName;
   let action = 'Add to Queue';
   let Signatory, Document_title, Doc_Type;
@@ -71,7 +71,7 @@
   const getsignature = async () => {
     // let fileHash = localStorage.getItem('filehash');
     // let dataHash = localStorage.getItem('datahash');
-   
+
     const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`);
     console.log(data);
     dispatch('signature', data);
@@ -105,7 +105,8 @@
     load = false;
     // success = true;
     if ((action = 'publish')) {
-      window.location.assign({proposedURL})
+      window.location.assign(proposedURL, '_blank');
+      // navigate({proposedURL})
     }
   };
 
@@ -116,17 +117,22 @@
         'x-access-token': token,
       },
     });
-    console.log(data)
+    console.log(data);
     console.log(data.success);
     if (data) {
       navigate(`/add-file/${documentID}`);
     }
   };
+
+  //disabling release button
   // let disabled = false;
   const disablebutton1 = () => {
     document.getElementById('button1').disabled = true;
   };
 
+  let animate = document.querySelector('#particles-js');
+  console.log(animate);
+  animate.style.display = 'none';
   const grads = [
     'linear-gradient(to right, rgb(234, 88, 12), rgb(249, 115, 22))',
     'radial-gradient(at center bottom, rgb(120, 53, 15), rgb(253, 224, 71))',
@@ -198,8 +204,8 @@
 
 <section class="relative text-gray-600">
   {#if success}
-      <Successmsg  {signature}/>
-      {/if}
+    <Successmsg />
+  {/if}
   <div class="md:w-flex-col container mx-auto flex flex-wrap pt-3 md:flex-nowrap">
     <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
       <div class="flex w-full flex-col">
@@ -226,7 +232,7 @@
         </div>
       </div>
     </div>
-    <div onload={changeGradient} class="mt-8 flex w-full flex-col rounded-md p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5">
+    <div style:background-color={changeGradient()} class=" mt-8 flex w-full flex-col rounded-md p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5">
       <div class="h-30 flex w-full flex-col gap-4 rounded-lg p-2">
         <div class="order-2 flex gap-3 lg:order-none">
           <img class="h-24 w-24 overflow-hidden rounded object-cover object-center" alt="qrcode" src={qr} />
@@ -276,17 +282,16 @@
       </div>
 
       <div class="flex w-full justify-between p-2">
-        <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none "  on:click|preventDefault={getsignature}> Sign</button>
+        <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " on:click|preventDefault={getsignature}> Sign</button>
 
         <!-- {#if (action = "add to queue")} -->
-        <a id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" href={proposedURL} target="_blank" on:click|once={disablebutton1} rel="noreferrer" on:click|preventDefault={publishdoc}>
+        <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" href={proposedURL} target="_blank" on:click|once={disablebutton1} rel="noreferrer" on:click|preventDefault={publishdoc}>
           {#if load}
             <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
-          {/if}{action}</a
+          {/if}{action}</button
         >
         <!-- {/if} -->
       </div>
-      
     </div>
   </div>
 </section>
