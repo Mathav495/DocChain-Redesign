@@ -41,6 +41,7 @@
         },
       );
       console.log(data);
+      console.log(data.lastModifiedDate)
       dispatch('filehash', data.fileHash);
       localStorage.setItem('filehash', data.fileHash);
       let fileHash = localStorage.getItem('filehash');
