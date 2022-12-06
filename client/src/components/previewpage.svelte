@@ -1,4 +1,5 @@
 <script>
+  import Successmsg from './successmsg.svelte';
   import axios from 'axios';
   import { onMount } from 'svelte';
   import { createEventDispatcher } from 'svelte';
@@ -16,11 +17,11 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
-
+  let signature
   let issuerName;
   let action = 'Add to Queue';
   let Signatory, Document_title, Doc_Type;
-  // let success = false;
+  let success = false;
 
   let load = false;
   onMount(async () => {
@@ -70,11 +71,11 @@
   const getsignature = async () => {
     // let fileHash = localStorage.getItem('filehash');
     // let dataHash = localStorage.getItem('datahash');
-    // load = true;
+   
     const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`);
     console.log(data);
     dispatch('signature', data);
-    // load = false;
+    success = true;
     localStorage.setItem('signature', data);
     let signature = localStorage.getItem('signature');
     console.log(signature);
@@ -196,6 +197,9 @@
 <!-- </section> -->
 
 <section class="relative text-gray-600">
+  {#if success}
+      <Successmsg  {signature}/>
+      {/if}
   <div class="md:w-flex-col container mx-auto flex flex-wrap pt-3 md:flex-nowrap">
     <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
       <div class="flex w-full flex-col">
@@ -282,6 +286,7 @@
         >
         <!-- {/if} -->
       </div>
+      
     </div>
   </div>
 </section>
