@@ -2,6 +2,7 @@
   import axios from 'axios';
   import { onMount } from 'svelte';
   import { createEventDispatcher } from 'svelte';
+  import { navigate} from "svelte-routing"
   const dispatch = createEventDispatcher();
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
@@ -103,7 +104,7 @@
     load = false;
     // success = true;
     if ((action = 'publish')) {
-      window.location.assign('{proposedURL}')
+      window.location.assign({proposedURL})
     }
   };
 
@@ -114,8 +115,9 @@
         'x-access-token': token,
       },
     });
+    console.log(data)
     console.log(data.success);
-    if (documentID) {
+    if (data) {
       navigate(`/add-file/${documentID}`);
     }
   };
