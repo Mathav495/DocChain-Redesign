@@ -184,6 +184,9 @@
     <div class="bg-neutral-900 w-1/2 p-1 rounded-md shadow-lg shadow-white">
       <h1 class="text-white text-2xl mx-8 font-bold tracking-wide mt-5">For new Document ID</h1>
       <h1 class="text-white text-lg mx-8 font-medium tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
+      <div class="mt-8 mx-8">
+        <button class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Generate Id</button>
+      </div>
     </div>
   </div>
 </div>
