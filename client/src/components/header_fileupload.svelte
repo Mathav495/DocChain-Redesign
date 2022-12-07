@@ -16,14 +16,14 @@
   });
 </script>
 
-<div class="mt-2 bg-blue-100 rounded-lg flex p-3">
+<div class="mt-2 bg-yellow-100 rounded-md flex items-center p-3">
   <div class="flex">
     <img src={qr} alt="qrcode" class="p-1 w-24 h-24" />
     <img src="/assets/sample.jpg" alt="qrcode" class="p-1 w-24 h-24" />
   </div>
-  <div class="ml-auto p-3">
-    <h1 class="text-base font-semibold text-slate-500">Issuer Name : <span class="text-lg text-slate-900 capitalize">{issuerName}</span></h1>
-    <h1 class="text-base font-semibold text-slate-500">Document ID : <span class="text-lg text-slate-900 capitalize">{id}</span></h1>
-    <h1 class="text-base font-semibold text-slate-500 inline-flex items-center">Document Title : <slot class=" text-xl text-slate-900" name="title" /></h1>
+  <div class="px-3">
+    <h1 class="text-base font-semibold text-slate-500">Issuer Name : <span class="text-base text-slate-900 capitalize">{issuerName}</span></h1>
+    <h1 class="text-base font-semibold text-slate-500">Document ID : <span class="text-base text-slate-900 capitalize">{id}</span></h1>
+    <h1 class="text-base font-semibold text-slate-500 inline-flex items-center">Document Title : <slot name="title" /></h1>
   </div>
 </div>

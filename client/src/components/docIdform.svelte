@@ -27,7 +27,6 @@
       console.log(data);
 
       let getdata = localStorage.getItem('docDetails');
-
       console.log(getdata);
       if (!getdata) {
         docDetails = [
@@ -38,7 +37,19 @@
             Status: 'Not published',
           },
         ];
-        localStorage.setItem('docDetails', docDetails);
+        localStorage.setItem('docDetails', JSON.stringify(docDetails));
+      } else {
+        let sampleData = JSON.parse(localStorage.getItem('docDetails'));
+        console.log(sampleData);
+        let seconddata = {
+          documentID: data.documentID,
+          datahash: false,
+          filehash: false,
+          Status: 'Not published',
+        };
+        sampleData = [...sampleData, seconddata];
+        console.log(sampleData);
+        localStorage.setItem('docDetails', JSON.stringify(sampleData));
       }
 
       localStorage.setItem('documentID', data.documentID);

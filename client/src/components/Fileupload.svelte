@@ -15,14 +15,11 @@
     signatory: '',
     msg: '',
   };
-
-  console.log(id);
-
-  token = localStorage.getItem('token');
-  documentID = localStorage.getItem('documentID');
-
   let fileavailable = false;
+  let token = localStorage.getItem('token');
+  let documentID = localStorage.getItem('documentID');
 
+  console.log('id get from the params', id);
   /**
    *dispatched data whether the file uploaded or not
    * @param e
@@ -102,30 +99,42 @@
       console.log(data);
       let metadata = data.metadata;
       console.log(metadata);
-
       // let name = data.metadata.receiver.name;
       // console.log(receiver);
       // let date = data.metadata.options.date;
       // console.log(date);
+      if (data.dataHash) {
+        let localdata = JSON.parse(localStorage.getItem('docDetails'));
+        console.log('localdata', localdata);
+        localdata.find((localdata) => {
+          if (localdata.documentID == id) {
+            console.log(localdata);
+            console.log('same id', localdata.documentID);
+            console.log('datahash', localdata.datahash);
+            localdata.datahash = true;
+            console.log(localdata);
+          }
+        });
+        console.log(localdata, 'local');
+        localStorage.setItem('docDetails', JSON.stringify(localdata));
+      }
       dispatch('datahash', data.dataHash);
       localStorage.setItem('datahash', data.dataHash);
       let dataHash = localStorage.getItem('datahash');
       console.log('datahash', dataHash);
-      if (fileavailable && data.dataHash) {
-        error.msg = '';
-        navigate('/preview');
-      } else {
-        error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
-      }
+      // if (fileavailable && data.dataHash) {
+      //   error.msg = '';
+      //   navigate('/preview');
+      // } else {
+      //   error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
+      // }
     }
   };
 </script>
 
 <div>
-  <h1 class="text-xl font-bold tracking-wide">Choose Document</h1>
-
   <HeaderFileupload {id}>
-    <h1 slot="title" class="pl-2 text-xl text-slate-900">{docTitle ? docTitle : 'No Title given'}</h1>
+    <h1 slot="title" class="pl-2 text-base text-slate-900">{docTitle ? docTitle : 'No Title given'}</h1>
   </HeaderFileupload>
 
   <div class="flex gap-5 pt-4">
