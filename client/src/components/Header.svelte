@@ -41,13 +41,13 @@
 
   <div class="flex flex-row gap-5">
     <div class="relative flex flex-row gap-2 md:gap-5">
-      <a href="/" class="flex md:hidden relative group items-center justify-center h-10 w-10 rounded-full text-black font-semibold bg-indigo-50">
+      <a href="/" class="flex md:hidden relative group items-center justify-center h-10 w-10 rounded-md text-black font-semibold bg-indigo-50">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
         </svg>
         <span class="text-black group-hover:opacity-100 transition-opacity duration-300 ease-in-out opacity-0 absolute inset-0 -top-7 -left-1">Logout</span>
       </a>
-      <button on:click={navBtn} class="flex md:hidden relative group items-center justify-center h-10 w-10 rounded-full text-black font-semibold bg-indigo-50">
+      <button on:click={navBtn} class="flex md:hidden relative group items-center justify-center h-10 w-10 rounded-md text-black font-semibold bg-indigo-50">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
         </svg>
@@ -55,7 +55,7 @@
       </button>
       <div class="hidden md:flex flex-row items-center">
         <img src="/assets/profile.png" alt="profile" class="h-16 w-16 ml-1 absolute cursor-pointer" />
-        <h1 class="flex flex-row  h-10 px-3 items-center bg-indigo-50 rounded-full">
+        <h1 class="flex flex-row  h-10 px-3 items-center bg-indigo-50 rounded-md">
           <p class="text-lg font-semibold ml-12">Joji V.</p>
           <button on:click={showCard}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mt-1 ml-2">
