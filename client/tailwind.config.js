@@ -19,6 +19,9 @@ module.exports = animateCss({
         '7/10': '77%',
         88: '22rem',
       },
+      borderWidth: {
+        6: '6px',
+      },
     },
   },
   plugins: [],
