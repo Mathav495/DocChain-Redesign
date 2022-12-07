@@ -46,6 +46,22 @@
       let fileHash = localStorage.getItem('filehash');
       console.log('filehash', fileHash);
       if (data.fileHash) {
+        // For local storage
+        let localfile = JSON.parse(localStorage.getItem('docDetails'));
+        console.log('localfile', localfile);
+        localfile.find((localfile) => {
+          if (localfile.documentID == id) {
+            console.log(localfile);
+            console.log('same id', localfile.documentID);
+            console.log('filehash', localfile.filehash);
+            localfile.filehash = true;
+            console.log(localfile);
+          }
+        });
+        console.log(localfile, 'local');
+        localStorage.setItem('docDetails', JSON.stringify(localfile));
+
+        //For dispatching
         fileavailable = true;
         dispatch('fileavailable', fileavailable);
         status = 'Uploaded Sucessfully';
