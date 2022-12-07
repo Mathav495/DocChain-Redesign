@@ -12,7 +12,6 @@
   let fileavailable = false;
   let File,
     base64,
-    element,
     instance = null;
 
   /**
@@ -112,7 +111,7 @@
           }
           return new Blob([bytes], { type: 'application/pdf' });
         }
-        element = document.getElementById('view');
+        const element = document.getElementById('view');
         WebViewer(
           {
             licenseKey: 'hezg49lLEY5VusvTCg1J',
