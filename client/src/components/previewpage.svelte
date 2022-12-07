@@ -132,7 +132,7 @@
     // when the continue button is clicked
     button3.addEventListener('click', (e) => {
       button3.style.visibility = 'hidden';
-      window.open(proposedURL, '_blank');
+      navigate("/pre")
       console.log('Continue with whatever you want to do now');
     });
   });

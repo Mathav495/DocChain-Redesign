@@ -1,144 +1,143 @@
-<script>
-  (function() {
-getElementByClassName('.share').on('click', function(e) {
-  e.preventDefault();
-  var $this = $(this);
-  $this.animate({
-    'width': $this.width() == 304 ? '64px' : '304px'
-  }, 300, 'swing');
-});
-} () );
-</script>
 
-<div class="container">
-  <ul class="btn-share clearfix">
-    <li>
-      <a href="#" class="button share entypo-share" rel="noreferrer" />
-    </li>
-    <li>
-      <a href="https://twitter.com/" class="button twitter entypo-twitter" target="_blank" rel="noreferrer" />
-    </li>
-    <li>
-      <a href="https://www.facebook.com/share.php?u=" class="button facebook entypo-facebook" target="_blank" rel="noreferrer" />
-    </li>
-    <li>
-      <a href="https://plus.google.com/" class="button google entypo-gplus" target="_blank" rel="noreferrer" />
-    </li>
-  </ul>
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+crossorigin="anonymous"
+referrerpolicy="no-referrer"
+/>
+
+<button>
+<div class="letters">
+  <div class="card">
+    <div class="card_face front">S</div>
+    <div class="card_face back"><i class="fab fa-github-square"></i></div>
+  </div>
 </div>
 
+<div class="letters">
+  <div class="card">
+    <div class="card_face front">H</div>
+    <div class="card_face back">
+      <i class="fab fa-twitter-square"></i>
+    </div>
+  </div>
+</div>
+
+<div class="letters">
+  <div class="card">
+    <div class="card_face front">A</div>
+    <div class="card_face back">
+      <i class="fab fa-facebook-square"></i>
+    </div>
+  </div>
+</div>
+
+<div class="letters">
+  <div class="card">
+    <div class="card_face front">R</div>
+    <div class="card_face back">
+      <i class="fab fa-instagram-square"></i>
+    </div>
+  </div>
+</div>
+
+<div class="letters">
+  <div class="card">
+    <div class="card_face front">E</div>
+    <div class="card_face back">
+      <i class="fab fa-linkedin"></i>
+    </div>
+  </div>
+</div>
+</button>
+
 <style>
-  a[class*='entypo-']:before,
-  span[class*='entypo-']:before {
-    font-family: 'entypo', sans-serif;
-  }
+    *,
+      :before,
+      :after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-  /* body {
-    background: #f9f9f9;
-    color: #151515;
-    font: 100%/1.5em sans-serif;
-    margin: 0;
-  } */
+      body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-  a {
-    text-decoration: none;
-  }
+      button {
+        width: 270px;
+        height: 60px;
+        border: none;
+        background: #ffe4c4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
 
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+       button::before,
+      button::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 3px;
+        background-color: #000;
+        transition: width 1s ease-in-out;
+      }
 
-  .clearfix {
-    *zoom: 1;
-  }
-  .clearfix:before,
-  .clearfix:after {
-    content: '';
-    display: table;
-  }
-  .clearfix:after {
-    clear: both;
-  }
+      button:before {
+        
+        top: 0;
+        left: 0;
+      }
 
-  .container {
-    height: 64px;
-    left: 50%;
-    margin: -32px 0 0 -152px;
-    position: absolute;
-    top: 50%;
-    width: 304px;
-  }
+      button:after {
+        
+        bottom: 0;
+        right: 0;
+      }
 
-  /* ---------- SHARE-BUTTON ---------- */
+      button:hover:before,
+      button:hover:after {
+        width: 100%;
+      }
 
-  .button {
-    border-radius: 8px;
-    color: #fff;
-    display: block;
-    font-size: 24px;
-    height: 64px;
-    line-height: 64px;
-    text-align: center;
-    -webkit-transition: -webkit-transform 0.2s;
-    -moz-transition: -moz-transform 0.2s;
-    -ms-transition: -ms-transform 0.2s;
-    -o-transition: -o-transform 0.2s;
-    transition: all 0.2s;
-    -webkit-transform: translateZ(1);
-    width: 64px;
-  }
+      .letters {
+        width: 50px;
+        height: 50px;
+        perspective: 600px;
+      }
 
-  .button:hover {
-    -webkit-transform: scale(1.05);
-    -moz-transform: scale(1.05);
-    -ms-transform: scale(1.05);
-    -o-transform: scale(1.05);
-    transform: scale(1.05);
-  }
+      .card {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transition: transform 1s ease-in-out;
+        transform-style: preserve-3d;
+      }
 
-  .share {
-    background: #444;
-    box-shadow: 0 4px 0 #2a2a2a;
-    width: 304px;
-  }
+      .card_face {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        backface-visibility: hidden;
+        font-size: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: 600;
+      }
 
-  .twitter {
-    background: #00acee;
-    box-shadow: 0 4px 0 #0080b1;
-  }
+      .back {
+        transform: rotateY(180deg);
+      }
 
-  .facebook {
-    background: #3b5998;
-    box-shadow: 0 4px 0 #2d4370;
-  }
-
-  .google {
-    background: #cc3732;
-    box-shadow: 0 4px 0 #9c2a26;
-  }
-
-  .btn-share {
-    display: inline-block;
-    position: relative;
-  }
-
-  .btn-share li {
-    float: left;
-    margin: 0 8px;
-  }
-
-  .btn-share li:first-child {
-    margin-left: 0;
-    position: absolute;
-  }
-
-  .btn-share li:nth-child(2) {
-    margin: 0 8px 0 80px;
-  }
-
-  .btn-share li:last-child {
-    margin: 0 0 0 8px;
-  }
+      button:hover .card {
+        transform: rotateY(180deg);
+      }
 </style>
