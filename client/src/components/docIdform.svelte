@@ -68,9 +68,9 @@
       <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900 ">Status</div>
       <div class=" py-3 tracking-wider w-1/5  text-slate-900">Actions</div>
     </div>
-    <div class="">
+    <div>
       <div class=" border-b-2 border-black flex w-full font-semibold text-base lg:text-lg">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900">638d975742d47d79c84d57c1</div>
+        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -88,7 +88,7 @@
         <div class=" py-3 w-1/5 tracking-wider text-lg font-bold text-sky-500"><a href="/" class="text-lg font-bold text-sky-500 ">Continue</a></div>
       </div>
       <div class="border-b-2 border-black flex w-full font-semibold text-base lg:text-lg">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900">638d975742d47d79c84d57c1</div>
+        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -106,7 +106,7 @@
         <div class=" py-3 w-1/5 tracking-wider text-lg font-bold text-sky-500"><a href="/" class="text-lg font-bold text-sky-500 ">Continue</a></div>
       </div>
       <div class="border-b-2 border-black flex w-full font-semibold text-base lg:text-lg">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900">638d975742d47d79c84d57c1</div>
+        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -124,7 +124,7 @@
         <div class=" py-3 w-1/5 tracking-wider text-lg font-bold text-sky-500"><a href="/" class="text-lg font-bold text-sky-500 ">Continue</a></div>
       </div>
       <div class="border-b-2 border-black flex w-full font-semibold text-base lg:text-lg">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900">638d975742d47d79c84d57c1</div>
+        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -142,7 +142,7 @@
         <div class=" py-3 w-1/5 tracking-wider text-lg font-bold text-sky-500"><a href="/" class="text-lg font-bold text-sky-500 ">Continue</a></div>
       </div>
       <div class=" flex w-full font-semibold text-base lg:text-lg">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900">638d975742d47d79c84d57c1</div>
+        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
