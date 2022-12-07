@@ -1,6 +1,7 @@
 <script>
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
+  import WebViewer from '@pdftron/pdfjs-express';
   const dispatch = createEventDispatcher();
   export let id;
   let token = localStorage.getItem('token');
@@ -9,16 +10,10 @@
   let showImage = false;
   let status = 'Upload';
   let fileavailable = false;
-  let File;
-
-  // docDetails = JSON.parse(localStorage.getItem('docDetails'));
-  // console.log(docDetails);
-
-  // docDetails.find((docDetails) => {
-  //   if (docDetails.documentID == id) {
-  //     console.log(id);
-  //   }
-  // });
+  let File,
+    base64,
+    element,
+    instance = null;
 
   /**
    * Submitting file for generating filehash
@@ -103,29 +98,51 @@
       const reader = new FileReader();
       reader.readAsDataURL(File);
       reader.addEventListener('load', function () {
-        pdf.setAttribute('src', reader.result);
-        const url1 = reader.result;
-        console.log(url1);
-        const pdf1 = new Image();
+        // pdf.setAttribute('src', reader.result);
+        base64 = reader.result;
+        console.log('base64', base64);
+        let encoded = window.btoa(base64);
+        function base64ToBlob(encoded) {
+          console.log(encoded);
+          const binaryString = window.atob(encoded);
+          const len = binaryString.length;
+          const bytes = new Uint8Array(len);
+          for (let i = 0; i < len; ++i) {
+            bytes[i] = binaryString.charCodeAt(i);
+          }
+          return new Blob([bytes], { type: 'application/pdf' });
+        }
+        element = document.getElementById('view');
+        WebViewer(
+          {
+            licenseKey: 'hezg49lLEY5VusvTCg1J',
+            path: '/lib',
+          },
+          element,
+        ).then((instance) => {
+          instance.loadDocument(base64ToBlob(encoded), { filename: File.name });
+          instance.UI.setTheme('dark');
+        });
+        // const pdf1 = new Image();
         // image.src = url;
         // document.body.appendChild(image);
-        localStorage.setItem('pdf', url1);
-        let pdfurl = localStorage.getItem('pdf');
-        console.log('pdfUrl', pdfurl);
-        pdf1.src = pdfurl;
+        // localStorage.setItem('pdf', url1);
+        // let pdfurl = localStorage.getItem('pdf');
+        // console.log('pdfUrl', pdfurl);
+        // pdf1.src = pdfurl;
       });
 
-      function onUpload(files) {
-        if (files.length !== 1) return;
-        const file = files[0];
-        let reader = new FileReader();
-        reader.onload = (e) => {
-          const data = atob(e.target.result.replace(/.*base64,/, ''));
-          renderPDF(data);
-        };
+      // function onUpload(files) {
+      //   if (files.length !== 1) return;
+      //   const file = files[0];
+      //   let reader = new FileReader();
+      //   reader.onload = (e) => {
+      //     const data = atob(e.target.result.replace(/.*base64,/, ''));
+      //     renderPDF(data);
+      //   };
 
-        reader.readAsDataURL(file);
-      }
+      //   reader.readAsDataURL(file);
+      // }
 
       async function renderPDF(data) {
         const pdf = await pdfjsLib.getDocument({ data }).promise;
@@ -181,7 +198,8 @@
                 {#if showImage}
                   <img bind:this={image} class="file-height w-full" id="File" src="" alt="Preview" />
                 {:else if showpdf}
-                  <embed bind:this={pdf} class="h-52 w-full" id="File" src="" alt="Preview" />
+                  <!-- <embed bind:this={pdf} class="h-52 w-full" id="File" src="" alt="Preview" /> -->
+                  <div id="view" />
                 {:else}
                   <label for="file-upload" class=" relative cursor-pointer rounded-md  font-semibold text-blue-800" id="dropzone">
                     <svg class="mx-auto h-12 w-12 text-gray-400" stroke="white" fill="none" viewBox="0 0 48 48" aria-hidden="true">
@@ -208,5 +226,9 @@
 <style lang="postcss">
   .file-height {
     height: 22rem;
+  }
+  #view {
+    width: 500px;
+    height: 500px;
   }
 </style>
