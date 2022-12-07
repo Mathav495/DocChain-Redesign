@@ -141,7 +141,7 @@
         </div>
         <div class=" py-3 w-1/5 tracking-wider text-lg font-bold text-sky-500"><a href="/" class="text-lg font-bold text-sky-500 ">Continue</a></div>
       </div>
-      <div class="border-b-2 border-black flex w-full font-semibold text-base lg:text-lg">
+      <div class=" flex w-full font-semibold text-base lg:text-lg">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
