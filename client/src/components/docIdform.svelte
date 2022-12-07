@@ -157,7 +157,13 @@
 
   <!-- 2st div form -->
   <div class="flex gap-3 mt-5 h-80 ">
-    <div class="bg-black w-1/2  p-2 text-white text-2xl rounded-md shadow-lg shadow-white">Form</div>
-    <div class="bg-black w-1/2 p-2 text-white text-2xl rounded-md shadow-lg shadow-white">Form</div>
+    <!-- 1st -->
+    <div class="bg-black w-1/2  p-2 text-white text-2xl rounded-md shadow-lg shadow-white">
+      <h1 class="text-white text-xl px-3 font-bold tracking-wide mt-5">Continue with Excisting Document ID</h1>
+      <h1 class="text-white text-lg px-3 font-medium tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
+    </div>
+
+    <!-- 2nd -->
+    <div class="bg-black  w-1/2 p-2 text-white text-2xl rounded-md shadow-lg shadow-white">Form</div>
   </div>
 </div>
