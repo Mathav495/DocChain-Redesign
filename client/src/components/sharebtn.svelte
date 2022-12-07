@@ -61,12 +61,12 @@ referrerpolicy="no-referrer"
         box-sizing: border-box;
       }
 
-      body {
+      /* body {
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-      }
+      } */
 
       button {
         width: 270px;
