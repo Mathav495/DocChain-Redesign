@@ -20,7 +20,7 @@
   let signature;
   let issuerName;
   let action = 'Add to Queue';
-  let receiver,signatory, Document_title, Doc_Type;
+  let receiver, signatory, Document_title, Doc_Type;
   let success = false;
 
   let load = false;
@@ -104,11 +104,38 @@
     dispatch('push', data);
     load = false;
     // success = true;
-    if ((action = 'publish')) {
-      window.location.assign(proposedURL, '_blank');
-      // navigate({proposedURL})
-    }
+    // if ((action = 'publish')) {
+    //   window.location.assign(proposedURL, '_blank');
+    //   // navigate({proposedURL})
+    // }
   };
+
+  window.addEventListener('DOMContentLoaded', (e) => {
+    const button2 = document.getElementById('button2');
+    const button3 = document.getElementById('button3');
+    const scaryFace = document.getElementById('scaryFace');
+
+    // whenever the enter button is clicked
+    button2.addEventListener('click', (e) => {
+      button2.style.visibility = 'hidden';
+      console.log('Ahh, jumpscare!');
+      scaryFace.style.visibility = 'visible';
+      setTimeout(() => {
+        // at least 3 seconds are gone => show the "continue" button
+        console.log('3 seconds are gone...');
+        button3.style.visibility = 'visible';
+      }, 3000);
+      
+    });
+    scaryFace.style.visibility = 'hidden';
+    // when the continue button is clicked
+    button3.addEventListener('click', (e) => {
+      button3.style.visibility = 'hidden';
+     
+      window.location.assign(proposedURL, '_blank');
+      console.log('Continue with whatever you want to do now');
+    });
+  });
 
   const releaseDoc = async () => {
     // let documentID = localStorage.getItem('documentID');
@@ -203,7 +230,6 @@
 <!-- </section> -->
 
 <section class="relative text-gray-600">
- 
   <div class="md:w-flex-col container mx-auto flex flex-wrap pt-3 md:flex-nowrap">
     <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
       <div class="flex w-full flex-col">
@@ -213,7 +239,7 @@
             <div class="mt-1 flex w-0 flex-1 items-center p-4">
               <div class="w-full">
                 <p class="text-2xl font-medium text-rose-500">Attention</p>
-                <p class="mt-1 text-lg text-red-800">kindly verify the document details before proceed. This precess cannot be reversed</p>
+                <p class="mt-1 text-lg text-red-800">kindly verify the document details before proceed. You cannot release after publishing</p>
               </div>
             </div>
             <div class="flex">
@@ -236,11 +262,7 @@
       <div class="h-30 flex w-full flex-col gap-4 rounded-lg p-2">
         <div class="order-2 flex gap-3 lg:order-none">
           <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="qrcode" src={qr} />
-          <img
-            class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200"
-            alt="logo"
-            src="/assets/sample.jpg"
-          />
+          <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="logo" src="/assets/sample.jpg" />
 
           <div class="flex flex-col gap-10">
             <div id="docid" class="flex rounded-md px-3 py-1 text-xs font-medium text-black">ISSUER NAME: {issuerName}</div>
@@ -293,16 +315,28 @@
         <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " on:click|preventDefault={getsignature}> Sign</button>
 
         <!-- {#if (action = "add to queue")} -->
-        <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" href={proposedURL} target="_blank" on:click|once={disablebutton1} rel="noreferrer" on:click|preventDefault={publishdoc}>
+        <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" on:click|once={disablebutton1} rel="noreferrer" on:click|preventDefault={publishdoc}>
           {#if load}
             <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
-          {/if}{action}</button
+          {/if}Queue</button
+        >
+        <button id="button3" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " href={proposedURL} target="_blank" style="visibility: hidden" rel="noreferrer" on:click|preventDefault={publishdoc}>
+          {#if load}
+            <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
+          {/if}Publish</button
         >
         <!-- {/if} -->
       </div>
+      <div id="scaryFace" style="visibility: hidden">loading ...</div>
       {#if success}
-      <Successmsg />
-    {/if}
+        <Successmsg />
+      {/if}
     </div>
   </div>
 </section>
+
+<!-- <style>
+  .hide {
+    display: none;
+  }
+</style> -->
