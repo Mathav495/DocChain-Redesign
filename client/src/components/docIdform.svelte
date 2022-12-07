@@ -3,6 +3,7 @@
   import { navigate } from 'svelte-routing';
   import Tick from '../icons/Tick.svelte';
   import X from '../icons/X.svelte';
+  import Emailicon from '../icons/Emailicon.svelte';
   let docValue,
     documentID,
     token,
@@ -161,6 +162,15 @@
     <div class="bg-black w-1/2  p-2 text-white text-2xl rounded-md shadow-lg shadow-white">
       <h1 class="text-white text-xl px-3 font-bold tracking-wide mt-5">Continue with Excisting Document ID</h1>
       <h1 class="text-white text-lg px-3 font-medium tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
+      <div class="w-96 mt-10 group mx-10">
+        <label for="Email" class="text-xl relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-400 group-hover:text-white tracking-wide">Document Id</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+            <Emailicon />
+          </span>
+          <input type="email" id="Email" placeholder="Enter Document Id" class="w-full mt-2 pl-9 placeholder:text-blue-500 placeholder:text-base  bg-black focus:bg-black text-blue-500 rounded border focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
+        </div>
+      </div>
     </div>
 
     <!-- 2nd -->
