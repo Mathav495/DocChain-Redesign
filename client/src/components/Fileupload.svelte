@@ -106,8 +106,11 @@
             console.log('same id', localdata.documentID);
             console.log('datahash', localdata.datahash);
             localdata.datahash = true;
+            console.log(localdata);
           }
         });
+        console.log(localdata, 'local');
+        localStorage.setItem('docDetails', JSON.stringify(localdata));
       }
       dispatch('datahash', data.dataHash);
       localStorage.setItem('datahash', data.dataHash);
