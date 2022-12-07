@@ -6,7 +6,7 @@
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   export let id;
-  let dateexpired, issuer, doctype, signatory, token, docTitle, documentID, valid, date, sampleData, options, name;
+  let dateexpired, issuer, doctype, signatory, docTitle, valid, date, sampleData, options, name;
   let error = {
     dateexpired: '',
     issuer: '',
