@@ -124,15 +124,15 @@
         // at least 3 seconds are gone => show the "continue" button
         console.log('3 seconds are gone...');
         button3.style.visibility = 'visible';
+        scaryFace.style.visibility = 'hidden';
+        console.log('hidden');
       }, 3000);
-      
     });
-    scaryFace.style.visibility = 'hidden';
+
     // when the continue button is clicked
     button3.addEventListener('click', (e) => {
       button3.style.visibility = 'hidden';
-     
-      window.location.assign(proposedURL, '_blank');
+      window.open(proposedURL, '_blank');
       console.log('Continue with whatever you want to do now');
     });
   });
@@ -327,7 +327,7 @@
         >
         <!-- {/if} -->
       </div>
-      <div id="scaryFace" style="visibility: hidden">loading ...</div>
+      <div id="scaryFace" style="visibility: hidden" class="mt-5 text-lg text-green-600 justify-center mx-auto" >loading please wait...</div>
       {#if success}
         <Successmsg />
       {/if}
