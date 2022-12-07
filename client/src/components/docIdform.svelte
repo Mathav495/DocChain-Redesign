@@ -58,30 +58,21 @@
   };
 </script>
 
-<h1 class="text-xl font-bold tracking-wide">Publish Documents</h1>
-<div class="flex lg:flex-row flex-col gap-0 lg:gap-5">
-  <div class="bg-black  mt-5 w-full lg:w-3/5 p-4 rounded-lg">
-    <form on:submit|preventDefault={submitdocid}>
-      <div class="flex flex-col">
-        <label for="docid" class="text-lg  mt-4 font-semibold tracking-wide text-white">Do you have Document ID</label>
-        <div class="flex mt-5 gap-5">
-          <select name="docid" class="w-1/2 pl-2 rounded-lg text-xl " bind:value={docValue}>
-            <option class="pl-5">select</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-          <button class="flex text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">Submit</button>
-        </div>
-      </div>
-    </form>
+<div class="flex flex-col">
+  <!-- 1st div table -->
+  <div class="shadow-lg rounded-lg relative text-center overflow-auto  max-h-96">
+    <div class="bg-sky-100 w-full flex font-semibold text-base lg:text-lg">
+      <div class="px-4 py-3 w-1/4  tracking-wider  text-slate-900">Document Id</div>
+      <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">Data Hash Generated</div>
+      <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">File Hash Generated</div>
+      <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900 ">Status</div>
+      <div class=" py-3 tracking-wider w-1/5  text-slate-900">Actions</div>
+    </div>
   </div>
 
-  <div class="bg-black  mt-5 w-full lg:w-2/5 p-4 rounded-lg">
-    <h1 class=" text-white font-semibold tracking-wide">NOTE.</h1>
-    <ul class="list-disc list-outside p-3">
-      <li class="text-sm md:text-base text-white font-semibold tracking-wide">If you don't have Document ID,Select 'NO' .It will generate Document ID.</li>
-
-      <li class="text-sm md:text-base text-white font-semibold tracking-wide mt-1">Otherwise select 'YES'</li>
-    </ul>
+  <!-- 2st div form -->
+  <div class="flex gap-3 mt-5">
+    <!-- <div class="bg-black w-1/2 p-2 text-white text-2xl">Form</div>
+    <div class="bg-black w-1/2 p-2 text-white text-2xl">Form</div> -->
   </div>
 </div>
