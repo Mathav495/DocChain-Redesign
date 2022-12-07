@@ -1,6 +1,8 @@
 <script>
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
+  import Tick from '../icons/Tick.svelte';
+  import X from '../icons/X.svelte';
   let docValue,
     documentID,
     token,
@@ -34,7 +36,7 @@
             documentID: data.documentID,
             datahash: false,
             filehash: false,
-            Status: 'Not published',
+            Status: 'Not Pendinged',
           },
         ];
         localStorage.setItem('docDetails', JSON.stringify(docDetails));
@@ -69,30 +71,133 @@
   };
 </script>
 
-<h1 class="text-xl font-bold tracking-wide">Publish Documents</h1>
-<div class="flex lg:flex-row flex-col gap-0 lg:gap-5">
-  <div class="bg-black  mt-5 w-full lg:w-3/5 p-4 rounded-lg">
-    <form on:submit|preventDefault={submitdocid}>
-      <div class="flex flex-col">
-        <label for="docid" class="text-lg  mt-4 font-semibold tracking-wide text-white">Do you have Document ID</label>
-        <div class="flex mt-5 gap-5">
-          <select name="docid" class="w-1/2 pl-2 rounded-lg text-xl " bind:value={docValue}>
-            <option class="pl-5">select</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-          <button class="flex text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">Submit</button>
+<div class="flex flex-col">
+  <!-- 1st div table -->
+  <div class="shadow-lg rounded-lg relative text-center overflow-auto  max-h-96">
+    <div class="bg-sky-100 w-full flex font-semibold text-base lg:text-lg">
+      <div class="px-4 py-3 w-1/4  tracking-wider  text-slate-900">Document Id</div>
+      <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">Data Hash Generated</div>
+      <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">File Hash Generated</div>
+      <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900 ">Actions</div>
+      <div class=" py-3 tracking-wider w-1/5  text-slate-900">Status</div>
+    </div>
+    <div>
+      <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-base lg:text-lg">
+        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <Tick />
+        </div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <Tick />
+        </div>
+        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
+          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-lg font-bold p-1 tracking-wide">Publish</button>
+          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-lg font-bold p-1 tracking-wide">Revoke</button>
+        </div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
+          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-lg font-bold p-1 tracking-wide">Pending</button>
         </div>
       </div>
-    </form>
+
+      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-base lg:text-lg">
+        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <Tick />
+        </div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <Tick />
+        </div>
+        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
+          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-lg font-bold p-1 tracking-wide">Publish</button>
+          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-lg font-bold p-1 tracking-wide">Revoke</button>
+        </div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
+          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-lg font-bold p-1 tracking-wide">Pending</button>
+        </div>
+      </div>
+      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-base lg:text-lg">
+        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <Tick />
+        </div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <Tick />
+        </div>
+        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
+          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-lg font-bold p-1 tracking-wide">Publish</button>
+          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-lg font-bold p-1 tracking-wide">Revoke</button>
+        </div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
+          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-lg font-bold p-1 tracking-wide">Pending</button>
+        </div>
+      </div>
+      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-base lg:text-lg">
+        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <X />
+        </div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <X />
+        </div>
+        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
+          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-lg font-bold p-1 tracking-wide">Publish</button>
+          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-lg font-bold p-1 tracking-wide">Revoke</button>
+        </div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
+          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-lg font-bold p-1 tracking-wide">Pending</button>
+        </div>
+      </div>
+      <div class=" flex w-full font-semibold text-base lg:text-lg">
+        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <X />
+        </div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <X />
+        </div>
+        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
+          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-lg font-bold p-1 tracking-wide">Publish</button>
+          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-lg font-bold p-1 tracking-wide">Revoke</button>
+        </div>
+        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
+          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-lg font-bold p-1 tracking-wide">Pending</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="bg-black  mt-5 w-full lg:w-2/5 p-4 rounded-lg">
-    <h1 class=" text-white font-semibold tracking-wide">NOTE.</h1>
-    <ul class="list-disc list-outside p-3">
-      <li class="text-sm md:text-base text-white font-semibold tracking-wide">If you don't have Document ID,Select 'NO' .It will generate Document ID.</li>
+  <!-- 2st div form -->
+  <div class="flex flex-col lg:flex-row gap-3 mt-10 h-80">
+    <!-- 1st -->
+    <div class="bg-white w-full lg:w-1/2 p-2 rounded-md shadow-xl">
+      <h1 class="text-black text-2xl mx-8 font-bold tracking-wide mt-5">Continue with Existing Document ID</h1>
+      <h1 class="text-black text-lg mx-8 font-medium tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
+      <form class="mx-8">
+        <div class="w-96 mt-8 group">
+          <label for="Email" class="text-lg relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-900 group-hover:text-blue-600 font-semibold tracking-wide">Document Id</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5  fill-gray-900 mt-2">
+                <path fill-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625zM7.5 15a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 017.5 15zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H8.25z" clip-rule="evenodd" />
+                <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
+              </svg>
+            </span>
+            <input type="email" id="Email" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black  rounded border focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
+          </div>
+        </div>
+        <div class="mt-8">
+          <button class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Continue</button>
+        </div>
+      </form>
+    </div>
 
-      <li class="text-sm md:text-base text-white font-semibold tracking-wide mt-1">Otherwise select 'YES'</li>
-    </ul>
+    <!-- 2nd -->
+    <div class="bg-white w-1/2 p-1 rounded-md shadow-lg">
+      <h1 class="text-black text-2xl mx-8 font-bold tracking-wide mt-5">For new Document ID</h1>
+      <h1 class="text-black text-lg mx-8 font-medium tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
+      <div class="mt-8 mx-8">
+        <button class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Generate Id</button>
+      </div>
+    </div>
   </div>
 </div>
