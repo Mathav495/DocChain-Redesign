@@ -37,7 +37,7 @@
             documentID: data.documentID,
             datahash: false,
             filehash: false,
-            Status: 'Not published',
+            Status: 'Not Pendinged',
           },
         ];
         localStorage.setItem('docDetails', docDetails);
@@ -71,7 +71,7 @@
       <div class=" py-3 tracking-wider w-1/5  text-slate-900">Actions</div>
     </div>
     <div>
-      <div class=" border-b-2 border-black flex w-full font-semibold text-base lg:text-lg">
+      <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-base lg:text-lg">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <Tick />
@@ -80,12 +80,12 @@
           <Tick />
         </div>
         <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-white rounded-md hover:bg-green-600 text-lg font-medium p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-lg font-medium p-1 tracking-wide">Revoke</button>
+          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-lg font-bold p-1 tracking-wide">Pending</button>
+          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-lg font-bold p-1 tracking-wide">Published</button>
         </div>
         <div class=" py-3 w-1/5 tracking-wider text-lg font-bold text-sky-500"><a href="/" class="text-lg font-bold text-sky-500 ">Continue</a></div>
       </div>
-      <div class="border-b-2 border-black flex w-full font-semibold text-base lg:text-lg">
+      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-base lg:text-lg">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <Tick />
@@ -94,12 +94,12 @@
           <Tick />
         </div>
         <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-white rounded-md hover:bg-green-600 text-lg font-medium p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-lg font-medium p-1 tracking-wide">Revoke</button>
+          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-lg font-bold p-1 tracking-wide">Pending</button>
+          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-lg font-bold p-1 tracking-wide">Published</button>
         </div>
         <div class=" py-3 w-1/5 tracking-wider text-lg font-bold text-sky-500"><a href="/" class="text-lg font-bold text-sky-500 ">Continue</a></div>
       </div>
-      <div class="border-b-2 border-black flex w-full font-semibold text-base lg:text-lg">
+      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-base lg:text-lg">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <Tick />
@@ -108,12 +108,12 @@
           <Tick />
         </div>
         <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-white rounded-md hover:bg-green-600 text-lg font-medium p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-lg font-medium p-1 tracking-wide">Revoke</button>
+          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-lg font-bold p-1 tracking-wide">Pending</button>
+          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-lg font-bold p-1 tracking-wide">Published</button>
         </div>
         <div class=" py-3 w-1/5 tracking-wider text-lg font-bold text-sky-500"><a href="/" class="text-lg font-bold text-sky-500 ">Continue</a></div>
       </div>
-      <div class="border-b-2 border-black flex w-full font-semibold text-base lg:text-lg">
+      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-base lg:text-lg">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <X />
@@ -122,8 +122,8 @@
           <X />
         </div>
         <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-white rounded-md hover:bg-green-600 text-lg font-medium p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-lg font-medium p-1 tracking-wide">Revoke</button>
+          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-lg font-bold p-1 tracking-wide">Pending</button>
+          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-lg font-bold p-1 tracking-wide">Published</button>
         </div>
         <div class=" py-3 w-1/5 tracking-wider text-lg font-bold text-sky-500"><a href="/" class="text-lg font-bold text-sky-500 ">Continue</a></div>
       </div>
@@ -136,8 +136,8 @@
           <X />
         </div>
         <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-white rounded-md hover:bg-green-600 text-lg font-medium p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-lg font-medium p-1 tracking-wide">Revoke</button>
+          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-lg font-bold p-1 tracking-wide">Pending</button>
+          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-lg font-bold p-1 tracking-wide">Published</button>
         </div>
         <div class=" py-3 w-1/5 tracking-wider text-lg font-bold text-sky-500"><a href="/" class="text-lg font-bold text-sky-500 ">Continue</a></div>
       </div>
