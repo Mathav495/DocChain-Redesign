@@ -1,58 +1,17 @@
 <script>
+  import Sharebtn from '../components/sharebtn.svelte';
   import Header from '../components/Header.svelte';
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
   // import axios from 'axios';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
-  // import { createEventDispatcher, onMount } from 'svelte';
-  // import { navigate } from 'svelte-routing';
-  import Previewpage from '../components/previewpage.svelte';
-
-  let token = localStorage.getItem('token');
-  let fileHash = localStorage.getItem('filehash');
-  console.log('filehash', fileHash);
-  let dataHash = localStorage.getItem('datahash');
-  console.log('datahash', dataHash);
   let qr = localStorage.getItem('qrcode');
   console.log('qrcode', qr);
   let proposedURL = localStorage.getItem('docURL');
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
-
-  const image = new Image();
-  image.onload = function () {
-    console.log(image.width);
-  };
-  image.src = qr;
-  image.src = imgurl;
-
-  const pdf1 = new Object();
-  pdf1.onload = function () {
-    console.log(pdf1);
-  };
-  //testing image loading with appendchild
-  // document.body.appendChild(pdf1);
-  let pdfurl = localStorage.getItem('pdf');
-  console.log('pdfUrl', pdfurl);
-  pdf1.src = pdfurl;
-
-  /**
-   * releasing document before publish
-   */
-  // const releaseDoc = async () => {
-  //   let documentID = localStorage.getItem('documentID');
-  //   const { data } = await axios.get(`https://test.swagger.print2block.in/docs/release?documentID=${documentID}`, {
-  //     headers: {
-  //       'x-access-token': token,
-  //     },
-  //   });
-  //   console.log(data);
-  //   if (documentID && token) {
-  //     navigate('/publish');
-  //   }
-  // };
 
   let hideNavbar = true;
   const hideNav = () => {
@@ -98,7 +57,26 @@
       <div class="md:hidden block">
         <Header on:navShow={showNav} />
       </div>
-      <Previewpage />
+      <!-- <section class="body-font text-gray-600"> -->
+        <div class="mx-auto flex flex-wrap justify-center  py-5">
+          <div class="-m-1 flex flex-wrap md:-m-2">
+            <div class="flex w-full flex-wrap">
+              <div class="w-full  md:p-2">
+                <img alt="gallery" class="object-cover object-center h-[500px] w-5/6 mx-auto" src={imgurl} />
+              </div>
+              <div class="mt-5 flex space-x-10">
+                <div class="w-1/3 p-1 md:p-2">
+                  <Sharebtn />
+                </div>
+                <div class="w-2/3 p-1 md:p-2">
+                  <!-- <img alt="gallery" class="block h-full w-full object-cover object-center" src="https://dummyimage.com/503x303" /> -->
+                  <div class="flex items-center text-center ml-10 mt-5 text-base text-gray-900">Your Document Url is: {proposedURL}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- </section> -->
     </div>
     <!--small screen navbar-->
     <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">

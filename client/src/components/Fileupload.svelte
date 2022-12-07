@@ -6,7 +6,7 @@
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   export let id;
-  let dateexpired, issuer, doctype, signatory, docTitle, valid, date, sampleData, options;
+  let dateexpired, issuer, doctype, signatory, token, docTitle, documentID, valid, date, sampleData, options, name;
   let error = {
     dateexpired: '',
     issuer: '',
@@ -97,6 +97,12 @@
         },
       );
       console.log(data);
+      let metadata = data.metadata;
+      console.log(metadata);
+      // let name = data.metadata.receiver.name;
+      // console.log(receiver);
+      // let date = data.metadata.options.date;
+      // console.log(date);
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem('docDetails'));
         console.log('localdata', localdata);

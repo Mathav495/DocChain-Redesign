@@ -1,6 +1,7 @@
 <script>
   import Loginpage from './pages/Loginpage.svelte';
   import Dashboardpage from './pages/Dashboardpage.svelte';
+  import Prepublish from './pages/prepublish.svelte';
   import { Route, Router } from 'svelte-routing';
   import Publishdoc from './pages/Publishdoc.svelte';
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
@@ -43,8 +44,8 @@
       <Fileuploadpage on:datahash={getDataHash} on:filehash={getFileHash} id={params.id} />
     </Route>
     <Route path="/preview"><Filepreview on:signature={getSign} /></Route>
-    <Route path="/sign"><Signature /></Route>
-    <Route path="/block"><Blockchain /></Route>
+    <!-- <Route path="/sign"><Signature /></Route> -->
+    <!-- <Route path="/pre"><Prepublish /></Route> -->
   </main>
 </Router>
 
