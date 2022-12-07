@@ -3,7 +3,6 @@
   import { navigate } from 'svelte-routing';
   import Tick from '../icons/Tick.svelte';
   import X from '../icons/X.svelte';
-  import Emailicon from '../icons/Emailicon.svelte';
   let docValue,
     documentID,
     token,
@@ -157,23 +156,30 @@
   </div>
 
   <!-- 2st div form -->
-  <div class="flex gap-3 mt-5 h-80 ">
+  <div class="flex flex-col lg:flex-row gap-3 mt-10 h-80">
     <!-- 1st -->
-    <div class="bg-black w-1/2  p-2 text-white text-2xl rounded-md shadow-lg shadow-white">
-      <h1 class="text-white text-xl px-3 font-bold tracking-wide mt-5">Continue with Excisting Document ID</h1>
-      <h1 class="text-white text-lg px-3 font-medium tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
-      <div class="w-96 mt-10 group mx-10">
-        <label for="Email" class="text-xl relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-400 group-hover:text-white tracking-wide">Document Id</label>
-        <div class="relative">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-            <Emailicon />
-          </span>
-          <input type="email" id="Email" placeholder="Enter Document Id" class="w-full mt-2 pl-9 placeholder:text-blue-500 placeholder:text-base  bg-black focus:bg-black text-blue-500 rounded border focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
+    <div class="bg-neutral-900 w-full lg:w-1/2 p-2 rounded-md shadow-lg shadow-white">
+      <h1 class="text-white text-2xl mx-8 font-bold tracking-wide mt-5">Continue with Existing Document ID</h1>
+      <h1 class="text-white text-lg mx-8 font-medium tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
+      <form class="mx-8">
+        <div class="w-96 mt-8 group">
+          <label for="Email" class="text-xl relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-400 group-hover:text-white tracking-wide">Document Id</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5  fill-gray-400 mt-2">
+                <path fill-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625zM7.5 15a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 017.5 15zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H8.25z" clip-rule="evenodd" />
+                <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
+              </svg>
+            </span>
+            <input type="email" id="Email" placeholder="Enter Document Id" class="w-full mt-2 pl-9 placeholder:text-blue-500 placeholder:text-base  bg-black focus:bg-black text-blue-500 rounded border focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
+          </div>
         </div>
-      </div>
+        <div class="mt-8">
+          <button class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Continue</button>
+        </div>
+      </form>
     </div>
 
     <!-- 2nd -->
-    <div class="bg-black  w-1/2 p-2 text-white text-2xl rounded-md shadow-lg shadow-white">Form</div>
   </div>
 </div>
