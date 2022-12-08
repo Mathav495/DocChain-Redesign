@@ -71,7 +71,7 @@
   };
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col gap-10">
   <!-- 1st div table -->
   <div class="shadow-lg rounded-lg relative text-center overflow-auto">
     <div class="bg-sky-100 w-full flex font-semibold text-sm lg:text-base">
@@ -167,11 +167,11 @@
   </div>
 
   <!-- 2st div form -->
-  <div class="flex flex-col lg:flex-row gap-3 mt-5 ">
+  <div class="flex flex-col lg:flex-row gap-5">
     <!-- 1st -->
     <div class="bg-slate-200 w-full lg:w-1/2 p-2 rounded-md shadow-2xl">
-      <h1 class="text-black text-xl mx-8 font-bold tracking-wide mt-5">Continue with Existing Document ID</h1>
-      <h1 class="text-black text-lg mx-8 font-medium tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
+      <h1 class="text-slate-800 text-xl mx-8 font-bold tracking-wide mt-5">Continue with Existing Document ID</h1>
+      <h1 class="text-slate-800 text-lg mx-8 font-medium tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
       <form class="mx-8">
         <div class="w-96 mt-8 group">
           <label for="Email" class="text-lg relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-900 group-hover:text-blue-600 font-semibold tracking-wide">Document Id</label>
@@ -185,7 +185,7 @@
             <input type="email" id="Email" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black  rounded border focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
           </div>
         </div>
-        <div class="mt-8">
+        <div class="mt-8 mb-2">
           <button class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Continue</button>
         </div>
       </form>
@@ -193,8 +193,8 @@
 
     <!-- 2nd -->
     <div class="bg-slate-200 w-1/2 p-1 rounded-md shadow-lg">
-      <h1 class="text-black text-xl mx-8 font-bold tracking-wide mt-5">For new Document ID</h1>
-      <h1 class="text-black text-lg mx-8 font-medium tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
+      <h1 class="text-slate-800 text-xl mx-8 font-bold tracking-wide mt-5">For new Document ID</h1>
+      <h1 class="text-slate-800 text-lg mx-8 font-medium tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div class="mt-8 mx-8">
         <button class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Generate Id</button>
       </div>
