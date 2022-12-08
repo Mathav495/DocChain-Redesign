@@ -132,51 +132,53 @@
   };
 </script>
 
-<div>
-  <HeaderFileupload {id}>
-    <h1 slot="title" class="pl-2 text-base text-slate-900">{docTitle ? docTitle : 'No Title given'}</h1>
-  </HeaderFileupload>
+<div class="flex gap-3 mt-3">
+  <div class="rounded-md bg-[#393E46] h-auto w-1/2 p-4">
+    <h1 class="text-base text-white font-bold tracking-wide">Details about Document</h1>
 
-  <div class="flex gap-5 pt-4">
-    <Addfile on:fileavailable={onavailable} {id} />
-
-    <div class="rounded-lg bg-blue-100 h-auto w-1/2 p-4">
-      <h1 class="text-base font-bold tracking-wide">Details about Document</h1>
-
-      <form on:submit|preventDefault={onsubmitdata}>
-        <div class="flex flex-col pt-5 space-y-3">
-          <div class="flex flex-col w-full lg:w-4/5 space-y-1">
-            <label for="issuer" class="text-sm text-slate-800 tracking-wide font-bold">Issued to</label>
-            <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class={error.issuer ? 'input-error' : 'input-normal'} />
-          </div>
-          <div class="flex flex-col w-full lg:w-4/5 space-y-1">
-            <label for="doctype" class="text-sm text-slate-800 tracking-wide font-bold">Document Type</label>
-            <input placeholder={error.doctype ? error.doctype : 'Enter document type'} bind:value={doctype} type="text" class={error.doctype ? 'input-error' : 'input-normal'} name="doctype" id="doctype" />
-          </div>
-          <div class="flex flex-col w-full lg:w-4/5 space-y-1">
-            <label for="signatory" class="text-sm text-slate-800 tracking-wide font-bold">Signatory</label>
-            <input placeholder={error.signatory ? error.signatory : 'Enter signatory name'} name="signatory" bind:value={signatory} id="signatory" type="text" class={error.signatory ? 'input-error' : 'input-normal'} />
-          </div>
-          <div class="flex flex-col w-full lg:w-4/5 space-y-1">
-            <label for="docid" class="text-sm text-slate-800 tracking-wide font-bold">Date Expired</label>
-            <input bind:value={dateexpired} placeholder={error.dateexpired ? error.dateexpired : 'Enter expiry date'} type="text" onfocus="(this.type = 'date')" class={error.dateexpired ? 'input-error' : 'input-normal'} name="docid" id="docid" />
-          </div>
-          <div class="flex flex-col w-full lg:w-4/5 space-y-1">
-            <label for="docTitle" class="text-sm text-slate-800 tracking-wide font-bold">Document Title</label>
-            <input placeholder={error.docTitle ? error.docTitle : 'Enter document title'} bind:value={docTitle} type="text" class={error.docTitle ? 'input-error' : 'input-normal'} name="docTitle" id="docTitle" />
-          </div>
-        </div>
-        <div class="w-full pt-6">
-          <button class="w-4/5 lg:w-2/5 bg-blue-600 px-2 py-1 text-white font-semibold text-base tracking-wide rounded-full">Confirm and Preview</button>
-        </div>
-      </form>
+    <div class="pt-6">
+      <HeaderFileupload {id}>
+        <h1 slot="title" class="pl-2 text-base text-slate-900">{docTitle ? docTitle : 'No Title given'}</h1>
+      </HeaderFileupload>
     </div>
+
+    <form on:submit|preventDefault={onsubmitdata}>
+      <div class="flex flex-col pt-5 space-y-3">
+        <div class="flex flex-col w-full lg:w-4/5 space-y-1">
+          <label for="issuer" class="text-sm text-white tracking-wide font-bold">Issued to</label>
+          <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class={error.issuer ? 'input-error' : 'input-normal'} />
+        </div>
+        <div class="flex flex-col w-full lg:w-4/5 space-y-1">
+          <label for="doctype" class="text-sm text-white tracking-wide font-bold">Document Type</label>
+          <input placeholder={error.doctype ? error.doctype : 'Enter document type'} bind:value={doctype} type="text" class={error.doctype ? 'input-error' : 'input-normal'} name="doctype" id="doctype" />
+        </div>
+        <div class="flex flex-col w-full lg:w-4/5 space-y-1">
+          <label for="signatory" class="text-sm text-white tracking-wide font-bold">Signatory</label>
+          <input placeholder={error.signatory ? error.signatory : 'Enter signatory name'} name="signatory" bind:value={signatory} id="signatory" type="text" class={error.signatory ? 'input-error' : 'input-normal'} />
+        </div>
+        <div class="flex flex-col w-full lg:w-4/5 space-y-1">
+          <label for="docid" class="text-sm text-white tracking-wide font-bold">Date Expired</label>
+          <input bind:value={dateexpired} placeholder={error.dateexpired ? error.dateexpired : 'Enter expiry date'} type="text" onfocus="(this.type = 'date')" class={error.dateexpired ? 'input-error' : 'input-normal'} name="docid" id="docid" />
+        </div>
+        <div class="flex flex-col w-full lg:w-4/5 space-y-1">
+          <label for="docTitle" class="text-sm text-white tracking-wide font-bold">Document Title</label>
+          <input placeholder={error.docTitle ? error.docTitle : 'Enter document title'} bind:value={docTitle} type="text" class={error.docTitle ? 'input-error' : 'input-normal'} name="docTitle" id="docTitle" />
+        </div>
+      </div>
+      <div class="w-full pt-6">
+        <button class="w-4/5 lg:w-2/5 bg-blue-600 px-2 py-1 text-white font-semibold text-base tracking-wide rounded-full">Confirm and Preview</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="w-1/2">
+    <Addfile on:fileavailable={onavailable} {id} />
   </div>
 </div>
 
 <style lang="postcss">
   .input-normal {
-    @apply w-full rounded-lg border-2 border-blue-500 bg-blue-200 p-1 pl-2 text-base font-bold placeholder:font-semibold  placeholder:text-slate-500  focus:outline-none;
+    @apply w-full rounded-lg border-2 border-blue-500 bg-slate-100 p-1 pl-2 text-base font-bold placeholder:font-semibold  placeholder:text-slate-500  focus:outline-none;
   }
   .input-error {
     @apply w-full rounded-lg border-2 border-red-500 bg-blue-200 p-1 pl-2 text-base font-bold placeholder:font-semibold  placeholder:text-red-500  focus:outline-none;
