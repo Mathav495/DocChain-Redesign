@@ -2,6 +2,8 @@
   import Successmsg from './successmsg.svelte';
   import Loading from './Loading.svelte';
   import axios from 'axios';
+  // import { changeGradient } from './grads.svelte';
+// import {changeGradient} from '../../public/Animate';
   import { onMount } from 'svelte';
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
@@ -27,6 +29,12 @@
   let success = false;
 
   let load = false;
+
+
+  onMount(() => {
+    changeGradient();
+  });
+
   onMount(async () => {
     const { data } = await axios.get('https://test.swagger.print2block.in/account/user', {
       headers: {
@@ -62,10 +70,47 @@
       localStorage.setItem('filehash', data.fileHash);
       let fileHash = localStorage.getItem('filehash');
       console.log('filehash', fileHash);
+
       if (data.fileHash) {
         fileavailable = true;
         dispatch('fileavailable', fileavailable);
         status = 'Uploaded Sucessfully';
+
+        // const onUpload = (files) => {
+        //   if (files.length !== 1) return;
+        //   const file = files[0];
+        //   let reader = new FileReader();
+        //   reader.onload = (e) => {
+        //     const data = Buffer.from(e.target.result.replace(/.*base64,/, ''));
+        //     renderPDF(data);
+        //     console.log(data);
+        //   };
+
+        //   reader.readAsDataURL(file);
+        // };
+
+        // async function renderPDF(data) {
+        //   const pdf = await pdfjsLib.getDocument({ data }).promise;
+        //   // console.log(pdf)
+
+        //   for (let i = 1; i <= pdf.numPages; i++) {
+        //     const image = document.createElement('img');
+        //     document.body.appendChild(image);
+        //     console.log(image);
+        //     const page = await pdf.getPage(i);
+        //     // console.log(page)
+        //     const viewport = page.getViewport({ scale: 2 });
+        //     const canvas = document.createElement('canvas');
+        //     const canvasContext = canvas.getContext('2d');
+        //     canvas.height = viewport.height;
+        //     canvas.width = viewport.width;
+        //     await page.render({ canvasContext, viewport }).promise;
+        //     const data = canvas.toDataURL('image/png');
+        //     console.log(data);
+        //     image.src = data;
+        //     image.style.width = '100%';
+        //   }
+        // }
       }
     }
   };
@@ -75,20 +120,17 @@
     // let fileHash = localStorage.getItem('filehash');
     // let dataHash = localStorage.getItem('datahash');
     // load = true;
-    loading = true
+    loading = true;
     const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`);
     console.log(data);
     dispatch('signature', data);
     console.log('sign created');
     success = true;
-    loading = false
-    // load = false;
+    loading = false;
     localStorage.setItem('signature', data);
     let signature = localStorage.getItem('signature');
     console.log(signature);
   };
-
-
 
   const publishdoc = async () => {
     load = true;
@@ -110,11 +152,11 @@
       },
     );
     console.log(data);
-    // loading = false;
+
     console.log(data.state);
     dispatch('push', data);
     load = false;
-    
+    // loading = false;
     // success = true;
     // if ((action = 'publish')) {
     //   window.location.assign(proposedURL, '_blank');
@@ -122,7 +164,7 @@
     // }
   };
 
- document.addEventListener('DOMContentLoaded', (e) => {
+  document.addEventListener('DOMContentLoaded', (e) => {
     const button2 = document.getElementById('button2');
     const button3 = document.getElementById('button3');
     // const success = document.getElementById('success');
@@ -150,8 +192,8 @@
     button3.addEventListener('click', (e) => {
       // button3.style.visibility = 'hidden';
       setTimeout(() => {
-      navigate('/pre');
-      },1000)
+        navigate('/pre');
+      }, 500);
       console.log('document published');
     });
   });
@@ -189,7 +231,7 @@
             <div class="pointer-events-auto flex w-full divide-x divide-gray-200 rounded-lg border-2 border-gray-200 bg-white shadow-lg ring-1 ring-blue-500 ring-opacity-5">
               <div class="mt-1 flex w-0 flex-1 items-center p-4">
                 <div class="w-full">
-                  <p class="text-2xl font-medium text-rose-500">Attention</p>
+                  <p class="text-2xl font-bold text-rose-500">Attention !!!</p>
                   <p class="mt-1 text-lg text-red-800">kindly verify the document details before proceed. You cannot release after publishing</p>
                 </div>
               </div>
@@ -207,18 +249,18 @@
               </div>
             </div>
           </div>
-          <!-- <input type="file" onchange="onUpload(this.files)"/> -->
+          <!-- <input type="file" on:change={onUpload(this.files)} /> -->
         </div>
       </div>
-      <div  class=" mt-8 flex w-full flex-col rounded-md p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5 bg-blue-200">
+      <div class=" mt-8 flex w-full flex-col rounded-md p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5">
         <div class="h-30 flex w-full flex-col gap-4 rounded-lg p-2">
           <div class="order-2 flex gap-3 lg:order-none">
             <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="qrcode" src={qr} />
             <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="logo" src="/assets/sample.jpg" />
 
             <div class="flex flex-col gap-10">
-              <div id="docid" class="flex rounded-md px-3 py-1 text-xs  text-black">ISSUER NAME: {issuerName}</div>
-              <div class="flex rounded-md px-3 py-1 text-xs uppercase text-black">DOCUMENT_ID: {documentID}</div>
+              <div class="flex rounded-md px-3 py-1 text-xs  text-black font-bold">ISSUER NAME: {issuerName}</div>
+              <div class="flex rounded-md px-3 py-1 text-xs uppercase text-black font-bold">DOCUMENT_ID: {documentID}</div>
             </div>
           </div>
           <!-- <div class="flex flex-col order-1 lg:order-none">
@@ -260,30 +302,29 @@
         </div>
 
         <footer class="flex w-full justify-between p-2">
-          <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " id="sign" on:click|preventDefault={getsignature}>
-           Sign</button
-          >
+          <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " id="sign" on:click|preventDefault={getsignature}> Sign</button>
 
-          <!-- {#if (action = "add to queue")} -->
           <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" rel="noreferrer" on:click|preventDefault={publishdoc}>
             {#if load}
-            <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
-          {/if}
+              <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
+            {/if}
 
-             Queue</button>
-          <button id="button3" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " href={proposedURL} target="_blank" style="visibility: hidden" rel="noreferrer"  on:click|once={disablebutton1}  on:click|preventDefault={publishdoc}>
+            Queue</button
+          >
+
+          <button id="button3" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " href={proposedURL} target="_blank" style="visibility: hidden" rel="noreferrer" on:click|once={disablebutton1} on:click|preventDefault={publishdoc}>
             {#if load}
-            <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
-          {/if}
+              <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
+            {/if}
 
             Publish</button
           >
           <!-- {/if} -->
         </footer>
-        <div id="loaded" style="visibility: hidden" class="mt-5 text-lg text-blue-900 justify-center mx-auto">Please wait... while we're adding your document to queue.</div>
+        <div id="loaded" style="visibility: hidden" class="mt-5 text-lg text-black bg-white justify-center mx-auto border border-blue-800 rounded-lg px-3 py-1">Please wait... while we're adding your document to queue.</div>
         {#if success}
           <!-- <div id="success"> -->
-            <Successmsg />
+          <Successmsg />
           <!-- </div> -->
         {/if}
       </div>
