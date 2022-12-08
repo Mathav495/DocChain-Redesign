@@ -8,11 +8,13 @@
   let token,
     qr,
     seconddata,
-    getdata,
+    getdata = [],
     proposedURL,
     docDetails = [];
-
   token = localStorage.getItem('token');
+
+  let newData = JSON.parse(localStorage.getItem('docDetails'));
+  console.log(newData);
 
   const submitdocid = async () => {
     const { data } = await axios.post(
@@ -82,25 +84,28 @@
       <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900 ">Actions</div>
       <div class=" py-3 tracking-wider w-1/5  text-slate-900">Status</div>
     </div>
-    <div class="overflow-auto  max-h-68">
-      <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-sm lg:text-base">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Tick />
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Tick />
-        </div>
-        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
-        </div>
-      </div>
 
-      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
+    <div class="overflow-auto min-h-[17rem] max-h-64">
+      {#each newData as newData}
+        <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-sm lg:text-base">
+          <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">{newData.documentID}</div>
+          <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+            <Tick />
+          </div>
+          <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+            <Tick />
+          </div>
+          <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
+            <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
+            <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
+          </div>
+          <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
+            <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
+          </div>
+        </div>
+      {/each}
+
+      <!-- <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <Tick />
@@ -115,8 +120,8 @@
         <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
         </div>
-      </div>
-      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
+      </div> -->
+      <!-- <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <Tick />
@@ -131,8 +136,8 @@
         <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
         </div>
-      </div>
-      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
+      </div> -->
+      <!-- <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <Xmark />
@@ -147,8 +152,8 @@
         <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
         </div>
-      </div>
-      <div class=" flex w-full font-semibold text-sm lg:text-base">
+      </div> -->
+      <!-- <div class=" flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <Xmark />
@@ -163,7 +168,7 @@
         <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <!-- 2st div form -->
