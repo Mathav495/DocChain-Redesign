@@ -2,33 +2,32 @@
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
   import Tick from '../icons/Tick.svelte';
-  import X from '../icons/X.svelte';
-  let docValue,
-    documentID,
+  import Xmark from '../icons/Xmark.svelte';
+  let documentID,
     token,
     qr,
+    seconddata,
+    getdata,
     proposedURL,
     docDetails = [];
 
   token = localStorage.getItem('token');
 
   const submitdocid = async () => {
-    console.log(docValue);
-    if (docValue == 'no') {
-      const { data } = await axios.post(
-        'https://test.swagger.print2block.in/docs/initiate/?qrcode=true',
-        {
-          filename: 'sampledoc',
+    const { data } = await axios.post(
+      'https://test.swagger.print2block.in/docs/initiate/?qrcode=true',
+      {
+        filename: 'sampledoc',
+      },
+      {
+        headers: {
+          'x-access-token': token,
         },
-        {
-          headers: {
-            'x-access-token': token,
-          },
-        },
-      );
-      console.log(data);
-
-      let getdata = localStorage.getItem('docDetails');
+      },
+    );
+    console.log(data);
+    if (data.documentID) {
+      getdata = JSON.parse(localStorage.getItem('docDetails'));
       console.log(getdata);
       if (!getdata) {
         docDetails = [
@@ -36,23 +35,23 @@
             documentID: data.documentID,
             datahash: false,
             filehash: false,
-            Status: 'Not Pendinged',
+            Status: 'Pending',
           },
         ];
         localStorage.setItem('docDetails', JSON.stringify(docDetails));
       } else {
-        let sampleData = JSON.parse(localStorage.getItem('docDetails'));
-        console.log(sampleData);
-        let seconddata = {
+        console.log(getdata);
+        seconddata = {
           documentID: data.documentID,
           datahash: false,
           filehash: false,
-          Status: 'Not published',
+          Status: 'Pending',
         };
-        sampleData = [...sampleData, seconddata];
-        console.log(sampleData);
-        localStorage.setItem('docDetails', JSON.stringify(sampleData));
+        getdata = [seconddata, ...getdata];
+        console.log(getdata);
+        localStorage.setItem('docDetails', JSON.stringify(getdata));
       }
+      navigate(`/add-file/${data.documentID}`);
 
       localStorage.setItem('documentID', data.documentID);
       documentID = localStorage.getItem('documentID');
@@ -64,9 +63,6 @@
       localStorage.setItem('docURL', data.proposedURL);
       proposedURL = localStorage.getItem('docURL');
       console.log(proposedURL);
-      if (data) {
-        navigate(`/add-file/${documentID}`);
-      }
     }
   };
 </script>
@@ -134,10 +130,10 @@
       <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <X />
+          <Xmark />
         </div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <X />
+          <Xmark />
         </div>
         <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
@@ -150,10 +146,10 @@
       <div class=" flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <X />
+          <Xmark />
         </div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <X />
+          <Xmark />
         </div>
         <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
@@ -165,7 +161,6 @@
       </div>
     </div>
   </div>
-
   <!-- 2st div form -->
   <div class="flex flex-col lg:flex-row gap-5">
     <!-- 1st -->
@@ -196,7 +191,7 @@
       <h1 class="text-slate-800 text-xl mx-8 font-bold tracking-wide mt-5">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg mx-8 font-medium tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div class="mt-8 mx-8">
-        <button class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Generate Id</button>
+        <button on:click={submitdocid} class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Generate Id</button>
       </div>
     </div>
   </div>
