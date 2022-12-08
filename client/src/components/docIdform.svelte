@@ -4,7 +4,8 @@
   import Tick from '../icons/Tick.svelte';
   import Xmark from '../icons/Xmark.svelte';
   let documentID,
-    token,
+    ExistingId = '';
+  let token,
     qr,
     seconddata,
     getdata,
@@ -64,6 +65,10 @@
       proposedURL = localStorage.getItem('docURL');
       console.log(proposedURL);
     }
+  };
+
+  const Continue = () => {
+    navigate(`/add-file/${ExistingId}`);
   };
 </script>
 
@@ -167,7 +172,7 @@
     <div class="bg-slate-200 w-full lg:w-1/2 p-2 rounded-md shadow-2xl">
       <h1 class="text-slate-800 text-xl mx-8 font-bold tracking-wide mt-5">Continue with Existing Document ID</h1>
       <h1 class="text-slate-800 text-lg mx-8 font-medium tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
-      <form class="mx-8">
+      <form on:submit|preventDefault={Continue} class="mx-8">
         <div class="w-96 mt-8 group">
           <label for="Document Id" class="text-lg relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-900 group-hover:text-blue-600 font-semibold tracking-wide">Document Id</label>
           <div class="relative">
@@ -177,7 +182,7 @@
                 <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
               </svg>
             </span>
-            <input type="text" id="Document Id" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black  rounded border focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
+            <input bind:value={ExistingId} type="text" id="Document Id" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black  rounded border focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
           </div>
         </div>
         <div class="mt-8 mb-2">
