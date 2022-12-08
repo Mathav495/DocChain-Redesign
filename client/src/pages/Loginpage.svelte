@@ -10,7 +10,7 @@
   console.log(animate);
   animate.style.display = 'block';
   let sampleData;
-  let display = true;
+  let display = false;
   let type = 'password';
   let Email = '',
     Password = '';
