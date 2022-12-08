@@ -90,7 +90,11 @@
         <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-sm lg:text-base">
           <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">{newData.documentID}</div>
           <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-            <Tick />
+            {#if newData.datahash}
+              <Tick />
+            {:else}
+              <Xmark />
+            {/if}
           </div>
           <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
             <Tick />
