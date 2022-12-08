@@ -2,7 +2,8 @@
   import axios from 'axios';
   import { onMount } from 'svelte';
   import Pagination from './pagination.svelte';
-  import UsageCards from './Usage_cards.svelte';
+  import Usagecard2 from './Usagecard2.svelte';
+  import UsageCards1 from './Usage_cards1.svelte';
 
   let hidden = true;
   let token = localStorage.getItem('token');
@@ -69,5 +70,6 @@
   </div>
 </div>
 <div>
-  <UsageCards />
+  <UsageCards1 />
+  <Usagecard2 />
 </div>
