@@ -171,18 +171,18 @@
   };
 </script>
 
-<div class="rounded-lg bg-blue-100 h-auto w-full p-4">
-  <h1 class="text-base font-bold tracking-wide">Select File to preview</h1>
+<div class="rounded-lg bg-[#393E46] h-auto w-full p-4">
+  <h1 class="text-base font-bold text-white tracking-wide">Select File to preview</h1>
 
   <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
     <div class="pt-6">
       <div class="flex w-full flex-col">
         <div class="sm:col-span-6 ">
-          <div class="flex justify-center items-center rounded-lg border-1 border-dashed border-blue-600 bg-blue-200 shadow-xl py-5">
+          <div class="flex justify-center items-center rounded-lg border-1 border-dashed border-blue-600 bg-slate-200 shadow-xl py-5">
             <div class="space-y-1 text-center">
               <div class="flex flex-col text-base text-gray-600" bind:this={container}>
                 <label for="file-upload" class=" relative cursor-pointer rounded-md  font-semibold text-blue-800" id="dropzone">
-                  <svg class="mx-auto h-12 w-12 text-gray-400" stroke="white" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                  <svg class="mx-auto h-12 w-12 text-gray-900" stroke="black" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
                   <span class="inline-flex">Upload a file</span>
@@ -206,7 +206,7 @@
       <div id="view" class="w-full h-full" />
     {:else}
       <div class="h-full w-full flex justify-center items-center">
-        <h1 class="text-lg font-bold tracking-wide">No image available</h1>
+        <h1 class="text-lg font-bold tracking-wide text-white">No image available</h1>
       </div>
       <!-- <img class="h-full w-full" id="File" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFG5-XTBYvoFjptCqHdiL_PXjkphJ3yGDxJ_tska9MH2XJWNQ5EIOO0maRAVRCqfXT4oI&usqp=CAU" alt="Preview" /> -->
     {/if}

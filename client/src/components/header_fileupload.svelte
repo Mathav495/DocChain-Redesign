@@ -16,7 +16,7 @@
   });
 </script>
 
-<div class=" w-full bg-blue-200 shadow-xl rounded-md flex items-center px-2 py-6 gap-1">
+<div class=" w-full bg-slate-200 shadow-xl rounded-md flex items-center px-2 py-6 gap-1">
   <div class="flex">
     <img src={qr} alt="qrcode" class="p-1 w-24 h-24" />
     <img src="/assets/sample.jpg" alt="qrcode" class="p-1 w-24 h-24" />
