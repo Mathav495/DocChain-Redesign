@@ -1,6 +1,4 @@
-let animate = document.querySelector('#particles-js');
-console.log(animate);
-animate.style.display = 'none';
+<script context="module">
  const grads = [
   'linear-gradient(to right, rgb(234, 88, 12), rgb(249, 115, 22))',
   'radial-gradient(at center bottom, rgb(120, 53, 15), rgb(253, 224, 71))',
@@ -13,8 +11,10 @@ animate.style.display = 'none';
   'linear-gradient( 63.1deg,  rgba(5,23,111,1) 16.4%, rgba(24,95,240,1) 64.5% )',
 ];
 
-const changeGradient = () => {
+export const changeGradient = () => {
   let random = Math.floor(Math.random() * grads.length);
   console.log(random);
   animate.style.background = grads[random];
 };
+
+  </script>

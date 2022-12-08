@@ -6,8 +6,7 @@
   import Publishdoc from './pages/Publishdoc.svelte';
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
   import Filepreview from './pages/Filepreview.svelte';
-  import Signature from './pages/signature.svelte';
-  import Blockchain from './pages/blockchain.svelte';
+
   import Dashboardpage2 from './pages/Dashboardpage2.svelte';
   let fileHash, dataHash, signature, documentID;
   export let url = '';
@@ -44,7 +43,6 @@
       <Fileuploadpage on:datahash={getDataHash} on:filehash={getFileHash} id={params.id} />
     </Route>
     <Route path="/preview"><Filepreview on:signature={getSign} /></Route>
-    <!-- <Route path="/sign"><Signature /></Route> -->
     <Route path="/pre"><Prepublish /></Route>
   </main>
 </Router>
