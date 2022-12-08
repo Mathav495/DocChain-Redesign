@@ -19,7 +19,7 @@
       </svg>
     </div>
     <div class="flex flex-row justify-between p-4 items-center shadow-md w-full h-full rounded-r-md">
-      <h1 class="text-xl font-semibold">doccumnet issued</h1>
+      <h1 class="text-xl font-semibold">doccumnet Viewed</h1>
       <p class="text-3xl text-yellow-500 font-bold">18</p>
     </div>
   </div>
@@ -30,7 +30,7 @@
       </svg>
     </div>
     <div class="flex flex-row justify-between p-4 items-center shadow-md w-full h-full rounded-r-md">
-      <h1 class="text-xl font-semibold">doccumnet issued</h1>
+      <h1 class="text-xl font-semibold">doccumnet Verified</h1>
       <p class="text-3xl text-green-500 font-bold">8</p>
     </div>
   </div>
