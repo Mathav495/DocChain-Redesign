@@ -107,6 +107,7 @@
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
+    margin-left: 8rem;
   }
 
   .dash {

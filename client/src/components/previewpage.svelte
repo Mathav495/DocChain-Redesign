@@ -91,7 +91,7 @@
 
 
   const publishdoc = async () => {
-    // load = true;
+    load = true;
     // loading = true;
     let signature = localStorage.getItem('signature');
     console.log('signature', signature);
@@ -113,7 +113,7 @@
     // loading = false;
     console.log(data.state);
     dispatch('push', data);
-    // load = false;
+    load = false;
     
     // success = true;
     // if ((action = 'publish')) {
@@ -122,7 +122,7 @@
     // }
   };
 
-  window.addEventListener('DOMContentLoaded', (e) => {
+ document.addEventListener('DOMContentLoaded', (e) => {
     const button2 = document.getElementById('button2');
     const button3 = document.getElementById('button3');
     // const success = document.getElementById('success');
@@ -148,8 +148,10 @@
 
     // when the publish button is clicked
     button3.addEventListener('click', (e) => {
-      button3.style.visibility = 'hidden';
+      // button3.style.visibility = 'hidden';
+      setTimeout(() => {
       navigate('/pre');
+      },1000)
       console.log('document published');
     });
   });
@@ -194,11 +196,11 @@
               <div class="flex">
                 <div class="flex flex-col divide-y divide-gray-300">
                   <div class="flex h-0 flex-1">
-                    <button type="button" class="flex w-full items-center justify-center rounded-none rounded-tr-lg border border-transparent bg-slate-200 hover:bg-blue-500 hover:text-white px-8 py-2 text-base font-medium text-black focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 uppercase" on:click|preventDefault={onSubmitFile}>Upload</button>
+                    <button type="button" class="flex w-full items-center justify-center rounded-none rounded-tr-lg border border-transparent bg-blue-600 hover:bg-blue-500 hover:text-white px-8 py-2 text-base font-medium text-white focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 uppercase" on:click|preventDefault={onSubmitFile}>Upload</button>
                   </div>
                   <!-- {#if (success = false)} -->
                   <div class="flex h-0 flex-1">
-                    <button id="button1" type="button" class="flex w-full items-center justify-center rounded-none rounded-br-lg border border-transparent bg-slate-200 px-8 py-2 text-base font-medium text-black hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-red-400 uppercase" on:click={releaseDoc}>Release</button>
+                    <button id="button1" type="button" class="flex w-full items-center justify-center rounded-none rounded-br-lg border border-transparent bg-blue-600 px-8 py-2 text-base font-medium text-white hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-blue-200 uppercase" on:click={releaseDoc}>Release</button>
                   </div>
                   <!-- {/if} -->
                 </div>
@@ -208,7 +210,7 @@
           <!-- <input type="file" onchange="onUpload(this.files)"/> -->
         </div>
       </div>
-      <div on:load={changeGradient()} class=" mt-8 flex w-full flex-col rounded-md p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5 bg-blue-200">
+      <div  class=" mt-8 flex w-full flex-col rounded-md p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5 bg-blue-200">
         <div class="h-30 flex w-full flex-col gap-4 rounded-lg p-2">
           <div class="order-2 flex gap-3 lg:order-none">
             <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="qrcode" src={qr} />
@@ -259,17 +261,20 @@
 
         <footer class="flex w-full justify-between p-2">
           <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " id="sign" on:click|preventDefault={getsignature}>
-            {#if load}
-              <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
-            {/if}Sign</button
+           Sign</button
           >
 
           <!-- {#if (action = "add to queue")} -->
-          <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" on:click|once={disablebutton1} rel="noreferrer" on:click|preventDefault={publishdoc}> Queue</button>
-          <button id="button3" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " href={proposedURL} target="_blank" style="visibility: hidden" rel="noreferrer" on:click|preventDefault={publishdoc}>
-            <!-- {#if load}
+          <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" rel="noreferrer" on:click|preventDefault={publishdoc}>
+            {#if load}
             <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
-          {/if} -->
+          {/if}
+
+             Queue</button>
+          <button id="button3" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " href={proposedURL} target="_blank" style="visibility: hidden" rel="noreferrer"  on:click|once={disablebutton1}  on:click|preventDefault={publishdoc}>
+            {#if load}
+            <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
+          {/if}
 
             Publish</button
           >
