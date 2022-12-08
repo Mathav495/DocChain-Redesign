@@ -97,7 +97,11 @@
             {/if}
           </div>
           <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-            <Tick />
+            {#if newData.filehash}
+              <Tick />
+            {:else}
+              <Xmark />
+            {/if}
           </div>
           <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
             <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
