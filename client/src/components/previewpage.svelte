@@ -121,19 +121,19 @@
       console.log('Ahh, jumpscare!');
       scaryFace.style.visibility = 'visible';
       setTimeout(() => {
-        // at least 3 seconds are gone => show the "continue" button
-        console.log('3 seconds are gone...');
+        // at least 5 seconds are gone => show the "publish" button
+        console.log('5 seconds are gone...');
         button3.style.visibility = 'visible';
         scaryFace.style.visibility = 'hidden';
         console.log('hidden');
-      }, 3000);
+      }, 5000);
     });
 
-    // when the continue button is clicked
+    // when the publish button is clicked
     button3.addEventListener('click', (e) => {
       button3.style.visibility = 'hidden';
       navigate("/pre")
-      console.log('Continue with whatever you want to do now');
+      console.log('document published');
     });
   });
 
@@ -265,8 +265,8 @@
           <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="logo" src="/assets/sample.jpg" />
 
           <div class="flex flex-col gap-10">
-            <div id="docid" class="flex rounded-md px-3 py-1 text-xs font-medium text-black">ISSUER NAME: {issuerName}</div>
-            <div class="flex rounded-md px-3 py-1 text-xs font-medium uppercase text-black">DOCUMENT_ID: {documentID}</div>
+            <div id="docid" class="flex rounded-md px-3 py-1 text-xs  text-black">ISSUER NAME: {issuerName}</div>
+            <div class="flex rounded-md px-3 py-1 text-xs uppercase text-black">DOCUMENT_ID: {documentID}</div>
           </div>
         </div>
         <!-- <div class="flex flex-col order-1 lg:order-none">
@@ -311,7 +311,7 @@
         <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">cerfificate</div>
       </div>
 
-      <div class="flex w-full justify-between p-2">
+      <footer class="flex w-full justify-between p-2">
         <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " on:click|preventDefault={getsignature}> Sign</button>
 
         <!-- {#if (action = "add to queue")} -->
@@ -326,8 +326,8 @@
           {/if}Publish</button
         >
         <!-- {/if} -->
-      </div>
-      <div id="scaryFace" style="visibility: hidden" class="mt-5 text-lg text-green-600 justify-center mx-auto" >loading please wait...</div>
+        </footer>
+      <div id="scaryFace" style="visibility: hidden" class="mt-5 text-lg text-green-900 justify-center mx-auto" >Please wait... while we're adding your document to queue.</div>
       {#if success}
         <Successmsg />
       {/if}

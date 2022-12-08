@@ -16,8 +16,8 @@
     msg: '',
   };
   let fileavailable = false;
-  let token = localStorage.getItem('token');
-  let documentID = localStorage.getItem('documentID');
+  // let token = localStorage.getItem('token');
+  // let documentID = localStorage.getItem('documentID');
 
   console.log('id get from the params', id);
   /**

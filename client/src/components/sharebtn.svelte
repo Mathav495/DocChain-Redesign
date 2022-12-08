@@ -72,7 +72,7 @@ referrerpolicy="no-referrer"
         width: 270px;
         height: 60px;
         border: none;
-        background: #ffe4c4;
+        background: #c2f1c8;
         display: flex;
         justify-content: center;
         align-items: center;

@@ -58,24 +58,24 @@
         <Header on:navShow={showNav} />
       </div>
       <!-- <section class="body-font text-gray-600"> -->
-        <div class="mx-auto flex flex-wrap justify-center  py-5">
-          <div class="-m-1 flex flex-wrap md:-m-2">
-            <div class="flex w-full flex-wrap">
-              <div class="w-full  md:p-2">
-                <img alt="gallery" class="object-cover object-center h-[500px] w-5/6 mx-auto" src={imgurl} />
+      <div class="mx-auto flex flex-wrap justify-center md:ml-0 md:justify-start py-5">
+        <div class="-m-1 flex flex-wrap md:-m-2">
+          <div class="flex w-full flex-wrap">
+            <div class="w-full  md:p-2">
+              <img alt="gallery" class="object-cover object-center h-[600px] md:justify-start w-5/6 mx-auto rounded-lg shadow-lg" src={imgurl} />
+            </div>
+            <div class="mt-10 flex shadow-lg w-5/6 mx-auto">
+              <div class="w-3/7 p-1 md:p-2 ml-20  justify-center">
+                <Sharebtn />
               </div>
-              <div class="mt-5 flex space-x-10">
-                <div class="w-1/3 p-1 md:p-2">
-                  <Sharebtn />
-                </div>
-                <div class="w-2/3 p-1 md:p-2">
-                  <!-- <img alt="gallery" class="block h-full w-full object-cover object-center" src="https://dummyimage.com/503x303" /> -->
-                  <div class="flex items-center text-center ml-10 mt-5 text-base text-gray-900">Your Document Url is: {proposedURL}</div>
-                </div>
+              <div class="w-4/7 ml-5 flex-col p-1 md:p-2 mb-2 ">
+                <div class="text-base text-gray-900 font-bold">Doucment Blockchain URL:</div>
+                <div class="flex  break-words mt-3 text-base text-gray-900 mb-2  "><a href={proposedURL} target="_blank" rel="noreferrer" class="text-base text-green-600 break-words font-bold underline ">{proposedURL}</a></div>
               </div>
             </div>
           </div>
         </div>
+      </div>
       <!-- </section> -->
     </div>
     <!--small screen navbar-->
