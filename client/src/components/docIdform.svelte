@@ -11,9 +11,9 @@
     getdata = [],
     proposedURL,
     docDetails = [];
+  let newData = [];
   token = localStorage.getItem('token');
-
-  let newData = JSON.parse(localStorage.getItem('docDetails'));
+  newData = JSON.parse(localStorage.getItem('docDetails'));
   console.log(newData);
 
   const submitdocid = async () => {
@@ -48,7 +48,7 @@
           documentID: data.documentID,
           datahash: false,
           filehash: false,
-          Status: 'Success',
+          Status: 'Pending',
         };
         getdata = [seconddata, ...getdata];
         console.log(getdata);
@@ -86,32 +86,38 @@
     </div>
 
     <div class="overflow-auto min-h-[17rem] max-h-64">
-      {#each newData as newData}
-        <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-sm lg:text-base">
-          <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">{newData.documentID}</div>
-          <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-            {#if newData.datahash}
-              <Tick />
-            {:else}
-              <Xmark />
-            {/if}
+      {#if newData}
+        {#each newData as newData}
+          <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-sm lg:text-base">
+            <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">{newData.documentID}</div>
+            <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+              {#if newData.datahash}
+                <Tick />
+              {:else}
+                <Xmark />
+              {/if}
+            </div>
+            <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+              {#if newData.filehash}
+                <Tick />
+              {:else}
+                <Xmark />
+              {/if}
+            </div>
+            <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
+              <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
+              <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
+            </div>
+            <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
+              <button class={newData.Status == 'Pending' ? 'Pending' : 'Published'}>{newData.Status}</button>
+            </div>
           </div>
-          <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-            {#if newData.filehash}
-              <Tick />
-            {:else}
-              <Xmark />
-            {/if}
-          </div>
-          <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-            <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
-            <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
-          </div>
-          <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-            <button class={newData.Status == 'Pending' ? 'Pending' : 'Published'}>{newData.Status}</button>
-          </div>
+        {/each}
+      {:else}
+        <div class="mt-20 w-1/2 mx-auto">
+          <h1 class="text-lg font-bold tracking-wide p-2 flex justify-center items-center bg-teal-200 rounded-lg">No Pending ID's</h1>
         </div>
-      {/each}
+      {/if}
 
       <!-- <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
@@ -219,7 +225,7 @@
   .Pending {
     @apply rounded-md bg-sky-200 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-sky-300;
   }
-  .published {
-    @apply rounded-md bg-green-200 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-green-300;
+  .Published {
+    @apply rounded-md bg-green-500 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-green-600;
   }
 </style>
