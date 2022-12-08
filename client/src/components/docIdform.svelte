@@ -48,7 +48,7 @@
           documentID: data.documentID,
           datahash: false,
           filehash: false,
-          Status: 'Pending',
+          Status: 'Success',
         };
         getdata = [seconddata, ...getdata];
         console.log(getdata);
@@ -108,7 +108,7 @@
             <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
           </div>
           <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-            <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">{newData.Status}</button>
+            <button class={newData.Status == 'Pending' ? 'Pending' : 'Published'}>{newData.Status}</button>
           </div>
         </div>
       {/each}
@@ -214,3 +214,12 @@
     </div>
   </div>
 </div>
+
+<style lang="postcss">
+  .Pending {
+    @apply rounded-md bg-sky-200 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-sky-300;
+  }
+  .published {
+    @apply rounded-md bg-green-200 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-green-300;
+  }
+</style>
