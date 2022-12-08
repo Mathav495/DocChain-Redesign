@@ -1,6 +1,4 @@
 <script>
-  // export let signature
-  // export let signature = localStorage.getItem('signature')
   let showsuccess = true;
   const hidesuccess = () => {
     showsuccess = false;
