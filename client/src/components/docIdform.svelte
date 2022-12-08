@@ -2,33 +2,35 @@
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
   import Tick from '../icons/Tick.svelte';
-  import X from '../icons/X.svelte';
-  let docValue,
-    documentID,
-    token,
+  import Xmark from '../icons/Xmark.svelte';
+  let documentID,
+    ExistingId = '';
+  let token,
     qr,
+    seconddata,
+    getdata = [],
     proposedURL,
     docDetails = [];
-
+  let newData = [];
   token = localStorage.getItem('token');
+  newData = JSON.parse(localStorage.getItem('docDetails'));
+  console.log(newData);
 
   const submitdocid = async () => {
-    console.log(docValue);
-    if (docValue == 'no') {
-      const { data } = await axios.post(
-        'https://test.swagger.print2block.in/docs/initiate/?qrcode=true',
-        {
-          filename: 'sampledoc',
+    const { data } = await axios.post(
+      'https://test.swagger.print2block.in/docs/initiate/?qrcode=true',
+      {
+        filename: 'sampledoc',
+      },
+      {
+        headers: {
+          'x-access-token': token,
         },
-        {
-          headers: {
-            'x-access-token': token,
-          },
-        },
-      );
-      console.log(data);
-
-      let getdata = localStorage.getItem('docDetails');
+      },
+    );
+    console.log(data);
+    if (data.documentID) {
+      getdata = JSON.parse(localStorage.getItem('docDetails'));
       console.log(getdata);
       if (!getdata) {
         docDetails = [
@@ -36,23 +38,23 @@
             documentID: data.documentID,
             datahash: false,
             filehash: false,
-            Status: 'Not Pendinged',
+            Status: 'Pending',
           },
         ];
         localStorage.setItem('docDetails', JSON.stringify(docDetails));
       } else {
-        let sampleData = JSON.parse(localStorage.getItem('docDetails'));
-        console.log(sampleData);
-        let seconddata = {
+        console.log(getdata);
+        seconddata = {
           documentID: data.documentID,
           datahash: false,
           filehash: false,
-          Status: 'Not published',
+          Status: 'Pending',
         };
-        sampleData = [...sampleData, seconddata];
-        console.log(sampleData);
-        localStorage.setItem('docDetails', JSON.stringify(sampleData));
+        getdata = [seconddata, ...getdata];
+        console.log(getdata);
+        localStorage.setItem('docDetails', JSON.stringify(getdata));
       }
+      navigate(`/add-file/${data.documentID}`);
 
       localStorage.setItem('documentID', data.documentID);
       documentID = localStorage.getItem('documentID');
@@ -64,10 +66,11 @@
       localStorage.setItem('docURL', data.proposedURL);
       proposedURL = localStorage.getItem('docURL');
       console.log(proposedURL);
-      if (data) {
-        navigate(`/add-file/${documentID}`);
-      }
     }
+  };
+
+  const Continue = () => {
+    navigate(`/add-file/${ExistingId}`);
   };
 </script>
 
@@ -81,25 +84,42 @@
       <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900 ">Actions</div>
       <div class=" py-3 tracking-wider w-1/5  text-slate-900">Status</div>
     </div>
-    <div class="overflow-auto  max-h-68">
-      <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-sm lg:text-base">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Tick />
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Tick />
-        </div>
-        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
-        </div>
-      </div>
 
-      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
+    <div class="overflow-auto min-h-[17rem] max-h-64">
+      {#if newData}
+        {#each newData as newData}
+          <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-sm lg:text-base">
+            <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">{newData.documentID}</div>
+            <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+              {#if newData.datahash}
+                <Tick />
+              {:else}
+                <Xmark />
+              {/if}
+            </div>
+            <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+              {#if newData.filehash}
+                <Tick />
+              {:else}
+                <Xmark />
+              {/if}
+            </div>
+            <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
+              <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
+              <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
+            </div>
+            <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
+              <button class={newData.Status == 'Pending' ? 'Pending' : 'Published'}>{newData.Status}</button>
+            </div>
+          </div>
+        {/each}
+      {:else}
+        <div class="mt-20 w-1/2 mx-auto">
+          <h1 class="text-lg font-bold tracking-wide p-2 flex justify-center items-center bg-teal-200 rounded-lg">No Pending ID's</h1>
+        </div>
+      {/if}
+
+      <!-- <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <Tick />
@@ -114,8 +134,8 @@
         <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
         </div>
-      </div>
-      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
+      </div> -->
+      <!-- <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
           <Tick />
@@ -130,14 +150,14 @@
         <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
         </div>
-      </div>
-      <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
+      </div> -->
+      <!-- <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <X />
+          <Xmark />
         </div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <X />
+          <Xmark />
         </div>
         <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
@@ -146,14 +166,14 @@
         <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
         </div>
-      </div>
-      <div class=" flex w-full font-semibold text-sm lg:text-base">
+      </div> -->
+      <!-- <div class=" flex w-full font-semibold text-sm lg:text-base">
         <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <X />
+          <Xmark />
         </div>
         <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <X />
+          <Xmark />
         </div>
         <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
@@ -162,17 +182,16 @@
         <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
           <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
-
   <!-- 2st div form -->
   <div class="flex flex-col lg:flex-row gap-5">
     <!-- 1st -->
     <div class="bg-slate-200 w-full lg:w-1/2 p-2 rounded-md shadow-2xl">
       <h1 class="text-slate-800 text-xl mx-8 font-bold tracking-wide mt-5">Continue with Existing Document ID</h1>
       <h1 class="text-slate-800 text-lg mx-8 font-medium tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
-      <form class="mx-8">
+      <form on:submit|preventDefault={Continue} class="mx-8">
         <div class="w-96 mt-8 group">
           <label for="Document Id" class="text-lg relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-900 group-hover:text-blue-600 font-semibold tracking-wide">Document Id</label>
           <div class="relative">
@@ -182,7 +201,7 @@
                 <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
               </svg>
             </span>
-            <input type="text" id="Document Id" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black  rounded border focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
+            <input bind:value={ExistingId} type="text" id="Document Id" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black  rounded border focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
           </div>
         </div>
         <div class="mt-8 mb-2">
@@ -196,8 +215,17 @@
       <h1 class="text-slate-800 text-xl mx-8 font-bold tracking-wide mt-5">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg mx-8 font-medium tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div class="mt-8 mx-8">
-        <button class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Generate Id</button>
+        <button on:click={submitdocid} class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Generate Id</button>
       </div>
     </div>
   </div>
 </div>
+
+<style lang="postcss">
+  .Pending {
+    @apply rounded-md bg-sky-200 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-sky-300;
+  }
+  .Published {
+    @apply rounded-md bg-green-500 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-green-600;
+  }
+</style>

@@ -5,11 +5,11 @@
   import Nav from '../components/Nav.svelte';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   import Header from '../components/Header.svelte';
+  export let id;
   let hideNavbar = true;
   const hideNav = () => {
     hideNavbar = true;
   };
-  export let id;
   console.log(id);
   const showNav = () => {
     if (hideNavbar == false) {
