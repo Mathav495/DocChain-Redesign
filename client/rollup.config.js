@@ -5,7 +5,9 @@ import livereload from "rollup-plugin-livereload"
 import { terser } from "rollup-plugin-terser"
 import css from "rollup-plugin-css-only"
 import preprocess from "svelte-preprocess"
-const production = !process.env.ROLLUP_WATCH
+
+const production = !process.env.ROLLUP_WATCH;
+
 
 function serve() {
   let server
@@ -66,7 +68,6 @@ export default {
       dedupe: ["svelte"],
     }),
     commonjs(),
-
     // In dev mode, call `npm run start` once
     // the bundle has been generated
     !production && serve(),

@@ -3,10 +3,10 @@
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
-  import axios from 'axios';
+  // import axios from 'axios';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
-  import { createEventDispatcher, onMount } from 'svelte';
-  import { navigate } from 'svelte-routing';
+  // import { createEventDispatcher, onMount } from 'svelte';
+  // import { navigate } from 'svelte-routing';
   import Previewpage from '../components/previewpage.svelte';
 
   let token = localStorage.getItem('token');
@@ -41,18 +41,18 @@
   /**
    * releasing document before publish
    */
-  const releaseDoc = async () => {
-    let documentID = localStorage.getItem('documentID');
-    const { data } = await axios.get(`https://test.swagger.print2block.in/docs/release?documentID=${documentID}`, {
-      headers: {
-        'x-access-token': token,
-      },
-    });
-    console.log(data);
-    if (documentID && token) {
-      navigate('/publish');
-    }
-  };
+  // const releaseDoc = async () => {
+  //   let documentID = localStorage.getItem('documentID');
+  //   const { data } = await axios.get(`https://test.swagger.print2block.in/docs/release?documentID=${documentID}`, {
+  //     headers: {
+  //       'x-access-token': token,
+  //     },
+  //   });
+  //   console.log(data);
+  //   if (documentID && token) {
+  //     navigate('/publish');
+  //   }
+  // };
 
   let hideNavbar = true;
   const hideNav = () => {
