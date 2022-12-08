@@ -2,6 +2,7 @@
   import axios from 'axios';
   import { onMount } from 'svelte';
   import Pagination from './pagination.svelte';
+  import UsageCards from './Usage_cards.svelte';
 
   let hidden = true;
   let token = localStorage.getItem('token');
@@ -66,4 +67,7 @@
       <p class="text-2xl md:text-3xl lg:text-4xl font-bold text-green-500 ml-auto">{usage.revoked}</p>
     </div>
   </div>
+</div>
+<div>
+  <UsageCards />
 </div>
