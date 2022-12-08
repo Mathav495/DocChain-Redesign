@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const animateCss = require('animated-tailwindcss');
-module.exports = animateCss({
+module.exports = {
   content: ['./src/**/*.svelte'],
   theme: {
     extend: {
@@ -25,4 +24,4 @@ module.exports = animateCss({
     },
   },
   plugins: [],
-});
+};
