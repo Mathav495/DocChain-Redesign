@@ -74,6 +74,9 @@
       type = 'password';
     }
   };
+  const hideErrmsg = () => {
+    display = false;
+  };
 </script>
 
 <svelte:head>
@@ -129,7 +132,7 @@
 
         <div>
           {#if display}
-            <ErrorInfo errormsg="Invalid Username or Password" />
+            <ErrorInfo errormsg="Invalid Username or Password" on:click={hideErrmsg} />
           {/if}
         </div>
       </form>
