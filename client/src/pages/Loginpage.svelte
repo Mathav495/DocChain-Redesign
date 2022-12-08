@@ -1,7 +1,7 @@
 <script>
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
-  import { fade, fly } from 'svelte/transition';
+  import ErrorInfo from '../components/ErrorInfo.svelte';
   import Emailicon from '../icons/Emailicon.svelte';
   import Eye from '../icons/Eye.svelte';
   import Eyeslash from '../icons/Eyeslash.svelte';
@@ -10,7 +10,8 @@
   console.log(animate);
   animate.style.display = 'block';
   let sampleData;
-  let display = false;
+
+  let display = true;
   let type = 'password';
   let Email = '',
     Password = '';
@@ -125,9 +126,10 @@
         <div>
           <button class="w-96 mt-5 text-white font-medium active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 tracking-wider uppercase rounded text-lg">login</button>
         </div>
+
         <div>
           {#if display}
-            <h1 transition:fade={{ duration: 2000 }} class="text-xl text-white font-medium tracking-wide  p-2 mt-7 rounded text-center bg-red-500">Invalid Username or Password</h1>
+            <ErrorInfo errormsg="Invalid Username or Password" />
           {/if}
         </div>
       </form>
