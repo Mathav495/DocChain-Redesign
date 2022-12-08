@@ -108,7 +108,7 @@
             <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
           </div>
           <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-            <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
+            <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">{newData.Status}</button>
           </div>
         </div>
       {/each}
