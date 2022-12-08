@@ -93,6 +93,7 @@
 
       return;
     } else if (File.type == 'application/pdf') {
+      instance = null;
       showImage = false;
       showpdf = true;
       const reader = new FileReader();
@@ -101,17 +102,6 @@
         // pdf.setAttribute('src', reader.result);
         base64 = reader.result;
         console.log('base64', base64);
-        let encoded = window.btoa(base64);
-        function base64ToBlob(encoded) {
-          console.log(encoded);
-          const binaryString = window.atob(encoded);
-          const len = binaryString.length;
-          const bytes = new Uint8Array(len);
-          for (let i = 0; i < len; ++i) {
-            bytes[i] = binaryString.charCodeAt(i);
-          }
-          return new Blob([bytes], { type: 'application/pdf' });
-        }
         const element = document.getElementById('view');
         WebViewer(
           {
@@ -120,7 +110,7 @@
           },
           element,
         ).then((instance) => {
-          instance.loadDocument(base64ToBlob(encoded), { filename: File.name });
+          instance.UI.loadDocument(File, { filename: File.name });
           instance.UI.setTheme('dark');
         });
         const onUpload = (files) =>{
@@ -201,7 +191,7 @@
                   <img bind:this={image} class="file-height w-full" id="File" src="" alt="Preview" />
                 {:else if showpdf}
                   <!-- <embed bind:this={pdf} class="h-52 w-full" id="File" src="" alt="Preview" /> -->
-                  <div id="view" />
+                  <div id="view" class="" />
                 {:else}
                   <label for="file-upload" class=" relative cursor-pointer rounded-md  font-semibold text-blue-800" id="dropzone">
                     <svg class="mx-auto h-12 w-12 text-gray-400" stroke="white" fill="none" viewBox="0 0 48 48" aria-hidden="true">
