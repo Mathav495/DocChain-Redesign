@@ -35,7 +35,7 @@
         },
       );
       console.log(data);
-      console.log(data.lastModifiedDate)
+      console.log(data.lastModifiedDate);
       dispatch('filehash', data.fileHash);
       localStorage.setItem('filehash', data.fileHash);
       let fileHash = localStorage.getItem('filehash');
@@ -123,6 +123,42 @@
           instance.loadDocument(base64ToBlob(encoded), { filename: File.name });
           instance.UI.setTheme('dark');
         });
+        const onUpload = (files) =>{
+          if (files.length !== 1) return;
+          const file = files[0];
+          let reader = new FileReader();
+          reader.onload = (e) => {
+            const data = buffer.form(e.target.result.replace(/.*base64,/, ''));
+            renderPDF(data);
+            console.log(data);
+          };
+
+          reader.readAsDataURL(file);
+        }
+
+        async function renderPDF(data) {
+          const pdf = await pdfjsLib.getDocument({ data }).promise;
+          // console.log(pdf)
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const image = document.createElement('img');
+            document.body.appendChild(image);
+            console.log(image);
+            const page = await pdf.getPage(i);
+            // console.log(page)
+            const viewport = page.getViewport({ scale: 2 });
+            const canvas = document.createElement('canvas');
+            const canvasContext = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            await page.render({ canvasContext, viewport }).promise;
+            const data = canvas.toDataURL('image/png');
+            console.log(data);
+            image.src = data;
+            image.style.width = '100%';
+          }
+        }
+
         // const pdf1 = new Image();
         // image.src = url;
         // document.body.appendChild(image);
@@ -132,40 +168,6 @@
         // pdf1.src = pdfurl;
       });
 
-      // function onUpload(files) {
-      //   if (files.length !== 1) return;
-      //   const file = files[0];
-      //   let reader = new FileReader();
-      //   reader.onload = (e) => {
-      //     const data = atob(e.target.result.replace(/.*base64,/, ''));
-      //     renderPDF(data);
-      //   };
-
-      //   reader.readAsDataURL(file);
-      // }
-
-      async function renderPDF(data) {
-        const pdf = await pdfjsLib.getDocument({ data }).promise;
-        // console.log(pdf)
-
-        for (let i = 1; i <= pdf.numPages; i++) {
-          const image = document.createElement('img');
-          document.body.appendChild(image);
-          console.log(image);
-          const page = await pdf.getPage(i);
-          // console.log(page)
-          const viewport = page.getViewport({ scale: 2 });
-          const canvas = document.createElement('canvas');
-          const canvasContext = canvas.getContext('2d');
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-          await page.render({ canvasContext, viewport }).promise;
-          const data = canvas.toDataURL('image/png');
-          console.log(data);
-          image.src = data;
-          image.style.width = '100%';
-        }
-      }
       return;
     } else {
       showImage = false;

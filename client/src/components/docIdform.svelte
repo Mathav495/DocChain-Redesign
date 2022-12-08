@@ -182,7 +182,7 @@
                 <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
               </svg>
             </span>
-            <input type="email" id="Email" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black  rounded border focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
+            <input type="text" id="Email" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black  rounded border focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
           </div>
         </div>
         <div class="mt-8">

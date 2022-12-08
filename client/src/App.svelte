@@ -45,7 +45,7 @@
     </Route>
     <Route path="/preview"><Filepreview on:signature={getSign} /></Route>
     <!-- <Route path="/sign"><Signature /></Route> -->
-    <!-- <Route path="/pre"><Prepublish /></Route> -->
+    <Route path="/pre"><Prepublish /></Route>
   </main>
 </Router>
 
