@@ -1,6 +1,7 @@
 <script>
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
+  import { fade, fly } from 'svelte/transition';
   import Emailicon from '../icons/Emailicon.svelte';
   import Eye from '../icons/Eye.svelte';
   import Eyeslash from '../icons/Eyeslash.svelte';
@@ -126,7 +127,7 @@
         </div>
         <div>
           {#if display}
-            <h1 class="text-xl text-white font-medium tracking-wide  p-2 mt-7 animate-fadeIn rounded text-center bg-red-500">Invalid Username or Password</h1>
+            <h1 transition:fade={{ duration: 2000 }} class="text-xl text-white font-medium tracking-wide  p-2 mt-7 rounded text-center bg-red-500">Invalid Username or Password</h1>
           {/if}
         </div>
       </form>
