@@ -163,19 +163,26 @@
     }
   };
 
-  const hideImage = () => {
-    showImage = false;
-    showpdf = false;
+  let dropzone = document.getElementById('dropzone');
+  console.log(dropzone);
+
+  const toClickinput = () => {
+    document.getElementById('file-upload').click();
   };
+
+  // const hideImage = () => {
+  //   showImage = false;
+  //   showpdf = false;
+  // };
 </script>
 
 <div class="rounded-lg bg-[#393E46] h-auto w-full p-4">
-  <h1 class="text-base font-bold text-white tracking-wide">Select File to preview</h1>
-
   <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
     <div class="pt-6">
       <div class="flex w-full flex-col">
-        <div class="sm:col-span-6 ">
+        <!-- svelte-ignore missing-declaration -->
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <div class="sm:col-span-6 cursor-pointer" id="dropzone" on:click={toClickinput}>
           <div class="flex justify-center items-center rounded-lg border-1 border-dashed border-blue-600 bg-slate-200 shadow-xl py-5">
             <div class="space-y-1 text-center">
               <div class="flex flex-col text-base text-gray-600" bind:this={container}>
