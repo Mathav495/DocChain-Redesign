@@ -123,8 +123,8 @@
   <!-- 2st div form -->
   <div class="flex flex-col lg:flex-row gap-5 mt-0 lg:mt-5">
     <!-- 1st -->
-    <div class="shadow-[0_5px_8px_10px_rgba(0,0,0,0.1)] w-full lg:w-1/2 p-2 rounded-md">
-      <h1 class="text-slate-900 text-xl mx-8 font-serif tracking-wide mt-5">Continue with Existing Document ID</h1>
+    <div class="shadow-[0_2px_20px_10px_rgba(0,0,0,0.1)] w-full lg:w-1/2 p-2 rounded-md">
+      <h1 class="text-blue-900 text-xl mx-8 font-serif tracking-wide mt-5">Continue with Existing Document ID</h1>
       <h1 class="text-slate-900 text-lg mx-8 font-serif tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
       <form on:submit|preventDefault={Continue} class="mx-8">
         <div class="w-96 mt-8 group">
@@ -147,7 +147,7 @@
 
     <!-- 2nd -->
     <div class="shadow-[0_5px_8px_10px_rgba(0,0,0,0.1)] w-full h-60 lg:h-80 lg:w-1/2 p-1 rounded-md">
-      <h1 class="text-slate-800 text-xl mx-8 font-serif font-medium tracking-wide mt-5">For new Document ID</h1>
+      <h1 class="text-blue-900 text-xl mx-8 font-serif font-medium tracking-wide mt-5">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg mx-8 font-serif tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div class="mt-8 mx-8">
         <button on:click={submitdocid} class="flex text-slate-800 hover:text-white border-2 border-blue-700  py-1 px-2  justify-center items-center focus:outline-none hover:bg-blue-600 rounded text-lg font-bold">Generate Id</button>
