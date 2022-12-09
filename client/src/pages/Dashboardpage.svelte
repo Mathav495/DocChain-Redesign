@@ -57,11 +57,13 @@
       console.log('hide');
       headerHide = false;
       show = false;
+      document.getElementById('header').classList.remove('md:mb-0');
     } else {
       hide = false;
       console.log('show');
       headerHide = true;
       show = true;
+      document.getElementById('header').classList.add('md:mb-0');
     }
   };
 </script>
@@ -71,24 +73,44 @@
 </div> -->
 
 <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4">
-  <div class:hidden={hide} class:block={show} class="lg:w-88 md:w-3/8">
-    <div class="hidden p-8 md:flex flex-col items-start gap-10 justify-between overflow-auto">
+  <div class:hidden={hide} class:block={show} class="width1200px width1024px width768px ">
+    <div class="h-full hidden p-8 md:flex flex-col items-start justify-between">
       <Logo on:Hide={HideNav} />
       <Nav />
       <Logout on:theme={changeClr} />
     </div>
   </div>
-  <div class="relative w-full flex flex-col bg-white text-gray-900 rounded-md p-8 ml-4 overflow-auto">
+  <div class="w-full flex flex-col bg-white text-gray-900 rounded-md p-8 ml-4 overflow-auto">
     <div class:hidden={headerHide}>
       <Headerlogo on:Hide={HideNav} />
     </div>
-    <div class="mb-4">
+    <div>
       <Header on:navShow={showNav} />
     </div>
-    <Dashboard />
+    <div>
+      <Dashboard />
+    </div>
   </div>
   <!--small screen navbar-->
   <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">
     <SmallScreenNavbar />
   </button>
 </div>
+
+<style>
+  @media screen and (min-width: 768px) {
+    .width768px {
+      width: 27rem;
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    .width1024px {
+      width: 24rem;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .width1200px {
+      width: 22rem;
+    }
+  }
+</style>

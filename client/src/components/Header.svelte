@@ -31,7 +31,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="flex justify-between items-center" on:click|self={hideCard}>
+<div id="header" class="flex justify-between items-center md:mb-0 mb-4" on:click|self={hideCard}>
   <div class="text-lg md:text-3xl flex items-center font-boldness gap-2">
     <div class="bg-black md:hidden md:h-12 md:w-12 h-10 w-10 rounded-md flex items-center justify-center">
       <img src="/assets/logo2.png" alt="logo" class="md:h-10 md:w-10 h-8 w-8 animate-pulse lg:animate-none" />
@@ -74,23 +74,7 @@
 </div>
 
 <style>
-  .card-width {
-    width: 9.15rem /* 144px */;
-  }
-  .show {
-    opacity: 100%;
-  }
   .font-boldness {
     font-weight: 1000;
-  }
-  @media (min-width: 640px) {
-    .small\:left {
-      left: 7.3rem /* 112px */;
-    }
-  }
-  @media (min-width: 768px) {
-    .medium\:left {
-      left: -0.2rem /* -4px */;
-    }
   }
 </style>

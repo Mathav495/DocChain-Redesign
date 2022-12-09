@@ -53,7 +53,7 @@
 </div> -->
 
 <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-2 pr-2">
-  <div class="lg:w-88 md:w-3/8 hidden p-8 md:flex flex-col items-start justify-between">
+  <div class="lg:w-88 md:w-3/8 h-full hidden p-8 md:flex flex-col items-start justify-between">
     <Logo />
     <Nav />
     <Logout on:theme={changeClr} />
