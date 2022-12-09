@@ -2,7 +2,7 @@
 module.exports = {
   content: ['./src/**/*.svelte'],
   theme: {
-    extend: {
+    extend: {      
       borderRadius: {
         2: '2rem',
       },

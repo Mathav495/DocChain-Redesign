@@ -21,8 +21,8 @@
       },
       ele,
     ).then((instance) => {
-      instance.UI.loadDocument("https://pdftron.s3.amazonaws.com/downloads/pl/PDFTRON_about.pdf");
-            instance.UI.setTheme('dark');
+      instance.UI.loadDocument('https://pdftron.s3.amazonaws.com/downloads/pl/PDFTRON_about.pdf');
+      instance.UI.setTheme('dark');
     });
   });
 
@@ -43,21 +43,15 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
-  let gradient =localStorage.getItem('gradient')
-  console.log(gradient);
-  // let signature;
+  // let gradient = localStorage.getItem('gradient');
+  // console.log(gradient);
   let issuerName;
   let loading = false;
 
-  // let action = 'Add to Queue';
-  // let receiver, signatory, Document_title, Doc_Type;
   let success = false;
 
   let load = false;
 
-  // onMount(() => {
-  //   changeGradient();
-  // });
 
   onMount(async () => {
     const { data } = await axios.get('https://test.swagger.print2block.in/account/user', {
@@ -247,14 +241,11 @@
   <Loading />
 {:else}
   <section class="relative text-gray-600">
-    <div class="md:w-flex-col mx-auto w-full h-full flex flex-wrap pt-3 md:flex-nowrap">
-      <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
+    <div class="xl:w-flex-col mx-auto w-full h-full flex flex-wrap pt-3 xl:flex-nowrap">
+      <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg xl:mr-10 xl:w-3/5 xl:flex-row lg:w-3/5">
         <div class="flex w-full h-full object-cover object-center block">
-          <!-- <img class="h-[600px] w-full object-cover rounded-md border-2 border-gray-200" src={imgurl} alt="document" /> -->
-          <div id="viewer" class="w-full h-full"/>
-          <!-- <WebView on:ready={ready} /> -->
-
-          <!-- <div class="mt-5">
+          <div id="viewer" class="w-full h-full" />
+                <!-- <div class="mt-5">
             <div class="pointer-events-auto flex w-full divide-x divide-gray-200 rounded-lg border-2 border-gray-200 bg-white shadow-lg ring-1 ring-blue-500 ring-opacity-5">
               <div class="mt-1 flex w-0 flex-1 items-center p-4">
                 <div class="w-full">
@@ -274,59 +265,57 @@
               </div>
             </div>
           </div> -->
-          <!-- <input type="file" on:change={onUpload(this.files)} /> -->
         </div>
       </div>
-      <div class=" mt-8 flex w-full flex-col rounded-md p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5">
-        <div class="h-30 flex w-full flex-col gap-4 rounded-lg p-2">
+      <div class=" mt-8 flex w-full flex-col rounded-md p-5 shadow-2xl xl:ml-auto xl:mt-0 xl:w-2/5 xl:py-8 lg:w-2/5">
+        <div class="h-30 flex w-full flex-col gap-4 rounded-lg p-2 border-2 border-gray-500">
           <div class="order-2 flex gap-3 lg:order-none">
             <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="qrcode" src={qr} />
             <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="logo" src="/assets/sample.jpg" />
 
-            <div class="flex flex-col gap-10">
-              <div class="flex rounded-md px-3 py-1 text-xs  text-black font-bold">ISSUER NAME: {issuerName}</div>
-              <div class="flex rounded-md px-3 py-1 text-xs uppercase text-black font-bold">DOCUMENT_ID: {documentID}</div>
+            <div class="flex flex-col gap-10 ">
+              <div class="flex rounded-md px-3 py-1 text-sm  text-black font-bold">{issuerName}</div>
+              <div class="flex rounded-md px-3 py-1 text-sm text-black font-bold">{documentID}</div>
             </div>
           </div>
-          <!-- <div class="flex flex-col order-1 lg:order-none">
-            <h1 class="text-white text-base font-normal mt-2">SIDBI (DEMO)</h1>
-            <h1 class="text-white text-lg font-bold">Fixed Deposit Report</h1>
-          </div> -->
         </div>
-        <hr class="mt-4 mt-1 h-0.5 w-full bg-gray-300" />
+        <!-- <hr class="mt-4 mt-1 h-0.5 w-full bg-gray-300" /> -->
+        <div class="border-2 border-gray-500 rounded-lg mt-5">
+          <div class="ml-4 mt-5">
+            <div class="relative ">
+              <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Receiver</div>
+              <div class="flex-col">
+                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Name</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 font-bold ease-in-out">john</div>
+              </div>
+            </div>
+            <div class="relative">
+              <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Document</div>
+              <div class="flex-col">
+                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Document type</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">pdf</div>
+              </div>
+            </div>
 
-        <div class="relative mt-4">
-          <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Receiver</div>
-          <div class="flex-col">
-            <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Name</div>
-            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 font-bold ease-in-out">john</div>
+            <div class="relative">
+              <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Issuer</div>
+              <div class="flex-col">
+                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Signatory</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">arun</div>
+              </div>
+            </div>
+            <div class="relative ">
+              <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Date Expired</div>
+              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">Wed Dec 17 2022 22:49:04 GMT+0530 (India Standard Time)</div>
+            </div>
+            <div class="relative mb-5" >
+              <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Document Title</div>
+              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">cerfificate</div>
+            </div>
           </div>
         </div>
-        <div class="relative">
-          <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Document</div>
-          <div class="flex-col">
-            <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Document type</div>
-            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">pdf</div>
-          </div>
-        </div>
 
-        <div class="relative">
-          <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Issuer</div>
-          <div class="flex-col">
-            <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Signatory</div>
-            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">arun</div>
-          </div>
-        </div>
-        <div class="relative ">
-          <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Date Expired</div>
-          <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">Wed Dec 17 2022 22:49:04 GMT+0530 (India Standard Time)</div>
-        </div>
-        <div class="relative">
-          <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Document Title</div>
-          <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">cerfificate</div>
-        </div>
-
-        <footer class="flex w-full justify-between p-2">
+        <footer class="flex w-full justify-between p-2 border-2 border-gray-500 rounded-lg mt-10">
           <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " id="sign" on:click|preventDefault={getsignature}> Sign</button>
 
           <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" rel="noreferrer" on:click|preventDefault={publishdoc}>
