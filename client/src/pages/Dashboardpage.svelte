@@ -2,6 +2,7 @@
   import { flush } from 'svelte/internal';
   import Dashboard from '../components/Dashboard.svelte';
   import Header from '../components/Header.svelte';
+  import Headerlogo from '../components/Headerlogo.svelte';
   // import Loader from '../components/Loader.svelte';
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
@@ -48,16 +49,19 @@
     }
   };
   let hide = false,
-    show = true;
+    show = true,
+    headerHide = true;
   const HideNav = () => {
     if (hide == false) {
       hide = true;
+      console.log('hide');
+      headerHide = false;
       show = false;
-      document.getElementById('btn').innerHTML = 'Show';
     } else {
       hide = false;
+      console.log('show');
+      headerHide = true;
       show = true;
-      document.getElementById('btn').innerHTML = 'Hide';
     }
   };
 </script>
@@ -68,18 +72,20 @@
 
 <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4">
   <div class:hidden={hide} class:block={show} class="lg:w-88 md:w-3/8">
-    <div class="hidden p-8 md:flex flex-col items-start gap-4 justify-between overflow-auto">
-      <Logo />
+    <div class="hidden p-8 md:flex flex-col items-start gap-10 justify-between overflow-auto">
+      <Logo on:Hide={HideNav} />
       <Nav />
       <Logout on:theme={changeClr} />
     </div>
   </div>
-  <div class="relative w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-4 md:ml-0 overflow-auto">
-    <div class="md:hidden block">
-      <Header on:navShow={showNav} />
+  <div class="relative w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-4 overflow-auto">
+    <!-- <div class:hidden={headerHide} class="hidden">
+      <Headerlogo on:Hide={HideNav} />
+    </div> -->
+    <div class:hidden={headerHide}>
+      <Header on:navShow={showNav} on:Hide={HideNav} />
     </div>
     <Dashboard />
-    <button on:click={HideNav} id="btn" class="text-lg bg-indigo-400 hidden md:block hover:bg-indigo-500 rounded-md text-white px-2 py-1 absolute bottom-0 right-0 m-8">Hide</button>
   </div>
   <!--small screen navbar-->
   <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">
