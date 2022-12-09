@@ -3,7 +3,7 @@
   import Loading from './Loading.svelte';
   import axios from 'axios';
   // import { changeGradient } from './grads.svelte';
-// import {changeGradient} from '../../public/Animate';
+  // import {changeGradient} from '../../public/Animate';
   import { onMount } from 'svelte';
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
@@ -29,7 +29,6 @@
   let success = false;
 
   let load = false;
-
 
   onMount(() => {
     changeGradient();
@@ -223,7 +222,7 @@
   <Loading />
 {:else}
   <section class="relative text-gray-600">
-    <div class="md:w-flex-col container mx-auto flex flex-wrap pt-3 md:flex-nowrap">
+    <div class="md:w-flex-col container mx-auto overflow-auto flex flex-wrap pt-3 md:flex-nowrap">
       <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
         <div class="flex w-full flex-col">
           <img class="h-[600px] w-full object-cover rounded-md border-2 border-gray-200" src={imgurl} alt="document" />
