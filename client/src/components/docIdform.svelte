@@ -81,8 +81,8 @@
       <div class="px-4 py-3 w-1/4  tracking-wider  text-slate-900">Document Id</div>
       <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">Data Hash Generated</div>
       <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">File Hash Generated</div>
-      <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900 ">Actions</div>
-      <div class=" py-3 tracking-wider w-1/5  text-slate-900">Status</div>
+      <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900 ">Status</div>
+      <div class=" py-3 tracking-wider w-1/4  text-slate-900">Actions</div>
     </div>
 
     <div class="overflow-auto min-h-[17rem] max-h-64 mt-3 border-2 border-slate-200">
@@ -104,12 +104,13 @@
                 <Pending />
               {/if}
             </div>
-            <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-              <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
-              <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
-            </div>
+
             <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-              <button class={newData.Status == 'Pending' ? 'Pending' : 'Published'}>{newData.Status}</button>
+              <button class="flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Pending</button>
+            </div>
+            <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900">
+              <button class="flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Continue</button>
+              <button class="flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Realese</button>
             </div>
           </div>
         {/each}
@@ -223,7 +224,7 @@
 
 <style lang="postcss">
   .Pending {
-    @apply rounded-md bg-sky-200 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-sky-300;
+    @apply flex rounded-md bg-sky-200 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-sky-300;
   }
   .Published {
     @apply rounded-md bg-green-500 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-green-600;
