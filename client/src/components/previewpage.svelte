@@ -280,7 +280,7 @@
           </div>
         </div>
         <!-- <hr class="mt-4 mt-1 h-0.5 w-full bg-gray-300" /> -->
-        <div class="border-2 border-gray-500 rounded-lg mt-5">
+        <div class="border-2 border-gray-500 rounded-lg mt-5 ">
           <div class="ml-4 mt-5">
             <div class="relative ">
               <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Receiver</div>
@@ -315,7 +315,7 @@
           </div>
         </div>
 
-        <footer class="flex w-full justify-between p-2 border-2 border-gray-500 rounded-lg mt-10">
+        <footer class="flex w-full justify-between  bottom-0 w-full  p-2 border-2 border-gray-500 rounded-lg mt-5 ">
           <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " id="sign" on:click|preventDefault={getsignature}> Sign</button>
 
           <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" rel="noreferrer" on:click|preventDefault={publishdoc}>
