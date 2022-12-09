@@ -3,6 +3,7 @@
   import pdfjsLib from 'pdfjs-dist/build/pdf';
   import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
   import { createEventDispatcher } from 'svelte';
+  import { navigate } from 'svelte-routing';
   import HeaderFileupload from './header_fileupload.svelte';
   const dispatch = createEventDispatcher();
   export let id;
@@ -66,6 +67,9 @@
         //For dispatching
         fileavailable = true;
         dispatch('fileavailable', fileavailable);
+
+        //For navigating to next page
+        navigate('/');
       }
     }
   };
@@ -135,54 +139,6 @@
     document.getElementById('pdf-preview').src = canvas.toDataURL();
   };
 
-  const onChange = () => {
-    const form = document.getElementById('form');
-    const formData = new FormData(form);
-    console.log([...formData]);
-    let datum = [...formData][0];
-    File = datum[1];
-    console.log(File.type);
-    if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
-      showImage = true;
-      const reader = new FileReader();
-      reader.readAsDataURL(File);
-
-      reader.addEventListener('load', function () {
-        image.setAttribute('src', reader.result);
-        const url = reader.result;
-        // console.log(url);
-        const img = new Image();
-
-        localStorage.setItem('img', url);
-        let imgurl = localStorage.getItem('img');
-        // console.log('imgUrl', imgurl);
-        img.src = imgurl;
-      });
-
-      return;
-    } else if (File.type == 'application/pdf') {
-      instance = null;
-      showImage = false;
-      showpdf = true;
-      const reader = new FileReader();
-      reader.readAsDataURL(File);
-      reader.addEventListener('load', function () {
-        // pdf.setAttribute('src', reader.result);
-        base64 = reader.result;
-        console.log('base64', base64);
-      });
-
-      return;
-    } else {
-      showImage = false;
-      showpdf = false;
-      return;
-    }
-  };
-
-  // let dropzone = document.getElementById('dropzone');
-  // console.log(dropzone);
-
   const toClickinput = () => {
     document.getElementById('file-upload').click();
   };
@@ -238,7 +194,7 @@
 
     {#if displaypreview}
       <div class="flex justify-center items-center">
-        <button class="bg-blue-400 rounded-xl px-10 py-3 text-white font-bold tracking-wide"> Confirm and Upload </button>
+        <button on:click|preventDefault={onSubmitFile} class="bg-blue-400 rounded-xl px-10 py-3 text-white font-bold tracking-wide"> Confirm and Upload </button>
       </div>
     {/if}
   </div>
@@ -268,6 +224,3 @@
     </div>
   {/if}
 </div>
-
-<style lang="postcss">
-</style>
