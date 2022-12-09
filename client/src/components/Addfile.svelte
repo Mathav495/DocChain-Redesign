@@ -12,6 +12,7 @@
   let image, showpdf, pdf, container, docDetails;
   let showImage = false;
   let fileavailable = false;
+  let displaypreview = false;
   let _PDFDOC;
   let File,
     _total_pages,
@@ -74,6 +75,7 @@
    */
 
   const ondisplay = async () => {
+    displaypreview = true;
     const form = document.getElementById('form');
     const formData = new FormData(form);
     console.log([...formData]);
@@ -108,11 +110,6 @@
   };
 
   const showPdf = async (blob) => {
-    // let selectPage = document.getElementById('page-no');
-    // console.log(selectPage);
-    // while (selectPage.options.length > 0) {
-    //   selectPage.remove(0);
-    // }
     pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
     let loadingTask = pdfjsLib.getDocument(blob);
     loadingTask = loadingTask.promise;
@@ -120,10 +117,6 @@
     _total_pages = _PDFDOC.numPages;
     console.log(_total_pages);
     console.log(_PDFDOC);
-    // for (let i = 0; i < _total_pages; i++) {
-    //   selectPage.options[selectPage.options.length] = new Option(i + 1, i);
-    // }
-    // selectPage.value = '0';
     currentpage = 1;
     showPage(1);
   };
@@ -132,6 +125,7 @@
     let page = await _PDFDOC.getPage(pageno);
     console.log('Page loaded');
     let viewport = page.getViewport({ scale: 1 });
+
     // Prepare canvas using PDF page dimensions
     let canvas = document.createElement('canvas');
     let context = canvas.getContext('2d');
@@ -182,59 +176,6 @@
         // pdf.setAttribute('src', reader.result);
         base64 = reader.result;
         console.log('base64', base64);
-        const element = document.getElementById('view');
-        // WebViewer(
-        //   {
-        //     licenseKey: 'hezg49lLEY5VusvTCg1J',
-        //     path: '/lib',
-        //   },
-        //   element,
-        // ).then((instance) => {
-        //   instance.UI.loadDocument(File, { filename: File.name });
-        //   instance.UI.setTheme('dark');
-        // });
-        // const onUpload = (files) =>{
-        //   if (files.length !== 1) return;
-        //   const file = files[0];
-        //   let reader = new FileReader();
-        //   reader.onload = (e) => {
-        //     const data = buffer.form(e.target.result.replace(/.*base64,/, ''));
-        //     renderPDF(data);
-        //     console.log(data);
-        //   };
-
-        //   reader.readAsDataURL(file);
-        // }
-        // async function renderPDF(data) {
-        //   const pdf = await pdfjsLib.getDocument({ data }).promise;
-        //   // console.log(pdf)
-
-        //   for (let i = 1; i <= pdf.numPages; i++) {
-        //     const image = document.createElement('img');
-        //     document.body.appendChild(image);
-        //     console.log(image);
-        //     const page = await pdf.getPage(i);
-        //     // console.log(page)
-        //     const viewport = page.getViewport({ scale: 2 });
-        //     const canvas = document.createElement('canvas');
-        //     const canvasContext = canvas.getContext('2d');
-        //     canvas.height = viewport.height;
-        //     canvas.width = viewport.width;
-        //     await page.render({ canvasContext, viewport }).promise;
-        //     const data = canvas.toDataURL('image/png');
-        //     console.log(data);
-        //     image.src = data;
-        //     image.style.width = '100%';
-        //   }
-        // }
-
-        // const pdf1 = new Image();
-        // image.src = url;
-        // document.body.appendChild(image);
-        // localStorage.setItem('pdf', url1);
-        // let pdfurl = localStorage.getItem('pdf');
-        // console.log('pdfUrl', pdfurl);
-        // pdf1.src = pdfurl;
       });
 
       return;
@@ -245,8 +186,8 @@
     }
   };
 
-  let dropzone = document.getElementById('dropzone');
-  console.log(dropzone);
+  // let dropzone = document.getElementById('dropzone');
+  // console.log(dropzone);
 
   const toClickinput = () => {
     document.getElementById('file-upload').click();
@@ -269,11 +210,6 @@
       console.log('final', currentpage);
     }
   };
-
-  // const hideImage = () => {
-  //   showImage = false;
-  //   showpdf = false;
-  // };
 </script>
 
 <div class="rounded-lg h-auto w-full flex space-x-4">
@@ -294,7 +230,7 @@
                       <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <span class="inline-flex">Upload a file</span>
-                    <input on:change|stopPropagation|preventDefault={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
+                    <input on:change={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
                     <span class="pl-1">or drag and drop</span>
                     <p class="text-xs mt-2 text-gray-600">Upload JPEG, PNG, JPG, PDF files</p>
                   </label>
@@ -307,34 +243,36 @@
     </form>
   </div>
 
-  <div class=" w-1/2 rounded-md bg-slate-900">
-    <div class="p-2">
-      <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[36rem]" />
-      <div class="flex justify-center items-center gap-8 pt-2">
-        <button on:click={previouspage}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-          </svg>
-        </button>
-        <h1 class="text-lg text-white font-bold">{currentpage}</h1>
-        <button on:click={nextpage}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
-        </button>
+  {#if displaypreview}
+    <div class=" w-1/2 rounded-md bg-slate-900">
+      <div class="p-2">
+        <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[36rem]" />
+        <div class="flex justify-center items-center gap-8 pt-2">
+          <button on:click={previouspage}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <h1 class="text-lg text-white font-bold">{currentpage}</h1>
+          <button on:click={nextpage}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </div>
       </div>
+      <!-- {#if showImage} -->
+      <!-- <img bind:this={image} class="h-full w-full" id="File" src="" alt="Preview" /> -->
+      <!-- {:else if showpdf} -->
+      <!-- <embed bind:this={pdf} class="h-52 w-full" id="File" src="" alt="Preview" /> -->
+      <!-- <div id="view" class="w-full h-full" /> -->
+      <!-- {:else} -->
+      <!-- <div class="h-full w-full flex justify-center items-center"> -->
+      <!-- <h1 class="text-lg font-bold tracking-wide text-white">No image available</h1> -->
+      <!-- </div> -->
+      <!-- {/if} -->
     </div>
-    <!-- {#if showImage} -->
-    <!-- <img bind:this={image} class="h-full w-full" id="File" src="" alt="Preview" /> -->
-    <!-- {:else if showpdf} -->
-    <!-- <embed bind:this={pdf} class="h-52 w-full" id="File" src="" alt="Preview" /> -->
-    <!-- <div id="view" class="w-full h-full" /> -->
-    <!-- {:else} -->
-    <!-- <div class="h-full w-full flex justify-center items-center"> -->
-    <!-- <h1 class="text-lg font-bold tracking-wide text-white">No image available</h1> -->
-    <!-- </div> -->
-    <!-- {/if} -->
-  </div>
+  {/if}
 </div>
 
 <style lang="postcss">
