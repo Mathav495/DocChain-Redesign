@@ -1,7 +1,8 @@
 <script>
   import axios from 'axios';
+  import pdfjsLib from 'pdfjs-dist/build/pdf';
+  import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
   import { createEventDispatcher, onMount } from 'svelte';
-  import WebViewer from '@pdftron/pdfjs-express';
   import HeaderFileupload from './header_fileupload.svelte';
   const dispatch = createEventDispatcher();
   export let id;
@@ -68,6 +69,69 @@
   /**
    * Function for previewing image or pdf when uploaded
    */
+
+  const ondisplay = async () => {
+    const form = document.getElementById('form');
+    const formData = new FormData(form);
+    console.log([...formData]);
+    let datum = [...formData][0];
+    File = datum[1];
+    console.log(File.type);
+    if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
+      showImage = true;
+      const reader = new FileReader();
+      reader.readAsDataURL(File);
+      reader.addEventListener('load', function () {
+        image.setAttribute('src', reader.result);
+        const url = reader.result;
+        const img = new Image();
+        localStorage.setItem('img', url);
+        let imgurl = localStorage.getItem('img');
+        img.src = imgurl;
+      });
+      return;
+    } else if (File.type == 'application/pdf') {
+      showImage = false;
+      showpdf = true;
+      let blob = URL.createObjectURL(File);
+      console.log(blob);
+      await showPdf(blob);
+      return;
+    } else {
+      showImage = false;
+      showpdf = false;
+      return;
+    }
+  };
+  let _PDFDOC;
+  const showPdf = async (blob) => {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+    let loadingTask = pdfjsLib.getDocument(blob);
+    loadingTask = loadingTask.promise;
+    _PDFDOC = await loadingTask;
+    console.log(_PDFDOC);
+    showPage(1);
+  };
+  const showPage = async (pageno) => {
+    let page = await _PDFDOC.getPage(pageno);
+    console.log('Page loaded');
+    let viewport = page.getViewport({ scale: 1 });
+    // Prepare canvas using PDF page dimensions
+    let canvas = document.createElement('canvas');
+    let context = canvas.getContext('2d');
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    // Render PDF page into canvas context
+    let renderContext = {
+      canvasContext: context,
+      viewport: viewport,
+    };
+    await page.render(renderContext).promise;
+    document.getElementById('pdf-preview').src = canvas.toDataURL();
+    // console.log(renderTask)
+  };
+
   const onChange = () => {
     const form = document.getElementById('form');
     const formData = new FormData(form);
@@ -104,16 +168,16 @@
         base64 = reader.result;
         console.log('base64', base64);
         const element = document.getElementById('view');
-        WebViewer(
-          {
-            licenseKey: 'hezg49lLEY5VusvTCg1J',
-            path: '/lib',
-          },
-          element,
-        ).then((instance) => {
-          instance.UI.loadDocument(File, { filename: File.name });
-          instance.UI.setTheme('dark');
-        });
+        // WebViewer(
+        //   {
+        //     licenseKey: 'hezg49lLEY5VusvTCg1J',
+        //     path: '/lib',
+        //   },
+        //   element,
+        // ).then((instance) => {
+        //   instance.UI.loadDocument(File, { filename: File.name });
+        //   instance.UI.setTheme('dark');
+        // });
         // const onUpload = (files) =>{
         //   if (files.length !== 1) return;
         //   const file = files[0];
@@ -179,11 +243,6 @@
   // };
 </script>
 
-<svelte:head>
-  <script src="./lib/pdf/pdf.min.js"></script>
-  <script src="./lib/pdf/pdf.worker.min.js"></script>
-</svelte:head>
-
 <div class="rounded-lg h-auto w-full flex space-x-4">
   <div class="w-1/2">
     <HeaderFileupload {id} {bgcolor} />
@@ -202,7 +261,7 @@
                       <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <span class="inline-flex">Upload a file</span>
-                    <input on:change={onChange} id="file-upload" onchange="onUpload(this.files)" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
+                    <input on:change={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
                     <span class="pl-1">or drag and drop</span>
                     <p class="text-xs mt-2 text-gray-600">Upload JPEG, PNG, JPG, PDF files</p>
                   </label>
@@ -215,8 +274,10 @@
     </form>
   </div>
 
-  <div class=" w-1/2 rounded-md bg-slate-200">
-    <canvas id="mycanvas" />
+  <div class=" w-1/2 rounded-md bg-slate-900">
+    <div class="p-4">
+      <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" />
+    </div>
     <!-- {#if showImage} -->
     <!-- <img bind:this={image} class="h-full w-full" id="File" src="" alt="Preview" /> -->
     <!-- {:else if showpdf} -->

@@ -4,11 +4,8 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "autobuild": "rollup -c -w",
     "dev": "rollup -c -w",
-    "start": "sirv public --single --clear",
-    "start:dev": "sirv public --dev",
-    "postinstall": "node tools/copy-webviewer-files.js"
+    "start": "sirv public --single --clear"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -27,7 +24,6 @@
     "tailwindcss": "^3.2.4"
   },
   "dependencies": {
-    "@pdftron/pdfjs-express": "^8.7.0",
     "axios": "^1.2.0",
     "npm-run-all": "^4.1.5",
     "particles.js": "^2.0.0",
