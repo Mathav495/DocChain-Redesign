@@ -212,12 +212,12 @@
   };
 </script>
 
-<div class="rounded-lg h-auto w-full flex space-x-4">
-  <div class="w-1/2">
+<div class="rounded-lg h-auto w-full flex space-x-4 ">
+  <div class="w-1/2 space-y-4">
     <HeaderFileupload {id} {bgcolor} />
 
     <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
-      <div class="pt-6">
+      <div class="">
         <div class="flex w-full flex-col">
           <!-- svelte-ignore missing-declaration -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -246,7 +246,7 @@
   {#if displaypreview}
     <div class=" w-1/2 rounded-md bg-slate-900">
       <div class="p-2">
-        <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[36rem]" />
+        <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" />
         <div class="flex justify-center items-center gap-8 pt-2">
           <button on:click={previouspage}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
