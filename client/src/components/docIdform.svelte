@@ -106,11 +106,11 @@
             </div>
 
             <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-              <button class="flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Pending</button>
+              <button class="flex text-slate-800 border-2 border-yellow-500 py-1 px-2 justify-center items-center focus:outline hover:bg-yellow-500 rounded text-lg">Pending</button>
             </div>
             <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900">
-              <button class="flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Continue</button>
-              <button class="flex text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Realese</button>
+              <button class="flex text-white border-2  py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Continue</button>
+              <button class="flex text-white border-2 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Realese</button>
             </div>
           </div>
         {/each}
@@ -119,71 +119,6 @@
           <h1 class="text-lg font-bold tracking-wide p-2 flex justify-center items-center bg-teal-200 rounded-lg">No Pending ID's</h1>
         </div>
       {/if}
-
-      <!-- <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Tick />
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Tick />
-        </div>
-        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
-        </div>
-      </div> -->
-      <!-- <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Tick />
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Tick />
-        </div>
-        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
-        </div>
-      </div> -->
-      <!-- <div class="border-b-2 border-gray-200  flex w-full font-semibold text-sm lg:text-base">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Xmark />
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Xmark />
-        </div>
-        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
-        </div>
-      </div> -->
-      <!-- <div class=" flex w-full font-semibold text-sm lg:text-base">
-        <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">638d975742d47d79c84d57c1</div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Xmark />
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
-          <Xmark />
-        </div>
-        <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-green-500 text-slate-700 rounded-md hover:bg-green-600 text-base font-bold p-1 tracking-wide">Publish</button>
-          <button class="bg-red-500 text-white rounded-md hover:bg-red-600 text-base font-bold p-1 tracking-wide">Revoke</button>
-        </div>
-        <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-          <button class="bg-sky-200 text-slate-700 rounded-md hover:bg-sky-300 text-base font-bold p-1 tracking-wide">Pending</button>
-        </div>
-      </div> -->
     </div>
   </div>
   <!-- 2st div form -->
