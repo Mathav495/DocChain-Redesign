@@ -76,8 +76,8 @@
 
 <div class="flex flex-col gap-10">
   <!-- 1st div table -->
-  <div class="shadow-lg rounded-lg relative text-center">
-    <div class=" w-full flex font-bold text-sm lg:text-base">
+  <div class="shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)] rounded-lg relative text-center">
+    <div class=" w-full flex font-bold text-sm lg:text-lg">
       <div class="px-4 py-3 w-1/4  tracking-wider  text-slate-900">Document Id</div>
       <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">Data Hash Generated</div>
       <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">File Hash Generated</div>

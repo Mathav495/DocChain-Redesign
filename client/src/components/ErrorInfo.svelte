@@ -12,7 +12,7 @@
       clip-rule="evenodd"
     />
   </svg>
-  <h1 class="text-xl text-white font-medium tracking-wide ">
+  <h1 class="text-xl text-white font-medium tracking-wide">
     {errormsg}
   </h1>
   <!-- event forwarding -->
