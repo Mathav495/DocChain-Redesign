@@ -2,12 +2,34 @@
   import Successmsg from './successmsg.svelte';
   import Loading from './Loading.svelte';
   import axios from 'axios';
-  // import { changeGradient } from './grads.svelte';
-// import {changeGradient} from '../../public/Animate';
-  import { onMount } from 'svelte';
-  import { createEventDispatcher } from 'svelte';
+  import { onMount, createEventDispatcher } from 'svelte';
+  import WebViewer from '@pdftron/pdfjs-express';
+  // import WebView from '../WebView.svelte';
   import { navigate } from 'svelte-routing';
+
   const dispatch = createEventDispatcher();
+  let instance = null;
+
+  onMount(async () => {
+    instance = null;
+    const ele = document.getElementById('viewer');
+    WebViewer(
+      {
+        licenseKey: '0uTsV6qWffrLJ98Zs5WU	',
+        path: '/lib',
+      },
+      ele,
+    ).then((instance) => {
+      instance.UI.loadDocument("https://pdftron.s3.amazonaws.com/downloads/pl/PDFTRON_about.pdf");
+            instance.UI.setTheme('dark');
+    });
+  });
+
+  // const ready = (r) => {
+  //   const instance = r.detail.instance;
+  //   instance.UI.loadDocument('https://pdftron.s3.amazonaws.com/downloads/pl/PDFTRON_about.pdf');
+  // };
+
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
   let fileHash = localStorage.getItem('filehash');
@@ -30,10 +52,9 @@
 
   let load = false;
 
-
-  onMount(() => {
-    changeGradient();
-  });
+  // onMount(() => {
+  //   changeGradient();
+  // });
 
   onMount(async () => {
     const { data } = await axios.get('https://test.swagger.print2block.in/account/user', {
@@ -48,72 +69,72 @@
   /**
    * Submitting file for generating filehash
    */
-  const onSubmitFile = async () => {
-    console.log('hello');
-    console.log(File);
-    if (File.name != '') {
-      const { data } = await axios.post(
-        'https://test.swagger.print2block.in/docs/add-file',
-        {
-          documentID: documentID,
-          file: File,
-        },
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'x-access-token': token,
-          },
-        },
-      );
-      console.log(data);
-      dispatch('filehash', data.fileHash);
-      localStorage.setItem('filehash', data.fileHash);
-      let fileHash = localStorage.getItem('filehash');
-      console.log('filehash', fileHash);
+  // const onSubmitFile = async () => {
+  //   console.log('hello');
+  //   console.log(File);
+  //   if (File.name != '') {
+  //     const { data } = await axios.post(
+  //       'https://test.swagger.print2block.in/docs/add-file',
+  //       {
+  //         documentID: documentID,
+  //         file: File,
+  //       },
+  //       {
+  //         headers: {
+  //           'Content-Type': 'multipart/form-data',
+  //           'x-access-token': token,
+  //         },
+  //       },
+  //     );
+  //     console.log(data);
+  //     dispatch('filehash', data.fileHash);
+  //     localStorage.setItem('filehash', data.fileHash);
+  //     let fileHash = localStorage.getItem('filehash');
+  //     console.log('filehash', fileHash);
 
-      if (data.fileHash) {
-        fileavailable = true;
-        dispatch('fileavailable', fileavailable);
-        status = 'Uploaded Sucessfully';
+  //     if (data.fileHash) {
+  //       fileavailable = true;
+  //       dispatch('fileavailable', fileavailable);
+  //       status = 'Uploaded Sucessfully';
 
-        // const onUpload = (files) => {
-        //   if (files.length !== 1) return;
-        //   const file = files[0];
-        //   let reader = new FileReader();
-        //   reader.onload = (e) => {
-        //     const data = Buffer.from(e.target.result.replace(/.*base64,/, ''));
-        //     renderPDF(data);
-        //     console.log(data);
-        //   };
+  //       // const onUpload = (files) => {
+  //       //   if (files.length !== 1) return;
+  //       //   const file = files[0];
+  //       //   let reader = new FileReader();
+  //       //   reader.onload = (e) => {
+  //       //     const data = Buffer.from(e.target.result.replace(/.*base64,/, ''));
+  //       //     renderPDF(data);
+  //       //     console.log(data);
+  //       //   };
 
-        //   reader.readAsDataURL(file);
-        // };
+  //       //   reader.readAsDataURL(file);
+  //       // };
 
-        // async function renderPDF(data) {
-        //   const pdf = await pdfjsLib.getDocument({ data }).promise;
-        //   // console.log(pdf)
+  //       // async function renderPDF(data) {
+  //       //   const pdf = await pdfjsLib.getDocument({ data }).promise;
+  //       //   // console.log(pdf)
 
-        //   for (let i = 1; i <= pdf.numPages; i++) {
-        //     const image = document.createElement('img');
-        //     document.body.appendChild(image);
-        //     console.log(image);
-        //     const page = await pdf.getPage(i);
-        //     // console.log(page)
-        //     const viewport = page.getViewport({ scale: 2 });
-        //     const canvas = document.createElement('canvas');
-        //     const canvasContext = canvas.getContext('2d');
-        //     canvas.height = viewport.height;
-        //     canvas.width = viewport.width;
-        //     await page.render({ canvasContext, viewport }).promise;
-        //     const data = canvas.toDataURL('image/png');
-        //     console.log(data);
-        //     image.src = data;
-        //     image.style.width = '100%';
-        //   }
-        // }
-      }
-    }
-  };
+  //       //   for (let i = 1; i <= pdf.numPages; i++) {
+  //       //     const image = document.createElement('img');
+  //       //     document.body.appendChild(image);
+  //       //     console.log(image);
+  //       //     const page = await pdf.getPage(i);
+  //       //     // console.log(page)
+  //       //     const viewport = page.getViewport({ scale: 2 });
+  //       //     const canvas = document.createElement('canvas');
+  //       //     const canvasContext = canvas.getContext('2d');
+  //       //     canvas.height = viewport.height;
+  //       //     canvas.width = viewport.width;
+  //       //     await page.render({ canvasContext, viewport }).promise;
+  //       //     const data = canvas.toDataURL('image/png');
+  //       //     console.log(data);
+  //       //     image.src = data;
+  //       //     image.style.width = '100%';
+  //       //   }
+  //       // }
+  //     }
+  //   }
+  // };
 
   // getting signature Id from the user
   const getsignature = async () => {
@@ -225,9 +246,12 @@
   <section class="relative text-gray-600">
     <div class="md:w-flex-col container mx-auto flex flex-wrap pt-3 md:flex-nowrap">
       <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
-        <div class="flex w-full flex-col">
-          <img class="h-[600px] w-full object-cover rounded-md border-2 border-gray-200" src={imgurl} alt="document" />
-          <div class="mt-5">
+        <div class="flex w-full h-full flex-colflex-shrink-0 overflow-y-auto">
+          <!-- <img class="h-[600px] w-full object-cover rounded-md border-2 border-gray-200" src={imgurl} alt="document" /> -->
+          <div id="viewer" class="w-full h-max"/>
+          <!-- <WebView on:ready={ready} /> -->
+
+          <!-- <div class="mt-5">
             <div class="pointer-events-auto flex w-full divide-x divide-gray-200 rounded-lg border-2 border-gray-200 bg-white shadow-lg ring-1 ring-blue-500 ring-opacity-5">
               <div class="mt-1 flex w-0 flex-1 items-center p-4">
                 <div class="w-full">
@@ -240,15 +264,13 @@
                   <div class="flex h-0 flex-1">
                     <button type="button" class="flex w-full items-center justify-center rounded-none rounded-tr-lg border border-transparent bg-blue-600 hover:bg-blue-500 hover:text-white px-8 py-2 text-base font-medium text-white focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 uppercase" on:click|preventDefault={onSubmitFile}>Upload</button>
                   </div>
-                  <!-- {#if (success = false)} -->
                   <div class="flex h-0 flex-1">
                     <button id="button1" type="button" class="flex w-full items-center justify-center rounded-none rounded-br-lg border border-transparent bg-blue-600 px-8 py-2 text-base font-medium text-white hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-blue-200 uppercase" on:click={releaseDoc}>Release</button>
                   </div>
-                  <!-- {/if} -->
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           <!-- <input type="file" on:change={onUpload(this.files)} /> -->
         </div>
       </div>
@@ -333,7 +355,8 @@
 {/if}
 
 <!-- <style>
-  .hide {
-    display: none;
+  #viewer {
+    width: 100%;
+    height: 100%;
   }
 </style> -->
