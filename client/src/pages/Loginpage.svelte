@@ -132,7 +132,7 @@
 
         <div>
           {#if display}
-            <ErrorInfo errormsg="Invalid Username or Password" on:click={hideErrmsg} />
+            <ErrorInfo errormsg="Invalid Username or Password" position="bottom-0 mr-5 mb-10 right-0" on:click={hideErrmsg} />
           {/if}
         </div>
       </form>
