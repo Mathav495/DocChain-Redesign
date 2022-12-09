@@ -4,7 +4,7 @@
   export let position;
 </script>
 
-<div in:fade={{ duration: 2000 }} out:fade={{ duration: 2000 }} class="absolute flex bg-[#e15858] justify-center items-center mt-8 gap-4 p-3 rounded-md {position}">
+<div in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }} class="flex bg-[#e15858] justify-center items-center mt-8 gap-4 p-3 rounded-md {position}">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class=" fill-white w-7 h-7">
     <path
       fill-rule="evenodd"
@@ -12,7 +12,7 @@
       clip-rule="evenodd"
     />
   </svg>
-  <h1 class="text-xl text-white font-medium tracking-wide">
+  <h1 class="text-xl text-white font-semibold tracking-wide">
     {errormsg}
   </h1>
   <!-- event forwarding -->

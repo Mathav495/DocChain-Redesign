@@ -76,28 +76,28 @@
 
 <div class="flex flex-col gap-10">
   <!-- 1st div table -->
-  <div class="shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)] rounded-lg relative text-center">
-    <div class="w-full flex font-bold text-sm lg:text-lg">
-      <div class="px-4 py-3 w-1/4  tracking-wider  text-slate-900">Document Id</div>
-      <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">Data Hash Generated</div>
-      <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">File Hash Generated</div>
-      <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-900 ">Status</div>
-      <div class=" py-3 tracking-wider w-1/4  text-slate-900">Actions</div>
+  <div class="shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)] rounded-lg relative  text-center  max-h-64 overflow-auto lg:overflow-hidden">
+    <div class="w-full font-bold flex justify-around text-sm lg:text-lg">
+      <div class=" py-3  bg-red-100  tracking-wider text-slate-900">Document Id</div>
+      <div class=" py-3  bg-green-100 tracking-wider  text-slate-900 ">Data Hash Generated</div>
+      <div class=" py-3  bg-yellow-100  text-slate-900 ">File Hash Generated</div>
+      <div class=" py-3  bg-slate-100 tracking-wider  text-slate-900 ">Status</div>
+      <div class=" py-3  bg-teal-100 tracking-wider  text-slate-900">Actions</div>
     </div>
 
-    <div class="overflow-auto min-h-[17rem] max-h-64 mt-3 border-2 border-slate-200">
+    <div class="lg:overflow-auto max-h-64 mt-3 border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
-          <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-sm lg:text-base">
-            <div class="px-4 py-3 w-1/4 tracking-wider  text-slate-600">{newData.documentID}</div>
-            <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+          <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
+            <div class=" py-3 w-1/4 bg-red-100 tracking-wider font-mono text-slate-600">{newData.documentID}</div>
+            <div class=" py-3 w-1/5 bg-green-100 tracking-wider flex justify-center items-center  text-slate-900 ">
               {#if newData.datahash}
                 <Tick />
               {:else}
                 <Pending />
               {/if}
             </div>
-            <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+            <div class=" py-3 w-1/5 bg-yellow-100 tracking-wider flex justify-center items-center  text-slate-900 ">
               {#if newData.filehash}
                 <Tick />
               {:else}
@@ -105,12 +105,12 @@
               {/if}
             </div>
 
-            <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-              <button class="flex text-slate-800 border-2 border-yellow-500 py-1 px-2 justify-center items-center  hover:bg-yellow-500 rounded text-base">Pending</button>
+            <div class=" py-3 w-1/5 bg-slate-100 tracking-wider flex gap-2 justify-center text-slate-900 ">
+              <button class="flex text-slate-800 border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
             </div>
-            <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900">
-              <button class="flex text-slate-800 border-2 border-indigo-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-base">Continue</button>
-              <button class="flex text-slate-800 border-2 border-red-500 py-1 px-2  justify-center items-center focus:outline-none hover:bg-red-600 rounded text-base">Realese</button>
+            <div class=" py-3  bg-teal-100 tracking-wider flex gap-2 justify-center text-slate-900">
+              <button class="flex text-slate-800 border-2 border-indigo-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-base">Continue</button>
+              <button class="flex text-slate-800 border-2 border-red-500 py-1 px-2  hover:text-white justify-center items-center focus:outline-none hover:bg-red-600 rounded text-base">Realese</button>
             </div>
           </div>
         {/each}
@@ -122,7 +122,7 @@
     </div>
   </div>
   <!-- 2st div form -->
-  <div class="flex flex-col lg:flex-row gap-5">
+  <div class="flex flex-col lg:flex-row gap-5 mt-0 lg:mt-5">
     <!-- 1st -->
     <div class="shadow-[0_5px_8px_10px_rgba(0,0,0,0.1)] w-full lg:w-1/2 p-2 rounded-md">
       <h1 class="text-slate-900 text-xl mx-8 font-serif tracking-wide mt-5">Continue with Existing Document ID</h1>
@@ -137,31 +137,22 @@
                 <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
               </svg>
             </span>
-            <input bind:value={ExistingId} type="text" id="Document Id" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black  rounded border focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
+            <input bind:value={ExistingId} type="text" id="Document Id" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black border-2 border-slate-500  rounded  focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
           </div>
         </div>
         <div class="mt-8 mb-2">
-          <button class="flex text-slate-800 border-2 border-indigo-500  py-1 px-2 font-bold justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-lg">Continue</button>
+          <button class="flex text-slate-800 border-2 hover:text-white border-indigo-500  py-1 px-2 font-bold justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-lg">Continue</button>
         </div>
       </form>
     </div>
 
     <!-- 2nd -->
-    <div class="shadow-[0_5px_8px_10px_rgba(0,0,0,0.1)] w-1/2 p-1 rounded-md">
+    <div class="shadow-[0_5px_8px_10px_rgba(0,0,0,0.1)] w-full h-60 lg:h-80 lg:w-1/2 p-1 rounded-md">
       <h1 class="text-slate-800 text-xl mx-8 font-serif font-medium tracking-wide mt-5">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg mx-8 font-serif tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div class="mt-8 mx-8">
-        <button on:click={submitdocid} class="flex text-slate-800 border-2 border-indigo-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-lg font-bold">Generate Id</button>
+        <button on:click={submitdocid} class="flex text-slate-800 hover:text-white border-2 border-indigo-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-lg font-bold">Generate Id</button>
       </div>
     </div>
   </div>
 </div>
-
-<style lang="postcss">
-  .Pending {
-    @apply flex rounded-md bg-sky-200 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-sky-300;
-  }
-  .Published {
-    @apply rounded-md bg-green-500 px-2 py-1 text-base font-bold tracking-wide text-slate-700 hover:bg-green-600;
-  }
-</style>

@@ -11,7 +11,7 @@
   animate.style.display = 'block';
   let sampleData;
 
-  let display = true;
+  let display = false;
   let type = 'password';
   let Email = '',
     Password = '';
@@ -132,7 +132,7 @@
 
         <div>
           {#if display}
-            <ErrorInfo errormsg="Invalid Username or Password" position=" bottom-32 left-0 ml-10" on:click={hideErrmsg} />
+            <ErrorInfo errormsg="Invalid Username or Password" on:click={hideErrmsg} />
           {/if}
         </div>
       </form>
