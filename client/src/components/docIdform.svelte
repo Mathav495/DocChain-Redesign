@@ -77,19 +77,19 @@
 <div class="flex flex-col gap-10">
   <!-- 1st div table -->
   <div class="shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)] rounded-lg relative  text-center  max-h-64 overflow-auto lg:overflow-hidden">
-    <div class="w-full font-bold flex justify-around text-sm lg:text-lg">
-      <div class=" py-3  bg-red-100  tracking-wider text-slate-900">Document Id</div>
-      <div class=" py-3  bg-green-100 tracking-wider  text-slate-900 ">Data Hash Generated</div>
-      <div class=" py-3  bg-yellow-100  text-slate-900 ">File Hash Generated</div>
-      <div class=" py-3  bg-slate-100 tracking-wider  text-slate-900 ">Status</div>
-      <div class=" py-3  bg-teal-100 tracking-wider  text-slate-900">Actions</div>
+    <div class="w-full font-medium flex font-serif text-sm lg:text-base">
+      <div class=" py-3 w-1/4 bg-red-100  tracking-wider text-slate-900">Document Id</div>
+      <div class=" py-3 w-1/5 bg-green-100 tracking-wider  text-slate-900 ">Data Hash Generated</div>
+      <div class=" py-3 w-1/5 bg-yellow-100 tracking-wider  text-slate-900 ">File Hash Generated</div>
+      <div class=" py-3 w-1/5 bg-slate-100 tracking-wider  text-slate-900 ">Status</div>
+      <div class=" py-3 w-1/4 bg-teal-100 tracking-wider  text-slate-900">Actions</div>
     </div>
 
     <div class="lg:overflow-auto max-h-64 mt-3 border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
-            <div class=" py-3 w-1/4 bg-red-100 tracking-wider font-mono text-slate-600">{newData.documentID}</div>
+            <div class=" py-3 w-1/4 bg-red-100 text-start pl-4 tracking-wider font-mono text-slate-600">{newData.documentID}</div>
             <div class=" py-3 w-1/5 bg-green-100 tracking-wider flex justify-center items-center  text-slate-900 ">
               {#if newData.datahash}
                 <Tick />
@@ -104,11 +104,10 @@
                 <Pending />
               {/if}
             </div>
-
             <div class=" py-3 w-1/5 bg-slate-100 tracking-wider flex gap-2 justify-center text-slate-900 ">
               <button class="flex text-slate-800 border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
             </div>
-            <div class=" py-3  bg-teal-100 tracking-wider flex gap-2 justify-center text-slate-900">
+            <div class="py-3 w-1/4 bg-teal-100 tracking-wider flex gap-2 justify-center text-slate-900">
               <button class="flex text-slate-800 border-2 border-indigo-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-base">Continue</button>
               <button class="flex text-slate-800 border-2 border-red-500 py-1 px-2  hover:text-white justify-center items-center focus:outline-none hover:bg-red-600 rounded text-base">Realese</button>
             </div>
