@@ -2,7 +2,7 @@
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
   import Tick from '../icons/Tick.svelte';
-  import Xmark from '../icons/Xmark.svelte';
+  import Pending from '../icons/Pending.svelte';
   let documentID,
     ExistingId = '';
   let token,
@@ -94,14 +94,14 @@
               {#if newData.datahash}
                 <Tick />
               {:else}
-                <Xmark />
+                <Pending />
               {/if}
             </div>
             <div class="px-4 py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
               {#if newData.filehash}
                 <Tick />
               {:else}
-                <Xmark />
+                <Pending />
               {/if}
             </div>
             <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900 ">
@@ -212,7 +212,7 @@
 
     <!-- 2nd -->
     <div class="shadow-[0_5px_8px_10px_rgba(0,0,0,0.1)] w-1/2 p-1 rounded-md">
-      <h1 class="text-slate-800 text-xl mx-8 font-serif tracking-wide mt-5">For new Document ID</h1>
+      <h1 class="text-slate-800 text-xl mx-8 font-serif font-medium tracking-wide mt-5">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg mx-8 font-serif tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div class="mt-8 mx-8">
         <button on:click={submitdocid} class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Generate Id</button>
