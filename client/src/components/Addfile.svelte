@@ -2,17 +2,17 @@
   import axios from 'axios';
   import pdfjsLib from 'pdfjs-dist/build/pdf';
   import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
   import HeaderFileupload from './header_fileupload.svelte';
   const dispatch = createEventDispatcher();
   export let id;
-  let pagechoosen;
+  let currentpage;
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
   let image, showpdf, pdf, container, docDetails;
   let showImage = false;
   let fileavailable = false;
-  let displaypage = false;
+  let _PDFDOC;
   let File,
     _total_pages,
     base64,
@@ -94,13 +94,10 @@
       });
       return;
     } else if (File.type == 'application/pdf') {
-      console.log(displaypage);
       showImage = false;
       showpdf = true;
       let blob = URL.createObjectURL(File);
       console.log(blob);
-      document.getElementById('select-box').classList.remove('hidden');
-      document.getElementById('select-box').classList.add('block');
       await showPdf(blob);
       return;
     } else {
@@ -109,26 +106,28 @@
       return;
     }
   };
-  let _PDFDOC;
-  const showPdf = async (blob) => {
-    let selectPage = document.getElementById('page-no');
 
-    console.log(selectPage);
-    while (selectPage.options.length > 0) {
-      selectPage.remove(0);
-    }
+  const showPdf = async (blob) => {
+    // let selectPage = document.getElementById('page-no');
+    // console.log(selectPage);
+    // while (selectPage.options.length > 0) {
+    //   selectPage.remove(0);
+    // }
     pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
     let loadingTask = pdfjsLib.getDocument(blob);
     loadingTask = loadingTask.promise;
     _PDFDOC = await loadingTask;
     _total_pages = _PDFDOC.numPages;
+    console.log(_total_pages);
     console.log(_PDFDOC);
-    for (let i = 0; i < _total_pages; i++) {
-      selectPage.options[selectPage.options.length] = new Option(i + 1, i);
-    }
-    selectPage.value = '0';
+    // for (let i = 0; i < _total_pages; i++) {
+    //   selectPage.options[selectPage.options.length] = new Option(i + 1, i);
+    // }
+    // selectPage.value = '0';
+    currentpage = 1;
     showPage(1);
   };
+
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno);
     console.log('Page loaded');
@@ -146,10 +145,6 @@
     };
     await page.render(renderContext).promise;
     document.getElementById('pdf-preview').src = canvas.toDataURL();
-  };
-
-  const choosePage = () => {
-    console.log(pagechoosen);
   };
 
   const onChange = () => {
@@ -281,7 +276,7 @@
                       <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <span class="inline-flex">Upload a file</span>
-                    <input on:change={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
+                    <input on:change|stopPropagation|preventDefault={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
                     <span class="pl-1">or drag and drop</span>
                     <p class="text-xs mt-2 text-gray-600">Upload JPEG, PNG, JPG, PDF files</p>
                   </label>
@@ -292,18 +287,24 @@
         </div>
       </div>
     </form>
-
-    <div id="select-box" class="hidden">
-      <label for="page-no">Select Page no</label>
-      <select bind:value={pagechoosen} id="page-no" on:change={choosePage(pagechoosen)}>
-        <option value="1">1</option>
-      </select>
-    </div>
   </div>
 
   <div class=" w-1/2 rounded-md bg-slate-900">
     <div class="p-4">
       <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" />
+      <div class="flex justify-center items-center gap-8">
+        <button>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+        <h1 class="text-lg text-white font-bold">{currentpage}</h1>
+        <button>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
+      </div>
     </div>
     <!-- {#if showImage} -->
     <!-- <img bind:this={image} class="h-full w-full" id="File" src="" alt="Preview" /> -->
