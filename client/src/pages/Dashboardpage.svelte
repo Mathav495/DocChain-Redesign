@@ -58,7 +58,7 @@
     <Nav />
     <Logout on:theme={changeClr} />
   </div>
-  <div class="lg:w-full md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-2 md:ml-0 overflow-auto">
+  <div class="lg:w-full md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-4 md:ml-0 overflow-auto">
     <div class="md:hidden block">
       <Header on:navShow={showNav} />
     </div>

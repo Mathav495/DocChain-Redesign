@@ -21,6 +21,9 @@ module.exports = {
       borderWidth: {
         6: '6px',
       },
+      boxShadow: {
+        around: '5px 5px 20px 0.1px',
+      },
     },
   },
   plugins: [],

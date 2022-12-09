@@ -33,7 +33,7 @@
 </script>
 
 <div class="flex flex-col lg:flex-row gap-4">
-  <div class="lg:w-8/12 w-full h-60 lg:h-full lg:order-1 order-2 border border-blue-500 text-2xl p-4 rounded-md flex flex-col justify-end items-center font-bold text-blue-500">
+  <div class="lg:w-8/12 w-full h-60 lg:h-full lg:order-1 order-2 shadow-around shadow-gray-200 text-2xl p-4 rounded-md flex flex-col justify-end items-center font-bold text-blue-500">
     <div><Pagination /></div>
   </div>
   <div class="flex flex-row lg:flex-col lg:order-2 order-1 w-full lg:w-4/12 gap-4">
