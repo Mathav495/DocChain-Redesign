@@ -138,7 +138,7 @@
 
     <div class="pt-6">
       <HeaderFileupload {id}>
-        <h1 slot="title" class="pl-2 text-base text-slate-900">{docTitle ? docTitle : 'No Title given'}</h1>
+        <h1 slot="title" class="pl-2 text-base text-slate-900">{docTitle ? docTitle : 'Untitled Document'}</h1>
       </HeaderFileupload>
     </div>
 

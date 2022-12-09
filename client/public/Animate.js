@@ -16,5 +16,6 @@ animate.style.display = 'none';
 const changeGradient = () => {
   let random = Math.floor(Math.random() * grads.length);
   console.log(random);
+  localStorage.setItem("bggradient",grads[random])
   animate.style.background = grads[random];
 };

@@ -1,7 +1,8 @@
 <script>
   import axios from 'axios';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import WebViewer from '@pdftron/pdfjs-express';
+  import HeaderFileupload from './header_fileupload.svelte';
   const dispatch = createEventDispatcher();
   export let id;
   let token = localStorage.getItem('token');
@@ -12,6 +13,8 @@
   let File,
     base64,
     instance = null;
+  let bgcolor = localStorage.getItem('bggradient');
+  console.log(bgcolor);
 
   /**
    * Submitting file for generating filehash
@@ -176,7 +179,9 @@
   // };
 </script>
 
-<div class="rounded-lg bg-[#393E46] h-auto w-full p-4">
+<div class="rounded-lg h-auto w-full ">
+  <HeaderFileupload {id} {bgcolor} />
+
   <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
     <div class="pt-6">
       <div class="flex w-full flex-col">
@@ -203,7 +208,7 @@
     </div>
   </form>
 
-  <div class="file-height w-full pt-5">
+  <div class="w-full pt-5">
     {#if showImage}
       <img bind:this={image} class="h-full w-full" id="File" src="" alt="Preview" />
     {:else if showpdf}
@@ -219,7 +224,4 @@
 </div>
 
 <style lang="postcss">
-  .file-height {
-    height: 27rem;
-  }
 </style>
