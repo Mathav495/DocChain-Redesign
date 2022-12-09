@@ -235,6 +235,12 @@
         </div>
       </div>
     </form>
+
+    {#if displaypreview}
+      <div class="flex justify-center items-center">
+        <button class="bg-blue-400 rounded-xl px-10 py-3 text-white font-bold tracking-wide"> Confirm and Upload </button>
+      </div>
+    {/if}
   </div>
 
   {#if displaypreview}
@@ -259,16 +265,6 @@
           <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
         {/if}
       </div>
-      <!-- {#if showImage} -->
-      <!-- <img bind:this={image} class="h-full w-full" id="File" src="" alt="Preview" /> -->
-      <!-- {:else if showpdf} -->
-      <!-- <embed bind:this={pdf} class="h-52 w-full" id="File" src="" alt="Preview" /> -->
-      <!-- <div id="view" class="w-full h-full" /> -->
-      <!-- {:else} -->
-      <!-- <div class="h-full w-full flex justify-center items-center"> -->
-      <!-- <h1 class="text-lg font-bold tracking-wide text-white">No image available</h1> -->
-      <!-- </div> -->
-      <!-- {/if} -->
     </div>
   {/if}
 </div>
