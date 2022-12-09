@@ -4,6 +4,7 @@
   import axios from 'axios';
   import { onMount, createEventDispatcher } from 'svelte';
   import WebViewer from '@pdftron/pdfjs-express';
+
   // import WebView from '../WebView.svelte';
   import { navigate } from 'svelte-routing';
 
@@ -42,6 +43,8 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
+  let gradient =localStorage.getItem('gradient')
+  console.log(gradient);
   // let signature;
   let issuerName;
   let loading = false;
@@ -244,11 +247,11 @@
   <Loading />
 {:else}
   <section class="relative text-gray-600">
-    <div class="md:w-flex-col container mx-auto flex flex-wrap pt-3 md:flex-nowrap">
+    <div class="md:w-flex-col mx-auto w-full h-full flex flex-wrap pt-3 md:flex-nowrap">
       <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
-        <div class="flex w-full h-full flex-colflex-shrink-0 overflow-y-auto">
+        <div class="flex w-full h-full object-cover object-center block">
           <!-- <img class="h-[600px] w-full object-cover rounded-md border-2 border-gray-200" src={imgurl} alt="document" /> -->
-          <div id="viewer" class="w-full h-max"/>
+          <div id="viewer" class="w-full h-full"/>
           <!-- <WebView on:ready={ready} /> -->
 
           <!-- <div class="mt-5">
