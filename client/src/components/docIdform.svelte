@@ -109,7 +109,7 @@
               <button class="flex text-slate-800 border-2 border-yellow-500 py-1 px-2 justify-center items-center  hover:bg-yellow-500 rounded text-base">Pending</button>
             </div>
             <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900">
-              <button class="flex text-slate-800 border-2 border-sky-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-sky-600 rounded text-base">Continue</button>
+              <button class="flex text-slate-800 border-2 border-indigo-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-base">Continue</button>
               <button class="flex text-slate-800 border-2 border-red-500 py-1 px-2  justify-center items-center focus:outline-none hover:bg-red-600 rounded text-base">Realese</button>
             </div>
           </div>
@@ -141,7 +141,7 @@
           </div>
         </div>
         <div class="mt-8 mb-2">
-          <button class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Continue</button>
+          <button class="flex text-slate-800 border-2 border-indigo-500  py-1 px-2 font-bold justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-lg">Continue</button>
         </div>
       </form>
     </div>
@@ -151,7 +151,7 @@
       <h1 class="text-slate-800 text-xl mx-8 font-serif font-medium tracking-wide mt-5">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg mx-8 font-serif tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div class="mt-8 mx-8">
-        <button on:click={submitdocid} class="bg-blue-600 px-3 text-white rounded-md hover:bg-blue-700 text-lg font-bold p-1 tracking-wide">Generate Id</button>
+        <button on:click={submitdocid} class="flex text-slate-800 border-2 border-indigo-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-lg font-bold">Generate Id</button>
       </div>
     </div>
   </div>
