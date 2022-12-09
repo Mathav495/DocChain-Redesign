@@ -252,6 +252,15 @@
     document.getElementById('file-upload').click();
   };
 
+  const nextpage = () => {
+    if (currentpage < _total_pages) {
+      console.log('initial', currentpage);
+      showPage(currentpage + 1);
+      currentpage++;
+      console.log('final', currentpage);
+    }
+  };
+
   // const hideImage = () => {
   //   showImage = false;
   //   showpdf = false;
@@ -299,7 +308,7 @@
           </svg>
         </button>
         <h1 class="text-lg text-white font-bold">{currentpage}</h1>
-        <button>
+        <button on:click={nextpage}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
           </svg>
