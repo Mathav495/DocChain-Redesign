@@ -188,7 +188,7 @@
   <!-- 2st div form -->
   <div class="flex flex-col lg:flex-row gap-5">
     <!-- 1st -->
-    <div class=" w-full lg:w-1/2 p-2 rounded-md shadow-2xl">
+    <div class="shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)] w-full lg:w-1/2 p-2 rounded-md">
       <h1 class="text-slate-900 text-xl mx-8 font-serif tracking-wide mt-5">Continue with Existing Document ID</h1>
       <h1 class="text-slate-900 text-lg mx-8 font-serif tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
       <form on:submit|preventDefault={Continue} class="mx-8">
