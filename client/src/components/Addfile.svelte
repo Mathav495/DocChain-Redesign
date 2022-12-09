@@ -6,7 +6,7 @@
   import HeaderFileupload from './header_fileupload.svelte';
   const dispatch = createEventDispatcher();
   export let id;
-  let currentpage;
+  let currentpage, blobimage;
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
   let image, showpdf, pdf, container, docDetails;
@@ -75,7 +75,6 @@
    */
 
   const ondisplay = async () => {
-    displaypreview = true;
     const form = document.getElementById('form');
     const formData = new FormData(form);
     console.log([...formData]);
@@ -83,17 +82,10 @@
     File = datum[1];
     console.log(File.type);
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
+      displaypreview = true;
       showImage = true;
-      const reader = new FileReader();
-      reader.readAsDataURL(File);
-      reader.addEventListener('load', function () {
-        image.setAttribute('src', reader.result);
-        const url = reader.result;
-        const img = new Image();
-        localStorage.setItem('img', url);
-        let imgurl = localStorage.getItem('img');
-        img.src = imgurl;
-      });
+      blobimage = URL.createObjectURL(File);
+      console.log(blobimage);
       return;
     } else if (File.type == 'application/pdf') {
       showImage = false;
@@ -101,8 +93,10 @@
       let blob = URL.createObjectURL(File);
       console.log(blob);
       await showPdf(blob);
+      displaypreview = true;
       return;
     } else {
+      displaypreview = false;
       showImage = false;
       showpdf = false;
       return;
@@ -246,20 +240,24 @@
   {#if displaypreview}
     <div class=" w-1/2 rounded-md bg-slate-900">
       <div class="p-2">
-        <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" />
-        <div class="flex justify-center items-center gap-8 pt-2">
-          <button on:click={previouspage}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-            </svg>
-          </button>
-          <h1 class="text-lg text-white font-bold">{currentpage}</h1>
-          <button on:click={nextpage}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
-          </button>
-        </div>
+        {#if showpdf}
+          <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" />
+          <div class="flex justify-center items-center gap-8 pt-2">
+            <button on:click={previouspage}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+            <h1 class="text-lg text-white font-bold">{currentpage}</h1>
+            <button on:click={nextpage}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          </div>
+        {:else}
+          <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
+        {/if}
       </div>
       <!-- {#if showImage} -->
       <!-- <img bind:this={image} class="h-full w-full" id="File" src="" alt="Preview" /> -->
