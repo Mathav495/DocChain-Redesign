@@ -6,12 +6,15 @@
   import HeaderFileupload from './header_fileupload.svelte';
   const dispatch = createEventDispatcher();
   export let id;
+  let pagechoosen;
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
   let image, showpdf, pdf, container, docDetails;
   let showImage = false;
   let fileavailable = false;
+  let displaypage = false;
   let File,
+    _total_pages,
     base64,
     instance = null;
   let bgcolor = localStorage.getItem('bggradient');
@@ -91,10 +94,13 @@
       });
       return;
     } else if (File.type == 'application/pdf') {
+      console.log(displaypage);
       showImage = false;
       showpdf = true;
       let blob = URL.createObjectURL(File);
       console.log(blob);
+      document.getElementById('select-box').classList.remove('hidden');
+      document.getElementById('select-box').classList.add('block');
       await showPdf(blob);
       return;
     } else {
@@ -105,11 +111,22 @@
   };
   let _PDFDOC;
   const showPdf = async (blob) => {
+    let selectPage = document.getElementById('page-no');
+
+    console.log(selectPage);
+    while (selectPage.options.length > 0) {
+      selectPage.remove(0);
+    }
     pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
     let loadingTask = pdfjsLib.getDocument(blob);
     loadingTask = loadingTask.promise;
     _PDFDOC = await loadingTask;
+    _total_pages = _PDFDOC.numPages;
     console.log(_PDFDOC);
+    for (let i = 0; i < _total_pages; i++) {
+      selectPage.options[selectPage.options.length] = new Option(i + 1, i);
+    }
+    selectPage.value = '0';
     showPage(1);
   };
   const showPage = async (pageno) => {
@@ -129,7 +146,10 @@
     };
     await page.render(renderContext).promise;
     document.getElementById('pdf-preview').src = canvas.toDataURL();
-    // console.log(renderTask)
+  };
+
+  const choosePage = () => {
+    console.log(pagechoosen);
   };
 
   const onChange = () => {
@@ -272,6 +292,13 @@
         </div>
       </div>
     </form>
+
+    <div id="select-box" class="hidden">
+      <label for="page-no">Select Page no</label>
+      <select bind:value={pagechoosen} id="page-no" on:change={choosePage(pagechoosen)}>
+        <option value="1">1</option>
+      </select>
+    </div>
   </div>
 
   <div class=" w-1/2 rounded-md bg-slate-900">
