@@ -261,6 +261,15 @@
     }
   };
 
+  const previouspage = () => {
+    if (currentpage > 1) {
+      console.log('initial', currentpage);
+      showPage(currentpage - 1);
+      currentpage--;
+      console.log('final', currentpage);
+    }
+  };
+
   // const hideImage = () => {
   //   showImage = false;
   //   showpdf = false;
@@ -302,7 +311,7 @@
     <div class="p-4">
       <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" />
       <div class="flex justify-center items-center gap-8">
-        <button>
+        <button on:click={previouspage}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
