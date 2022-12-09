@@ -77,7 +77,7 @@
 <div class="flex flex-col gap-10">
   <!-- 1st div table -->
   <div class="shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)] rounded-lg relative text-center">
-    <div class=" w-full flex font-bold text-sm lg:text-lg">
+    <div class="w-full flex font-bold text-sm lg:text-lg">
       <div class="px-4 py-3 w-1/4  tracking-wider  text-slate-900">Document Id</div>
       <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">Data Hash Generated</div>
       <div class="px-4 py-3 w-1/5 tracking-wider  text-slate-900 ">File Hash Generated</div>
@@ -85,7 +85,7 @@
       <div class=" py-3 tracking-wider w-1/5  text-slate-900">Status</div>
     </div>
 
-    <div class="overflow-auto min-h-[17rem] max-h-64">
+    <div class="overflow-auto min-h-[17rem] max-h-64 mt-3 border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex w-full font-semibold text-sm lg:text-base">
@@ -188,7 +188,7 @@
   <!-- 2st div form -->
   <div class="flex flex-col lg:flex-row gap-5">
     <!-- 1st -->
-    <div class="shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)] w-full lg:w-1/2 p-2 rounded-md">
+    <div class="shadow-[0_5px_8px_10px_rgba(0,0,0,0.1)] w-full lg:w-1/2 p-2 rounded-md">
       <h1 class="text-slate-900 text-xl mx-8 font-serif tracking-wide mt-5">Continue with Existing Document ID</h1>
       <h1 class="text-slate-900 text-lg mx-8 font-serif tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
       <form on:submit|preventDefault={Continue} class="mx-8">
@@ -211,7 +211,7 @@
     </div>
 
     <!-- 2nd -->
-    <div class="bg-slate-200 w-1/2 p-1 rounded-md shadow-lg">
+    <div class="shadow-[0_5px_8px_10px_rgba(0,0,0,0.1)] w-1/2 p-1 rounded-md">
       <h1 class="text-slate-800 text-xl mx-8 font-bold tracking-wide mt-5">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg mx-8 font-medium tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div class="mt-8 mx-8">
