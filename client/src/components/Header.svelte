@@ -28,18 +28,14 @@
   const navBtn = () => {
     dispatch('navShow');
   };
-  const passValue = () => {
-    console.log('value');
-    dispatch('Hide');
-  };
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="flex justify-between items-center" on:click|self={hideCard}>
   <div class="text-lg md:text-3xl flex items-center font-boldness gap-2">
-    <button on:click={passValue} class="bg-black md:h-12 md:w-12 h-10 w-10 rounded-md flex items-center justify-center">
+    <div class="bg-black md:hidden md:h-12 md:w-12 h-10 w-10 rounded-md flex items-center justify-center">
       <img src="/assets/logo2.png" alt="logo" class="md:h-10 md:w-10 h-8 w-8 animate-pulse lg:animate-none" />
-    </button>
+    </div>
     <h1 class="md:hidden">DocChain.io</h1>
   </div>
 

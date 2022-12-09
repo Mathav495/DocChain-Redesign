@@ -78,12 +78,12 @@
       <Logout on:theme={changeClr} />
     </div>
   </div>
-  <div class="relative w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-4 overflow-auto">
-    <!-- <div class:hidden={headerHide} class="hidden">
-      <Headerlogo on:Hide={HideNav} />
-    </div> -->
+  <div class="relative w-full flex flex-col bg-white text-gray-900 rounded-md p-8 ml-4 overflow-auto">
     <div class:hidden={headerHide}>
-      <Header on:navShow={showNav} on:Hide={HideNav} />
+      <Headerlogo on:Hide={HideNav} />
+    </div>
+    <div class="mb-4">
+      <Header on:navShow={showNav} />
     </div>
     <Dashboard />
   </div>
