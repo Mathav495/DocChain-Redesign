@@ -106,11 +106,11 @@
             </div>
 
             <div class="px-4 py-3 w-1/5 tracking-wider flex gap-2 justify-center text-slate-900 ">
-              <button class="flex text-slate-800 border-2 border-yellow-500 py-1 px-2 justify-center items-center focus:outline hover:bg-yellow-500 rounded text-lg">Pending</button>
+              <button class="flex text-slate-800 border-2 border-yellow-500 py-1 px-2 justify-center items-center  hover:bg-yellow-500 rounded text-base">Pending</button>
             </div>
             <div class="px-4 py-3 w-1/4 tracking-wider flex gap-2 justify-center text-slate-900">
-              <button class="flex text-white border-2  py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Continue</button>
-              <button class="flex text-white border-2 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded text-lg">Realese</button>
+              <button class="flex text-slate-800 border-2 border-sky-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-sky-600 rounded text-base">Continue</button>
+              <button class="flex text-slate-800 border-2 border-red-500 py-1 px-2  justify-center items-center focus:outline-none hover:bg-red-600 rounded text-base">Realese</button>
             </div>
           </div>
         {/each}
