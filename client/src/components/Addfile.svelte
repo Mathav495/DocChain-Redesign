@@ -126,7 +126,8 @@
   };
 
   const toClickinput = () => {
-    document.getElementById('file-upload').onchange(ondisplay());
+    let inputElement = document.getElementById('file-upload');
+    inputElement.onchange = ondisplay();
   };
 
   const nextpage = () => {
@@ -148,8 +149,8 @@
   };
 </script>
 
-<div class="rounded-lg h-auto w-full flex flex-col lg:flex-row space-x-0 lg:space-x-4 ">
-  <div class="w-full lg:w-1/2 space-y-4">
+<div class="rounded-lg h-auto w-full flex flex-col gap-4 lg:gap-0 lg:flex-row">
+  <div class="w-full lg:w-1/2 flex flex-col gap-4 pr-0 lg:pr-4">
     <HeaderFileupload {id} {bgcolor} />
 
     <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
@@ -213,7 +214,7 @@
           </div>
         </div>
         {#if !showpdf}
-          <div class="flex pt-8 mx-auto">
+          <div class="flex pt-4 mx-auto">
             <button on:click|preventDefault={onSubmitFile} class="bg-blue-400 rounded-full px-10 py-2 text-lg text-white font-bold tracking-wide"> Confirm and Upload </button>
           </div>
         {/if}
