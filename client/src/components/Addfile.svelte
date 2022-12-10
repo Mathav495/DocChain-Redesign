@@ -11,7 +11,7 @@
   let showpdf, container;
   let showImage = false;
   let displaypreview = false;
-  let bgcolor = localStorage.getItem('bggradient');
+  let bgcolor = localStorage.getItem('bgGradient');
   console.log(bgcolor);
 
   /**

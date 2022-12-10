@@ -1,7 +1,7 @@
 <script>
   import axios from 'axios';
   import { onMount } from 'svelte';
-  export let id, bgcolor;
+  export let bgcolor, id;
   let token = localStorage.getItem('token');
   let issuerName;
   let qr = localStorage.getItem('qrcode');

@@ -76,7 +76,7 @@
 
 <div class="flex flex-col gap-5">
   <!-- 1st div table -->
-  <div class=" rounded-lg relative  text-center max-h-96 overflow-auto lg:overflow-hidden">
+  <div class="rounded-lg relative text-center overflow-auto lg:overflow-hidden">
     <div class="w-full flex font-bold text-sm lg:text-base">
       <div class=" py-3 w-1/4 bg-red-100  tracking-wider text-slate-900">Document Id</div>
       <div class=" py-3 w-1/5 bg-green-100 tracking-wider  text-slate-900 ">Data Hash Generated</div>
@@ -85,7 +85,7 @@
       <div class=" py-3 w-1/4 bg-teal-100 tracking-wider  text-slate-900">Actions</div>
     </div>
 
-    <div class="lg:overflow-y-scroll -mr-16 pr-12 max-h-96 border-2 border-slate-200">
+    <div class="overflow-y-scroll -mr-16 pr-12 h-80 border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
