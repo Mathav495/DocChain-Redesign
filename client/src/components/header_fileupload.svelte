@@ -24,6 +24,6 @@
   <div class="px-3 space-y-2 justify-center items-center flex flex-col">
     <h1 class="text-base font-semibold text-white capitalize self-start">{issuerName}</h1>
     <h1 class="text-base font-semibold font-mono text-white capitalize">{id}</h1>
-    <h1 class="text-base font-semibold text-slate-500 inline-flex items-center"><slot name="title" /></h1>
+    <h1 class="text-base font-semibold text-white  self-start"><slot name="title" /></h1>
   </div>
 </div>

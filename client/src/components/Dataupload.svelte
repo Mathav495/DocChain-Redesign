@@ -16,7 +16,7 @@
   };
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
-
+  let bgcolor = localStorage.getItem('bggradient');
   console.log('id get from the params', id);
 
   /**
@@ -113,23 +113,20 @@
       localStorage.setItem('datahash', data.dataHash);
       let dataHash = localStorage.getItem('datahash');
       console.log('datahash', dataHash);
-      // if (fileavailable && data.dataHash) {
-      //   error.msg = '';
-      //   navigate('/preview');
-      // } else {
-      //   error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
-      // }
+      if (data.dataHash) {
+        error.msg = '';
+        navigate('/preview');
+      } else {
+        error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
+      }
     }
   };
 </script>
 
+<HeaderFileupload {id} {bgcolor}>
+  <h1 slot="title" class="text-base text-white">{docTitle ? docTitle : 'Untitled Document'}</h1>
+</HeaderFileupload>
 <div class="flex gap-3 mt-3">
-  <div class="pt-6">
-    <HeaderFileupload {id}>
-      <h1 slot="title" class="pl-2 text-base text-slate-900">{docTitle ? docTitle : 'Untitled Document'}</h1>
-    </HeaderFileupload>
-  </div>
-
   <div class="rounded-md bg-[#393E46] h-auto w-1/2 p-4">
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col pt-5 space-y-3">
