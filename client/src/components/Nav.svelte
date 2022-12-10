@@ -49,6 +49,6 @@
 
 <style lang="postcss">
   .active {
-    @apply border-l-8 border-violet-700 px-2;
+    @apply border-l-8 border-violet-600 px-2;
   }
 </style>
