@@ -1,5 +1,5 @@
 <script>
-  import Dashboard2 from '../components/Dashboard2.svelte';
+  import Dashboard3 from '../components/Dashboard3.svelte';
   import Header from '../components/Header.svelte';
   import Headerlogo from '../components/Headerlogo.svelte';
   // import Loader from '../components/Loader.svelte';
@@ -87,7 +87,7 @@
       <Header on:navShow={showNav} />
     </div>
     <div>
-      <Dashboard2 />
+      <Dashboard3 />
     </div>
   </div>
   <!--small screen navbar-->

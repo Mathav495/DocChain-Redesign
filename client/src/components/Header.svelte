@@ -31,12 +31,12 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="flex justify-between items-center" on:click|self={hideCard}>
+<div id="header" class="flex justify-between items-center md:mb-0 mb-4" on:click|self={hideCard}>
   <div class="text-lg md:text-3xl flex items-center font-boldness gap-2">
-    <div class="bg-black md:hidden md:h-14 md:w-14 h-10 w-10 rounded-md flex items-center justify-center">
-      <img src="/assets/logo2.png" alt="logo" class="md:h-10 md:w-10 h-5 w-5 animate-pulse lg:animate-none" />
+    <div class="bg-black md:hidden md:h-12 md:w-12 h-10 w-10 rounded-md flex items-center justify-center">
+      <img src="/assets/logo2.png" alt="logo" class="md:h-10 md:w-10 h-8 w-8 animate-pulse lg:animate-none" />
     </div>
-    <h1>DocChain.io</h1>
+    <h1 class="md:hidden">DocChain.io</h1>
   </div>
 
   <div class="flex flex-row gap-5">
@@ -53,7 +53,7 @@
         </svg>
         <span class="text-black group-hover:opacity-100 transition-opacity duration-300 ease-in-out opacity-0 absolute inset-0 -top-7 -left-1">Navbar</span>
       </button>
-      <div class="hidden md:flex flex-row items-center">
+      <!-- <div class="hidden md:flex flex-row items-center">
         <img src="/assets/profile.png" alt="profile" class="h-16 w-16 ml-1 absolute cursor-pointer" />
         <h1 class="flex flex-row  h-10 px-3 items-center bg-indigo-50 rounded-md">
           <p class="text-lg font-semibold ml-12">Joji V.</p>
@@ -63,34 +63,18 @@
             </svg>
           </button>
         </h1>
-      </div>
-      <div class:show={card} class="transition-opacity duration-300 ease-in-out opacity-0 bg-black shadow-md shadow-gray-700 text-white absolute top-12 small:left medium:left px-3 py-2 hidden md:flex flex-col items-center justify-center rounded-2xl w-36 card-width">
+      </div> -->
+      <!-- <div class:show={card} class="transition-opacity duration-300 ease-in-out opacity-0 bg-black shadow-md shadow-gray-700 text-white absolute top-12 small:left medium:left px-3 py-2 hidden md:flex flex-col items-center justify-center rounded-2xl w-36 card-width">
         <p class="text-xs">Welcome,</p>
         <h1 class="text-md font-semibold">Mr. Joji Varghese</h1>
         <a href="https://mail.google.com/mail/" class="text-sm text-blue-400 underline">test@email.com</a>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
 
 <style>
-  .card-width {
-    width: 9.15rem /* 144px */;
-  }
-  .show {
-    opacity: 100%;
-  }
   .font-boldness {
     font-weight: 1000;
-  }
-  @media (min-width: 640px) {
-    .small\:left {
-      left: 7.3rem /* 112px */;
-    }
-  }
-  @media (min-width: 768px) {
-    .medium\:left {
-      left: -0.2rem /* -4px */;
-    }
   }
 </style>
