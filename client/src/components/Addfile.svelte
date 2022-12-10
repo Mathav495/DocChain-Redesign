@@ -2,17 +2,14 @@
   import axios from 'axios';
   import pdfjsLib from 'pdfjs-dist/build/pdf';
   import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
-  import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   import HeaderFileupload from './header_fileupload.svelte';
-  const dispatch = createEventDispatcher();
   export let id;
   let currentpage, blobimage, _PDFDOC, File, _total_pages;
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
   let showpdf, container;
   let showImage = false;
-  let fileavailable = false;
   let displaypreview = false;
   let bgcolor = localStorage.getItem('bggradient');
   console.log(bgcolor);
@@ -59,12 +56,8 @@
         console.log(localfile, 'local');
         localStorage.setItem('docDetails', JSON.stringify(localfile));
 
-        //For dispatching
-        fileavailable = true;
-        dispatch('fileavailable', fileavailable);
-
         //For navigating to next page
-        navigate('/');
+        navigate(`/add-data/${id}`);
       }
     }
   };
@@ -82,6 +75,7 @@
     console.log(File.type);
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       displaypreview = true;
+      showpdf = false;
       showImage = true;
       blobimage = URL.createObjectURL(File);
       console.log(blobimage);
