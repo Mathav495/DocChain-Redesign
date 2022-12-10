@@ -2,17 +2,17 @@
   import axios from 'axios';
   import pdfjsLib from 'pdfjs-dist/build/pdf';
   import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
+  import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   import HeaderFileupload from './header_fileupload.svelte';
   export let id;
-  let currentpage, blobimage, _PDFDOC, File, _total_pages;
+  let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf;
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
-  let showpdf, container;
-  let showImage = false;
+  let bgcolor = localStorage.getItem('bgGradient');
   let displaypreview = false;
-  let bgcolor = localStorage.getItem('bggradient');
-  console.log(bgcolor);
+  const dispatch = createEventDispatcher();
+  console.log('bgcolor', bgcolor);
 
   /**
    * Submitting file for generating filehash
@@ -76,12 +76,10 @@
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       displaypreview = true;
       showpdf = false;
-      showImage = true;
       blobimage = URL.createObjectURL(File);
       console.log(blobimage);
       return;
     } else if (File.type == 'application/pdf') {
-      showImage = false;
       showpdf = true;
       let blob = URL.createObjectURL(File);
       console.log(blob);
@@ -90,7 +88,6 @@
       return;
     } else {
       displaypreview = false;
-      showImage = false;
       showpdf = false;
       return;
     }
@@ -129,7 +126,7 @@
   };
 
   const toClickinput = () => {
-    document.getElementById('file-upload').click();
+    document.getElementById('file-upload').onchange(ondisplay());
   };
 
   const nextpage = () => {
@@ -151,7 +148,7 @@
   };
 </script>
 
-<div class="rounded-lg h-auto w-full flex flex-col lg:flex-row space-x-4 ">
+<div class="rounded-lg h-auto w-full flex flex-col lg:flex-row space-x-0 lg:space-x-4 ">
   <div class="w-full lg:w-1/2 space-y-4">
     <HeaderFileupload {id} {bgcolor} />
 
@@ -160,10 +157,10 @@
         <div class="flex w-full flex-col">
           <!-- svelte-ignore missing-declaration -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <div class="sm:col-span-6 cursor-pointer" id="dropzone" on:click={toClickinput}>
+          <div class="sm:col-span-6 cursor-pointer" id="dropzone" on:click|stopPropagation={toClickinput}>
             <div class="flex justify-center items-center rounded-lg border-1 border-dashed border-blue-600 bg-slate-200 shadow-xl py-10">
               <div class="space-y-1 text-center">
-                <div class="flex flex-col text-base text-gray-600" bind:this={container}>
+                <div class="flex flex-col text-base text-gray-600">
                   <label for="file-upload" class=" relative cursor-pointer rounded-md  font-semibold text-blue-800" id="dropzone">
                     <svg class="mx-auto h-12 w-12 text-gray-900" stroke="black" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                       <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -207,7 +204,7 @@
             </button>
           </div>
         {:else}
-          <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
+          <img src={blobimage} class="w-full  max-h-[40rem]" id="File" alt="Preview" />
         {/if}
       </div>
     </div>

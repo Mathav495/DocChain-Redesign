@@ -123,13 +123,15 @@
   };
 </script>
 
-<HeaderFileupload {id} {bgcolor}>
-  <h1 slot="title" class="text-base text-white">{docTitle ? docTitle : 'Untitled Document'}</h1>
-</HeaderFileupload>
+<div class="w-full lg:w-1/2">
+  <HeaderFileupload {id} {bgcolor}>
+    <h1 slot="title" class="text-base text-white">{docTitle ? docTitle : 'Untitled Document'}</h1>
+  </HeaderFileupload>
+</div>
 <div class="flex gap-3 mt-3">
-  <div class="rounded-md bg-[#393E46] h-auto w-1/2 p-4">
+  <div class="rounded-md bg-[#393E46] h-auto w-full lg:w-1/2 p-4">
     <form on:submit|preventDefault={onsubmitdata}>
-      <div class="flex flex-col pt-5 space-y-3">
+      <div class="flex flex-col  space-y-5">
         <div class="flex flex-col w-full lg:w-4/5 space-y-1">
           <label for="issuer" class="text-sm text-white tracking-wide font-bold">Issued to</label>
           <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class={error.issuer ? 'input-error' : 'input-normal'} />
@@ -160,7 +162,7 @@
 
 <style lang="postcss">
   .input-normal {
-    @apply w-full rounded-lg border-2 border-blue-500 bg-slate-100 p-1 pl-2 text-base font-bold placeholder:font-semibold  placeholder:text-slate-500  focus:outline-none;
+    @apply h-9 w-full rounded-lg border-2 border-blue-500 bg-slate-100 p-1 pl-2 text-base font-bold placeholder:font-semibold  placeholder:text-slate-500  focus:outline-none;
   }
   .input-error {
     @apply w-full rounded-lg border-2 border-red-500 bg-blue-200 p-1 pl-2 text-base font-bold placeholder:font-semibold  placeholder:text-red-500  focus:outline-none;
