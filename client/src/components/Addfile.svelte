@@ -7,6 +7,8 @@
   import HeaderFileupload from './header_fileupload.svelte';
   export let id;
   let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf;
+  let nextbtn = true;
+  let prevbtn = true;
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
   let bgcolor = localStorage.getItem('bgGradient');
@@ -126,8 +128,7 @@
   };
 
   const toClickinput = () => {
-    let inputElement = document.getElementById('file-upload');
-    inputElement.onchange = ondisplay();
+    document.getElementById('file-upload').click();
   };
 
   const nextpage = () => {
@@ -139,6 +140,16 @@
     }
   };
 
+  $: if (currentpage < _total_pages) {
+    nextbtn = true;
+  } else {
+    nextbtn = false;
+  }
+  $: if (currentpage > 1) {
+    prevbtn = true;
+  } else {
+    prevbtn = false;
+  }
   const previouspage = () => {
     if (currentpage > 1) {
       console.log('initial', currentpage);
@@ -192,17 +203,22 @@
         <div class="p-2">
           <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" />
           <div class="flex justify-center items-center gap-8 pt-2">
-            <button on:click={previouspage}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-              </svg>
-            </button>
+            {#if prevbtn}
+              <button on:click={previouspage}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 stroke-white">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+              </button>
+            {/if}
+
             <h1 class="text-lg text-white font-bold">{currentpage}</h1>
-            <button on:click={nextpage}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
-            </button>
+            {#if nextbtn}
+              <button on:click={nextpage}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 stroke-white">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
+            {/if}
           </div>
         </div>
       </div>
