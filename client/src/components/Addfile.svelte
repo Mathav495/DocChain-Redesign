@@ -14,6 +14,8 @@
   let bgcolor = localStorage.getItem('bggradient');
   console.log(bgcolor);
 
+
+
   /**
    * Submitting file for generating filehash
    */
@@ -36,7 +38,7 @@
       );
       console.log(data);
       console.log(data.lastModifiedDate);
-      dispatch('filehash', data.fileHash);
+      // dispatch('filehash', data.fileHash);
       localStorage.setItem('filehash', data.fileHash);
       let fileHash = localStorage.getItem('filehash');
       console.log('filehash', fileHash);

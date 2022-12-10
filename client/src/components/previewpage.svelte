@@ -30,10 +30,6 @@
 
   let load = false;
 
-  onMount(() => {
-    changeGradient();
-  });
-
   onMount(async () => {
     const { data } = await axios.get('https://test.swagger.print2block.in/account/user', {
       headers: {
