@@ -7,6 +7,7 @@
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
   import Filepreview from './pages/Filepreview.svelte';
   import Dashboardpage2 from './pages/Dashboardpage2.svelte';
+  import Dashboardpage3 from './pages/Dashboardpage3.svelte';
   import Adddatapage from './pages/Adddatapage.svelte';
   let signature;
   export let url = '';
@@ -23,6 +24,7 @@
     <Route path="/dash"><Dashboardpage /></Route>
     <Route path="/publish"><Publishdoc /></Route>
     <Route path="/dash2"><Dashboardpage2 /></Route>
+    <Route path="/dash3"><Dashboardpage3 /></Route>
     <Route path="/add-file/:id" let:params>
       <Fileuploadpage id={params.id} />
     </Route>
