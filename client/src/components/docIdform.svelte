@@ -85,26 +85,26 @@
       <div class=" py-3 w-1/4 bg-teal-100 tracking-wider  text-slate-900">Actions</div>
     </div>
 
-    <div class="lg:overflow-y-scroll -mr-16  pr-12 max-h-96 border-2 border-slate-200">
+    <div class="lg:overflow-y-scroll -mr-16 pr-12 max-h-96 border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
-            <div class=" py-3 w-1/4 bg-red-100 text-start pl-4 tracking-wider font-mono text-slate-600">{newData.documentID}</div>
-            <div class=" py-3 w-1/5 bg-green-100 tracking-wider flex justify-center items-center  text-slate-900 ">
+            <div class="py-3 w-1/4 bg-red-100 tracking-wider font-mono text-slate-600">{newData.documentID}</div>
+            <div class="py-3 w-1/5 bg-green-100 tracking-wider flex justify-center items-center text-slate-900">
               {#if newData.datahash}
                 <Tick />
               {:else}
                 <Pending />
               {/if}
             </div>
-            <div class=" py-3 w-1/5 bg-yellow-100 tracking-wider flex justify-center items-center  text-slate-900 ">
+            <div class="py-3 w-1/5 bg-yellow-100 tracking-wider flex justify-center items-center  text-slate-900 ">
               {#if newData.filehash}
                 <Tick />
               {:else}
                 <Pending />
               {/if}
             </div>
-            <div class=" py-3 w-1/5 bg-slate-100 tracking-wider flex gap-2 justify-center text-slate-900 ">
+            <div class="py-3 w-1/5 bg-slate-100 tracking-wider flex justify-center text-slate-900 ">
               <button class="flex text-slate-800 border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
             </div>
             <div class="py-3 w-1/4 bg-teal-100 tracking-wider flex gap-2 justify-center text-slate-900">
@@ -114,7 +114,7 @@
           </div>
         {/each}
       {:else}
-        <div class="mt-20 w-1/2 mx-auto">
+        <div class="pt-20 w-1/2 mx-auto">
           <h1 class="text-lg font-bold tracking-wide p-2 flex justify-center items-center bg-teal-200 rounded-lg">No Pending ID's</h1>
         </div>
       {/if}
