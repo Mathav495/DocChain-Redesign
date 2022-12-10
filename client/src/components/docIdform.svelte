@@ -85,7 +85,7 @@
       <div class="hidden lg:block py-3 w-1/5 tracking-wider ">File Hash Generated</div>
       <div class="block lg:hidden py-3 w-1/4 tracking-wider">FileHash</div>
       <div class="hidden lg:block py-3 w-1/5 tracking-wider">Status</div>
-      <div class=" py-3 w-1/4  tracking-wider">Actions</div>
+      <div class=" py-3 w-1/4 tracking-wider">Actions</div>
     </div>
 
     <div class="overflow-y-scroll -mr-16 pr-12 h-80 border-2 border-slate-200">
@@ -93,30 +93,34 @@
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
             <div class="py-3 w-1/4 tracking-wider pl-2 lg:text-lg text-xs font-mono text-slate-600">{newData.documentID}</div>
-            <div class="py-3 w-1/5 tracking-wider flex justify-center items-center text-slate-900">
+            <div class="py-3 w-1/4 lg:w-1/5 tracking-wider flex justify-center items-center text-slate-900">
               {#if newData.datahash}
                 <Tick />
               {:else}
                 <Pending />
               {/if}
             </div>
-            <div class="py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
+            <div class="py-3 w-1/4 lg:w-1/5 tracking-wider flex justify-center items-center text-slate-900 ">
               {#if newData.filehash}
                 <Tick />
               {:else}
                 <Pending />
               {/if}
             </div>
-            <div class="py-3 w-1/5 tracking-wider flex justify-center text-slate-900 ">
-              <button class="hidden lg:block text-slate-800 border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
+            <div class="hidden lg:block py-3 w-1/5 tracking-wider justify-center text-slate-900 ">
+              <button class=" text-slate-800 border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
             </div>
             <div class="py-3 w-1/4  tracking-wider flex gap-2 justify-center text-slate-900">
               <button class="hidden lg:block text-slate-800 border-2 border-green-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-base">Continue</button>
-              <button
-                ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 fill-green-500 h-5 block lg:hidden">
+              <div class="relative group">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 fill-green-500 h-5 block lg:hidden">
                   <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z" clip-rule="evenodd" />
                 </svg>
-              </button>
+                <div class="absolute bottom-0 mb-6  flex-col hidden items-center group-hover:flex">
+                  <span class="whitespace-no-wrap relative z-10 bg-black p-2 text-xs leading-none text-white shadow-lg">Continue</span>
+                  <div class="-mt-2 h-3 w-3 rotate-45 bg-black" />
+                </div>
+              </div>
               <button class="hidden lg:block text-slate-800 border-2 border-red-500 py-1 px-2  hover:text-white justify-center items-center focus:outline-none hover:bg-red-600 rounded text-base">Release</button>
               <button
                 ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 fill-red-500 h-5 block lg:hidden">
