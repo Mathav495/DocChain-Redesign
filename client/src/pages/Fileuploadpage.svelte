@@ -1,10 +1,10 @@
 <script>
-  import Fileupload from '../components/Fileupload.svelte';
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   import Header from '../components/Header.svelte';
+  import Addfile from '../components/Addfile.svelte';
   export let id;
   let hideNavbar = true;
   const hideNav = () => {
@@ -50,11 +50,11 @@
     <Nav />
     <Logout on:theme={changeClr} />
   </div>
-  <div class="lg:w-full md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-2 md:ml-0">
+  <div class="lg:w-full md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-4 ml-2 md:ml-0 overflow-auto">
     <div class="md:hidden block">
       <Header on:navShow={showNav} />
     </div>
-    <Fileupload {id} />
+    <Addfile {id} />
   </div>
   <!--small screen navbar-->
   <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">

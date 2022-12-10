@@ -6,27 +6,11 @@
   import Publishdoc from './pages/Publishdoc.svelte';
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
   import Filepreview from './pages/Filepreview.svelte';
-
   import Dashboardpage2 from './pages/Dashboardpage2.svelte';
-  let fileHash, dataHash, signature, documentID;
+  import Adddatapage from './pages/Adddatapage.svelte';
+  let signature;
   export let url = '';
 
-  /**
-   * Function in which the datahash is dispatched from the add-data page
-   * @param e {object} datahash
-   */
-  const getDataHash = (e) => {
-    dataHash = e.detail;
-    console.log(dataHash);
-  };
-  /**
-   * Function in which the filehash is dispatched from the add-file page
-   * @param e {object} filehash
-   */
-  const getFileHash = (e) => {
-    fileHash = e.detail;
-    console.log(fileHash);
-  };
   const getSign = (e) => {
     signature = e.detail;
     console.log(signature);
@@ -40,7 +24,10 @@
     <Route path="/publish"><Publishdoc /></Route>
     <Route path="/dash2"><Dashboardpage2 /></Route>
     <Route path="/add-file/:id" let:params>
-      <Fileuploadpage on:datahash={getDataHash} on:filehash={getFileHash} id={params.id} />
+      <Fileuploadpage id={params.id} />
+    </Route>
+    <Route path="/add-data/:id" let:params>
+      <Adddatapage id={params.id} />
     </Route>
     <Route path="/preview"><Filepreview on:signature={getSign} /></Route>
     <Route path="/pre"><Prepublish /></Route>

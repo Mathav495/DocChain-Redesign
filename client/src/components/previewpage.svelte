@@ -267,7 +267,7 @@
             <h1 class="text-white text-lg font-bold">Fixed Deposit Report</h1>
           </div> -->
         </div>
-        <hr class="mt-4 mt-1 h-0.5 w-full bg-gray-300" />
+        <hr class="mt-4 h-0.5 w-full bg-gray-300" />
 
         <div class="relative mt-4">
           <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Receiver</div>
