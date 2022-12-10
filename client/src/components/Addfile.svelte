@@ -162,8 +162,8 @@
   };
 </script>
 
-<div class="rounded-lg h-auto w-full flex space-x-4 ">
-  <div class="w-1/2 space-y-4">
+<div class="rounded-lg h-auto w-full flex flex-col lg:flex-row space-x-4 ">
+  <div class="w-full lg:w-1/2 space-y-4">
     <HeaderFileupload {id} {bgcolor} />
 
     <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
@@ -200,7 +200,7 @@
   </div>
 
   {#if displaypreview}
-    <div class=" w-1/2 rounded-md bg-slate-900">
+    <div class="w-full lg:w-1/2 rounded-md bg-slate-900">
       <div class="p-2">
         {#if showpdf}
           <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" />

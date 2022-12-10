@@ -18,12 +18,12 @@
 
 <div class=" w-full shadow-xl rounded-md flex items-center p-2 gap-1" style="background:{bgcolor}">
   <div class="flex">
-    <img src={qr} alt="qrcode" class="p-1 w-24 h-24" />
-    <img src="/assets/sample.jpg" alt="qrcode" class="p-1 w-24 h-24" />
+    <img src={qr} alt="qrcode" class="p-1 w-20 h-20 lg:w-24 lg:h-24" />
+    <img src="/assets/sample.jpg" alt="qrcode" class="p-1 w-20 h-20 lg:w-24 lg:h-24" />
   </div>
-  <div class="px-3 space-y-2">
-    <h1 class="text-base font-semibold text-white capitalize">{issuerName}</h1>
-    <h1 class="text-base font-semibold text-white capitalize">{id}</h1>
+  <div class="px-3 space-y-2 justify-center items-center flex flex-col">
+    <h1 class="text-base font-semibold text-white capitalize self-start">{issuerName}</h1>
+    <h1 class="text-base font-semibold font-mono text-white capitalize">{id}</h1>
     <h1 class="text-base font-semibold text-slate-500 inline-flex items-center"><slot name="title" /></h1>
   </div>
 </div>
