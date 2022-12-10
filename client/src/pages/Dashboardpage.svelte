@@ -1,5 +1,4 @@
 <script>
-  import { flush } from 'svelte/internal';
   import Dashboard from '../components/Dashboard.svelte';
   import Header from '../components/Header.svelte';
   import Headerlogo from '../components/Headerlogo.svelte';
@@ -73,14 +72,14 @@
 </div> -->
 
 <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4">
-  <div class:hidden={hide} class:block={show} class="width1200px width1024px width768px ">
-    <div class="h-full hidden p-8 md:flex flex-col items-start justify-between">
+  <div class:hidden={hide} class:block={show} class="width1200px width1024px width768px transform ease-in-out delay-1000 duration-1000 translate-x-6">
+    <div class="h-full hidden p-4 md:flex flex-col items-start justify-between">
       <Logo on:Hide={HideNav} />
       <Nav />
       <Logout on:theme={changeClr} />
     </div>
   </div>
-  <div class="w-full flex flex-col bg-white text-gray-900 rounded-md p-8 ml-4 overflow-auto">
+  <div class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto">
     <div class:hidden={headerHide}>
       <Headerlogo on:Hide={HideNav} />
     </div>

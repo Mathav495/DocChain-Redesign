@@ -1,6 +1,7 @@
 <script>
   import Dashboard2 from '../components/Dashboard2.svelte';
   import Header from '../components/Header.svelte';
+  import Headerlogo from '../components/Headerlogo.svelte';
   // import Loader from '../components/Loader.svelte';
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
@@ -46,26 +47,69 @@
       Gray = true;
     }
   };
+  let hide = false,
+    show = true,
+    headerHide = true;
+  const HideNav = () => {
+    if (hide == false) {
+      hide = true;
+      console.log('hide');
+      headerHide = false;
+      show = false;
+      document.getElementById('header').classList.remove('md:mb-0');
+    } else {
+      hide = false;
+      console.log('show');
+      headerHide = true;
+      show = true;
+      document.getElementById('header').classList.add('md:mb-0');
+    }
+  };
 </script>
 
 <!-- <div id="load1">
   <Loader />
 </div> -->
 
-<div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-2 pr-2">
-  <div class="lg:w-88 md:w-3/8 h-full hidden p-8 md:flex flex-col items-start justify-between">
-    <Logo />
-    <Nav />
-    <Logout on:theme={changeClr} />
+<div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4">
+  <div class:hidden={hide} class:block={show} class="width1200px width1024px width768px transform ease-in-out delay-1000 duration-1000 translate-x-6">
+    <div class="h-full hidden p-4 md:flex flex-col items-start justify-between">
+      <Logo on:Hide={HideNav} />
+      <Nav />
+      <Logout on:theme={changeClr} />
+    </div>
   </div>
-  <div class="lg:w-full md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-2 md:ml-0">
-    <div class="md:hidden block">
+  <div class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto">
+    <div class:hidden={headerHide}>
+      <Headerlogo on:Hide={HideNav} />
+    </div>
+    <div>
       <Header on:navShow={showNav} />
     </div>
-    <Dashboard2 />
+    <div>
+      <Dashboard2 />
+    </div>
   </div>
   <!--small screen navbar-->
   <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">
     <SmallScreenNavbar />
   </button>
 </div>
+
+<style>
+  @media screen and (min-width: 768px) {
+    .width768px {
+      width: 27rem;
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    .width1024px {
+      width: 24rem;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .width1200px {
+      width: 22rem;
+    }
+  }
+</style>
