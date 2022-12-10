@@ -1,7 +1,7 @@
 <script>
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
-  import { fade, fly } from 'svelte/transition';
+  import ErrorInfo from '../components/ErrorInfo.svelte';
   import Emailicon from '../icons/Emailicon.svelte';
   import Eye from '../icons/Eye.svelte';
   import Eyeslash from '../icons/Eyeslash.svelte';
@@ -10,6 +10,7 @@
   console.log(animate);
   animate.style.display = 'block';
   let sampleData;
+
   let display = false;
   let type = 'password';
   let Email = '',
@@ -73,6 +74,9 @@
       type = 'password';
     }
   };
+  const hideErrmsg = () => {
+    display = false;
+  };
 </script>
 
 <svelte:head>
@@ -96,7 +100,7 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
               <Emailicon />
             </span>
-            <input bind:value={Email} type="email" id="Email" placeholder={error.Email ? error.Email : 'Enter Your Email'} class="w-full mt-2 pl-9  placeholder:text-base  bg-black focus:bg-black text-blue-500 rounded border {error.Email ? 'border-red-500 ring-1 shadow-md shadow-red-500 ring-red-500 placeholder:text-red-500' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-2 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
+            <input bind:value={Email} type="email" id="Email" placeholder={error.Email ? error.Email : 'Enter Your Email'} class="w-full mt-2 pl-9  placeholder:text-base  bg-black focus:bg-black text-blue-500 rounded border {error.Email ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
           </div>
         </div>
         <div class="w-96 mt-8 group">
@@ -106,9 +110,9 @@
               <PasswordIcons />
             </span>
             {#if type == 'password'}
-              <input bind:value={Password} type="password" id="Password" placeholder={error.Password ? error.Password : 'Enter Your Password'} class="w-full placeholder:text-base mt-2 bg-black pl-10  focus:bg-black text-blue-500 rounded border {error.Password ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-2 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
+              <input bind:value={Password} type="password" id="Password" placeholder={error.Password ? error.Password : 'Enter Your Password'} class="w-full placeholder:text-base mt-2 bg-black pl-10  focus:bg-black text-blue-500 rounded border {error.Password ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
             {:else}
-              <input bind:value={Password} type="text" id="Password" placeholder={error.Password ? error.Password : 'Enter Your Password'} class="w-full mt-2 bg-black pl-10 placeholder:text-base focus:bg-black text-blue-500 rounded border {error.Password ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-2 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
+              <input bind:value={Password} type="text" id="Password" placeholder={error.Password ? error.Password : 'Enter Your Password'} class="w-full mt-2 bg-black pl-10 placeholder:text-base focus:bg-black text-blue-500 rounded border {error.Password ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
             {/if}
 
             <button on:click|preventDefault={showPassword} class="absolute inset-y-0 right-4 flex items-center pl-2">
@@ -125,9 +129,10 @@
         <div>
           <button class="w-96 mt-5 text-white font-medium active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 tracking-wider uppercase rounded text-lg">login</button>
         </div>
+
         <div>
           {#if display}
-            <h1 transition:fade={{ duration: 2000 }} class="text-xl text-white font-medium tracking-wide  p-2 mt-7 rounded text-center bg-red-500">Invalid Username or Password</h1>
+            <ErrorInfo errormsg="Invalid Username or Password" on:click={hideErrmsg} />
           {/if}
         </div>
       </form>

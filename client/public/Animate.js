@@ -1,7 +1,7 @@
 let animate = document.querySelector('#particles-js');
 console.log(animate);
 animate.style.display = 'none';
- const grads = [
+const grads = [
   'linear-gradient(to right, rgb(234, 88, 12), rgb(249, 115, 22))',
   'radial-gradient(at center bottom, rgb(120, 53, 15), rgb(253, 224, 71))',
   'radial-gradient(at center top, rgb(209, 213, 219), rgb(192, 38, 211), rgb(234, 88, 12))',
