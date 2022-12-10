@@ -1,5 +1,4 @@
 <script>
-  import Addfile from './Addfile.svelte';
   import HeaderFileupload from './header_fileupload.svelte';
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
@@ -15,18 +14,10 @@
     signatory: '',
     msg: '',
   };
-  let fileavailable = false;
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
-
+  let bgcolor = localStorage.getItem('bggradient');
   console.log('id get from the params', id);
-  /**
-   *dispatched data whether the file uploaded or not
-   * @param e
-   */
-  const onavailable = (e) => {
-    fileavailable = e.detail;
-  };
 
   /**
    * Submitting document metadata and generating datahash
@@ -122,26 +113,21 @@
       localStorage.setItem('datahash', data.dataHash);
       let dataHash = localStorage.getItem('datahash');
       console.log('datahash', dataHash);
-      // if (fileavailable && data.dataHash) {
-      //   error.msg = '';
-      //   navigate('/preview');
-      // } else {
-      //   error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
-      // }
+      if (data.dataHash) {
+        error.msg = '';
+        navigate('/preview');
+      } else {
+        error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
+      }
     }
   };
 </script>
 
+<HeaderFileupload {id} {bgcolor}>
+  <h1 slot="title" class="text-base text-white">{docTitle ? docTitle : 'Untitled Document'}</h1>
+</HeaderFileupload>
 <div class="flex gap-3 mt-3">
   <div class="rounded-md bg-[#393E46] h-auto w-1/2 p-4">
-    <h1 class="text-base text-white font-bold tracking-wide">Details about Document</h1>
-
-    <div class="pt-6">
-      <HeaderFileupload {id}>
-        <h1 slot="title" class="pl-2 text-base text-slate-900">{docTitle ? docTitle : 'No Title given'}</h1>
-      </HeaderFileupload>
-    </div>
-
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col pt-5 space-y-3">
         <div class="flex flex-col w-full lg:w-4/5 space-y-1">
@@ -169,10 +155,6 @@
         <button class="w-4/5 lg:w-2/5 bg-blue-600 px-2 py-1 text-white font-semibold text-base tracking-wide rounded-full">Confirm and Preview</button>
       </div>
     </form>
-  </div>
-
-  <div class="w-1/2">
-    <Addfile on:fileavailable={onavailable} {id} />
   </div>
 </div>
 
