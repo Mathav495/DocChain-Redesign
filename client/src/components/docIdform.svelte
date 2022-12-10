@@ -92,7 +92,7 @@
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
-            <div class="py-3 w-1/4 bg-red-100 tracking-wider font-mono text-slate-600">{newData.documentID}</div>
+            <div class="py-3 w-1/4 bg-red-100 tracking-wider lg:text-lg text-xs font-mono text-slate-600">{newData.documentID}</div>
             <div class="py-3 w-1/5 bg-green-100 tracking-wider flex justify-center items-center text-slate-900">
               {#if newData.datahash}
                 <Tick />
