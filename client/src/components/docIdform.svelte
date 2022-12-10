@@ -78,7 +78,8 @@
   <!-- 1st div table -->
   <div class="rounded-lg relative text-center overflow-auto lg:overflow-hidden">
     <div class="w-full flex font-bold text-sm lg:text-base">
-      <div class=" py-3 w-1/4 bg-red-100  tracking-wider text-slate-900">Document Id</div>
+      <div class="hidden lg:block py-3 w-1/4 bg-red-100  tracking-wider text-slate-900">Document Id</div>
+      <div class="block lg:hidden py-3 w-1/4 bg-red-100  tracking-wider text-slate-900">Doc Id</div>
       <div class="hidden lg:block py-3 w-1/5 bg-green-100 tracking-wider text-slate-900 ">Data Hash Generated</div>
       <div class="block lg:hidden py-3 w-1/5 bg-green-100 tracking-wider text-slate-900 ">DataHash</div>
       <div class="hidden lg:block py-3 w-1/5 bg-yellow-100 tracking-wider  text-slate-900 ">File Hash Generated</div>
