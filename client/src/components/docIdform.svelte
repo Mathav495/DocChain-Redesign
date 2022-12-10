@@ -76,7 +76,7 @@
 
 <div class="flex flex-col gap-5">
   <!-- 1st div table -->
-  <div class="rounded-lg relative text-center overflow-auto lg:overflow-hidden">
+  <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] rounded-lg relative text-center overflow-auto lg:overflow-hidden">
     <div class="w-full flex font-bold text-sm lg:text-base">
       <div class="hidden lg:block py-3 w-1/4 tracking-wider text-slate-900">Document Id</div>
       <div class="block lg:hidden py-3 w-1/4 tracking-wider text-slate-900">Doc Id</div>
@@ -84,7 +84,7 @@
       <div class="block lg:hidden py-3 w-1/5 tracking-wider text-slate-900 ">DataHash</div>
       <div class="hidden lg:block py-3 w-1/5 tracking-wider  text-slate-900 ">File Hash Generated</div>
       <div class="block lg:hidden py-3 w-1/5 tracking-wider  text-slate-900 ">FileHash</div>
-      <div class=" py-3 w-1/5 b tracking-wider  text-slate-900 ">Status</div>
+      <div class=" py-3 w-1/5 tracking-wider  text-slate-900 ">Status</div>
       <div class=" py-3 w-1/4  tracking-wider  text-slate-900">Actions</div>
     </div>
 
@@ -146,7 +146,7 @@
   <div class="flex flex-col lg:flex-row gap-5">
     <!-- 1st -->
 
-    <div class="shadow-[0_2px_20px_10px_rgba(0,0,0,0.1)] w-full px-5 py-8 lg:w-1/2 rounded-md space-y-5">
+    <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] w-full px-5 py-8 lg:w-1/2 rounded-md space-y-5">
       <h1 class="text-blue-900 text-xl font-bold tracking-wide">Continue with Existing Document ID</h1>
       <h1 class="text-slate-900 text-lg font-semibold tracking-wide">Please Make sure that you already have the Document ID</h1>
       <form on:submit|preventDefault={Continue}>
@@ -170,7 +170,7 @@
 
     <!-- 2nd -->
 
-    <div class="shadow-[0_2px_20px_10px_rgba(0,0,0,0.1)] w-full lg:w-1/2 px-5 py-8 space-y-5 rounded-md">
+    <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] w-full lg:w-1/2 px-5 py-8 space-y-5 rounded-md">
       <h1 class="text-blue-900 text-xl font-bold tracking-wide">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg font-semibold tracking-wide leading-relaxed">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div>
