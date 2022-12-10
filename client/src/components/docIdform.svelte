@@ -109,9 +109,9 @@
             </div>
             <div class="py-3 w-1/5 tracking-wider flex justify-center text-slate-900 ">
               <button class="hidden lg:block text-slate-800 border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
-              <button
-                ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 fill-yellow-500 h-5 block lg:hidden">
-                  <path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+              <button>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 stroke-yellow-500 block lg:hidden">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
                 </svg>
               </button>
             </div>
@@ -164,7 +164,7 @@
         </div>
       </form>
       <div>
-        <button class="flex text-slate-800 border-2 hover:text-white border-blue-700  py-1 px-2 font-bold justify-center items-center focus:outline-none hover:bg-blue-600 rounded text-lg">Continue</button>
+        <button class="flex text-slate-800 border-2 hover:text-white border-green-500  py-1 px-2 font-bold justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg">Continue</button>
       </div>
     </div>
 
@@ -174,7 +174,7 @@
       <h1 class="text-blue-900 text-xl font-bold tracking-wide">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg font-semibold tracking-wide leading-relaxed">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div>
-        <button on:click={submitdocid} class="flex text-slate-800 hover:text-white border-2 border-blue-700  py-1 px-2  justify-center items-center focus:outline-none hover:bg-blue-600 rounded text-lg font-bold">Generate Id</button>
+        <button on:click={submitdocid} class="flex text-slate-800 hover:text-white border-2 border-green-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg font-bold">Generate Id</button>
       </div>
     </div>
   </div>
