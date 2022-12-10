@@ -7,18 +7,13 @@
   import HeaderFileupload from './header_fileupload.svelte';
   const dispatch = createEventDispatcher();
   export let id;
-  let currentpage, blobimage;
+  let currentpage, blobimage, _PDFDOC, File, _total_pages;
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
-  let image, showpdf, pdf, container, docDetails;
+  let showpdf, container;
   let showImage = false;
   let fileavailable = false;
   let displaypreview = false;
-  let _PDFDOC;
-  let File,
-    _total_pages,
-    base64,
-    instance = null;
   let bgcolor = localStorage.getItem('bggradient');
   console.log(bgcolor);
 
