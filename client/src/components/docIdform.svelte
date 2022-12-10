@@ -109,7 +109,7 @@
             </div>
             <div class="py-3 w-1/4 bg-teal-100 tracking-wider flex gap-2 justify-center text-slate-900">
               <button class="flex text-slate-800 border-2 border-indigo-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-base">Continue</button>
-              <button class="flex text-slate-800 border-2 border-red-500 py-1 px-2  hover:text-white justify-center items-center focus:outline-none hover:bg-red-600 rounded text-base">Realese</button>
+              <button class="flex text-slate-800 border-2 border-red-500 py-1 px-2  hover:text-white justify-center items-center focus:outline-none hover:bg-red-600 rounded text-base">Release</button>
             </div>
           </div>
         {/each}
@@ -123,11 +123,11 @@
   <!-- 2st div form -->
   <div class="flex flex-col lg:flex-row gap-5 mt-0 lg:mt-5">
     <!-- 1st -->
-    <div class="shadow-[0_2px_20px_10px_rgba(0,0,0,0.1)] w-full lg:w-1/2 p-2 rounded-md">
-      <h1 class="text-blue-900 text-xl mx-8 font-serif tracking-wide mt-5">Continue with Existing Document ID</h1>
-      <h1 class="text-slate-900 text-lg mx-8 font-serif tracking-wide mt-5">Please Make sure that you already have the Document ID</h1>
-      <form on:submit|preventDefault={Continue} class="mx-8">
-        <div class="w-96 mt-8 group">
+    <div class="shadow-[0_2px_20px_10px_rgba(0,0,0,0.1)] w-full p-5 lg:w-1/2 rounded-md">
+      <h1 class="text-blue-900 text-xl font-serif tracking-wide">Continue with Existing Document ID</h1>
+      <h1 class="text-slate-900 text-lg  font-serif tracking-wide pt-5">Please Make sure that you already have the Document ID</h1>
+      <form on:submit|preventDefault={Continue}>
+        <div class="w-96 pt-8 group">
           <label for="Document Id" class="text-lg relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-900 group-hover:text-blue-600 font-semibold tracking-wide">Document Id</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -139,17 +139,17 @@
             <input bind:value={ExistingId} type="text" id="Document Id" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black border-2 border-slate-500  rounded  focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
           </div>
         </div>
-        <div class="mt-8 mb-2">
+        <div class="pt-5 pb-2">
           <button class="flex text-slate-800 border-2 hover:text-white border-blue-700  py-1 px-2 font-bold justify-center items-center focus:outline-none hover:bg-blue-600 rounded text-lg">Continue</button>
         </div>
       </form>
     </div>
 
     <!-- 2nd -->
-    <div class="shadow-[0_5px_8px_10px_rgba(0,0,0,0.1)] w-full h-60 lg:h-80 lg:w-1/2 p-1 rounded-md">
-      <h1 class="text-blue-900 text-xl mx-8 font-serif font-medium tracking-wide mt-5">For new Document ID</h1>
-      <h1 class="text-slate-800 text-lg mx-8 font-serif tracking-wide leading-relaxed mt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
-      <div class="mt-8 mx-8">
+    <div class="shadow-[0_2px_20px_10px_rgba(0,0,0,0.1)] w-full p-5 lg:w-1/2 rounded-md">
+      <h1 class="text-blue-900 text-xl font-serif font-medium tracking-wide">For new Document ID</h1>
+      <h1 class="text-slate-800 text-lg font-serif tracking-wide leading-relaxed pt-5">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
+      <div class="mt-8">
         <button on:click={submitdocid} class="flex text-slate-800 hover:text-white border-2 border-blue-700  py-1 px-2  justify-center items-center focus:outline-none hover:bg-blue-600 rounded text-lg font-bold">Generate Id</button>
       </div>
     </div>
