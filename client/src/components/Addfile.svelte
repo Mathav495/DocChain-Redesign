@@ -178,17 +178,17 @@
       </div>
     </form>
 
-    {#if displaypreview}
+    {#if showpdf}
       <div class="flex justify-center items-center">
-        <button on:click|preventDefault={onSubmitFile} class="bg-blue-400 rounded-xl px-10 py-3 text-white font-bold tracking-wide"> Confirm and Upload </button>
+        <button on:click|preventDefault={onSubmitFile} class="bg-blue-400 rounded-full px-10 py-2 text-lg text-white font-bold tracking-wide"> Confirm and Upload </button>
       </div>
     {/if}
   </div>
 
   {#if displaypreview}
-    <div class="w-full lg:w-1/2 rounded-md bg-slate-900">
-      <div class="p-2">
-        {#if showpdf}
+    {#if showpdf}
+      <div class="w-full lg:w-1/2 rounded-md self-start bg-slate-900">
+        <div class="p-2">
           <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" />
           <div class="flex justify-center items-center gap-8 pt-2">
             <button on:click={previouspage}>
@@ -203,10 +203,21 @@
               </svg>
             </button>
           </div>
-        {:else}
-          <img src={blobimage} class="w-full  max-h-[40rem]" id="File" alt="Preview" />
+        </div>
+      </div>
+    {:else}
+      <div class="flex w-full lg:w-1/2 flex-col">
+        <div class="w-full rounded-md self-start bg-slate-900">
+          <div class="p-2">
+            <img src={blobimage} class="w-full  max-h-[40rem]" id="File" alt="Preview" />
+          </div>
+        </div>
+        {#if !showpdf}
+          <div class="flex pt-8 mx-auto">
+            <button on:click|preventDefault={onSubmitFile} class="bg-blue-400 rounded-full px-10 py-2 text-lg text-white font-bold tracking-wide"> Confirm and Upload </button>
+          </div>
         {/if}
       </div>
-    </div>
+    {/if}
   {/if}
 </div>
