@@ -85,7 +85,7 @@
       <div class=" py-3 w-1/4 bg-teal-100 tracking-wider  text-slate-900">Actions</div>
     </div>
 
-    <div class="lg:overflow-auto max-h-96 mt-3 border-2 border-slate-200">
+    <div class="lg:overflow-y-scroll -mr-16  pr-12 max-h-96 border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
