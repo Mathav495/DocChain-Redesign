@@ -78,36 +78,36 @@
   <!-- 1st div table -->
   <div class="rounded-lg relative text-center overflow-auto lg:overflow-hidden">
     <div class="w-full flex font-bold text-sm lg:text-base">
-      <div class="hidden lg:block py-3 w-1/4 bg-red-100  tracking-wider text-slate-900">Document Id</div>
-      <div class="block lg:hidden py-3 w-1/4 bg-red-100  tracking-wider text-slate-900">Doc Id</div>
-      <div class="hidden lg:block py-3 w-1/5 bg-green-100 tracking-wider text-slate-900 ">Data Hash Generated</div>
-      <div class="block lg:hidden py-3 w-1/5 bg-green-100 tracking-wider text-slate-900 ">DataHash</div>
-      <div class="hidden lg:block py-3 w-1/5 bg-yellow-100 tracking-wider  text-slate-900 ">File Hash Generated</div>
-      <div class="block lg:hidden py-3 w-1/5 bg-yellow-100 tracking-wider  text-slate-900 ">FileHash</div>
-      <div class=" py-3 w-1/5 bg-slate-100 tracking-wider  text-slate-900 ">Status</div>
-      <div class=" py-3 w-1/4 bg-teal-100 tracking-wider  text-slate-900">Actions</div>
+      <div class="hidden lg:block py-3 w-1/4 tracking-wider text-slate-900">Document Id</div>
+      <div class="block lg:hidden py-3 w-1/4 tracking-wider text-slate-900">Doc Id</div>
+      <div class="hidden lg:block py-3 w-1/5 tracking-wider text-slate-900 ">Data Hash Generated</div>
+      <div class="block lg:hidden py-3 w-1/5 tracking-wider text-slate-900 ">DataHash</div>
+      <div class="hidden lg:block py-3 w-1/5 tracking-wider  text-slate-900 ">File Hash Generated</div>
+      <div class="block lg:hidden py-3 w-1/5 tracking-wider  text-slate-900 ">FileHash</div>
+      <div class=" py-3 w-1/5 b tracking-wider  text-slate-900 ">Status</div>
+      <div class=" py-3 w-1/4  tracking-wider  text-slate-900">Actions</div>
     </div>
 
     <div class="overflow-y-scroll -mr-16 pr-12 h-80 border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
-            <div class="py-3 w-1/4 bg-red-100 tracking-wider lg:text-lg text-xs font-mono text-slate-600">{newData.documentID}</div>
-            <div class="py-3 w-1/5 bg-green-100 tracking-wider flex justify-center items-center text-slate-900">
+            <div class="py-3 w-1/4 tracking-wider lg:text-lg text-xs font-mono text-slate-600">{newData.documentID}</div>
+            <div class="py-3 w-1/5 tracking-wider flex justify-center items-center text-slate-900">
               {#if newData.datahash}
                 <Tick />
               {:else}
                 <Pending />
               {/if}
             </div>
-            <div class="py-3 w-1/5 bg-yellow-100 tracking-wider flex justify-center items-center  text-slate-900 ">
+            <div class="py-3 w-1/5 tracking-wider flex justify-center items-center  text-slate-900 ">
               {#if newData.filehash}
                 <Tick />
               {:else}
                 <Pending />
               {/if}
             </div>
-            <div class="py-3 w-1/5 bg-slate-100 tracking-wider flex justify-center text-slate-900 ">
+            <div class="py-3 w-1/5 tracking-wider flex justify-center text-slate-900 ">
               <button class="hidden lg:block text-slate-800 border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
               <button
                 ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 fill-yellow-500 h-5 block lg:hidden">
@@ -115,7 +115,7 @@
                 </svg>
               </button>
             </div>
-            <div class="py-3 w-1/4 bg-teal-100 tracking-wider flex gap-2 justify-center text-slate-900">
+            <div class="py-3 w-1/4  tracking-wider flex gap-2 justify-center text-slate-900">
               <button class="hidden lg:block text-slate-800 border-2 border-indigo-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-indigo-600 rounded text-base">Continue</button>
               <button
                 ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 fill-blue-500 h-5 block lg:hidden">
