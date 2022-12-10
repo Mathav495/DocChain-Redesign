@@ -77,15 +77,15 @@
 <div class="flex flex-col gap-5">
   <!-- 1st div table -->
   <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] rounded-lg relative text-center overflow-auto lg:overflow-hidden">
-    <div class="w-full flex font-bold text-sm lg:text-base">
-      <div class="hidden lg:block py-3 w-1/4 tracking-wider text-slate-900">Document Id</div>
-      <div class="block lg:hidden py-3 w-1/4 tracking-wider text-slate-900">Doc Id</div>
-      <div class="hidden lg:block py-3 w-1/5 tracking-wider text-slate-900 ">Data Hash Generated</div>
-      <div class="block lg:hidden py-3 w-1/5 tracking-wider text-slate-900 ">DataHash</div>
-      <div class="hidden lg:block py-3 w-1/5 tracking-wider  text-slate-900 ">File Hash Generated</div>
-      <div class="block lg:hidden py-3 w-1/5 tracking-wider  text-slate-900 ">FileHash</div>
-      <div class=" py-3 w-1/5 tracking-wider  text-slate-900 ">Status</div>
-      <div class=" py-3 w-1/4  tracking-wider  text-slate-900">Actions</div>
+    <div class="w-full flex font-bold text-sm lg:text-lg text-blue-900">
+      <div class="hidden lg:block py-3 w-1/4 tracking-wider">Document Id</div>
+      <div class="block lg:hidden py-3 w-1/4 tracking-wider">Doc Id</div>
+      <div class="hidden lg:block py-3 w-1/5 tracking-wider">Data Hash Generated</div>
+      <div class="block lg:hidden py-3 w-1/5 tracking-wider">DataHash</div>
+      <div class="hidden lg:block py-3 w-1/5 tracking-wider ">File Hash Generated</div>
+      <div class="block lg:hidden py-3 w-1/5 tracking-wider">FileHash</div>
+      <div class=" py-3 w-1/5 tracking-wider">Status</div>
+      <div class=" py-3 w-1/4  tracking-wider">Actions</div>
     </div>
 
     <div class="overflow-y-scroll -mr-16 pr-12 h-80 border-2 border-slate-200">
