@@ -76,15 +76,15 @@
 
 <div class="flex flex-col gap-5">
   <!-- 1st div table -->
-  <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] rounded-lg relative text-center overflow-auto lg:overflow-hidden">
+  <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] rounded-lg relative text-center lg:overflow-hidden">
     <div class="w-full flex font-bold text-sm lg:text-lg text-blue-900">
-      <div class="hidden lg:block py-3 w-1/4 tracking-wider">Document Id</div>
+      <div class="hidden lg:block pl-2 py-3 w-1/4 tracking-wider">Document Id</div>
       <div class="block lg:hidden py-3 w-1/4 tracking-wider">Doc Id</div>
-      <div class="hidden lg:block py-3 w-1/5 tracking-wider">Data Hash Generated</div>
-      <div class="block lg:hidden py-3 w-1/5 tracking-wider">DataHash</div>
+      <div class="hidden lg:block py-3 lg:w-1/5 tracking-wider">Data Hash Generated</div>
+      <div class="block lg:hidden py-3 w-1/4 tracking-wider">DataHash</div>
       <div class="hidden lg:block py-3 w-1/5 tracking-wider ">File Hash Generated</div>
-      <div class="block lg:hidden py-3 w-1/5 tracking-wider">FileHash</div>
-      <div class=" py-3 w-1/5 tracking-wider">Status</div>
+      <div class="block lg:hidden py-3 w-1/4 tracking-wider">FileHash</div>
+      <div class="hidden lg:block py-3 w-1/5 tracking-wider">Status</div>
       <div class=" py-3 w-1/4  tracking-wider">Actions</div>
     </div>
 
@@ -92,7 +92,7 @@
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
-            <div class="py-3 w-1/4 tracking-wider lg:text-lg text-xs font-mono text-slate-600">{newData.documentID}</div>
+            <div class="py-3 w-1/4 tracking-wider pl-2 lg:text-lg text-xs font-mono text-slate-600">{newData.documentID}</div>
             <div class="py-3 w-1/5 tracking-wider flex justify-center items-center text-slate-900">
               {#if newData.datahash}
                 <Tick />
@@ -109,16 +109,11 @@
             </div>
             <div class="py-3 w-1/5 tracking-wider flex justify-center text-slate-900 ">
               <button class="hidden lg:block text-slate-800 border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
-              <button>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 stroke-yellow-500 block lg:hidden">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                </svg>
-              </button>
             </div>
             <div class="py-3 w-1/4  tracking-wider flex gap-2 justify-center text-slate-900">
               <button class="hidden lg:block text-slate-800 border-2 border-green-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-base">Continue</button>
               <button
-                ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 fill-blue-500 h-5 block lg:hidden">
+                ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 fill-green-500 h-5 block lg:hidden">
                   <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z" clip-rule="evenodd" />
                 </svg>
               </button>
