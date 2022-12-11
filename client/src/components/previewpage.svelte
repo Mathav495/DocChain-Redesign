@@ -2,11 +2,15 @@
   import Successmsg from './successmsg.svelte';
   import Loading from './Loading.svelte';
   import axios from 'axios';
-  // import { changeGradient } from './grads.svelte';
-  // import {changeGradient} from '../../public/Animate';
   import { onMount } from 'svelte';
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
+  import pdfjsLib from 'pdfjs-dist/build/pdf';
+  import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
+
+  let currentpage, _PDFDOC, File, _total_pages;
+  let showpdf;
+
   const dispatch = createEventDispatcher();
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
@@ -20,6 +24,100 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
+  let bgcolor = localStorage.getItem('bggradient');
+  console.log(bgcolor);
+
+  /**
+   * getting saved blob image from localstorage
+   */
+  let blobimage = localStorage.getItem('blobimage');
+  console.log(blobimage);
+
+  /**
+   * getting saved pdf blob and converting it as the base64 string
+   */
+
+  //   // var blob = //your blob data;
+
+  let blob = localStorage.getItem('blobpdf');
+  console.log(blob);
+
+  // const showPdf = async (blob) => {
+  //   pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+  //   let loadingTask = pdfjsLib.getDocument(blob);
+  //   loadingTask = loadingTask.promise;
+  //   _PDFDOC = await loadingTask;
+  //   _total_pages = _PDFDOC.numPages;
+  //   console.log(_total_pages);
+  //   console.log(_PDFDOC);
+  //   currentpage = 1;
+  //   showPage(1);
+  // };
+
+  // const showPage = async (pageno) => {
+  //   let page = await _PDFDOC.getPage(pageno);
+  //   console.log('Page loaded');
+  //   let viewport = page.getViewport({ scale: 1 });
+
+  //   // Prepare canvas using PDF page dimensions
+  //   let canvas = document.createElement('canvas');
+  //   let context = canvas.getContext('2d');
+  //   canvas.height = viewport.height;
+  //   canvas.width = viewport.width;
+
+  //   // Render PDF page into canvas context
+  //   let renderContext = {
+  //     canvasContext: context,
+  //     viewport: viewport,
+  //   };
+  //   await page.render(renderContext).promise;
+  //   document.getElementById('pdf-preview').src = canvas.toDataURL();
+  // };
+
+  // // const toClickinput = () => {
+  // //   document.getElementById('file-upload').click();
+  // // };
+
+  // const nextpage = () => {
+  //   if (currentpage < _total_pages) {
+  //     console.log('initial', currentpage);
+  //     showPage(currentpage + 1);
+  //     currentpage++;
+  //     console.log('final', currentpage);
+  //   }
+  // };
+
+  // const previouspage = () => {
+  //   if (currentpage > 1) {
+  //     console.log('initial', currentpage);
+  //     showPage(currentpage - 1);
+  //     currentpage--;
+  //     console.log('final', currentpage);
+  //   }
+  // };
+
+  // var reader = new FileReader();
+
+  // reader.readAsDataURL(blob);
+  // reader.onloadend = function() {
+  //     var base64data = reader.result;
+  //     console.log(base64data);
+  //     return;
+  // }
+  // const convertBlobToBase64 = async (blob) => {
+  //   // blob data
+  //   return await blobToBase64(blob);
+  // };
+
+  // const blobToBase64 = (blob) =>
+  //   new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(blob);
+  //     reader.onload = () => resolve(reader.result);
+  //     reader.onerror = (error) => reject(error);
+  //   });
+  // // console.log(await convertBlobToBase64(someFileData));
+
   // let signature;
   let issuerName;
   let loading = false;
@@ -70,42 +168,6 @@
         fileavailable = true;
         dispatch('fileavailable', fileavailable);
         status = 'Uploaded Sucessfully';
-
-        // const onUpload = (files) => {
-        //   if (files.length !== 1) return;
-        //   const file = files[0];
-        //   let reader = new FileReader();
-        //   reader.onload = (e) => {
-        //     const data = Buffer.from(e.target.result.replace(/.*base64,/, ''));
-        //     renderPDF(data);
-        //     console.log(data);
-        //   };
-
-        //   reader.readAsDataURL(file);
-        // };
-
-        // async function renderPDF(data) {
-        //   const pdf = await pdfjsLib.getDocument({ data }).promise;
-        //   // console.log(pdf)
-
-        //   for (let i = 1; i <= pdf.numPages; i++) {
-        //     const image = document.createElement('img');
-        //     document.body.appendChild(image);
-        //     console.log(image);
-        //     const page = await pdf.getPage(i);
-        //     // console.log(page)
-        //     const viewport = page.getViewport({ scale: 2 });
-        //     const canvas = document.createElement('canvas');
-        //     const canvasContext = canvas.getContext('2d');
-        //     canvas.height = viewport.height;
-        //     canvas.width = viewport.width;
-        //     await page.render({ canvasContext, viewport }).promise;
-        //     const data = canvas.toDataURL('image/png');
-        //     console.log(data);
-        //     image.src = data;
-        //     image.style.width = '100%';
-        //   }
-        // }
       }
     }
   };
@@ -217,11 +279,32 @@
 {#if loading}
   <Loading />
 {:else}
-  <section class="relative text-gray-600">
-    <div class="md:w-flex-col container mx-auto flex flex-wrap pt-3 md:flex-nowrap">
+  <section class="relative text-gray-600 ">
+    <div class="md:w-flex-col container mx-auto w-full h-full flex flex-wrap pt-3 md:flex-nowrap">
       <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
         <div class="flex w-full flex-col">
-          <img class="h-[600px] w-full object-cover rounded-md border-2 border-gray-200" src={imgurl} alt="document" />
+         
+          <img class="h-[600px] w-full object-cover rounded-md border-2 border-gray-200" src={blobimage} alt="document" />
+          <object data={blob} type="application/pdf" width="100%" height="100%" title="pdf" />
+          <!-- {#if showpdf}
+            <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" on:load={showPdf} />
+            <div class="flex justify-center items-center gap-8 pt-2">
+              <button on:click={previouspage}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+              </button>
+              <h1 class="text-lg text-white font-bold">{currentpage}</h1>
+              <button on:click={nextpage}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
+            </div>
+          {:else}
+            <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
+          {/if} -->
+
           <div class="mt-5">
             <div class="pointer-events-auto flex w-full divide-x divide-gray-200 rounded-lg border-2 border-gray-200 bg-white shadow-lg ring-1 ring-blue-500 ring-opacity-5">
               <div class="mt-1 flex w-0 flex-1 items-center p-4">
@@ -247,15 +330,15 @@
           <!-- <input type="file" on:change={onUpload(this.files)} /> -->
         </div>
       </div>
-      <div class=" mt-8 flex w-full flex-col rounded-md p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5">
+      <div class=" mt-8 flex w-full flex-col rounded-md p-5 shadow-lg md:ml-auto md:mt-0 md:w-1/2 md:py-8 lg:w-2/5" style="background:{bgcolor}">
         <div class="h-30 flex w-full flex-col gap-4 rounded-lg p-2">
           <div class="order-2 flex gap-3 lg:order-none">
             <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="qrcode" src={qr} />
             <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="logo" src="/assets/sample.jpg" />
 
             <div class="flex flex-col gap-10">
-              <div class="flex rounded-md px-3 py-1 text-xs  text-black font-bold">ISSUER NAME: {issuerName}</div>
-              <div class="flex rounded-md px-3 py-1 text-xs uppercase text-black font-bold">DOCUMENT_ID: {documentID}</div>
+              <div class="flex rounded-md px-3 py-1 text-xs  text-black font-bold">{issuerName}</div>
+              <div class="flex rounded-md px-3 py-1 text-xs uppercase text-black font-bold">{documentID}</div>
             </div>
           </div>
           <!-- <div class="flex flex-col order-1 lg:order-none">
@@ -327,8 +410,16 @@
   </section>
 {/if}
 
-<!-- <style>
-  .hide {
-    display: none;
+<style>
+  #holder {
+    background: #eee;
+    padding: 32px 0 16px 0;
   }
-</style> -->
+  .canvas-wrapper {
+    margin-bottom: 16px;
+  }
+  canvas {
+    margin: 0 auto;
+    display: block;
+  }
+</style>

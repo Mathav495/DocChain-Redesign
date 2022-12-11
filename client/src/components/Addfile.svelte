@@ -79,15 +79,18 @@
       displaypreview = true;
       showpdf = false;
       showImage = true;
-      blobimage = URL.createObjectURL(File);
+      blobimage = URL.createObjectURL(File);     
+      localStorage.setItem("blobimage",blobimage)
       console.log(blobimage);
       return;
     } else if (File.type == 'application/pdf') {
       showImage = false;
       showpdf = true;
       let blob = URL.createObjectURL(File);
+      localStorage.setItem("blobpdf",blob)
       console.log(blob);
       await showPdf(blob);
+      // console.log(showPdf(blob))
       displaypreview = true;
       return;
     } else {

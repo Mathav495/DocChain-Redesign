@@ -27,9 +27,7 @@
     <Route path="/add-data/:id" let:params>
       <Adddatapage id={params.id} />
     </Route>
-    <Route path="/preview/:id" let:params>
-    <Filepreview id={params.id} />
-    </Route>
+    <Route path="/preview"><Filepreview /></Route>
     <Route path="/pre"><Prepublish /></Route>
   </main>
 </Router>

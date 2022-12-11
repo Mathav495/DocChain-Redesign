@@ -93,11 +93,6 @@
       console.log('datahash', dataHash);
       console.log(data.metadata.receiver)
 
-    
-
-
-
-
       // let dateexpired = localStorage.setItem('date', dateexpired);
       // let date = localStorage.getItem('date')
       // console.log(date);
@@ -108,7 +103,7 @@
 
       if (fileavailable && data.dataHash) {
         error.msg = '';
-        navigate('/preview');
+        navigate(`/preview/${documentID}`);
       } else {
         error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
       }
