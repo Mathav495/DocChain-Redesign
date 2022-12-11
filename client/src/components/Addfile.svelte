@@ -5,6 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   import HeaderFileupload from './header_fileupload.svelte';
+  import { fade } from 'svelte/transition';
   const dispatch = createEventDispatcher();
   export let id;
   let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf;
@@ -177,7 +178,7 @@
           <!-- svelte-ignore missing-declaration -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           {#if displayDropzone}
-            <div class="sm:col-span-6 cursor-pointer " id="dropzone" on:click={toClickinput}>
+            <div class="sm:col-span-6 cursor-pointer " id="dropzone" on:click={toClickinput} in:fade={{ duration: 1500 }} out:fade={{ duration: 1000 }}>
               <div class="flex justify-center items-center rounded-lg border-1 border-dashed border-blue-600 bg-slate-200 shadow-xl py-10">
                 <div class="space-y-1 text-center">
                   <div class="flex flex-col text-base text-gray-600">
@@ -202,7 +203,7 @@
 
   {#if displaypreview}
     {#if showpdf}
-      <div class="flex w-full lg:w-1/2 flex-col">
+      <div class="flex w-full lg:w-1/2 flex-col" in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }}>
         <div class="w-full h-[37rem] lg:h-[40rem] rounded-md self-start bg-slate-900">
           <div class="p-2">
             <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" />
