@@ -123,33 +123,34 @@
   };
 </script>
 
-<div class="w-full lg:w-1/2">
-  <HeaderFileupload {id} {bgcolor}>
-    <h1 slot="title" class="text-base text-white">{docTitle ? docTitle : 'Untitled Document'}</h1>
-  </HeaderFileupload>
-</div>
-<div class="flex gap-3 mt-3">
-  <div class="rounded-md bg-[#393E46] h-auto w-full lg:w-1/2 p-4">
+<div class="space-y-3">
+  <div class="w-full lg:w-1/2">
+    <HeaderFileupload {id} {bgcolor}>
+      <h1 slot="title" class="text-base text-white">{docTitle ? docTitle : 'Untitled Document'}</h1>
+    </HeaderFileupload>
+  </div>
+
+  <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] rounded-lg bg-white  h-auto w-full lg:w-1/2 px-4 py-6">
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col  space-y-5">
-        <div class="flex flex-col w-full lg:w-4/5 space-y-1">
-          <label for="issuer" class="text-sm text-white tracking-wide font-bold">Issued to</label>
+        <div class="flex flex-col w-full lg:w-4/5 space-y-2">
+          <label for="issuer" class="text-sm text-black tracking-wide font-bold">Issued to</label>
           <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class={error.issuer ? 'input-error' : 'input-normal'} />
         </div>
-        <div class="flex flex-col w-full lg:w-4/5 space-y-1">
-          <label for="doctype" class="text-sm text-white tracking-wide font-bold">Document Type</label>
+        <div class="flex flex-col w-full lg:w-4/5 space-y-2">
+          <label for="doctype" class="text-sm text-black tracking-wide font-bold">Document Type</label>
           <input placeholder={error.doctype ? error.doctype : 'Enter document type'} bind:value={doctype} type="text" class={error.doctype ? 'input-error' : 'input-normal'} name="doctype" id="doctype" />
         </div>
-        <div class="flex flex-col w-full lg:w-4/5 space-y-1">
-          <label for="signatory" class="text-sm text-white tracking-wide font-bold">Signatory</label>
+        <div class="flex flex-col w-full lg:w-4/5 space-y-2">
+          <label for="signatory" class="text-sm text-black tracking-wide font-bold">Signatory</label>
           <input placeholder={error.signatory ? error.signatory : 'Enter signatory name'} name="signatory" bind:value={signatory} id="signatory" type="text" class={error.signatory ? 'input-error' : 'input-normal'} />
         </div>
-        <div class="flex flex-col w-full lg:w-4/5 space-y-1">
-          <label for="docid" class="text-sm text-white tracking-wide font-bold">Date Expired</label>
+        <div class="flex flex-col w-full lg:w-4/5 space-y-2">
+          <label for="docid" class="text-sm text-black tracking-wide font-bold">Date Expired</label>
           <input bind:value={dateexpired} placeholder={error.dateexpired ? error.dateexpired : 'Enter expiry date'} type="text" onfocus="(this.type = 'date')" class={error.dateexpired ? 'input-error' : 'input-normal'} name="docid" id="docid" />
         </div>
-        <div class="flex flex-col w-full lg:w-4/5 space-y-1">
-          <label for="docTitle" class="text-sm text-white tracking-wide font-bold">Document Title</label>
+        <div class="flex flex-col w-full lg:w-4/5 space-y-2">
+          <label for="docTitle" class="text-sm text-black tracking-wide font-bold">Document Title</label>
           <input placeholder={error.docTitle ? error.docTitle : 'Enter document title'} bind:value={docTitle} type="text" class={error.docTitle ? 'input-error' : 'input-normal'} name="docTitle" id="docTitle" />
         </div>
       </div>
