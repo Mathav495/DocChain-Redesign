@@ -1,4 +1,4 @@
-export function pannable(node) {
+export const pannable  = (node) => {
   let x;
   let y;
 
