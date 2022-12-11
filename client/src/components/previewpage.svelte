@@ -10,6 +10,7 @@
 
   let currentpage, _PDFDOC, File, _total_pages;
   let showpdf;
+  let src
 
   const dispatch = createEventDispatcher();
   let token = localStorage.getItem('token');
@@ -36,9 +37,6 @@
   /**
    * getting saved pdf blob and converting it as the base64 string
    */
-
-  //   // var blob = //your blob data;
-
   let blob = localStorage.getItem('blobpdf');
   console.log(blob);
 
@@ -283,27 +281,11 @@
     <div class="md:w-flex-col container mx-auto w-full h-full flex flex-wrap pt-3 md:flex-nowrap">
       <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
         <div class="flex w-full flex-col">
-         
-          <img class="h-[600px] w-full object-cover rounded-md border-2 border-gray-200" src={blobimage} alt="document" />
-          <object data={blob} type="application/pdf" width="100%" height="100%" title="pdf" />
-          <!-- {#if showpdf}
-            <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" on:load={showPdf} />
-            <div class="flex justify-center items-center gap-8 pt-2">
-              <button on:click={previouspage}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                </svg>
-              </button>
-              <h1 class="text-lg text-white font-bold">{currentpage}</h1>
-              <button on:click={nextpage}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
-              </button>
-            </div>
+          {#if (src = blobimage)}
+            <img class="h-[600px] w-full object-cover rounded-md border-2 border-gray-200" src={blobimage} alt="document" />
           {:else}
-            <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
-          {/if} -->
+            <object data={blob} type="application/pdf" width="100%" height="100%" title="pdf" />
+          {/if}
 
           <div class="mt-5">
             <div class="pointer-events-auto flex w-full divide-x divide-gray-200 rounded-lg border-2 border-gray-200 bg-white shadow-lg ring-1 ring-blue-500 ring-opacity-5">
