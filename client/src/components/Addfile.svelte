@@ -13,9 +13,6 @@
   let documentID = localStorage.getItem('documentID');
   let bgcolor = localStorage.getItem('bgGradient');
   let displaypreview = false;
-  const dispatch = createEventDispatcher();
-  console.log('bgcolor', bgcolor);
-
   /**
    * Submitting file for generating filehash
    */

@@ -55,6 +55,10 @@
       if (!data.success) {
         console.log(data.errorCode);
         display = true;
+
+        setTimeout(() => {
+          display = false;
+        }, 2000);
       } else {
         localStorage.setItem('token', data.token);
         let token = localStorage.getItem('token');
