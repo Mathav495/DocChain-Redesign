@@ -5,6 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   import HeaderFileupload from './header_fileupload.svelte';
+  const dispatch = createEventDispatcher()
   export let id;
   let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf;
   let nextbtn = true;
