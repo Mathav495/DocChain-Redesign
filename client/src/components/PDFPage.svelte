@@ -4,7 +4,7 @@
   const dispatch = createEventDispatcher();
   let canvas;
   let width;
-  let height;
+  let height
   let clientWidth;
   let mounted;
   function measure() {
@@ -34,7 +34,7 @@
 <div>
   <canvas
     bind:this={canvas}
-    class="max-w-full"
+    class="max-w-full h-[700px]"
     style="width: {width}px;"
     {width}
     {height} />
