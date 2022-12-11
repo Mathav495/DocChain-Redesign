@@ -282,7 +282,7 @@
       <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg md:mr-10 md:w-1/2 md:flex-row lg:w-3/5">
         <div class="flex w-full flex-col">
           {#if (src = blobimage)}
-            <img class="h-[600px] w-full object-cover rounded-md border-2 border-gray-200" src={blobimage} alt="document" />
+            <img class="h-full w-full object-cover rounded-md border-2 border-gray-200" src={blobimage} alt="document" />
           {:else}
             <object data={blob} type="application/pdf" width="100%" height="100%" title="pdf" />
           {/if}
