@@ -8,6 +8,7 @@
   const dispatch = createEventDispatcher();
   export let id;
   let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf;
+  let displayDropzone = true;
   let nextbtn = true;
   let prevbtn = true;
   let token = localStorage.getItem('token');
@@ -67,6 +68,7 @@
    */
 
   const ondisplay = async () => {
+    console.log('displayed');
     const form = document.getElementById('form');
     const formData = new FormData(form);
     console.log([...formData]);
@@ -75,6 +77,7 @@
     console.log(File.type);
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       displaypreview = true;
+      displayDropzone = false;
       showpdf = false;
       blobimage = URL.createObjectURL(File);
       console.log(blobimage);
@@ -84,6 +87,7 @@
       let blob = URL.createObjectURL(File);
       console.log(blob);
       await showPdf(blob);
+      displayDropzone = false;
       displaypreview = true;
       return;
     } else {
@@ -156,6 +160,11 @@
       console.log('final', currentpage);
     }
   };
+
+  const ondisplaydropzone = () => {
+    displayDropzone = true;
+    displaypreview = false;
+  };
 </script>
 
 <div class="rounded-lg h-auto w-full flex flex-col gap-4 lg:gap-0 lg:flex-row">
@@ -167,23 +176,25 @@
         <div class="flex w-full flex-col">
           <!-- svelte-ignore missing-declaration -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <div class="sm:col-span-6 cursor-pointer " id="dropzone" on:click|stopPropagation={toClickinput}>
-            <div class="flex justify-center items-center rounded-lg border-1 border-dashed border-blue-600 bg-slate-200 shadow-xl py-10">
-              <div class="space-y-1 text-center">
-                <div class="flex flex-col text-base text-gray-600">
-                  <label for="file-upload" class=" relative cursor-pointer rounded-md  font-semibold text-blue-800" id="dropzone">
-                    <svg class="mx-auto h-12 w-12 text-gray-900" stroke="black" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <span class="inline-flex">Upload a file</span>
-                    <input on:change={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
-                    <span class="pl-1">or drag and drop</span>
-                    <p class="text-xs mt-2 text-gray-600">Upload JPEG, PNG, JPG, PDF files</p>
-                  </label>
+          {#if displayDropzone}
+            <div class="sm:col-span-6 cursor-pointer " id="dropzone" on:click={toClickinput}>
+              <div class="flex justify-center items-center rounded-lg border-1 border-dashed border-blue-600 bg-slate-200 shadow-xl py-10">
+                <div class="space-y-1 text-center">
+                  <div class="flex flex-col text-base text-gray-600">
+                    <label for="file-upload" class=" relative cursor-pointer rounded-md  font-semibold text-blue-800" id="dropzone">
+                      <svg class="mx-auto h-12 w-12 text-gray-900" stroke="black" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <span class="inline-flex">Upload a file</span>
+                      <input on:change|stopPropagation={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
+                      <span class="pl-1">or drag and drop</span>
+                      <p class="text-xs mt-2 text-gray-600">Upload JPEG, PNG, JPG, PDF files</p>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          {/if}
         </div>
       </div>
     </form>
@@ -213,7 +224,7 @@
         {#if showpdf}
           <div class="flex mx-auto gap-4 pt-3">
             <div class="flex">
-              <button class="border-2 border-red-500 hover:bg-red-500 hover:text-white rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide">Choose Different file</button>
+              <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide">Choose Different file</button>
             </div>
             <div class="flex">
               <button on:click|preventDefault={onSubmitFile} class="border-2 hover:text-white border-blue-500 hover:bg-blue-500 rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide"> Confirm and Upload </button>
@@ -231,7 +242,7 @@
         {#if !showpdf}
           <div class="flex mx-auto gap-4 pt-3">
             <div class="flex">
-              <button class="border-2 border-red-500 hover:bg-red-500 hover:text-white rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide">Choose Different file</button>
+              <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide">Choose Different file</button>
             </div>
             <div class="flex">
               <button on:click|preventDefault={onSubmitFile} class="border-2 hover:text-white border-blue-500 hover:bg-blue-500 rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide"> Confirm and Upload </button>
