@@ -34,7 +34,7 @@
 <div>
   <canvas
     bind:this={canvas}
-    class="max-w-full h-[700px]"
+    class="max-w-full h-[600px]"
     style="width: {width}px;"
     {width}
     {height} />

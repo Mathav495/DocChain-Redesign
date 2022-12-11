@@ -202,12 +202,12 @@
 {#if loading}
   <Loading />
 {:else}
-  <section class="relative text-gray-600 ">
-    <div class="xl:w-flex-col mx-auto w-full h-auto flex flex-wrap pt-3 xl:flex-nowrap">
-      <div class="flex w-full h-full space-y-4 overflow-hidden rounded-lg xl:mr-10 xl:w-3/5 xl:flex-row lg:w-3/5">
+
+    <div class="xl:w-flex-col mx-auto w-full  flex flex-wrap pt-3 xl:flex-nowrap">
+      <div class="flex w-full h-[700px] space-y-4 overflow-hidden rounded-lg xl:mr-10 xl:w-3/5 xl:flex-row lg:w-3/5">
         <div class="flex w-full h-full flex-col">
           {#if (src = blobimage)}
-            <img class="h-full w-full object-cover rounded-md border-2 border-gray-200" src={blobimage} alt="document" />
+            <img class="w-full object-cover rounded-md border-2 border-gray-200" src={blobimage} alt="document" />
           {:else}
            <PdfCanvas />
           {/if}
@@ -235,7 +235,7 @@
           <!-- <input type="file" on:change={onUpload(this.files)} /> -->
         </div>
       </div>
-      <div class=" mt-8 flex w-full flex-col rounded-md p-5 shadow-2xl xl:ml-auto xl:mt-0 xl:w-2/5 xl:py-8 lg:w-2/5">
+      <div class=" mt-3 flex w-full h-[700px] flex-col rounded-md p-5 shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)] xl:ml-auto xl:mt-0 xl:w-2/5 xl:py-2 lg:w-2/5">
         <div class="h-30 flex w-full flex-col gap-4 rounded-lg p-3 border-2 border-gray-200 shadow-lg bg-gradient-to-r from-indigo-200 via-purple-400 to-teal-500" >
           <div class="order-2 flex gap-3 lg:order-none">
             <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="qrcode" src={qr} />
@@ -344,6 +344,5 @@
         {/if}
       </div>
     </div>
-  </section>
 {/if}
 
