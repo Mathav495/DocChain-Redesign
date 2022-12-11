@@ -5,7 +5,7 @@
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   import HeaderFileupload from './header_fileupload.svelte';
-  const dispatch = createEventDispatcher()
+  const dispatch = createEventDispatcher();
   export let id;
   let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf;
   let nextbtn = true;
@@ -163,11 +163,11 @@
     <HeaderFileupload {id} {bgcolor} />
 
     <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
-      <div class="">
+      <div>
         <div class="flex w-full flex-col">
           <!-- svelte-ignore missing-declaration -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <div class="sm:col-span-6 cursor-pointer" id="dropzone" on:click|stopPropagation={toClickinput}>
+          <div class="sm:col-span-6 cursor-pointer " id="dropzone" on:click|stopPropagation={toClickinput}>
             <div class="flex justify-center items-center rounded-lg border-1 border-dashed border-blue-600 bg-slate-200 shadow-xl py-10">
               <div class="space-y-1 text-center">
                 <div class="flex flex-col text-base text-gray-600">
@@ -187,45 +187,55 @@
         </div>
       </div>
     </form>
-
-    {#if showpdf}
-      <div class="flex justify-center items-center">
-        <button on:click|preventDefault={onSubmitFile} class="bg-blue-400 rounded-full px-10 py-2 text-lg text-white font-bold tracking-wide"> Confirm and Upload </button>
-      </div>
-    {/if}
   </div>
 
   {#if displaypreview}
     {#if showpdf}
-      <div class="w-full lg:w-1/2 rounded-md self-start bg-slate-900">
-        <div class="p-2">
-          <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[40rem]" />
-          <div class="flex justify-center items-center gap-8 pt-2">
-            <button on:click={previouspage} disabled={!prevbtn}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-white'}">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-              </svg>
-            </button>
-
-            <h1 class="text-lg text-white font-bold">{currentpage}</h1>
-            <button on:click={nextpage} disabled={!nextbtn}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-white'}">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
-            </button>
+      <div class="flex w-full lg:w-1/2 flex-col">
+        <div class="w-full h-[37rem] lg:h-[40rem] rounded-md self-start bg-slate-900">
+          <div class="p-2">
+            <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" />
+            <div class="flex justify-center items-center gap-8 pt-1">
+              <button on:click={previouspage} disabled={!prevbtn}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-white'}">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+              </button>
+              <h1 class="text-lg text-white font-bold">{currentpage}</h1>
+              <button on:click={nextpage} disabled={!nextbtn}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-white'}">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
+        {#if showpdf}
+          <div class="flex mx-auto gap-4 pt-3">
+            <div class="flex">
+              <button class="border-2 border-red-500 hover:bg-red-500 hover:text-white rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide">Choose Different file</button>
+            </div>
+            <div class="flex">
+              <button on:click|preventDefault={onSubmitFile} class="border-2 hover:text-white border-blue-500 hover:bg-blue-500 rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide"> Confirm and Upload </button>
+            </div>
+          </div>
+        {/if}
       </div>
     {:else}
       <div class="flex w-full lg:w-1/2 flex-col">
-        <div class="w-full rounded-md self-start bg-slate-900">
+        <div class="w-full h-[40rem] rounded-md justify-center items-center flex bg-slate-900">
           <div class="p-2">
-            <img src={blobimage} class="w-full  max-h-[40rem]" id="File" alt="Preview" />
+            <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
           </div>
         </div>
         {#if !showpdf}
-          <div class="flex pt-4 mx-auto">
-            <button on:click|preventDefault={onSubmitFile} class="bg-blue-400 rounded-full px-10 py-2 text-lg text-white font-bold tracking-wide"> Confirm and Upload </button>
+          <div class="flex mx-auto gap-4 pt-3">
+            <div class="flex">
+              <button class="border-2 border-red-500 hover:bg-red-500 hover:text-white rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide">Choose Different file</button>
+            </div>
+            <div class="flex">
+              <button on:click|preventDefault={onSubmitFile} class="border-2 hover:text-white border-blue-500 hover:bg-blue-500 rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide"> Confirm and Upload </button>
+            </div>
           </div>
         {/if}
       </div>
