@@ -186,7 +186,7 @@
   >
     <input type="file" name="pdf" id="pdf" on:change={onUploadPDF} class="hidden" />
     <input type="file" id="image" name="image" class="hidden" on:change={onUploadImage} />
-    <div class="relative flex h-10 bg-gray-400 rounded-lg overflow-hidden
+    <div class="relative fixed top-0 flex h-10 bg-gray-400 rounded-lg overflow-hidden
       md:mr-4">
       <label
         class="flex items-center justify-center h-full w-32 hover:bg-gray-500
@@ -198,6 +198,7 @@
         <img src="/assets/image.svg" alt="An icon for adding images" />
         <span class="ml-3 text-gray-900 text-base font-bold">Add-Image</span>
       </label>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <label
         class=" flex items-center justify-center h-full w-32 bg-teal-300 hover:bg-gray-500
         cursor-pointer"
@@ -213,6 +214,15 @@
         <span class="ml-3 text-gray-900 text-base font-bold">Add-Sign</span>
       </label>
     </div>
+    <!-- <button
+    on:click={savePDF}
+    class="w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3
+    md:px-4 mr-3 md:mr-4 rounded"
+    class:cursor-not-allowed={pages.length === 0 || saving || !pdfFile}
+    class:bg-blue-700={pages.length === 0 || saving || !pdfFile}
+  >
+    {saving ? "Saving" : "Save"}
+  </button> -->
   </div>
   {#if addingDrawing}
     <div

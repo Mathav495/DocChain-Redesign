@@ -196,7 +196,7 @@
 {:else}
   <!-- <div class=" flex w-full"> -->
     <div class=" mx-auto w-full h-auto flex flex-wrap pt-3 xl:flex-nowrap">
-      <div class="flex w-fullrounded-lg xl:mr-10 xl:w-3/5 lg:w-3/5">
+      <div class="flex w-full rounded-lg xl:mr-10 xl:w-3/5 lg:w-3/5">
         <BlobPreview />
       </div>
       <div class="flex w-full flex-col xl:w-2/5 lg:w-2/5">

@@ -1,7 +1,7 @@
-<div class="fixed absolute bottom-0 right-0 w-full justify-center items-center border-2 border-gray-200 bg-gray-200">
+<div class="fixed  bottom-0 right-0 w-5/6 mr-5 justify-center items-center border-2 border-gray-200 bg-black px-4 ">
   <div class="mx-auto flex flex-col items-center px-5 py-5 md:flex-row">
-    <div class="mb-6 flex w-full pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left">
-      <h1 class="title-font text-md font-medium text-red-600 md:text-3xl">Please verify document details before proceed</h1>
+    <div class=" flex w-full pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left">
+      <h1 class="title-font text-lg font-medium text-red-600 md:text-3xl">Please verify document details before proceed</h1>
     </div>
     <div class="mx-auto flex flex-shrink-0 items-center space-x-4 md:ml-auto md:mr-0">
       <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white">
