@@ -5,14 +5,12 @@
   import { onMount } from 'svelte';
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
-  import PdfCanvas from './pdfCanvas.svelte';
-  // import pdfjsLib from 'pdfjs-dist/build/pdf';
-  // import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
+  import BlobPreview from './blob-preview.svelte';
+  import HeaderFileupload from './header_fileupload.svelte';
+  import PreviewQrCard from './preview_qrCard.svelte';
+  import PrevFooter from './prev_footer.svelte';
 
-  // let currentpage, _PDFDOC, File, _total_pages;
-  // let showpdf;
-  let src
-
+  export let id;
   const dispatch = createEventDispatcher();
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
@@ -26,20 +24,18 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
-  let bgcolor = localStorage.getItem('bggradient');
-  console.log(bgcolor);
+  let bgcolor = localStorage.getItem('bgGradient');
+  // /**
+  //  * getting saved blob image from localstorage
+  //  */
+  // let blobimage = localStorage.getItem('blobimage');
+  // console.log(blobimage);
 
-  /**
-   * getting saved blob image from localstorage
-   */
-  let blobimage = localStorage.getItem('blobimage');
-  console.log(blobimage);
-
-  /**
-   * getting saved pdf blob and converting it as the base64 string
-   */
-  let blob = localStorage.getItem('blobpdf');
-  console.log(blob);
+  // /**
+  //  * getting saved pdf blob and converting it as the base64 string
+  //  */
+  // let blob = localStorage.getItem('blobpdf');
+  // console.log(blob);
 
   // let signature;
   let issuerName;
@@ -97,9 +93,6 @@
 
   // getting signature Id from the user
   const getsignature = async () => {
-    // let fileHash = localStorage.getItem('filehash');
-    // let dataHash = localStorage.getItem('datahash');
-    // load = true;
     loading = true;
     const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`);
     console.log(data);
@@ -193,127 +186,83 @@
 
   //disabling release button
   // let disabled = false;
-  const disablebutton1 = () => {
-    document.getElementById('button1').disabled = true;
-  };
+  // const disablebutton1 = () => {
+  //   document.getElementById('button1').disabled = true;
+  // };
 </script>
 
 {#if loading}
   <Loading />
 {:else}
-
-    <div class="xl:w-flex-col mx-auto w-full  flex flex-wrap pt-3 xl:flex-nowrap">
-      <div class="flex w-full h-[700px] space-y-4 overflow-hidden rounded-lg xl:mr-10 xl:w-3/5 xl:flex-row lg:w-3/5">
-        <div class="flex w-full h-full flex-col">
-          {#if (src = blobimage)}
-      
-             <img class="w-full h-full rounded-md " src={blobimage} alt="document" />           
-          {:else }
-           <PdfCanvas />
-          {/if}
-
-        </div>
+  <!-- <div class=" flex w-full"> -->
+    <div class=" mx-auto w-full h-auto flex flex-wrap pt-3 xl:flex-nowrap">
+      <div class="flex w-fullrounded-lg xl:mr-10 xl:w-3/5 lg:w-3/5">
+        <BlobPreview />
       </div>
-      <div class=" mt-3 flex w-full h-[700px] flex-col rounded-md p-5 shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)] xl:ml-auto xl:mt-0 xl:w-2/5 xl:py-2 lg:w-2/5">
-        <div class="h-30 flex w-full flex-col gap-4 rounded-lg p-3 border-2 border-gray-200 shadow-lg bg-gradient-to-r from-indigo-200 via-purple-400 to-teal-500" >
-          <div class="order-2 flex gap-3 lg:order-none">
-            <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="qrcode" src={qr} />
-            <img class="h-24 w-24 overflow-hidden rounded object-cover object-center border-2 border-gray-200" alt="logo" src="/assets/sample.jpg" />
-
-            <div class="flex flex-col gap-10 ">
-              <div class="flex rounded-md px-3 py-1 text-sm  text-black font-bold">{issuerName}</div>
-              <div class="flex rounded-md px-3 py-1 text-sm text-black font-bold">{documentID}</div>
-            </div>
-          </div>
-        </div>
+      <div class="flex w-full flex-col xl:w-2/5 lg:w-2/5">
+        <PreviewQrCard {id} {bgcolor} />
         <!-- <hr class="mt-4 mt-1 h-0.5 w-full bg-gray-300" /> -->
-        <div class="border-2 border-gray-200 shadow-lg rounded-lg mt-5 ">
-          <div class="ml-4 mt-5">
+        <div class="border-2 border-gray-200 shadow-lg rounded-lg mt-5" style="background:{bgcolor}">
+          <div class="mt-5 ml-2">
             <div class="relative ">
-              <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Receiver</div>
+              <div for="name" class="text-md font-bold uppercase leading-7 text-white">Receiver</div>
               <div class="flex-col">
-                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Name</div>
-                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 font-bold ease-in-out">john</div>
+                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-white transition-colors duration-200 ease-in-out">Name</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-white transition-colors duration-200 font-bold ease-in-out">john</div>
               </div>
             </div>
             <div class="relative">
-              <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Document</div>
+              <div for="name" class="text-md font-bold uppercase leading-7 text-white">Document</div>
               <div class="flex-col">
-                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Document type</div>
-                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">pdf</div>
+                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-white transition-colors duration-200 ease-in-out">Document type</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-white transition-colors duration-200 ease-in-out font-bold">pdf</div>
               </div>
             </div>
 
             <div class="relative">
-              <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Issuer</div>
+              <div for="name" class="text-md font-bold uppercase leading-7 text-white">Issuer</div>
               <div class="flex-col">
-                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Signatory</div>
-                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">arun</div>
+                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-white transition-colors duration-200 ease-in-out">Signatory</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-white transition-colors duration-200 ease-in-out font-bold">arun</div>
               </div>
-            </div>
-            <div class="relative ">
-              <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Date Expired</div>
-              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">Wed Dec 17 2022 22:49:04 GMT+0530 (India Standard Time)</div>
             </div>
             <div class="relative mb-5">
-              <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-700 transition-colors duration-200 ease-in-out">Document Title</div>
-              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-700 transition-colors duration-200 ease-in-out font-bold">cerfificate</div>
+              <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-white transition-colors duration-200 ease-in-out">Document Title</div>
+              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-white transition-colors duration-200 ease-in-out font-bold">cerfificate</div>
             </div>
           </div>
         </div>
 
-        <footer class="flex w-full justify-between  bottom-0 w-full  p-3 border-2 border-gray-200 rounded-lg mt-5 ">
-
-          <!-- <button class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 border border-indigo-600 bg-gray-50 group uppercase" style="visibility: hidden" id="sign" on:click|preventDefault={getsignature}>
-            <span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full" />
-            <span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </span>
-            <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </span>
-            <span class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">sign</span>
-          </button> -->
-
-          <button class="flex text-slate-800 hover:text-white border-2 border-green-700  py-1 px-2 ml-2 justify-center items-center focus:outline-none hover:bg-green-700 rounded text-base font-bold uppercase" id="sign" on:click|preventDefault={getsignature}>
-            release
-          </button>
-          <!-- <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " id="sign" on:click|preventDefault={getsignature}> release</button> -->
-
-          <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" style="visibility: hidden" rel="noreferrer" on:click|preventDefault={publishdoc}>
-            {#if load}
-              <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
-            {/if}
-            Queue</button>
-          <button class="flex text-slate-800 hover:text-white border-2 border-green-700  py-1 px-2 mr-2  justify-center items-center focus:outline-none hover:bg-green-700 rounded text-base font-bold uppercase" id="confirm" href={proposedURL} target="_blank" rel="noreferrer" on:click|once={disablebutton1} on:click|preventDefault={publishdoc}>
-            confirm
-          </button>
-
-          <button class="flex text-slate-800 hover:text-white border-2 border-green-700  py-1 px-2 justify-center items-center focus:outline-none hover:bg-green-700 rounded text-base font-bold uppercase"  style="visibility: hidden" id="sign" on:click|preventDefault={getsignature}>
-            sign
-          </button>
-          <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" style="visibility: hidden" rel="noreferrer" href={proposedURL} target="_blank"  on:click|once={disablebutton1} on:click|preventDefault={publishdoc}>
-            {#if load}
-              <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
-            {/if}
-            Queue</button>
-
-          <!-- <button id="button3" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " href={proposedURL} target="_blank" rel="noreferrer" on:click|once={disablebutton1} on:click|preventDefault={publishdoc}>
-            {#if load}
-              <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
-            {/if}
-
-            confirm</button
-          > -->
-          <!-- {/if} -->
-        </footer>
         <div id="loaded" style="visibility: hidden" class="mt-5 text-lg text-black bg-white justify-center mx-auto border border-blue-800 rounded-lg px-3 py-1">Please wait... while we're adding your document to queue.</div>
         {#if success}
-          <!-- <div id="success"> -->
           <Successmsg />
-          <!-- </div> -->
         {/if}
       </div>
     </div>
+    <!-- <div class="flex absolute fixed bottom-0 right-0  w-full mx-auto rounded-lg border-2 border-gray-200">
+      <div class="mx-auto relative justify-between flex flex-col  px-5 py-5 md:flex-row">
+        <div class="mb-6 flex w-full pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left">
+          <h1 class="title-font text-md font-bold text-red-600 md:text-3xl">Please verify document details before proceed</h1>
+        </div>
+        <div class="mx-auto flex flex-shrink-0 items-center space-x-4 md:ml-auto md:mr-0">
+          <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
+            </svg>
+            <span class="title-font ml-2 font-bold text-base">Release</span>
+          </button>
+          <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 ">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+              />
+            </svg>
+            <span class="title-font ml-2 font-bold text-base">Confirm</span>
+          </button>
+        </div>
+      </div>
+    </div> -->
+  <!-- </div> -->
 {/if}
-

@@ -25,7 +25,7 @@
   /**
    * getting saved blob image from localstorage
    */
-   let blobimage = localStorage.getItem('blobimage');
+  let blobimage = localStorage.getItem('blobimage');
   console.log(blobimage);
 
   /**
@@ -36,7 +36,7 @@
   // for test purpose
   onMount(async () => {
     try {
-      const res = await fetch(blob);
+      const res = await fetch('/assets/test.pdf');
       const pdfBlob = await res.blob();
       await addPDF(pdfBlob);
       selectedPageIndex = 0;
@@ -49,7 +49,6 @@
     }
   });
 
-  
   async function onUploadPDF(e) {
     const files = e.target.files || (e.dataTransfer && e.dataTransfer.files);
     const file = files[0];
@@ -180,17 +179,15 @@
 </script>
 
 <svelte:window on:dragenter|preventDefault on:dragover|preventDefault on:drop|preventDefault={onUploadPDF} />
-<main class="flex flex-col items-center w-full py-2 bg-gray-100 h-full border-4 border-black shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)]">
+<main class="flex flex-col items-center w-full py-2 bg-gray-100 h-full border-2 border-gray-300 shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)]">
   <div
     class="h-12 flex justify-center text-center items-center
      shadow-lg"
   >
     <input type="file" name="pdf" id="pdf" on:change={onUploadPDF} class="hidden" />
     <input type="file" id="image" name="image" class="hidden" on:change={onUploadImage} />
-    <div
-      class="relative flex h-10 bg-gray-400 rounded-lg overflow-hidden
-      md:mr-4"
-    >
+    <div class="relative flex h-10 bg-gray-400 rounded-lg overflow-hidden
+      md:mr-4">
       <label
         class="flex items-center justify-center h-full w-32 hover:bg-gray-500
         cursor-pointer"
@@ -203,7 +200,8 @@
       </label>
       <label
         class=" flex items-center justify-center h-full w-32 bg-teal-300 hover:bg-gray-500
-        cursor-pointer" for="id"
+        cursor-pointer"
+        for="id"
         signature
         on:click={onAddDrawing}
         class:cursor-not-allowed={selectedPageIndex < 0}
@@ -219,7 +217,7 @@
   {#if addingDrawing}
     <div
       transition:fly={{ y: -200, duration: 500 }}
-      class="fixed z-10 top-0 left-0 right-0 border-b border-gray-300 bg-white h-50
+      class="fixed z-10 top-0 left-0 right-0 border-b border-gray-300 bg-white
       shadow-lg"
       style="height: 40%;"
     >

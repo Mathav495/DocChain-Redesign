@@ -12,7 +12,6 @@ export function pannable(node) {
         detail: { x, y, target },
       })
     );
-
     window.addEventListener('mousemove', handleMousemove);
     window.addEventListener('mouseup', handleMouseup);
   }
