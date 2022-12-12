@@ -88,7 +88,7 @@
       <div class=" py-3 w-1/4 tracking-wider">Actions</div>
     </div>
 
-    <div class="overflow-y-scroll -mr-16 pr-12 h-80 border-2 border-slate-200">
+    <div class="overflow-y-scroll -mr-0 pr-0 lg:-mr-16 lg:pr-12 h-80 border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
@@ -153,7 +153,7 @@
       <h1 class="text-blue-900 text-xl font-bold tracking-wide">Continue with Existing Document ID</h1>
       <h1 class="text-slate-900 text-lg font-semibold tracking-wide">Please Make sure that you already have the Document ID</h1>
       <form on:submit|preventDefault={Continue}>
-        <div class="w-full lg:w-96 group">
+        <div class="w-3/4 lg:w-96 group">
           <label for="DocumentId" class="text-lg relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-900 group-hover:text-blue-600 font-semibold tracking-wide">Document Id</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
