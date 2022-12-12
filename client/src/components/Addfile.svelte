@@ -1,7 +1,7 @@
 <script>
   import axios from 'axios';
-  import { pdfjsLib } from 'pdfjs-dist/build/pdf';
-  import { pdfjsWorker } from 'pdfjs-dist/build/pdf.worker.entry';
+  import pdfjsLib from 'pdfjs-dist/build/pdf';
+  import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   import HeaderFileupload from './header_fileupload.svelte';
