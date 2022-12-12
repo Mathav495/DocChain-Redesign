@@ -2,12 +2,10 @@
   import axios from 'axios';
   import pdfjsLib from 'pdfjs-dist/build/pdf';
   import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
-  import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   import { fade } from 'svelte/transition';
   import HeaderFileupload from './header_fileupload.svelte';
   import ErrorInfo from './ErrorInfo.svelte';
-  const dispatch = createEventDispatcher();
   export let id;
   let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf, errormsg;
   let displayerror = false;
@@ -18,14 +16,6 @@
   let documentID = localStorage.getItem('documentID');
   let bgcolor = localStorage.getItem('bgGradient');
   let displaypreview = false;
-<<<<<<< HEAD
-  let bgcolor = localStorage.getItem('bggradient');
-  console.log(bgcolor);
-
-
-
-=======
->>>>>>> 33bb51c4a65c1baa7428d59a481e92cd6575ec14
   /**
    * Submitting file for generating filehash
    */
@@ -100,26 +90,16 @@
       displaypreview = true;
       displayDropzone = false;
       showpdf = false;
-<<<<<<< HEAD
-      showImage = true;
-      blobimage = URL.createObjectURL(File);     
-      localStorage.setItem("blobimage",blobimage)
-=======
       blobimage = URL.createObjectURL(File);
->>>>>>> 33bb51c4a65c1baa7428d59a481e92cd6575ec14
-      console.log(blobimage);
+      localStorage.setItem('blobimage', blobimage);
       return;
     } else if (File.type == 'application/pdf') {
       showpdf = true;
       let blob = URL.createObjectURL(File);
-      localStorage.setItem("blobpdf",blob)
+      localStorage.setItem('blobpdf', blob);
       console.log(blob);
       await showPdf(blob);
-<<<<<<< HEAD
-      // console.log(showPdf(blob))
-=======
       displayDropzone = false;
->>>>>>> 33bb51c4a65c1baa7428d59a481e92cd6575ec14
       displaypreview = true;
       return;
     } else {
