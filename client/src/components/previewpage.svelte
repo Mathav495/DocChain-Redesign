@@ -207,32 +207,12 @@
       <div class="flex w-full h-[700px] space-y-4 overflow-hidden rounded-lg xl:mr-10 xl:w-3/5 xl:flex-row lg:w-3/5">
         <div class="flex w-full h-full flex-col">
           {#if (src = blobimage)}
-            <img class="w-full object-cover rounded-md border-2 border-gray-200" src={blobimage} alt="document" />
-          {:else}
+      
+             <img class="w-full h-full rounded-md " src={blobimage} alt="document" />           
+          {:else }
            <PdfCanvas />
           {/if}
 
-          <!-- <div class="mt-5">
-            <div class="pointer-events-auto flex w-full divide-x divide-gray-200 rounded-lg border-2 border-gray-200 bg-white shadow-lg ring-1 ring-blue-500 ring-opacity-5">
-              <div class="mt-1 flex w-0 flex-1 items-center p-4">
-                <div class="w-full">
-                  <p class="text-2xl font-bold text-rose-500">Attention !!!</p>
-                  <p class="mt-1 text-lg text-red-800">kindly verify the document details before proceed. You cannot release after publishing</p>
-                </div>
-              </div>
-              <div class="flex">
-                <div class="flex flex-col divide-y divide-gray-300">
-                  <div class="flex h-0 flex-1">
-                    <button type="button" class="flex w-full items-center justify-center rounded-none rounded-tr-lg border border-transparent bg-blue-600 hover:bg-blue-500 hover:text-white px-8 py-2 text-base font-medium text-white focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-500 uppercase" on:click|preventDefault={onSubmitFile}>Upload</button>
-                  </div>
-                  <div class="flex h-0 flex-1">
-                    <button id="button1" type="button" class="flex w-full items-center justify-center rounded-none rounded-br-lg border border-transparent bg-blue-600 px-8 py-2 text-base font-medium text-white hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-blue-200 uppercase" on:click={releaseDoc}>Release</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> -->
-          <!-- <input type="file" on:change={onUpload(this.files)} /> -->
         </div>
       </div>
       <div class=" mt-3 flex w-full h-[700px] flex-col rounded-md p-5 shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)] xl:ml-auto xl:mt-0 xl:w-2/5 xl:py-2 lg:w-2/5">

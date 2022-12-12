@@ -21,10 +21,22 @@
   let selectedPageIndex = -1;
   let saving = false;
   let addingDrawing = false;
+
+  /**
+   * getting saved blob image from localstorage
+   */
+   let blobimage = localStorage.getItem('blobimage');
+  console.log(blobimage);
+
+  /**
+   * getting saved pdf blob and converting it as the base64 string
+   */
+  let blob = localStorage.getItem('blobpdf');
+  console.log(blob);
   // for test purpose
   onMount(async () => {
     try {
-      const res = await fetch('/assets/test.pdf');
+      const res = await fetch(blob);
       const pdfBlob = await res.blob();
       await addPDF(pdfBlob);
       selectedPageIndex = 0;
@@ -174,7 +186,7 @@
     <input type="file" name="pdf" id="pdf" on:change={onUploadPDF} class="hidden" />
     <input type="file" id="image" name="image" class="hidden" on:change={onUploadImage} />
     <div
-      class="relative flex gap-4 h-10 bg-gray-400 rounded-lg overflow-hidden
+      class="relative flex h-10 bg-gray-400 rounded-lg overflow-hidden
       md:mr-4"
     >
       <label
@@ -212,7 +224,7 @@
       <DrawingCanvas
         on:finish={(e) => {
           const { originWidth, originHeight, path } = e.detail;
-          let scale = 1;
+          let scale = 0.5;
           if (originWidth > 500) {
             scale = 500 / originWidth;
           }

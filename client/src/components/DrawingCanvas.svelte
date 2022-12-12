@@ -82,7 +82,7 @@
   </div>
   <svg class="w-full h-full pointer-events-none">
     <path
-      stroke-width="4"
+      stroke-width="2"
       stroke-linejoin="round"
       stroke-linecap="round"
       d={path}
