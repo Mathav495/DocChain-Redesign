@@ -12,6 +12,17 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
+   /**
+   * getting saved blob image from localstorage
+   */
+   let blobimage = localStorage.getItem('blobimage');
+  console.log(blobimage);
+
+  /**
+   * getting saved pdf blob and converting it as the base64 string
+   */
+  let blob = localStorage.getItem('blobpdf');
+  console.log(blob);
 
   let hideNavbar = true;
   const hideNav = () => {
@@ -62,7 +73,7 @@
         <div class="-m-1 flex flex-wrap md:-m-2">
           <div class="flex w-full flex-wrap">
             <div class="w-full  md:p-2">
-              <img alt="gallery" class="object-cover object-center h-[600px] md:justify-start w-5/6 mx-auto rounded-lg shadow-lg" src={imgurl} />
+              <img alt="gallery" class="object-cover object-center h-[600px] md:justify-start w-5/6 mx-auto rounded-lg shadow-lg" src={blobimage} />
             </div>
             <div class="mt-10 flex shadow-lg w-5/6 mx-auto">
               <div class="w-3/7 p-1 md:p-2 ml-20  justify-center">

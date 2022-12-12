@@ -12,10 +12,6 @@
   let signature;
   export let url = '';
 
-  const getSign = (e) => {
-    signature = e.detail;
-    console.log(signature);
-  };
 </script>
 
 <Router {url}>
@@ -31,7 +27,7 @@
     <Route path="/add-data/:id" let:params>
       <Adddatapage id={params.id} />
     </Route>
-    <Route path="/preview"><Filepreview on:signature={getSign} /></Route>
+    <Route path="/preview"><Filepreview /></Route>
     <Route path="/pre"><Prepublish /></Route>
   </main>
 </Router>

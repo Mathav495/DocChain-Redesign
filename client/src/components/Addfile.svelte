@@ -14,6 +14,8 @@
   let bgcolor = localStorage.getItem('bggradient');
   console.log(bgcolor);
 
+
+
   /**
    * Submitting file for generating filehash
    */
@@ -36,7 +38,7 @@
       );
       console.log(data);
       console.log(data.lastModifiedDate);
-      dispatch('filehash', data.fileHash);
+      // dispatch('filehash', data.fileHash);
       localStorage.setItem('filehash', data.fileHash);
       let fileHash = localStorage.getItem('filehash');
       console.log('filehash', fileHash);
@@ -77,15 +79,18 @@
       displaypreview = true;
       showpdf = false;
       showImage = true;
-      blobimage = URL.createObjectURL(File);
+      blobimage = URL.createObjectURL(File);     
+      localStorage.setItem("blobimage",blobimage)
       console.log(blobimage);
       return;
     } else if (File.type == 'application/pdf') {
       showImage = false;
       showpdf = true;
       let blob = URL.createObjectURL(File);
+      localStorage.setItem("blobpdf",blob)
       console.log(blob);
       await showPdf(blob);
+      // console.log(showPdf(blob))
       displaypreview = true;
       return;
     } else {
