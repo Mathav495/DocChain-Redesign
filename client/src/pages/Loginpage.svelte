@@ -55,6 +55,10 @@
       if (!data.success) {
         console.log(data.errorCode);
         display = true;
+
+        setTimeout(() => {
+          display = false;
+        }, 2000);
       } else {
         localStorage.setItem('token', data.token);
         let token = localStorage.getItem('token');
@@ -100,7 +104,7 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
               <Emailicon />
             </span>
-            <input bind:value={Email} type="email" id="Email" placeholder={error.Email ? error.Email : 'Enter Your Email'} class="w-full mt-2 pl-9  placeholder:text-base  bg-black focus:bg-black text-blue-500 rounded border {error.Email ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
+            <input bind:value={Email} novalidate="true" type="email" id="Email" placeholder={error.Email ? error.Email : 'Enter Your Email'} class="w-full mt-2 pl-9  placeholder:text-base  bg-black focus:bg-black text-blue-500 rounded border {error.Email ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
           </div>
         </div>
         <div class="w-96 mt-8 group">
@@ -130,7 +134,7 @@
           <button class="w-96 mt-5 text-white font-medium active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 tracking-wider uppercase rounded text-lg">login</button>
         </div>
 
-        <div>
+        <div class="pt-4">
           {#if display}
             <ErrorInfo errormsg="Invalid Username or Password" on:click={hideErrmsg} />
           {/if}

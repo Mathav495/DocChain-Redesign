@@ -1,7 +1,8 @@
 <script>
   import axios from 'axios';
   import { onMount } from 'svelte';
-  export let id, bgcolor;
+  import { fade } from 'svelte/transition';
+  export let bgcolor, id;
   let token = localStorage.getItem('token');
   let issuerName;
   let qr = localStorage.getItem('qrcode');
@@ -16,7 +17,7 @@
   });
 </script>
 
-<div class=" w-full shadow-xl rounded-md flex items-center p-2 gap-1" style="background:{bgcolor}">
+<div class=" w-full shadow-xl rounded-md flex items-center p-2 gap-1" style="background:{bgcolor}" in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }}>
   <div class="flex">
     <img src={qr} alt="qrcode" class="p-1 w-20 h-20 lg:w-24 lg:h-24" />
     <img src="/assets/sample.jpg" alt="qrcode" class="p-1 w-20 h-20 lg:w-24 lg:h-24" />
