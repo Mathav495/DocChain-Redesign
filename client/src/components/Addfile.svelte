@@ -4,11 +4,13 @@
   import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
-  import HeaderFileupload from './header_fileupload.svelte';
   import { fade } from 'svelte/transition';
+  import HeaderFileupload from './header_fileupload.svelte';
+  import ErrorInfo from './ErrorInfo.svelte';
   const dispatch = createEventDispatcher();
   export let id;
-  let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf;
+  let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf, errormsg;
+  let displayerror = false;
   let displayDropzone = true;
   let nextbtn = true;
   let prevbtn = true;
@@ -60,6 +62,16 @@
 
         //For navigating to next page
         navigate(`/add-data/${id}`);
+      } else {
+        if (data.error) {
+          errormsg = data.errorCode;
+          let arr = errormsg.split(':');
+          errormsg = arr[2].replaceAll('_', ' ');
+          displayerror = true;
+          setTimeout(() => {
+            displayerror = false;
+          }, 3000);
+        }
       }
     }
   };
@@ -166,10 +178,17 @@
     displayDropzone = true;
     displaypreview = false;
   };
+
+  const hideError = () => {
+    displayerror = false;
+  };
 </script>
 
-<div class="rounded-lg h-auto w-full flex flex-col gap-4 lg:gap-0 lg:flex-row">
-  <div class="w-full lg:w-1/2 flex flex-col gap-4 pr-0 lg:pr-4">
+<div class="relative rounded-lg h-auto w-full flex flex-col gap-4 lg:gap-0 lg:flex-row">
+  {#if displayerror}
+    <ErrorInfo {errormsg} position="absolute top-0 right-0" on:click={hideError} />
+  {/if}
+  <div class=" w-full lg:w-1/2 flex flex-col gap-4 pr-0 lg:pr-4">
     <HeaderFileupload {id} {bgcolor} />
 
     <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">

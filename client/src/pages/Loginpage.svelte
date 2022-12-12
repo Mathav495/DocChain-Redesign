@@ -134,7 +134,7 @@
           <button class="w-96 mt-5 text-white font-medium active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 tracking-wider uppercase rounded text-lg">login</button>
         </div>
 
-        <div>
+        <div class="pt-4">
           {#if display}
             <ErrorInfo errormsg="Invalid Username or Password" on:click={hideErrmsg} />
           {/if}
