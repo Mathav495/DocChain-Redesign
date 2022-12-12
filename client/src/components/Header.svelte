@@ -37,11 +37,11 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div id="header" class="flex justify-between items-center mb-4" on:click|self={hideCard}>
-  <div class="text-lg md:text-xl flex items-center font-boldness gap-2">
-    <div on:click={passValue} class="bg-black md:h-12 md:w-12 h-10 w-10 rounded-md flex items-center justify-center">
-      <img src="/assets/logo2.png" alt="logo" class="md:h-10 md:w-10 h-6 w-6 animate-pulse lg:animate-none" />
+  <div class="text-lg md:text-2xl flex items-center font-boldness gap-2">
+    <div on:click={passValue} class="bg-black md:h-12 md:w-12 h-10 w-10 rounded-md flex items-center justify-center cursor-pointer">
+      <img src="/assets/logo2.png" alt="logo" class="md:h-10 md:w-10 h-8 w-8 animate-pulse lg:animate-none" />
     </div>
-    <h1>DocChain.io</h1>
+    <h1 class="font-bold">DocChain.io</h1>
   </div>
 
   <div class="flex flex-row gap-5">

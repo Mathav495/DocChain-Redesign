@@ -72,17 +72,14 @@
 </div> -->
 
 <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4">
-  <div class:hidden={hide} class:block={show} class="width1200px width1024px width768px transform ease-in-out delay-1000 duration-1000 translate-x-6">
-    <div class="h-full hidden p-4 lg:flex flex-col items-start justify-between">
+  <div class:hidden={hide} class:block={show} class="width1200px width1024px transform ease-in-out delay-1000 duration-1000 translate-x-6">
+    <div class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between">
       <Logo on:Hide={HideNavbar} />
       <Nav />
       <Logout on:theme={changeClr} />
     </div>
   </div>
   <div class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto">
-    <!-- <div class:hidden={headerHide}>
-      <Headerlogo on:Hide={HideNav} />
-    </div> -->
     <div class="lg:hidden block">
       <Header on:navShow={showNav} />
     </div>
