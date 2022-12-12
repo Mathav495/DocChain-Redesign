@@ -50,19 +50,19 @@
   let hide = false,
     show = true,
     headerHide = true;
-  const HideNav = () => {
+  const HideNavbar = () => {
     if (hide == false) {
       hide = true;
       console.log('hide');
       headerHide = false;
       show = false;
-      document.getElementById('header').classList.remove('md:mb-0');
+      // document.getElementById('header').classList.remove('md:mb-0');
     } else {
       hide = false;
       console.log('show');
       headerHide = true;
       show = true;
-      document.getElementById('header').classList.add('md:mb-0');
+      // document.getElementById('header').classList.add('md:mb-0');
     }
   };
 </script>
@@ -73,35 +73,38 @@
 
 <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4">
   <div class:hidden={hide} class:block={show} class="width1200px width1024px width768px transform ease-in-out delay-1000 duration-1000 translate-x-6">
-    <div class="h-full hidden p-4 md:flex flex-col items-start justify-between">
-      <Logo on:Hide={HideNav} />
+    <div class="h-full hidden p-4 lg:flex flex-col items-start justify-between">
+      <Logo on:Hide={HideNavbar} />
       <Nav />
       <Logout on:theme={changeClr} />
     </div>
   </div>
   <div class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto">
-    <div class:hidden={headerHide}>
+    <!-- <div class:hidden={headerHide}>
       <Headerlogo on:Hide={HideNav} />
-    </div>
-    <div>
+    </div> -->
+    <div class="lg:hidden block">
       <Header on:navShow={showNav} />
+    </div>
+    <div class:hidden={headerHide}>
+      <Header on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>
       <Dashboard />
     </div>
   </div>
   <!--small screen navbar-->
-  <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">
+  <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start absolute inset-0 p-8">
     <SmallScreenNavbar />
   </button>
 </div>
 
 <style>
-  @media screen and (min-width: 768px) {
+  /* @media screen and (min-width: 768px) {
     .width768px {
       width: 27rem;
     }
-  }
+  } */
   @media screen and (min-width: 1024px) {
     .width1024px {
       width: 24rem;
