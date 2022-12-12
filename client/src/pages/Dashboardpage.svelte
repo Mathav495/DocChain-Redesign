@@ -87,7 +87,7 @@
       <Header on:navShow={showNav} />
     </div>
     <div class:hidden={headerHide}>
-      <Header on:navShow={showNav} on:Hide={HideNavbar} />
+      <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>
       <Dashboard />
