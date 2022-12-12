@@ -88,7 +88,7 @@
       <div class=" py-3 w-1/4 tracking-wider">Actions</div>
     </div>
 
-    <div class="overflow-y-scroll -mr-16 pr-12 h-80 border-2 border-slate-200">
+    <div class="overflow-y-scroll -mr-0 pr-0 lg:-mr-16 lg:pr-12 h-80 border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
