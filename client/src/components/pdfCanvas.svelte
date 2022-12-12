@@ -179,14 +179,14 @@
 </script>
 
 <svelte:window on:dragenter|preventDefault on:dragover|preventDefault on:drop|preventDefault={onUploadPDF} />
-<main class="flex flex-col items-center w-full py-2 bg-gray-100 h-full border-2 border-gray-300 shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)]">
+<main class="flex flex-col items-center w-full bg-gray-100 h-full border border-gray-300 shadow-lg">
   <div
-    class="h-12 flex justify-center text-center items-center
+    class="flex justify-center text-center items-center
      shadow-lg"
   >
     <input type="file" name="pdf" id="pdf" on:change={onUploadPDF} class="hidden" />
     <input type="file" id="image" name="image" class="hidden" on:change={onUploadImage} />
-    <div class="relative fixed top-0 flex h-10 bg-gray-400 rounded-lg overflow-hidden
+    <!-- <div class="relative fixed top-0 flex h-10 bg-gray-400 rounded-lg overflow-hidden
       md:mr-4">
       <label
         class="flex items-center justify-center h-full w-32 hover:bg-gray-500
@@ -198,8 +198,8 @@
         <img src="/assets/image.svg" alt="An icon for adding images" />
         <span class="ml-3 text-gray-900 text-base font-bold">Add-Image</span>
       </label>
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <label
+      svelte-ignore a11y-click-events-have-key-events -->
+      <!-- <label
         class=" flex items-center justify-center h-full w-32 bg-teal-300 hover:bg-gray-500
         cursor-pointer"
         for="id"
@@ -213,7 +213,7 @@
         </svg>
         <span class="ml-3 text-gray-900 text-base font-bold">Add-Sign</span>
       </label>
-    </div>
+    </div> -->
     <!-- <button
     on:click={savePDF}
     class="w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3
@@ -252,7 +252,7 @@
 		</div> -->
     <div class="w-full">
       {#each pages as page, pIndex (page)}
-        <div class="p-5 w-full flex flex-col items-center overflow-hidden" on:mousedown={() => selectPage(pIndex)} on:touchstart={() => selectPage(pIndex)}>
+        <div class="w-full flex flex-col items-center overflow-hidden" on:mousedown={() => selectPage(pIndex)} on:touchstart={() => selectPage(pIndex)}>
           <div class="relative shadow-lg" class:shadow-outline={pIndex === selectedPageIndex}>
             <PDFPage on:measure={(e) => onMeasure(e.detail.scale, pIndex)} {page} />
             <div class="absolute top-0 left-0 transform origin-top-left" style="transform: scale({pagesScale[pIndex]}); touch-action: none;">

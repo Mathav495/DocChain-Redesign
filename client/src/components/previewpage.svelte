@@ -105,37 +105,7 @@
     console.log(signature);
   };
 
-  const publishdoc = async () => {
-    load = true;
-    // loading = true;
-    let signature = localStorage.getItem('signature');
-    console.log('signature', signature);
-    let documentID = localStorage.getItem('documentID');
-    console.log('documentID', documentID);
-    const { data } = await axios.post(
-      'https://test.swagger.print2block.in/docs/publish',
-      {
-        documentID: documentID,
-        signature: signature,
-      },
-      {
-        headers: {
-          'x-access-token': token,
-        },
-      },
-    );
-    console.log(data);
-
-    console.log(data.state);
-    dispatch('push', data);
-    load = false;
-    // loading = false;
-    // success = true;
-    // if ((action = 'publish')) {
-    //   window.location.assign(proposedURL, '_blank');
-    //   // navigate({proposedURL})
-    // }
-  };
+ 
 
   document.addEventListener('DOMContentLoaded', (e) => {
     const button2 = document.getElementById('button2');
@@ -195,40 +165,40 @@
   <Loading />
 {:else}
   <!-- <div class=" flex w-full"> -->
-    <div class=" mx-auto w-full h-auto flex flex-wrap pt-3 xl:flex-nowrap">
+    <div class=" mx-auto w-full h-auto flex flex-wrap pt-3 xl:flex-nowrap space-y-5">
       <div class="flex w-full rounded-lg xl:mr-10 xl:w-3/5 lg:w-3/5">
         <BlobPreview />
       </div>
       <div class="flex w-full flex-col xl:w-2/5 lg:w-2/5">
         <PreviewQrCard {id} {bgcolor} />
         <!-- <hr class="mt-4 mt-1 h-0.5 w-full bg-gray-300" /> -->
-        <div class="border-2 border-gray-200 shadow-lg rounded-lg mt-5" style="background:{bgcolor}">
+        <div class="border-2 border-gray-200 shadow-lg rounded-lg mt-5">
           <div class="mt-5 ml-2">
             <div class="relative ">
-              <div for="name" class="text-md font-bold uppercase leading-7 text-white">Receiver</div>
+              <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Receiver</div>
               <div class="flex-col">
-                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-white transition-colors duration-200 ease-in-out">Name</div>
-                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-white transition-colors duration-200 font-bold ease-in-out">john</div>
+                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Name</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 font-bold ease-in-out">john</div>
               </div>
             </div>
             <div class="relative">
-              <div for="name" class="text-md font-bold uppercase leading-7 text-white">Document</div>
+              <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Document</div>
               <div class="flex-col">
-                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-white transition-colors duration-200 ease-in-out">Document type</div>
-                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-white transition-colors duration-200 ease-in-out font-bold">pdf</div>
+                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document type</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">pdf</div>
               </div>
             </div>
 
             <div class="relative">
-              <div for="name" class="text-md font-bold uppercase leading-7 text-white">Issuer</div>
+              <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Issuer</div>
               <div class="flex-col">
-                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-white transition-colors duration-200 ease-in-out">Signatory</div>
-                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-white transition-colors duration-200 ease-in-out font-bold">arun</div>
+                <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Signatory</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">arun</div>
               </div>
             </div>
             <div class="relative mb-5">
-              <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-white transition-colors duration-200 ease-in-out">Document Title</div>
-              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-white transition-colors duration-200 ease-in-out font-bold">cerfificate</div>
+              <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document Title</div>
+              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">cerfificate</div>
             </div>
           </div>
         </div>
@@ -245,13 +215,13 @@
           <h1 class="title-font text-md font-bold text-red-600 md:text-3xl">Please verify document details before proceed</h1>
         </div>
         <div class="mx-auto flex flex-shrink-0 items-center space-x-4 md:ml-auto md:mr-0">
-          <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white">
+          <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-gray-600">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
             </svg>
             <span class="title-font ml-2 font-bold text-base">Release</span>
           </button>
-          <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none">
+          <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-gray-600 focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 ">
               <path
                 stroke-linecap="round"
