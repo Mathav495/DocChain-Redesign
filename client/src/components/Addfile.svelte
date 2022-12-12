@@ -1,7 +1,5 @@
 <script>
   import axios from 'axios';
-  import pdfjsLib from 'pdfjs-dist/build/pdf';
-  import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
   import { navigate } from 'svelte-routing';
   import { fade } from 'svelte/transition';
   import HeaderFileupload from './header_fileupload.svelte';
@@ -16,6 +14,7 @@
   let documentID = localStorage.getItem('documentID');
   let bgcolor = localStorage.getItem('bgGradient');
   let displaypreview = false;
+  let pdfjsLib, pdfjsWorker;
   /**
    * Submitting file for generating filehash
    */
@@ -109,7 +108,13 @@
     }
   };
 
+  const pageloader = async () => {
+    pdfjsLib = await import('../../node_modules/pdfjs-dist/build/pdf').default;
+    pdfjsWorker = await import('../../node_modules/pdfjs-dist/build/pdf.worker.entry').default;
+  };
+
   const showPdf = async (blob) => {
+    await pageloader();
     pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
     let loadingTask = pdfjsLib.getDocument(blob);
     loadingTask = loadingTask.promise;

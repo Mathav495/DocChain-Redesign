@@ -16,7 +16,7 @@
   };
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
-  let bgcolor = localStorage.getItem('bggradient');
+  let bgcolor = localStorage.getItem('bgGradient');
   console.log('id get from the params', id);
 
   /**
