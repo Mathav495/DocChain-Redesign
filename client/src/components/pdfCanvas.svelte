@@ -48,6 +48,8 @@
       console.log(e);
     }
   });
+
+  
   async function onUploadPDF(e) {
     const files = e.target.files || (e.dataTransfer && e.dataTransfer.files);
     const file = files[0];

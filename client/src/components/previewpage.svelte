@@ -147,7 +147,6 @@
   document.addEventListener('DOMContentLoaded', (e) => {
     const button2 = document.getElementById('button2');
     const button3 = document.getElementById('button3');
-    // const success = document.getElementById('success');
     const loaded = document.getElementById('loaded');
 
     // whenever the enter button is clicked
@@ -276,15 +275,8 @@
             <span class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">sign</span>
           </button> -->
 
-          <button class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 border border-indigo-600 bg-gray-50 group uppercase" id="sign" on:click|preventDefault={getsignature}>
-            <span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full" />
-            <span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </span>
-            <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </span>
-            <span class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">release</span>
+          <button class="flex text-slate-800 hover:text-white border-2 border-green-700  py-1 px-2 ml-2 justify-center items-center focus:outline-none hover:bg-green-700 rounded text-base font-bold uppercase" id="sign" on:click|preventDefault={getsignature}>
+            release
           </button>
           <!-- <button class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " id="sign" on:click|preventDefault={getsignature}> release</button> -->
 
@@ -292,20 +284,19 @@
             {#if load}
               <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
             {/if}
-
-            Queue</button
-          >
-
-          <button class="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 border border-indigo-600 bg-gray-50 group uppercase" href={proposedURL} target="_blank" rel="noreferrer" on:click|once={disablebutton1} on:click|preventDefault={publishdoc}>
-            <span class="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full" />
-            <span class="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </span>
-            <span class="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </span>
-            <span class="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">confirm</span>
+            Queue</button>
+          <button class="flex text-slate-800 hover:text-white border-2 border-green-700  py-1 px-2 mr-2  justify-center items-center focus:outline-none hover:bg-green-700 rounded text-base font-bold uppercase" id="confirm" href={proposedURL} target="_blank" rel="noreferrer" on:click|once={disablebutton1} on:click|preventDefault={publishdoc}>
+            confirm
           </button>
+
+          <button class="flex text-slate-800 hover:text-white border-2 border-green-700  py-1 px-2 justify-center items-center focus:outline-none hover:bg-green-700 rounded text-base font-bold uppercase"  style="visibility: hidden" id="sign" on:click|preventDefault={getsignature}>
+            sign
+          </button>
+          <button id="button2" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none" style="visibility: hidden" rel="noreferrer" href={proposedURL} target="_blank"  on:click|once={disablebutton1} on:click|preventDefault={publishdoc}>
+            {#if load}
+              <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-indigo-500" viewBox="0 0 24 24" />
+            {/if}
+            Queue</button>
 
           <!-- <button id="button3" class="mx-auto flex rounded-lg border-0 bg-blue-600 py-2 px-8 text-base uppercase text-white focus:outline-none " href={proposedURL} target="_blank" rel="noreferrer" on:click|once={disablebutton1} on:click|preventDefault={publishdoc}>
             {#if load}
