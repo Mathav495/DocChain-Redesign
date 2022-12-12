@@ -153,7 +153,7 @@
       <h1 class="text-blue-900 text-xl font-bold tracking-wide">Continue with Existing Document ID</h1>
       <h1 class="text-slate-900 text-lg font-semibold tracking-wide">Please Make sure that you already have the Document ID</h1>
       <form on:submit|preventDefault={Continue}>
-        <div class="w-full lg:w-96 group">
+        <div class="w-3/4 lg:w-96 group">
           <label for="DocumentId" class="text-lg relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-900 group-hover:text-blue-600 font-semibold tracking-wide">Document Id</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
