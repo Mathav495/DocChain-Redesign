@@ -1,4 +1,6 @@
 <script>
+  import pdfjsLib from 'pdfjs-dist/build/pdf';
+  import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
   import { fade } from 'svelte/transition';
@@ -14,7 +16,8 @@
   let documentID = localStorage.getItem('documentID');
   let bgcolor = localStorage.getItem('bgGradient');
   let displaypreview = false;
-  let pdfjsLib, pdfjsWorker;
+  // $: pdfjsLib = null;
+  // $: pdfjsWorker = null;
   /**
    * Submitting file for generating filehash
    */
@@ -108,13 +111,14 @@
     }
   };
 
-  const pageloader = async () => {
-    pdfjsLib = await import('../../node_modules/pdfjs-dist/build/pdf').default;
-    pdfjsWorker = await import('../../node_modules/pdfjs-dist/build/pdf.worker.entry').default;
-  };
+  // const pageloader = async () => {
+  //   const pdfjs = await import('pdfjs-dist/build/pdf').default;
+  //   pdfjsLib = pdfjs;
+  //   const jsWorker = await import('pdfjs-dist/build/pdf.worker.entry').default;
+  //   pdfjsWorker = jsWorker;
+  // };
 
   const showPdf = async (blob) => {
-    await pageloader();
     pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
     let loadingTask = pdfjsLib.getDocument(blob);
     loadingTask = loadingTask.promise;
@@ -132,7 +136,7 @@
     let viewport = page.getViewport({ scale: 1 });
 
     // Prepare canvas using PDF page dimensions
-    let canvas = document.createElement('canvas');
+    let canvas = document.getElementById('mycanvas');
     let context = canvas.getContext('2d');
     canvas.height = viewport.height;
     canvas.width = viewport.width;
@@ -143,7 +147,7 @@
       viewport: viewport,
     };
     await page.render(renderContext).promise;
-    document.getElementById('pdf-preview').src = canvas.toDataURL();
+    // document.getElementById('pdf-preview').src = canvas.toDataURL();
   };
 
   const toClickinput = () => {
@@ -188,11 +192,11 @@
   };
 </script>
 
-<div class="relative rounded-lg h-auto w-full flex flex-col gap-4 lg:gap-0 lg:flex-row">
+<div class="relative h-auto w-full flex flex-col items-center justify-center gap-4 lg:gap-0">
   {#if displayerror}
     <ErrorInfo {errormsg} position="absolute top-0 right-0" on:click={hideError} />
   {/if}
-  <div class=" w-full lg:w-1/2 flex flex-col gap-4 pr-0 lg:pr-4">
+  <div class=" w-full lg:w-[38.5rem] flex flex-col gap-4">
     <HeaderFileupload {id} {bgcolor} />
 
     <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
@@ -202,7 +206,7 @@
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           {#if displayDropzone}
             <div class="sm:col-span-6 cursor-pointer " id="dropzone" on:click={toClickinput} in:fade={{ duration: 1500 }} out:fade={{ duration: 1000 }}>
-              <div class="flex justify-center items-center rounded-lg border-1 border-dashed border-blue-600 bg-slate-200 shadow-xl py-10">
+              <div class="flex justify-center items-center rounded-md border-1 border-dashed border-blue-600 bg-slate-200 shadow-xl py-10">
                 <div class="space-y-1 text-center">
                   <div class="flex flex-col text-base text-gray-600">
                     <label for="file-upload" class=" relative cursor-pointer rounded-md  font-semibold text-blue-800" id="dropzone">
@@ -226,32 +230,29 @@
 
   {#if displaypreview}
     {#if showpdf}
-      <div class="flex w-full lg:w-1/2 flex-col" in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }}>
-        <div class="w-full h-[37rem] lg:h-[40rem] rounded-md self-start bg-slate-900">
-          <div class="p-2">
-            <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" />
-            <div class="flex justify-center items-center gap-8 pt-1">
-              <button on:click={previouspage} disabled={!prevbtn}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-white'}">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                </svg>
-              </button>
-              <h1 class="text-lg text-white font-bold">{currentpage}</h1>
-              <button on:click={nextpage} disabled={!nextbtn}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-white'}">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
-              </button>
-            </div>
-          </div>
+      <div class="flex w-full lg:w-[38.5rem] flex-col rounded-md" in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }}>
+        <canvas id="mycanvas" class="border-2 rounded-md overflow-hidden" />
+        <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
+        <div class="flex justify-center items-center gap-8 pt-3">
+          <button on:click={previouspage} disabled={!prevbtn}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-black'}">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <h1 class="text-lg text-black font-bold">{currentpage}</h1>
+          <button on:click={nextpage} disabled={!nextbtn}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-black'}">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
         </div>
         {#if showpdf}
           <div class="flex mx-auto gap-4 pt-3">
             <div class="flex">
-              <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide">Choose Different file</button>
+              <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
             </div>
             <div class="flex">
-              <button on:click|preventDefault={onSubmitFile} class="border-2 hover:text-white border-blue-500 hover:bg-blue-500 rounded-full px-3 lg:px-10 py-1 text-sm lg:text-lg text-black font-bold tracking-wide"> Confirm and Upload </button>
+              <button on:click|preventDefault={onSubmitFile} class="border-2 hover:text-white border-blue-500 text-blue-500 hover:bg-blue-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide"> Confirm and Upload </button>
             </div>
           </div>
         {/if}
