@@ -169,7 +169,7 @@
 
     <!-- 2nd -->
 
-    <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] w-full lg:w-1/2 px-5 py-8 space-y-5 rounded-md">
+    <div class="shadow-[0_0px_8px_0px_rgba(0,0,0,0.15)]  w-full lg:w-1/2 px-5 py-8 space-y-5 rounded-md">
       <h1 class="text-blue-900 text-xl font-bold tracking-wide">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg font-semibold tracking-wide leading-relaxed">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div>
