@@ -177,7 +177,7 @@
       <h1 class="text-blue-900 text-xl font-bold tracking-wide">For new Document ID</h1>
       <h1 class="text-slate-800 text-lg font-semibold tracking-wide leading-relaxed">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
       <div>
-        <button on:click={submitdocid} class="flex text-slate-800 hover:text-white border-2 border-green-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg font-bold">Generate Id</button>
+        <button on:click={submitdocid} class="flex text-green-500 hover:text-white border-2 border-green-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg font-bold">Generate Id</button>
       </div>
     </div>
   </div>
