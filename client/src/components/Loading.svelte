@@ -1,4 +1,4 @@
-<!-- <h5 class="loader">
+<h5 class="loader">
   <div
     style="min-height: 100vh; align-items: center!important; justify-content: center!important; display: flex;">
     <div style="width: 150px;">
@@ -25,23 +25,12 @@
           d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5L82,35.7z"
           id="ring-3" />
       </svg>
-      <h4
-        class="text-2xl font-bold text-slate-700"
-        style="text-align: center;  margin-top: 30px; font-family: roboto;">
-        Fetching data, Please wait...
-      </h4>
+  
     </div>
   </div>
-</h5> -->
+</h5> 
 
-<div class="box">
-  <div class="dash uno" />
-  <div class="dash dos" />
-  <div class="dash tres" />
-  <div class="dash cuatro" />
-</div>
-
-<!-- <style>
+ <style>
   h5 {
     background-color: aliceblue;
   }
@@ -96,156 +85,6 @@
     100% {
       transform: rotate(360deg);
       transform-origin: 50% 50%;
-    }
-  }
-</style> -->
-<style>
-  .box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    margin-left: 8rem;
-  }
-
-  .dash {
-    margin: 0 15px;
-    width: 35px;
-    height: 15px;
-    border-radius: 8px;
-
-    box-shadow: 0 0 10px 0 #fecdff;
-  }
-
-  .uno {
-    background: #07dbf2;
-    margin-right: -18px;
-    transform-origin: center left;
-    animation: spin 3s linear infinite;
-  }
-
-  .dos {
-    background: #32a852;
-    transform-origin: center right;
-    animation: spin2 3s linear infinite;
-    animation-delay: 0.2s;
-  }
-
-  .tres {
-    background: #070bf2;
-    transform-origin: center right;
-    animation: spin3 3s linear infinite;
-    animation-delay: 0.3s;
-  }
-
-  .cuatro {
-    background: #f207ea;
-    transform-origin: center right;
-    animation: spin4 3s linear infinite;
-    animation-delay: 0.4s;
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    25% {
-      transform: rotate(360deg);
-    }
-    30% {
-      transform: rotate(370deg);
-    }
-    35% {
-      transform: rotate(360deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes spin2 {
-    0% {
-      transform: rotate(0deg);
-    }
-    20% {
-      transform: rotate(0deg);
-    }
-    30% {
-      transform: rotate(-180deg);
-    }
-    35% {
-      transform: rotate(-190deg);
-    }
-    40% {
-      transform: rotate(-180deg);
-    }
-    78% {
-      transform: rotate(-180deg);
-    }
-    95% {
-      transform: rotate(-360deg);
-    }
-    98% {
-      transform: rotate(-370deg);
-    }
-    100% {
-      transform: rotate(-360deg);
-    }
-  }
-
-  @keyframes spin3 {
-    0% {
-      transform: rotate(0deg);
-    }
-    27% {
-      transform: rotate(0deg);
-    }
-    40% {
-      transform: rotate(180deg);
-    }
-    45% {
-      transform: rotate(190deg);
-    }
-    50% {
-      transform: rotate(180deg);
-    }
-    62% {
-      transform: rotate(180deg);
-    }
-    75% {
-      transform: rotate(360deg);
-    }
-    80% {
-      transform: rotate(370deg);
-    }
-    85% {
-      transform: rotate(360deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes spin4 {
-    0% {
-      transform: rotate(0deg);
-    }
-    38% {
-      transform: rotate(0deg);
-    }
-    60% {
-      transform: rotate(-360deg);
-    }
-    65% {
-      transform: rotate(-370deg);
-    }
-    75% {
-      transform: rotate(-360deg);
-    }
-    100% {
-      transform: rotate(-360deg);
     }
   }
 </style>

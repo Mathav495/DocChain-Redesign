@@ -15,7 +15,7 @@
   async function render() {
     const _page = await page;
     const context = canvas.getContext("2d");
-    const viewport = _page.getViewport({ scale: 1, rotation: 0 });
+    const viewport = _page.getViewport({ scale: 1.5, rotation: 0 });
     width = viewport.width;
     height = viewport.height;
     await _page.render({
@@ -34,7 +34,7 @@
 <div>
   <canvas
     bind:this={canvas}
-    class="max-w-full h-[600px]"
+    class="w-full h-auto"
     style="width: {width}px;"
     {width}
     {height} />

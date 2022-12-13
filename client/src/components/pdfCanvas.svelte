@@ -10,6 +10,7 @@
   import { readAsArrayBuffer, readAsImage, readAsPDF, readAsDataURL } from '../utils/asyncReader.js';
   import { ggID } from '../utils/helper.js';
   import { save } from '../utils/PDF.js';
+    import Loading from './Loading.svelte';
   const genID = ggID();
   let pdfFile;
   let pdfName = '';
@@ -25,7 +26,7 @@
   /**
    * getting saved blob image from localstorage
    */
-   let blobimage = localStorage.getItem('blobimage');
+  let blobimage = localStorage.getItem('blobimage');
   console.log(blobimage);
 
   /**
@@ -36,20 +37,19 @@
   // for test purpose
   onMount(async () => {
     try {
-      const res = await fetch(blob);
+      const res = await fetch('/assets/Handbook on SHG.pdf');
       const pdfBlob = await res.blob();
       await addPDF(pdfBlob);
       selectedPageIndex = 0;
-      setTimeout(() => {
-        fetchFont(currentFont);
-        prepareAssets();
-      }, 5000);
+      // setTimeout(() => {
+      //   fetchFont(currentFont);
+      //   prepareAssets();
+      // }, 5000);
     } catch (e) {
       console.log(e);
     }
   });
 
-  
   async function onUploadPDF(e) {
     const files = e.target.files || (e.dataTransfer && e.dataTransfer.files);
     const file = files[0];
@@ -180,17 +180,15 @@
 </script>
 
 <svelte:window on:dragenter|preventDefault on:dragover|preventDefault on:drop|preventDefault={onUploadPDF} />
-<main class="flex flex-col items-center w-full py-2 bg-gray-100 h-full border-4 border-black shadow-[0_5px_8px_7px_rgba(0,0,0,0.1)]">
+<main class="flex flex-col rounded-md drop-shadow-lg items-center w-full bg-gray-100 h-full border border-gray-300 ">
   <div
-    class="h-12 flex justify-center text-center items-center
+    class="flex justify-center text-center items-center
      shadow-lg"
   >
     <input type="file" name="pdf" id="pdf" on:change={onUploadPDF} class="hidden" />
     <input type="file" id="image" name="image" class="hidden" on:change={onUploadImage} />
-    <div
-      class="relative flex h-10 bg-gray-400 rounded-lg overflow-hidden
-      md:mr-4"
-    >
+    <!-- <div class="relative fixed top-0 flex h-10 bg-gray-400 rounded-lg overflow-hidden
+      md:mr-4">
       <label
         class="flex items-center justify-center h-full w-32 hover:bg-gray-500
         cursor-pointer"
@@ -201,9 +199,11 @@
         <img src="/assets/image.svg" alt="An icon for adding images" />
         <span class="ml-3 text-gray-900 text-base font-bold">Add-Image</span>
       </label>
-      <label
+      svelte-ignore a11y-click-events-have-key-events -->
+      <!-- <label
         class=" flex items-center justify-center h-full w-32 bg-teal-300 hover:bg-gray-500
-        cursor-pointer" for="id"
+        cursor-pointer"
+        for="id"
         signature
         on:click={onAddDrawing}
         class:cursor-not-allowed={selectedPageIndex < 0}
@@ -214,12 +214,21 @@
         </svg>
         <span class="ml-3 text-gray-900 text-base font-bold">Add-Sign</span>
       </label>
-    </div>
+    </div> -->
+    <!-- <button
+    on:click={savePDF}
+    class="w-20 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3
+    md:px-4 mr-3 md:mr-4 rounded"
+    class:cursor-not-allowed={pages.length === 0 || saving || !pdfFile}
+    class:bg-blue-700={pages.length === 0 || saving || !pdfFile}
+  >
+    {saving ? "Saving" : "Save"}
+  </button> -->
   </div>
   {#if addingDrawing}
     <div
       transition:fly={{ y: -200, duration: 500 }}
-      class="fixed z-10 top-0 left-0 right-0 border-b border-gray-300 bg-white h-50
+      class="fixed z-10 top-0 left-0 right-0 border-b border-gray-300 bg-white
       shadow-lg"
       style="height: 40%;"
     >
@@ -244,7 +253,7 @@
 		</div> -->
     <div class="w-full">
       {#each pages as page, pIndex (page)}
-        <div class="p-5 w-full flex flex-col items-center overflow-hidden" on:mousedown={() => selectPage(pIndex)} on:touchstart={() => selectPage(pIndex)}>
+        <div class="w-full flex flex-col items-center overflow-hidden" on:mousedown={() => selectPage(pIndex)} on:touchstart={() => selectPage(pIndex)}>
           <div class="relative shadow-lg" class:shadow-outline={pIndex === selectedPageIndex}>
             <PDFPage on:measure={(e) => onMeasure(e.detail.scale, pIndex)} {page} />
             <div class="absolute top-0 left-0 transform origin-top-left" style="transform: scale({pagesScale[pIndex]}); touch-action: none;">
@@ -261,8 +270,6 @@
       {/each}
     </div>
   {:else}
-    <div class="w-full flex-grow flex justify-center items-center">
-      <span class=" font-bold text-3xl text-gray-500">Drag something here</span>
-    </div>
+    <Loading />
   {/if}
 </main>

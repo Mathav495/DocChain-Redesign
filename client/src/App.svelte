@@ -1,7 +1,7 @@
 <script>
   import Loginpage from './pages/Loginpage.svelte';
   import Dashboardpage from './pages/Dashboardpage.svelte';
-  import Prepublish from './pages/prepublish.svelte';
+  import Final from './pages/final.svelte';
   import { Route, Router } from 'svelte-routing';
   import Publishdoc from './pages/Publishdoc.svelte';
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
@@ -9,7 +9,6 @@
   import Dashboardpage2 from './pages/Dashboardpage2.svelte';
   import Dashboardpage3 from './pages/Dashboardpage3.svelte';
   import Adddatapage from './pages/Adddatapage.svelte';
-  let signature;
   export let url = '';
 
 </script>
@@ -28,7 +27,7 @@
       <Adddatapage id={params.id} />
     </Route>
     <Route path="/preview"><Filepreview /></Route>
-    <Route path="/pre"><Prepublish /></Route>
+    <Route path="/final"><Final /></Route>
   </main>
 </Router>
 

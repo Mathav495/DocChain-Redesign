@@ -3,8 +3,9 @@
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
-  import SmallScreenNavbar from '../components/Small_screen_navbar.svelte'; 
+  import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   import Previewpage from '../components/previewpage.svelte';
+  import PrevFooter from '../components/prev_footer.svelte';
   let bgcolor = localStorage.getItem('bggradient');
   console.log(bgcolor);
   let token = localStorage.getItem('token');
@@ -18,39 +19,7 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
-
-  const image = new Image();
-  image.onload = function () {
-    console.log(image.width);
-  };
-  image.src = qr;
-  image.src = imgurl;
-
-  const pdf1 = new Object();
-  pdf1.onload = function () {
-    console.log(pdf1);
-  };
-  //testing image loading with appendchild
-  // document.body.appendChild(pdf1);
-  let pdfurl = localStorage.getItem('pdf');
-  console.log('pdfUrl', pdfurl);
-  pdf1.src = pdfurl;
-
-  /**
-   * releasing document before publish
-   */
-  // const releaseDoc = async () => {
-  //   let documentID = localStorage.getItem('documentID');
-  //   const { data } = await axios.get(`https://test.swagger.print2block.in/docs/release?documentID=${documentID}`, {
-  //     headers: {
-  //       'x-access-token': token,
-  //     },
-  //   });
-  //   console.log(data);
-  //   if (documentID && token) {
-  //     navigate('/publish');
-  //   }
-  // };
+  let signmsg, Queue_msg
 
   let hideNavbar = true;
   const hideNav = () => {
@@ -92,11 +61,12 @@
       <Nav />
       <Logout on:theme={changeClr} />
     </div>
-    <div class="lg:w-full md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-2 md:ml-0">
+    <div class="lg:w-full relative overflow-auto md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-2 md:ml-0">
       <div class="md:hidden block">
         <Header on:navShow={showNav} />
       </div>
-      <Previewpage {bgcolor}/>
+      <Previewpage {bgcolor}  />
+      <PrevFooter {signmsg} {Queue_msg}/>
     </div>
     <!--small screen navbar-->
     <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">
