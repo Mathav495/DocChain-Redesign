@@ -145,7 +145,7 @@
   <div class="flex flex-col lg:flex-row gap-5">
     <!-- 1st -->
 
-    <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] w-full px-5 py-8 lg:w-1/2 rounded-md space-y-5">
+    <div class="shadow-[0_0px_8px_0px_rgba(0,0,0,0.15)]  w-full px-5 py-8 lg:w-1/2 rounded-md space-y-5">
       <h1 class="text-blue-900 text-xl font-bold tracking-wide">Continue with Existing Document ID</h1>
       <h1 class="text-slate-900 text-lg font-semibold tracking-wide">Please Make sure that you already have the Document ID</h1>
       <form on:submit|preventDefault={Continue}>
