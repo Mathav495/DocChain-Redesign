@@ -123,14 +123,14 @@
   };
 </script>
 
-<div class="space-y-3">
+<div class="space-y-3 flex flex-col justify-center items-center">
   <div class="w-full lg:w-1/2">
     <HeaderFileupload {id} {bgcolor}>
       <h1 slot="title" class="text-base text-white">{docTitle ? docTitle : 'Untitled Document'}</h1>
     </HeaderFileupload>
   </div>
 
-  <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] rounded-lg bg-white  h-auto w-full lg:w-1/2 px-4 py-6">
+  <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-1/2 px-4 py-6">
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col  space-y-5">
         <div class="flex flex-col w-full lg:w-4/5 space-y-2">

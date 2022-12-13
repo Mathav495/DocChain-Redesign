@@ -22,9 +22,9 @@
     <img src={qr} alt="qrcode" class="p-1 w-20 h-20 lg:w-24 lg:h-24" />
     <img src="/assets/sample.jpg" alt="qrcode" class="p-1 w-20 h-20 lg:w-24 lg:h-24" />
   </div>
-  <div class="px-3 space-y-2 justify-center items-center flex flex-col">
-    <h1 class="text-base font-semibold text-white capitalize self-start">{issuerName}</h1>
-    <h1 class="text-base font-semibold font-mono text-white capitalize">{id}</h1>
-    <h1 class="text-base font-semibold text-white  self-start"><slot name="title" /></h1>
+  <div class="px-3 space-y-2 justify-center items-start flex flex-col">
+    <h1 class="text-base font-semibold text-white capitalize ">{issuerName}</h1>
+    <h1 class="text-base font-semibold font-mono text-white ">{id}</h1>
+    <h1 class="text-base font-semibold text-white "><slot name="title" /></h1>
   </div>
 </div>
