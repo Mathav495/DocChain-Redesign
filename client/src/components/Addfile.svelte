@@ -64,6 +64,9 @@
         navigate(`/add-data/${id}`);
       } else {
         if (data.error) {
+          displayConfirm = false;
+          displaypreview = false;
+          displayDropzone = true;
           errormsg = data.errorCode;
           let arr = errormsg.split(':');
           errormsg = arr[2].replaceAll('_', ' ');
@@ -210,9 +213,7 @@
       </div>
     </div>
   </div>
-  {#if displayerror}
-    <ErrorInfo {errormsg} position="absolute top-0 right-0" on:click={() => (displayerror = false)} />
-  {/if}
+
   <div class=" w-full lg:w-[38.5rem] flex flex-col gap-4">
     <HeaderFileupload {id} {bgcolor} />
 
@@ -243,11 +244,16 @@
         </div>
       </div>
     </form>
+    {#if displayerror}
+    <div class="mx-auto">
+      <ErrorInfo {errormsg} on:click={() => (displayerror = false)} />
+    </div>
+    {/if}
   </div>
 
   {#if displaypreview}
     {#if showpdf}
-      <div class="flex w-full lg:w-[38.5rem] flex-col rounded-md" in:fade={{ duration: 4000 }} out:fade={{ duration: 1000 }}>
+      <div class="flex w-full lg:w-[38.5rem] flex-col rounded-md" in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }}>
         <canvas id="mycanvas" class="border-2 rounded-md overflow-hidden" />
         <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
         <div class="flex justify-center items-center gap-8 pt-3">
