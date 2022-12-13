@@ -150,7 +150,7 @@
       <h1 class="text-slate-900 text-lg font-semibold tracking-wide">Please Make sure that you already have the Document ID</h1>
       <form on:submit|preventDefault={Continue}>
         <div class="w-3/4 lg:w-96 group">
-          <label for="DocumentId" class="text-lg relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-900 group-hover:text-blue-600 font-semibold tracking-wide">Document Id</label>
+          <label for="DocumentId" class="text-lg relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-900 font-semibold tracking-wide">Document Id</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5  fill-gray-900 mt-2">
@@ -158,7 +158,7 @@
                 <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
               </svg>
             </span>
-            <input bind:value={ExistingId} type="text" id="DocumentId" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-blue-500 placeholder:text-lg placeholder:font-medium text-black border-2 border-slate-500  rounded  focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
+            <input bind:value={ExistingId} type="text" id="DocumentId" placeholder="Enter Document Id" class="w-full text-lg font-bold mt-2 pl-9 placeholder:text-black placeholder:text-lg placeholder:font-medium  border-2 border-slate-500  rounded  focus:border-black focus:ring-1 focus:ring-black outline-none py-1 px-3 leading-8" />
           </div>
         </div>
       </form>
