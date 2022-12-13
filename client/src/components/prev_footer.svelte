@@ -121,7 +121,15 @@
       console.log('publishing triggered');
     });
   });
+
+  const hideSignmsg = () => {
+    displayerror = false;
+  };
 </script>
+
+{#if signmsg }
+  <SignidMsg position="absolute top-0 right-0" on:click={hideSignmsg} /> 
+{/if}
 
 <div class="fixed  bottom-0 right-0 w-5/6 mr-5 mx-auto justify-center items-center bg-black px-4 mb-2 md:justify-center">
   <div class="mx-auto flex flex-col items-center px-3 py-3 md:flex-row md:justify-center md:w-full">
@@ -168,9 +176,4 @@
     </div>
   </div>
 </div>
-<!-- 
-<style>
-  .hide {
-    display: none;
-  }
-</style> -->
+
