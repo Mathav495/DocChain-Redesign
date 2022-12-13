@@ -1,9 +1,6 @@
 <script>
-  import Successmsg from './successmsg.svelte';
-  import Loading from './Loading.svelte';
-  import axios from 'axios';
+  import Successmsg from './successmsg.svelte'; 
   import { createEventDispatcher } from 'svelte';
-  import { navigate } from 'svelte-routing';
   import BlobPreview from './blob-preview.svelte';
   import PreviewQrCard from './preview_qrCard.svelte';
 
@@ -71,11 +68,6 @@
             </div>
           </div>
         </div>
-
-        <div id="loaded" style="visibility: hidden" class="mt-5 text-lg text-black bg-white justify-center mx-auto border border-blue-800 rounded-lg px-3 py-1">Please wait... while we're adding your document to queue.</div>
-        {#if success}
-          <Successmsg />
-        {/if}
       </div>
     </div>
    

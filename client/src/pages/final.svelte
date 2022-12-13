@@ -8,6 +8,7 @@
   import PrevFooter from '../components/prev_footer.svelte';
   // import axios from 'axios';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
+  import FinalPrev from '../components/final_prev.svelte';
   let qr = localStorage.getItem('qrcode');
   console.log('qrcode', qr);
   let proposedURL = localStorage.getItem('docURL');
@@ -17,10 +18,10 @@
 
   let bgcolor = localStorage.getItem('bggradient');
   console.log(bgcolor);
-   /**
+  /**
    * getting saved blob image from localstorage
    */
-   let blobimage = localStorage.getItem('blobimage');
+  let blobimage = localStorage.getItem('blobimage');
   console.log(blobimage);
 
   /**
@@ -73,7 +74,7 @@
       <div class="md:hidden block">
         <Header on:navShow={showNav} />
       </div>
-      <Previewpage {bgcolor} />
+      <FinalPrev {bgcolor} />
       <!-- <PrevFooter /> -->
       <!-- <section class="body-font text-gray-600"> -->
       <!-- <div class="mx-auto flex flex-wrap justify-center md:ml-0 md:justify-start py-5">

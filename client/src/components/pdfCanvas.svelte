@@ -37,14 +37,14 @@
   // for test purpose
   onMount(async () => {
     try {
-      const res = await fetch(blob);
+      const res = await fetch('/assets/Handbook on SHG.pdf');
       const pdfBlob = await res.blob();
       await addPDF(pdfBlob);
       selectedPageIndex = 0;
-      setTimeout(() => {
-        fetchFont(currentFont);
-        prepareAssets();
-      }, 5000);
+      // setTimeout(() => {
+      //   fetchFont(currentFont);
+      //   prepareAssets();
+      // }, 5000);
     } catch (e) {
       console.log(e);
     }
