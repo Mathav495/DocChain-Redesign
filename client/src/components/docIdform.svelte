@@ -76,7 +76,7 @@
 
 <div class="flex flex-col gap-5">
   <!-- 1st div table -->
-  <div class="shadow-[0_8px_60px_15px_rgba(0,0,0,0.1)] rounded-lg relative text-center lg:overflow-hidden">
+  <div class="shadow-[0_0px_8px_0px_rgba(0,0,0,0.15)] rounded-lg relative text-center lg:overflow-hidden">
     <div class="w-full flex font-bold text-sm lg:text-lg text-blue-900">
       <div class="hidden lg:block pl-2 py-3 w-1/4 tracking-wider">Document Id</div>
       <div class="block lg:hidden py-3 w-1/4 tracking-wider">Doc Id</div>
