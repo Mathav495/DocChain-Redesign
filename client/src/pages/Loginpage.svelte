@@ -128,19 +128,16 @@
             </button>
           </div>
         </div>
-
         <h1 class="text-gray-400 hover:text-white underline underline-offset-4 text-base tracking-wide mt-5 mb-5 cursor-pointer font-normal">Forgot Password?</h1>
         <div>
           <button class="w-96 mt-5 text-white font-medium active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 tracking-wider uppercase rounded text-lg">login</button>
         </div>
-
         <div class="pt-4">
           {#if display}
             <ErrorInfo errormsg="Invalid Username or Password" on:click={hideErrmsg} />
           {/if}
         </div>
       </form>
-
       <h1 class="absolute bottom-0  pb-10 text-base font-medium tracking-wide text-neutral-400">
         Don't have an account? <span class="text-gray-400 hover:text-white tracking-wide cursor-pointer underline underline-offset-4">Contact us</span>
       </h1>
