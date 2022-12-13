@@ -19,39 +19,7 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
-
-  const image = new Image();
-  image.onload = function () {
-    console.log(image.width);
-  };
-  image.src = qr;
-  image.src = imgurl;
-
-  const pdf1 = new Object();
-  pdf1.onload = function () {
-    console.log(pdf1);
-  };
-  //testing image loading with appendchild
-  // document.body.appendChild(pdf1);
-  let pdfurl = localStorage.getItem('pdf');
-  console.log('pdfUrl', pdfurl);
-  pdf1.src = pdfurl;
-
-  /**
-   * releasing document before publish
-   */
-  // const releaseDoc = async () => {
-  //   let documentID = localStorage.getItem('documentID');
-  //   const { data } = await axios.get(`https://test.swagger.print2block.in/docs/release?documentID=${documentID}`, {
-  //     headers: {
-  //       'x-access-token': token,
-  //     },
-  //   });
-  //   console.log(data);
-  //   if (documentID && token) {
-  //     navigate('/publish');
-  //   }
-  // };
+  let signmsg
 
   let hideNavbar = true;
   const hideNav = () => {
@@ -97,8 +65,8 @@
       <div class="md:hidden block">
         <Header on:navShow={showNav} />
       </div>
-      <Previewpage {bgcolor} />
-      <PrevFooter />
+      <Previewpage {bgcolor}  />
+      <PrevFooter {signmsg}/>
     </div>
     <!--small screen navbar-->
     <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">

@@ -3,9 +3,15 @@
   import { onMount } from 'svelte';
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
+  import ConfirmMsg from './confirm_msg.svelte';
+  import SignidMsg from './signid_msg.svelte';
   const dispatch = createEventDispatcher();
   let load = false;
-  let issuerName
+  let confirnmsg = false;
+  export let signmsg = false;
+  signmsg = false;
+
+  let issuerName;
 
   let token = localStorage.getItem('token');
   let fileHash = localStorage.getItem('filehash');
@@ -32,10 +38,13 @@
   // getting signature Id from the user
   const getsignature = async () => {
     load = true;
-    // loading = true;
+    signmsg = true;
     const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`);
     console.log(data);
     dispatch('signature', data);
+    setTimeout(() => {
+      signmsg = false;
+    }, 3000);
     console.log('sign created');
     // success = true;
     load = false;
@@ -126,7 +135,7 @@
         </svg>
         <span class="title-font ml-2 font-bold text-base">Release</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" id="confirm" >
+      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" id="confirm">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 ">
           <path
             stroke-linecap="round"
