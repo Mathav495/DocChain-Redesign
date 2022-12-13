@@ -4,6 +4,7 @@
   import Headerlogo from '../components/Headerlogo.svelte';
   // import Loader from '../components/Loader.svelte';
   import Logo from '../components/Logo.svelte';
+  import Logoload from '../components/Logoload.svelte';
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
@@ -67,11 +68,11 @@
   };
 </script>
 
-<!-- <div id="load1">
-  <Loader />
-</div> -->
+<div id="load2">
+  <Logoload />
+</div>
 
-<div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4">
+<div class:hidden={true} class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4" id="homepage2">
   <div class:hidden={hide} class:block={show} class="width1200px width1024px transform ease-in-out delay-1000 duration-1000 translate-x-6">
     <div class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between">
       <Logo on:Hide={HideNavbar} />

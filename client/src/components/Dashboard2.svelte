@@ -23,15 +23,15 @@
     usage = data;
     console.log(usage);
 
-    // let loader = document.getElementById('load');
-    // loader.classList.add('hidden');
-    // let home = document.getElementById('homepage');
-    // home.classList.remove('hidden');
-    // hidden = false;
+    let loader = document.getElementById('load2');
+    loader.classList.add('hidden');
+    let home = document.getElementById('homepage2');
+    home.classList.remove('hidden');
+    hidden = false;
   });
 </script>
 
-<div class="flex flex-col gap-4">
+<div class:hidden class="flex flex-col gap-4">
   <div class="flex flex-row w-full gap-4">
     <div class="border-b-4 border-x border-t border-red-500 rounded-md w-1/3 lg:w-full p-4 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="lg:w-10 lg:h-10 w-8 h-8 bg-white rounded-xl hidden lg:flex items-center justify-center">
