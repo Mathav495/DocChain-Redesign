@@ -163,9 +163,9 @@
 
 <style lang="postcss">
   .input-normal {
-    @apply h-9 w-full rounded-lg border-2 border-blue-500 bg-slate-100 p-1 pl-2 text-base font-bold placeholder:font-semibold  placeholder:text-slate-500  focus:outline-none;
+    @apply h-9 w-full rounded-md border-2 border-slate-200  p-1 pl-2 text-base font-bold placeholder:font-semibold placeholder:text-slate-500 focus:outline-none  focus:ring-2 focus:ring-slate-800;
   }
   .input-error {
-    @apply w-full rounded-lg border-2 border-red-500 bg-blue-200 p-1 pl-2 text-base font-bold placeholder:font-semibold  placeholder:text-red-500  focus:outline-none;
+    @apply w-full rounded-lg border-2 border-red-500 p-1 pl-2 text-base font-bold ring-1 ring-red-500 placeholder:font-semibold  placeholder:text-red-500  focus:outline-none;
   }
 </style>
