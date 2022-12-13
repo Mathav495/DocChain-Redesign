@@ -34,6 +34,9 @@
     // const result1 = mail.test(Email);
     if (Email == '') {
       error.Email = "Email can't be empty";
+      setTimeout(() => {
+        error.Email = '';
+      }, 2000);
       valid = false;
     } else {
       error.Email = '';
