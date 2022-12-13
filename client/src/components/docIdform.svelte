@@ -90,7 +90,7 @@
       <div class=" py-3 w-1/5 lg:w-2/5 tracking-wider">Actions</div>
     </div>
 
-    <div class="overflow-y-scroll  h-80 border-2 border-slate-200">
+    <div class="overflow-y-auto max-h-80 border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
@@ -110,7 +110,9 @@
               {/if}
             </div>
             <div class="py-3 w-1/5 lg:w-2/5 tracking-wider flex gap-2 justify-center text-slate-900">
-              <button class="hidden lg:block text-green-500 border-2 border-green-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-base">Continue</button>
+              <div class="pl-0 lg:pl-10">
+                <button class="hidden lg:block text-green-500 border-2 border-green-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-base">Continue</button>
+              </div>
               <div class="has-tooltip">
                 <span class="tooltip rounded text-xs p-1 bg-black text-white -ml-16">Continue</span>
                 <button>
@@ -150,7 +152,7 @@
 
     <div class="shadow-[0_0px_8px_0px_rgba(0,0,0,0.15)]  w-full px-5 py-8 lg:w-1/2 rounded-md space-y-5">
       <h1 class="text-blue-900 text-xl font-bold tracking-wide">Continue with Existing Document ID</h1>
-      <h1 class="text-slate-900 text-lg font-semibold tracking-wide">Please Make sure that you already have the Document ID</h1>
+      <h1 class="text-slate-900 text-lg font-semibold tracking-wide">Please Make sure that you already have the document ID</h1>
       <form on:submit|preventDefault={Continue}>
         <div class="w-3/4 lg:w-96 group">
           <label for="DocumentId" class="text-lg relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-900 font-semibold tracking-wide">Document Id</label>
@@ -172,7 +174,7 @@
     <!-- 2nd -->
     <div class="shadow-[0_0px_8px_0px_rgba(0,0,0,0.15)]  w-full lg:w-1/2 px-5 py-8 space-y-5 rounded-md">
       <h1 class="text-blue-900 text-xl font-bold tracking-wide">For new Document ID</h1>
-      <h1 class="text-slate-800 text-lg font-semibold tracking-wide leading-relaxed">If you have any pending Document ID's, Then here will able to Generate Document Id for Publish Documents.</h1>
+      <h1 class="text-slate-800 text-lg font-semibold tracking-wide leading-relaxed">If you have any pending document Id's, then here will able to generate document Id for publish documents.</h1>
       <div>
         <button on:click={submitdocid} class="flex text-green-500 hover:text-white border-2 border-green-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg font-bold">Generate Id</button>
       </div>
