@@ -91,7 +91,7 @@
     </div>
   </div>
   <!--small screen navbar-->
-  <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start absolute inset-0 p-8">
+  <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex lg:hidden items-start justify-start absolute inset-0 p-8">
     <SmallScreenNavbar />
   </button>
 </div>

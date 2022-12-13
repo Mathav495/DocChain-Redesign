@@ -52,7 +52,7 @@
         </svg>
         <span class="text-black group-hover:opacity-100 transition-opacity duration-300 ease-in-out opacity-0 absolute inset-0 -top-4">Logout</span>
       </a>
-      <button on:click={navBtn} class="flex relative group items-center justify-center md:h-12 md:w-12 h-10 w-10 rounded-md text-black font-semibold bg-indigo-50">
+      <button on:click={navBtn} class="flex lg:hidden relative group items-center justify-center md:h-12 md:w-12 h-10 w-10 rounded-md text-black font-semibold bg-indigo-50">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
         </svg>
