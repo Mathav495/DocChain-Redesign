@@ -10,6 +10,7 @@
   import { readAsArrayBuffer, readAsImage, readAsPDF, readAsDataURL } from '../utils/asyncReader.js';
   import { ggID } from '../utils/helper.js';
   import { save } from '../utils/PDF.js';
+    import Loading from './Loading.svelte';
   const genID = ggID();
   let pdfFile;
   let pdfName = '';
@@ -269,8 +270,6 @@
       {/each}
     </div>
   {:else}
-    <div class="w-full flex-grow flex justify-center items-center">
-      <span class=" font-bold text-3xl text-gray-500">Drag something here</span>
-    </div>
+    <Loading />
   {/if}
 </main>

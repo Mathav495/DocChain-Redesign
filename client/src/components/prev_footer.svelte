@@ -99,54 +99,19 @@
     confirm.addEventListener('click', (e) => {
       confirm.style.display = 'none';
       console.log('adding to queue');
-      // loading = "inline"
-      // success.style.visibility = 'hidden';
-      // loaded.style.display = 'inline';
-      // alert("adding to queue")
-      setTimeout(() => {
-        // at least 5 seconds are gone => show the "publish" button
-        console.log('5 seconds are gone...');
-        sign.style.display = 'inline-flex';
-        loaded.style.display = 'none';
-        // loading="hidden"
-        console.log('hidden');
-      }, 5000);
+      console.log('5 seconds are gone...');
+      sign.style.display = 'inline-flex';
+      console.log('hidden');
     });
-
-
-
-    // when the publish button is clicked
     sign.addEventListener('click', (e) => {
-      // sign.style.visibility = 'hidden';
-      setTimeout(() => {
-        navigate('/pre');
-      }, 500);
-      console.log('document published');
+      sign.style.display = 'none';
+      confirm.style.display = 'none';
+      console.log('adding to queue');
+      console.log('5 seconds are gone...');
+      publish.style.display = 'inline-flex';
+      console.log('hidden');
     });
   });
-
-  // const sign = document.getElementById('sign');
-  // console.log('sign triggered');
-  // function action(el) {
-  //   el.classList.add('hide');
-  //   sign.classList.remove('hide');
-  // };
-
-//   const confirm = document.getElementById('confirm');
-//   const sign = document.getElementById('sign');
-//   const publish = document.getElementById('publish');
-
-//  sign.style.display = 'none';
-//   publish.style.display = 'none';
-
-//   confirm.onclick = function () {
-//     confirm.style.display = 'none';
-//     sign.style.display = 'inline';
-//   };
-//   sign.onclick = function () {
-//     sign.style.display = 'none';
-//     publish.style.display = 'inline';
-//   };
 </script>
 
 <div class="fixed  bottom-0 right-0 w-5/6 mr-5 mx-auto justify-center items-center bg-black px-4 mb-2">
@@ -171,13 +136,13 @@
         </svg>
         <span class="title-font ml-2 font-bold text-base">Confirm</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" id="sign" >
+      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" id="sign">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
         </svg>
-        <span class="title-font ml-2 font-bold text-base">sign</span>
+        <span class="title-font ml-2 font-bold text-base">sign_ID</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" id="publish"  on:click|once={disablerelease}>
+      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" id="publish" on:click|once={disablerelease}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12" />
         </svg>
