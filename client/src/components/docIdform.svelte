@@ -84,7 +84,6 @@
       <div class="block lg:hidden py-3 w-1/4 tracking-wider">DataHash</div>
       <div class="hidden lg:block py-3 w-1/5 tracking-wider ">File Hash Generated</div>
       <div class="block lg:hidden py-3 w-1/4 tracking-wider">FileHash</div>
-      <div class="hidden lg:block py-3 w-1/5 tracking-wider">Status</div>
       <div class=" py-3 w-1/4 tracking-wider">Actions</div>
     </div>
 
@@ -106,9 +105,6 @@
               {:else}
                 <Pending />
               {/if}
-            </div>
-            <div class="hidden lg:block py-3 w-1/5 tracking-wider justify-center text-slate-900 ">
-              <button class=" text-yellow-500  border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
             </div>
             <div class="py-3 w-1/4  tracking-wider flex gap-2 justify-center text-slate-900">
               <button class="hidden lg:block text-green-500 border-2 border-green-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-base">Continue</button>
