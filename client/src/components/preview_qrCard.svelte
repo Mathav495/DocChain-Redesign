@@ -28,12 +28,12 @@
 </script>
 
 <div class=" w-full shadow-xl rounded-md flex items-center p-2 gap-1" style="background:{bgcolor}">
-  <div id="header_card" class="w-full flex px-2 py-2">
+  <div id="header_card" class="w-full flex p-1">
     <div class="flex">
       <img src={qr} alt="qrcode" class="p-1 w-28 h-28 lg:w-28 lg:h-28 rounded-md" />
-      <img src="/assets/sample.jpg" alt="qrcode" class="p-1 ml-1 w-28 h-28 lg:w-28 lg:h-28 rounded-md" />
+      <img src="/assets/sample.jpg" alt="qrcode" class="p-1 ml-2 w-28 h-28 lg:w-28 lg:h-28 rounded-md" />
     </div>
-    <div class="px-2 space-y-2 justify-center items-center flex flex-col">
+    <div class="px-3 space-y-2 justify-center items-center flex flex-col">
       <h1 class="text-base font-semibold text-white capitalize self-start">{issuerName}</h1>
       <h1 class="text-base font-semibold font-mono text-white capitalize">{documentID}</h1>
     </div>
