@@ -191,6 +191,11 @@
   const hideError = () => {
     displayerror = false;
   };
+
+  const hideConfirmation = () => {
+    displayConfirm = false;
+    ondisplaydropzone();
+  };
 </script>
 
 {#if displayConfirm}
@@ -205,7 +210,7 @@
           <button on:click={onSubmitFile} class="border-2 border-green-500 hover:bg-green-500 hover:text-white text-green-500 rounded-md px-2  py-1 text-base  font-bold tracking-wide">Upload</button>
         </div>
         <div>
-          <button class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3  py-1 text-base  font-bold tracking-wide">Back</button>
+          <button on:click={hideConfirmation} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3  py-1 text-base  font-bold tracking-wide">Back</button>
         </div>
       </div>
     </div>
