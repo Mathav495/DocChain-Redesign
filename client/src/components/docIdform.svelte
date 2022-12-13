@@ -167,7 +167,7 @@
         </div>
       </form>
       <div>
-        <button class="flex text-slate-800 border-2 hover:text-white border-green-500  py-1 px-2 font-bold justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg">Continue</button>
+        <button class="flex text-green-500 border-2 hover:text-white border-green-500  py-1 px-2 font-bold justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg">Continue</button>
       </div>
     </div>
 
