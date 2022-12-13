@@ -108,7 +108,7 @@
               {/if}
             </div>
             <div class="hidden lg:block py-3 w-1/5 tracking-wider justify-center text-slate-900 ">
-              <button class=" text-slate-800 border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
+              <button class=" text-yellow-500  border-2 border-yellow-500 py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-yellow-600 rounded text-base">Pending</button>
             </div>
             <div class="py-3 w-1/4  tracking-wider flex gap-2 justify-center text-slate-900">
               <button class="hidden lg:block text-slate-800 border-2 border-green-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-base">Continue</button>
