@@ -24,15 +24,15 @@
     usage = data;
     console.log(usage);
 
-    // let loader = document.getElementById('load');
-    // loader.classList.add('hidden');
-    // let home = document.getElementById('homepage');
-    // home.classList.remove('hidden');
-    // hidden = false;
+    let loader = document.getElementById('load3');
+    loader.classList.add('hidden');
+    let home = document.getElementById('homepage3');
+    home.classList.remove('hidden');
+    hidden = false;
   });
 </script>
 
-<div class="flex flex-col lg:flex-row gap-4">
+<div class:hidden class="flex flex-col lg:flex-row gap-4">
   <div class="lg:w-8/12 w-full h-60 lg:h-auto lg:order-1 order-2 shadow-around shadow-gray-200 text-2xl p-4 rounded-md flex flex-col justify-end items-center font-bold text-blue-500">
     <div><Pagination /></div>
   </div>
