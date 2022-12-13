@@ -194,13 +194,13 @@
 </script>
 
 <div class="relative h-auto w-full flex flex-col items-center justify-center gap-4 lg:gap-0 p-4">
-  <div class="w-full h-full bg-[#000000cc] absolute  flex items-end justify-center pb-4" class:hidden={!displayConfirm}>
-    <div class="z-10 flex w-3/5  bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
+  <div class="w-full h-full bg-[#000000cc] absolute  flex items-end justify-center p-4" class:hidden={!displayConfirm}>
+    <div class="z-10 flex flex-col lg:flex-row w-full lg:w-3/5  bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
       <div>
         <h1 class="text-lg text-blue-500 font-bold pb-3">Confirmation</h1>
         <p class="text-base text-slate-500 font-semibold">You are not able to choose different file if you click upload</p>
       </div>
-      <div class="flex gap-4 ml-auto items-end">
+      <div class="flex gap-4 ml-0 lg:ml-auto items-end pt-3 lg:pt-0">
         <div>
           <button on:click={hideConfirmation} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3  py-1 text-base  font-bold tracking-wide">Back</button>
         </div>
