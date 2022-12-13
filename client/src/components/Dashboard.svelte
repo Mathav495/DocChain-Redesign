@@ -34,7 +34,7 @@
 
 <div class="flex flex-col gap-4">
   <div class="flex flex-row w-full gap-4">
-    <Usagecard3 />
+    <Usagecard3 {usage} />
   </div>
   <div class="w-full h-60 shadow-around shadow-gray-300 text-2xl p-4 rounded-md flex flex-col justify-end items-center font-bold text-blue-500">
     <div><Pagination /></div>

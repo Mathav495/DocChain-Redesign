@@ -1,7 +1,12 @@
+<script>
+  export let usage;
+  console.log(usage);
+</script>
+
 <div class="shadow-around shadow-gray-300 border-l-8 border-red-500 rounded-md w-1/3 lg:w-full p-4 flex flex-row md:gap-1">
   <div class="flex flex-col">
     <p class="text-base lg:text-lg font-bold text-gray-500"><span class="hidden xl:inline-flex">Document</span> Issued</p>
-    <p class="text-xl md:text-4xl font-bold text-red-500 font-mono">109</p>
+    <p class="text-xl md:text-4xl font-bold text-red-500 font-mono">{usage.initiated}</p>
   </div>
   <div class="flex items-center ml-auto">
     <div class="lg:w-10 lg:h-10 w-8 h-8 rounded-md hidden md:flex items-center justify-center">
@@ -15,7 +20,7 @@
 <div class="shadow-around shadow-gray-300 border-l-8 border-yellow-500 rounded-md w-1/3 lg:w-full p-4 flex flex-row md:gap-1">
   <div class="flex flex-col">
     <p class="text-base lg:text-lg font-bold text-gray-500"><span class="hidden xl:inline-flex">Document</span> Viewed</p>
-    <p class="text-xl md:text-4xl font-bold text-yellow-500 font-mono">19</p>
+    <p class="text-xl md:text-4xl font-bold text-yellow-500 font-mono">{usage.published}</p>
   </div>
   <div class="flex items-center ml-auto">
     <div class="lg:w-10 lg:h-10 w-8 h-8 rounded-md hidden md:flex items-center justify-center">
@@ -29,7 +34,7 @@
 <div class="shadow-around shadow-gray-300 border-l-8 border-green-500 rounded-md w-1/3 lg:w-full p-4 flex flex-row md:gap-1">
   <div class="flex flex-col">
     <p class="text-base lg:text-lg font-bold text-gray-500"><span class="hidden xl:inline-flex">Document</span> Verified</p>
-    <p class="text-xl md:text-4xl font-bold text-green-500 font-mono">9</p>
+    <p class="text-xl md:text-4xl font-bold text-green-500 font-mono">{usage.revoked}</p>
   </div>
   <div class="flex items-center ml-auto">
     <div class="lg:w-10 lg:h-10 w-8 h-8 rounded-md hidden md:flex items-center justify-center">
