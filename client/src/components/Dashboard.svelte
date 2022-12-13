@@ -1,6 +1,7 @@
 <script>
   import axios from 'axios';
   import { onMount } from 'svelte';
+  import Loader from './Loader.svelte';
   import Pagination from './pagination.svelte';
   import Usagecard3 from './Usagecard3.svelte';
 
@@ -24,15 +25,15 @@
     usage = data;
     console.log(usage);
 
-    // let loader = document.getElementById('load');
-    // loader.classList.add('hidden');
-    // let home = document.getElementById('homepage');
-    // home.classList.remove('hidden');
-    // hidden = false;
+    let loader = document.getElementById('load');
+    loader.classList.add('hidden');
+    let home = document.getElementById('homepage');
+    home.classList.remove('hidden');
+    hidden = false;
   });
 </script>
 
-<div class="flex flex-col gap-4">
+<div class:hidden class="flex flex-col gap-4">
   <div class="flex flex-row w-full gap-4">
     <Usagecard3 {usage} />
   </div>
