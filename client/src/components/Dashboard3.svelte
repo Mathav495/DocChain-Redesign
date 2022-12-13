@@ -37,6 +37,6 @@
     <div><Pagination /></div>
   </div>
   <div class="flex flex-row lg:flex-col lg:order-2 order-1 w-full lg:w-4/12 gap-4">
-    <Usagecard1 />
+    <Usagecard1 {usage} />
   </div>
 </div>

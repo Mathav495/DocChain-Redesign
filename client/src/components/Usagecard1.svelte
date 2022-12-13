@@ -1,3 +1,8 @@
+<script>
+  export let usage;
+  console.log(usage);
+</script>
+
 <div class="flex flex-row w-1/3 lg:w-full h-20">
   <div class="w-24 bg-red-500 font-bold text-3xl hidden text-white lg:flex items-center justify-center rounded-l-md">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="lg:w-8 lg:h-8 w-6 h-6">
@@ -7,7 +12,7 @@
   </div>
   <div class="flex flex-col md:flex-row justify-between p-4 items-center shadow-around shadow-gray-200 w-full h-full rounded-r-md">
     <p class="text-base md:text-lg font-bold text-gray-500"><span class="hidden xl:inline-flex">Document</span> Issued</p>
-    <p class="text-2xl md:text-3xl lg:text-4xl font-bold font-mono lg:text-black text-red-500">108</p>
+    <p class="text-2xl md:text-3xl lg:text-4xl font-bold font-mono lg:text-black text-red-500">{usage.initiated}</p>
   </div>
 </div>
 <div class="flex flex-row w-1/3 lg:w-full h-20">
@@ -19,7 +24,7 @@
   </div>
   <div class="flex flex-col md:flex-row justify-between p-4 items-center shadow-around shadow-gray-200 w-full h-full rounded-r-md">
     <p class="text-base md:text-lg font-bold text-gray-500"><span class="hidden xl:inline-flex">Document</span> Viewed</p>
-    <p class="text-2xl md:text-3xl lg:text-4xl font-bold font-mono lg:text-black text-yellow-500">18</p>
+    <p class="text-2xl md:text-3xl lg:text-4xl font-bold font-mono lg:text-black text-yellow-500">{usage.published}</p>
   </div>
 </div>
 <div class="flex flex-row w-1/3 lg:w-full h-20">
@@ -30,6 +35,6 @@
   </div>
   <div class="flex flex-col md:flex-row justify-between p-4 items-center shadow-around shadow-gray-200 w-full h-full rounded-r-md">
     <p class="text-base md:text-lg font-bold text-gray-500"><span class="hidden xl:inline-flex">Document</span> Verified</p>
-    <p class="text-2xl md:text-3xl lg:text-4xl font-bold font-mono lg:text-black text-green-500">8</p>
+    <p class="text-2xl md:text-3xl lg:text-4xl font-bold font-mono lg:text-black text-green-500">{usage.revoked}</p>
   </div>
 </div>
