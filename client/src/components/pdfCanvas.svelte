@@ -37,7 +37,7 @@
   // for test purpose
   onMount(async () => {
     try {
-      const res = await fetch('/assets/Handbook on SHG.pdf');
+      const res = await fetch(blob);
       const pdfBlob = await res.blob();
       await addPDF(pdfBlob);
       selectedPageIndex = 0;

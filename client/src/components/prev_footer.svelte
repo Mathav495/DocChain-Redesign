@@ -4,6 +4,8 @@
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
+  let load = false;
+  let issuerName
 
   let token = localStorage.getItem('token');
   let fileHash = localStorage.getItem('filehash');
@@ -17,39 +19,40 @@
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
 
-  // onMount(async () => {
-  //   const { data } = await axios.get('https://test.swagger.print2inline.in/account/user', {
-  //     headers: {
-  //       'x-access-token': token,
-  //     },
-  //   });
-  //   issuerName = data.userData.name;
-  //   console.log(data.userData.name);
-  // });
+  onMount(async () => {
+    const { data } = await axios.get('https://test.swagger.print2block.in/account/user', {
+      headers: {
+        'x-access-token': token,
+      },
+    });
+    issuerName = data.userData.name;
+    console.log(data.userData.name);
+  });
 
   // getting signature Id from the user
   const getsignature = async () => {
+    load = true;
     // loading = true;
-    const { data } = await axios.get(`https://ecdsa.test.print2inline.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`);
+    const { data } = await axios.get(`https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`);
     console.log(data);
     dispatch('signature', data);
     console.log('sign created');
     // success = true;
-    // loading = false;
+    load = false;
     localStorage.setItem('signature', data);
     let signature = localStorage.getItem('signature');
     console.log(signature);
   };
 
   const publishdoc = async () => {
-    // load = true;
+    load = true;
     // loading = true;
     let signature = localStorage.getItem('signature');
     console.log('signature', signature);
     let documentID = localStorage.getItem('documentID');
     console.log('documentID', documentID);
     const { data } = await axios.post(
-      'https://test.swagger.print2inline.in/docs/publish',
+      'https://test.swagger.print2block.in/docs/publish',
       {
         documentID: documentID,
         signature: signature,
@@ -64,14 +67,15 @@
 
     console.log(data.state);
     dispatch('push', data);
-    window.location.assign(proposedURL, '_blank');
+    load = false;
+    // window.location.assign(proposedURL, '_blank');
     navigate('/final');
     // }
   };
 
   const releaseDoc = async () => {
     // let documentID = localStorage.getItem('documentID');
-    const { data } = await axios.get(`https://test.swagger.print2inline.in/docs/release?documentID=${documentID}`, {
+    const { data } = await axios.get(`https://test.swagger.print2block.in/docs/release?documentID=${documentID}`, {
       headers: {
         'x-access-token': token,
       },
@@ -98,26 +102,22 @@
     // whenever the enter button is clicked
     confirm.addEventListener('click', (e) => {
       confirm.style.display = 'none';
-      console.log('adding to queue');
-      console.log('5 seconds are gone...');
       sign.style.display = 'inline-flex';
-      console.log('hidden');
+      console.log('sign-triggered');
     });
     sign.addEventListener('click', (e) => {
       sign.style.display = 'none';
       confirm.style.display = 'none';
-      console.log('adding to queue');
-      console.log('5 seconds are gone...');
       publish.style.display = 'inline-flex';
-      console.log('hidden');
+      console.log('publishing triggered');
     });
   });
 </script>
 
-<div class="fixed  bottom-0 right-0 w-5/6 mr-5 mx-auto justify-center items-center bg-black px-4 mb-2">
-  <div class="mx-auto flex flex-col items-center px-3 py-3 md:flex-row">
+<div class="fixed  bottom-0 right-0 w-5/6 mr-5 mx-auto justify-center items-center bg-black px-4 mb-2 md:justify-center">
+  <div class="mx-auto flex flex-col items-center px-3 py-3 md:flex-row md:justify-center md:w-full">
     <div class=" flex w-full pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left">
-      <h1 class="title-font text-lg font-medium text-red-600 md:text-3xl">Please verify document details before proceed</h1>
+      <h1 class="title-font text-2xl font-medium text-red-600 md:text-2xl">Please verify document details before proceed</h1>
     </div>
     <div class="mx-auto flex flex-shrink-0 items-center space-x-4 md:ml-auto md:mr-0">
       <button class=" inline-flex items-center rounded-lg border border-red-600 text-red-600 py-3 px-5 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click={releaseDoc} id="release">
@@ -126,7 +126,7 @@
         </svg>
         <span class="title-font ml-2 font-bold text-base">Release</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" id="confirm">
+      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" id="confirm" >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 ">
           <path
             stroke-linecap="round"
@@ -136,17 +136,24 @@
         </svg>
         <span class="title-font ml-2 font-bold text-base">Confirm</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" id="sign">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-        </svg>
+      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" on:click={getsignature} id="sign">
+        {#if load}
+          <svg role="status" class="mr-3 h-6 w-6 animate-spin rounded-full border-4 border-white border-r-green-600" viewBox="0 0 24 24" />
+        {:else}
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+          </svg>
+        {/if}
         <span class="title-font ml-2 font-bold text-base">sign_ID</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" id="publish" on:click|once={disablerelease}>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12" />
-        </svg>
-
+      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" id="publish" on:click|once={disablerelease} on:click={publishdoc}>
+        {#if load}
+          <svg role="status" class="mr-3 h-6 w-6 animate-spin rounded-full border-4 border-white border-r-green-600" viewBox="0 0 24 24" />
+        {:else}
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12" />
+          </svg>
+        {/if}
         <span class="title-font ml-2 font-bold text-base">publish</span>
       </button>
     </div>

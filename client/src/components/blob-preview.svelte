@@ -1,18 +1,18 @@
 <script>
-    import PdfCanvas from "./pdfCanvas.svelte";
-    let src;
+  import Loading from './Loading.svelte';
+  import PdfCanvas from './pdfCanvas.svelte';
+  let src;
   /**
    * getting saved blob image from localstorage
    */
-   let blobimage = localStorage.getItem('blobimage');
+  let blobimage = localStorage.getItem('blobimage');
   console.log(blobimage);
 
   /**
-   * getting saved pdf blob and converting it as the base64 string
+   * getting saved pdf blob from local storage
    */
   let blob = localStorage.getItem('blobpdf');
   console.log(blob);
-
 </script>
 
 <div class="flex w-full flex-col">

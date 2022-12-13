@@ -25,11 +25,7 @@
           d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5L82,35.7z"
           id="ring-3" />
       </svg>
-      <h4
-        class="text-2xl font-bold text-slate-700"
-        style="text-align: center;  margin-top: 30px; font-family: roboto;">
-        Fetching data, Please wait...
-      </h4>
+  
     </div>
   </div>
 </h5> 

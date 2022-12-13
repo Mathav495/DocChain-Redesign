@@ -4,6 +4,8 @@
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte';
+  import Previewpage from '../components/previewpage.svelte';
+  import PrevFooter from '../components/prev_footer.svelte';
   // import axios from 'axios';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   let qr = localStorage.getItem('qrcode');
@@ -12,6 +14,9 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
+
+  let bgcolor = localStorage.getItem('bggradient');
+  console.log(bgcolor);
    /**
    * getting saved blob image from localstorage
    */
@@ -64,16 +69,18 @@
       <Nav />
       <Logout on:theme={changeClr} />
     </div>
-    <div class="lg:w-full md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-2 md:ml-0">
+    <div class="lg:w-full relative overflow-auto md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-2 md:ml-0">
       <div class="md:hidden block">
         <Header on:navShow={showNav} />
       </div>
+      <Previewpage {bgcolor} />
+      <!-- <PrevFooter /> -->
       <!-- <section class="body-font text-gray-600"> -->
-      <div class="mx-auto flex flex-wrap justify-center md:ml-0 md:justify-start py-5">
+      <!-- <div class="mx-auto flex flex-wrap justify-center md:ml-0 md:justify-start py-5">
         <div class="-m-1 flex flex-wrap md:-m-2">
           <div class="flex w-full flex-wrap">
-            <div class="w-full  md:p-2">
-              <img alt="gallery" class="object-cover object-center h-[600px] md:justify-start w-5/6 mx-auto rounded-lg shadow-lg" src={blobimage} />
+            <div class="w-full flex  md:p-2">
+              <canvas alt="gallery" class="w-full md:justify-start  mx-auto rounded-lg shadow-lg" src={blobimage} />
             </div>
             <div class="mt-10 flex shadow-lg w-5/6 mx-auto">
               <div class="w-3/7 p-1 md:p-2 ml-20  justify-center">
@@ -86,7 +93,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- </section> -->
     </div>
     <!--small screen navbar-->
