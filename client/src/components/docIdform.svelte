@@ -121,7 +121,7 @@
                 </button>
               </div>
 
-              <button class="hidden lg:block text-slate-800 border-2 border-red-500 py-1 px-2  hover:text-white justify-center items-center focus:outline-none hover:bg-red-600 rounded text-base">Release</button>
+              <button class="hidden lg:block text-red-500 border-2 border-red-500 py-1 px-2  hover:text-white justify-center items-center focus:outline-none hover:bg-red-600 rounded text-base">Release</button>
 
               <div class="has-tooltip">
                 <span class="tooltip rounded text-xs p-1 bg-black text-white ml-6">Release</span>
