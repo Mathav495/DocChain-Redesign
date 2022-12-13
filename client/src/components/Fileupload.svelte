@@ -133,29 +133,29 @@
   <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-1/2 px-4 py-6">
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col  space-y-5">
-        <div class="flex flex-col w-full lg:w-4/5 space-y-2">
+        <div class="flex flex-col w-full  space-y-2">
           <label for="issuer" class="text-sm text-black tracking-wide font-bold">Issued to</label>
           <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class={error.issuer ? 'input-error' : 'input-normal'} />
         </div>
-        <div class="flex flex-col w-full lg:w-4/5 space-y-2">
+        <div class="flex flex-col w-full  space-y-2">
           <label for="doctype" class="text-sm text-black tracking-wide font-bold">Document Type</label>
           <input placeholder={error.doctype ? error.doctype : 'Enter document type'} bind:value={doctype} type="text" class={error.doctype ? 'input-error' : 'input-normal'} name="doctype" id="doctype" />
         </div>
-        <div class="flex flex-col w-full lg:w-4/5 space-y-2">
+        <div class="flex flex-col w-full space-y-2">
           <label for="signatory" class="text-sm text-black tracking-wide font-bold">Signatory</label>
           <input placeholder={error.signatory ? error.signatory : 'Enter signatory name'} name="signatory" bind:value={signatory} id="signatory" type="text" class={error.signatory ? 'input-error' : 'input-normal'} />
         </div>
-        <div class="flex flex-col w-full lg:w-4/5 space-y-2">
+        <div class="flex flex-col w-full space-y-2">
           <label for="docid" class="text-sm text-black tracking-wide font-bold">Date Expired</label>
           <input bind:value={dateexpired} placeholder={error.dateexpired ? error.dateexpired : 'Enter expiry date'} type="text" onfocus="(this.type = 'date')" class={error.dateexpired ? 'input-error' : 'input-normal'} name="docid" id="docid" />
         </div>
-        <div class="flex flex-col w-full lg:w-4/5 space-y-2">
+        <div class="flex flex-col w-full space-y-2">
           <label for="docTitle" class="text-sm text-black tracking-wide font-bold">Document Title</label>
           <input placeholder={error.docTitle ? error.docTitle : 'Enter document title'} bind:value={docTitle} type="text" class={error.docTitle ? 'input-error' : 'input-normal'} name="docTitle" id="docTitle" />
         </div>
       </div>
-      <div class="w-full pt-6">
-        <button class="w-4/5 lg:w-2/5 bg-blue-600 px-2 py-1 text-white font-semibold text-base tracking-wide rounded-full">Confirm and Preview</button>
+      <div class="flex pt-5">
+        <button class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 py-1 text-lg font-bold tracking-wide">Confirm and Preview</button>
       </div>
     </form>
   </div>
