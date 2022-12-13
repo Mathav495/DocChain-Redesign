@@ -6,9 +6,8 @@
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
   import BlobPreview from './blob-preview.svelte';
-  import HeaderFileupload from './header_fileupload.svelte';
   import PreviewQrCard from './preview_qrCard.svelte';
-  import PrevFooter from './prev_footer.svelte';
+  // import PrevFooter from './prev_footer.svelte';
 
   export let id;
   const dispatch = createEventDispatcher();
@@ -47,15 +46,15 @@
 
   let load = false;
 
-  onMount(async () => {
-    const { data } = await axios.get('https://test.swagger.print2block.in/account/user', {
-      headers: {
-        'x-access-token': token,
-      },
-    });
-    issuerName = data.userData.name;
-    console.log(data.userData.name);
-  });
+  // onMount(async () => {
+  //   const { data } = await axios.get('https://test.swagger.print2block.in/account/user', {
+  //     headers: {
+  //       'x-access-token': token,
+  //     },
+  //   });
+  //   issuerName = data.userData.name;
+  //   console.log(data.userData.name);
+  // });
 
   /**
    * Submitting file for generating filehash
@@ -107,38 +106,38 @@
 
  
 
-  document.addEventListener('DOMContentLoaded', (e) => {
-    const button2 = document.getElementById('button2');
-    const button3 = document.getElementById('button3');
-    const loaded = document.getElementById('loaded');
+  // document.addEventListener('DOMContentLoaded', (e) => {
+  //   const button2 = document.getElementById('button2');
+  //   const button3 = document.getElementById('button3');
+  //   const loaded = document.getElementById('loaded');
 
-    // whenever the enter button is clicked
-    button2.addEventListener('click', (e) => {
-      button2.style.visibility = 'hidden';
-      console.log('adding to queue');
-      // loading = "visible"
-      // success.style.visibility = 'hidden';
-      loaded.style.visibility = 'visible';
-      // alert("adding to queue")
-      setTimeout(() => {
-        // at least 5 seconds are gone => show the "publish" button
-        console.log('5 seconds are gone...');
-        button3.style.visibility = 'visible';
-        loaded.style.visibility = 'hidden';
-        // loading="hidden"
-        console.log('hidden');
-      }, 5000);
-    });
+  //   // whenever the enter button is clicked
+  //   button2.addEventListener('click', (e) => {
+  //     button2.style.visibility = 'hidden';
+  //     console.log('adding to queue');
+  //     // loading = "visible"
+  //     // success.style.visibility = 'hidden';
+  //     loaded.style.visibility = 'visible';
+  //     // alert("adding to queue")
+  //     setTimeout(() => {
+  //       // at least 5 seconds are gone => show the "publish" button
+  //       console.log('5 seconds are gone...');
+  //       button3.style.visibility = 'visible';
+  //       loaded.style.visibility = 'hidden';
+  //       // loading="hidden"
+  //       console.log('hidden');
+  //     }, 5000);
+  //   });
 
-    // when the publish button is clicked
-    button3.addEventListener('click', (e) => {
-      // button3.style.visibility = 'hidden';
-      setTimeout(() => {
-        navigate('/pre');
-      }, 500);
-      console.log('document published');
-    });
-  });
+  //   // when the publish button is clicked
+  //   button3.addEventListener('click', (e) => {
+  //     // button3.style.visibility = 'hidden';
+  //     setTimeout(() => {
+  //       navigate('/pre');
+  //     }, 500);
+  //     console.log('document published');
+  //   });
+  // });
 
   const releaseDoc = async () => {
     // let documentID = localStorage.getItem('documentID');
@@ -165,13 +164,12 @@
   <Loading />
 {:else}
   <!-- <div class=" flex w-full"> -->
-    <div class=" mx-auto w-full h-auto flex flex-wrap pt-3 xl:flex-nowrap space-y-5">
-      <div class="flex w-full rounded-lg xl:mr-10 xl:w-3/5 lg:w-3/5">
+    <div class=" mx-auto w-full h-auto flex flex-wrap pt-3 xl:flex-nowrap ">
+      <div class="flex w-full rounded-lg xl:mr-7 xl:w-3/5 lg:w-3/5">
         <BlobPreview />
       </div>
       <div class="flex w-full flex-col xl:w-2/5 lg:w-2/5">
         <PreviewQrCard {id} {bgcolor} />
-        <!-- <hr class="mt-4 mt-1 h-0.5 w-full bg-gray-300" /> -->
         <div class="border-2 border-gray-200 shadow-lg rounded-lg mt-5">
           <div class="mt-5 ml-2">
             <div class="relative ">

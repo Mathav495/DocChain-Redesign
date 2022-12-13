@@ -36,7 +36,7 @@
   // for test purpose
   onMount(async () => {
     try {
-      const res = await fetch('/assets/test.pdf');
+      const res = await fetch('/assets/Handbook on SHG.pdf');
       const pdfBlob = await res.blob();
       await addPDF(pdfBlob);
       selectedPageIndex = 0;
@@ -179,7 +179,7 @@
 </script>
 
 <svelte:window on:dragenter|preventDefault on:dragover|preventDefault on:drop|preventDefault={onUploadPDF} />
-<main class="flex flex-col items-center w-full bg-gray-100 h-full border border-gray-300 shadow-lg">
+<main class="flex flex-col rounded-md drop-shadow-lg items-center w-full bg-gray-100 h-full border border-gray-300 ">
   <div
     class="flex justify-center text-center items-center
      shadow-lg"
