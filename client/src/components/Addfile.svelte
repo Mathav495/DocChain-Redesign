@@ -245,9 +245,9 @@
       </div>
     </form>
     {#if displayerror}
-    <div class="mx-auto">
-      <ErrorInfo {errormsg} on:click={() => (displayerror = false)} />
-    </div>
+      <div class="mx-auto">
+        <ErrorInfo {errormsg} on:click={() => (displayerror = false)} />
+      </div>
     {/if}
   </div>
 

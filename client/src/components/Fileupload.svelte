@@ -3,16 +3,17 @@
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
   import { navigate } from 'svelte-routing';
+  import ErrorInfo from './ErrorInfo.svelte';
   const dispatch = createEventDispatcher();
   export let id;
-  let dateexpired, issuer, doctype, signatory, docTitle, valid, date, sampleData, options, name;
+  let dateexpired, issuer, doctype, signatory, docTitle, valid, date, sampleData, options, errormsg, name;
+  let displayerror = false;
   let error = {
     dateexpired: '',
     issuer: '',
     doctype: '',
     docTitle: '',
     signatory: '',
-    msg: '',
   };
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
@@ -27,6 +28,9 @@
     valid = true;
     if (dateexpired == undefined) {
       error.dateexpired = 'Fill the Expiry Date';
+      setTimeout(() => {
+        error.dateexpired = '';
+      }, 3000);
       valid = false;
     } else {
       date = new Date(dateexpired).toISOString();
@@ -34,24 +38,36 @@
     }
     if (issuer == undefined) {
       error.issuer = 'Fill the Issuer name';
+      setTimeout(() => {
+        error.issuer = '';
+      }, 3000);
       valid = false;
     } else {
       error.issuer = '';
     }
     if (doctype == undefined) {
       error.doctype = 'Fill the Document Type';
+      setTimeout(() => {
+        error.doctype = '';
+      }, 3000);
       valid = false;
     } else {
       error.doctype = '';
     }
     if (docTitle == undefined) {
       error.docTitle = 'Fill the Document Title';
+      setTimeout(() => {
+        error.docTitle = '';
+      }, 3000);
       valid = false;
     } else {
       error.docTitle = '';
     }
     if (signatory == undefined) {
       error.signatory = 'Fill the Signatory name';
+      setTimeout(() => {
+        error.signatory = '';
+      }, 3000);
       valid = false;
     } else {
       error.signatory = '';
@@ -114,10 +130,18 @@
       let dataHash = localStorage.getItem('datahash');
       console.log('datahash', dataHash);
       if (data.dataHash) {
-        error.msg = '';
+        errormsg = '';
         navigate('/preview');
       } else {
-        error.msg = 'Check Whether the file is uploaded properly or not Otherwise give proper metadata';
+        if (data.error) {
+          errormsg = data.errorCode;
+          let arr = errormsg.split(':');
+          errormsg = arr[2].replaceAll('_', ' ');
+          displayerror = true;
+          setTimeout(() => {
+            displayerror = false;
+          }, 3000);
+        }
       }
     }
   };
@@ -130,7 +154,7 @@
     </HeaderFileupload>
   </div>
 
-  <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-1/2 px-4 py-6">
+  <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-1/2 px-4 py-4">
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col  space-y-5">
         <div class="flex flex-col w-full  space-y-2">
@@ -159,13 +183,19 @@
       </div>
     </form>
   </div>
+
+  {#if displayerror}
+    <div class="mx-auto">
+      <ErrorInfo {errormsg} on:click={() => (displayerror = false)} />
+    </div>
+  {/if}
 </div>
 
 <style lang="postcss">
   .input-normal {
-    @apply h-9 w-full rounded-md border-2 border-slate-200  p-1 pl-2 text-base font-bold placeholder:font-semibold placeholder:text-slate-500 focus:outline-none  focus:ring-2 focus:ring-slate-800;
+    @apply h-9 w-full rounded-md border-2 border-slate-200  bg-white p-1 pl-2 text-base font-bold placeholder:font-semibold placeholder:text-slate-500  focus:outline-none focus:ring-2 focus:ring-slate-800;
   }
   .input-error {
-    @apply w-full rounded-lg border-2 border-red-500 p-1 pl-2 text-base font-bold ring-1 ring-red-500 placeholder:font-semibold  placeholder:text-red-500  focus:outline-none;
+    @apply h-9 w-full rounded-lg border-2 border-red-500 p-1 pl-2 text-base font-bold ring-1 ring-red-500 placeholder:font-semibold  placeholder:text-red-500  focus:outline-none;
   }
 </style>
