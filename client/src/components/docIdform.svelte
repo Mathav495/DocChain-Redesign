@@ -76,18 +76,18 @@
 
 <div class="flex flex-col gap-5">
   <!-- 1st div table -->
-  <div class="shadow-[0_0px_8px_0px_rgba(0,0,0,0.15)] rounded-lg relative text-center lg:overflow-hidden">
+  <div class="shadow-[0_0px_8px_0px_rgba(0,0,0,0.15)] rounded-lg relative text-center overflow-hidden">
     <div class="w-full flex font-bold text-sm lg:text-lg text-blue-900">
       <div class="hidden lg:block pl-2 py-3 w-2/5 tracking-wider">Document Id</div>
-      <div class="block lg:hidden py-3 w-1/4 tracking-wider">Doc Id</div>
+      <div class="block  lg:hidden py-3 w-2/5 tracking-wider">Doc Id</div>
 
       <div class="hidden lg:block py-3 lg:w-1/4 tracking-wider">Data Hash Generated</div>
-      <div class="block lg:hidden py-3 w-1/4 tracking-wider">DataHash</div>
+      <div class="block lg:hidden py-3 w-1/5 tracking-wider">DataHash</div>
 
       <div class="hidden lg:block py-3 w-1/4 tracking-wider ">File Hash Generated</div>
-      <div class="block lg:hidden py-3 w-1/4 tracking-wider">FileHash</div>
+      <div class="block lg:hidden py-3 w-1/5 tracking-wider">FileHash</div>
 
-      <div class=" py-3 w-2/5 tracking-wider">Actions</div>
+      <div class=" py-3 w-1/5 lg:w-2/5 tracking-wider">Actions</div>
     </div>
 
     <div class="overflow-y-scroll -mr-0 pr-0 lg:-mr-16 lg:pr-12 h-80 border-2 border-slate-200">
@@ -95,21 +95,21 @@
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
             <div class="py-3 w-2/5 tracking-wider pl-2 lg:text-lg text-xs font-mono text-slate-600">{newData.documentID}</div>
-            <div class="py-3 w-1/4 lg:w-1/4 tracking-wider flex justify-center items-center text-slate-900">
+            <div class="py-3 w-1/5 tracking-wider flex justify-center items-center text-slate-900">
               {#if newData.datahash}
                 <Tick />
               {:else}
                 <Pending />
               {/if}
             </div>
-            <div class="py-3 w-1/4 lg:w-1/4 tracking-wider flex justify-center items-center text-slate-900 ">
+            <div class="py-3 w-1/5 tracking-wider flex justify-center items-center text-slate-900 ">
               {#if newData.filehash}
                 <Tick />
               {:else}
                 <Pending />
               {/if}
             </div>
-            <div class="py-3 w-2/5 tracking-wider flex gap-2 justify-center text-slate-900">
+            <div class="py-3 w-1/5 lg:w-2/5 tracking-wider flex gap-2 justify-center text-slate-900">
               <button class="hidden lg:block text-green-500 border-2 border-green-500  py-1 px-2 hover:text-white  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-base">Continue</button>
               <div class="has-tooltip">
                 <span class="tooltip rounded text-xs p-1 bg-black text-white -ml-16">Continue</span>
