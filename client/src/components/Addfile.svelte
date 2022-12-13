@@ -23,7 +23,6 @@
    * Submitting file for generating filehash
    */
   const onSubmitFile = async () => {
-    console.log('hello');
     console.log(File);
     if (File.name != '') {
       const { data } = await axios.post(
@@ -188,10 +187,6 @@
     displaypreview = false;
   };
 
-  const hideError = () => {
-    displayerror = false;
-  };
-
   const hideConfirmation = () => {
     displayConfirm = false;
     ondisplaydropzone();
@@ -218,7 +213,7 @@
 {:else}
   <div class="relative h-auto w-full flex flex-col items-center justify-center gap-4 lg:gap-0">
     {#if displayerror}
-      <ErrorInfo {errormsg} position="absolute top-0 right-0" on:click={hideError} />
+      <ErrorInfo {errormsg} position="absolute top-0 right-0" on:click={() => (displayerror = false)} />
     {/if}
     <div class=" w-full lg:w-[38.5rem] flex flex-col gap-4">
       <HeaderFileupload {id} {bgcolor} />
@@ -276,13 +271,13 @@
                 <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
               </div>
               <div class="flex">
-                <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-blue-500 text-blue-500 hover:bg-blue-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide"> Confirm and Continue </button>
+                <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide"> Confirm and Continue </button>
               </div>
             </div>
           {/if}
         </div>
       {:else}
-        <div class="flex w-full lg:w-[38.5rem] flex-col">
+        <div class="flex w-full lg:w-[38.5rem] flex-col" in:fade={{ duration: 4000 }} out:fade={{ duration: 1000 }}>
           <div class="w-full h-[40rem] rounded-md justify-center items-center flex border-2">
             <div>
               <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
@@ -294,7 +289,7 @@
                 <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
               </div>
               <div class="flex">
-                <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-blue-500 text-blue-500 hover:bg-blue-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Confirm and Continue</button>
+                <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Confirm and Continue</button>
               </div>
             </div>
           {/if}
