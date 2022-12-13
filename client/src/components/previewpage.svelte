@@ -5,9 +5,9 @@
   import PreviewQrCard from './preview_qrCard.svelte';
 
   export let id;
+  let issuer, doctype, signatory, docTitle
   const dispatch = createEventDispatcher();
-  let token = localStorage.getItem('token');
-  let documentID = localStorage.getItem('documentID');
+
   let fileHash = localStorage.getItem('filehash');
   console.log('filehash', fileHash);
   let dataHash = localStorage.getItem('datahash');
@@ -44,14 +44,14 @@
               <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Receiver</div>
               <div class="flex-col">
                 <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Name</div>
-                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 font-bold ease-in-out">john</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 font-bold ease-in-out">{issuer}</div>
               </div>
             </div>
             <div class="relative">
               <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Document</div>
               <div class="flex-col">
                 <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document type</div>
-                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">pdf</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{doctype}</div>
               </div>
             </div>
 
@@ -59,12 +59,12 @@
               <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Issuer</div>
               <div class="flex-col">
                 <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Signatory</div>
-                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">arun</div>
+                <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{signatory}</div>
               </div>
             </div>
             <div class="relative mb-5">
               <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document Title</div>
-              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">cerfificate</div>
+              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{docTitle}</div>
             </div>
           </div>
         </div>
