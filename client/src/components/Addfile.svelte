@@ -1,6 +1,6 @@
 <script>
-  import pdfjsLib from 'pdfjs-dist/build/pdf';
-  import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
+  // import pdfjsLib from 'pdfjs-dist/build/pdf';
+  // import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
   import { fade } from 'svelte/transition';
@@ -17,8 +17,6 @@
   let documentID = localStorage.getItem('documentID');
   let bgcolor = localStorage.getItem('bgGradient');
   let displaypreview = false;
-  // $: pdfjsLib = null;
-  // $: pdfjsWorker = null;
   /**
    * Submitting file for generating filehash
    */
@@ -114,15 +112,30 @@
     }
   };
 
-  // const pageloader = async () => {
-  //   const pdfjs = await import('pdfjs-dist/build/pdf').default;
-  //   pdfjsLib = pdfjs;
-  //   const jsWorker = await import('pdfjs-dist/build/pdf.worker.entry').default;
-  //   pdfjsWorker = jsWorker;
-  // };
+  // onMount(async () => {
+  //   import('pdfjs-dist/build/pdf')
+  //     .then(({ pdfjsLib }) => {
+  //       pdfjs = pdfjsLib;
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+
+  //   import('pdfjs-dist/build/pdf.worker.entry')
+  //     .then(({ pdfjsWorker }) => {
+  //       jsWorker = pdfjsWorker;
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+
+  //   // pdfjsLib = (await import('pdfjs-dist/build/pdf')).default;
+  //   // pdfjsWorker = (await import('pdfjs-dist/build/pdf.worker.entry')).default;
+  // });
 
   const showPdf = async (blob) => {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+    // await pageloader();
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
     let loadingTask = pdfjsLib.getDocument(blob);
     loadingTask = loadingTask.promise;
     _PDFDOC = await loadingTask;
