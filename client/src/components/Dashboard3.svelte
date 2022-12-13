@@ -2,7 +2,7 @@
   import axios from 'axios';
   import { onMount } from 'svelte';
   import Pagination from './pagination.svelte';
-  import Usagecard3 from './Usagecard3.svelte';
+  import Usagecard1 from './Usagecard1.svelte';
 
   let hidden = true;
   let token = localStorage.getItem('token');
@@ -24,19 +24,19 @@
     usage = data;
     console.log(usage);
 
-    // let loader = document.getElementById('load');
-    // loader.classList.add('hidden');
-    // let home = document.getElementById('homepage');
-    // home.classList.remove('hidden');
-    // hidden = false;
+    let loader = document.getElementById('load3');
+    loader.classList.add('hidden');
+    let home = document.getElementById('homepage3');
+    home.classList.remove('hidden');
+    hidden = false;
   });
 </script>
 
-<div class="flex flex-col gap-4">
-  <div class="flex flex-row w-full gap-4">
-    <Usagecard3 />
-  </div>
-  <div class="w-full h-60 shadow-around shadow-gray-300 text-2xl p-4 rounded-md flex flex-col justify-end items-center font-bold text-blue-500">
+<div class:hidden class="flex flex-col lg:flex-row gap-4">
+  <div class="lg:w-8/12 w-full h-60 lg:h-auto lg:order-1 order-2 shadow-around shadow-gray-200 text-2xl p-4 rounded-md flex flex-col justify-end items-center font-bold text-blue-500">
     <div><Pagination /></div>
+  </div>
+  <div class="flex flex-row lg:flex-col lg:order-2 order-1 w-full lg:w-4/12 gap-4">
+    <Usagecard1 {usage} />
   </div>
 </div>

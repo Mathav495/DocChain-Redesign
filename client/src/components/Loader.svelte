@@ -1,4 +1,4 @@
-<div class="div1 h-screen w-screen flex gap-3 justify-center items-center bg-black">
+<div class="div1 h-screen lg:w-screen w-auto flex gap-3 justify-center items-center bg-black">
   <div class="wave1" />
   <div class="wave1" />
   <div class="wave1" />
