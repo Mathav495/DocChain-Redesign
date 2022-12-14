@@ -1,5 +1,5 @@
 <script>
-  import { fade } from 'svelte/transition';
+  import { fade, fly } from 'svelte/transition';
   import Dashboard2 from '../components/Dashboard2.svelte';
   import Header from '../components/Header.svelte';
   import Headerlogo from '../components/Headerlogo.svelte';
@@ -75,7 +75,7 @@
 
 <div class:hidden={true} class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4" id="homepage2">
   <div class:hidden={hide} class:block={show} class="width1200px width1024px transform ease-in-out delay-1000 duration-1000 translate-x-6 overflow-auto">
-    <div class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between">
+    <div transition:fly={{ y: 100, duration: 500 }} class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between">
       <Logo on:Hide={HideNavbar} />
       <Nav />
       <Logout on:theme={changeClr} />
