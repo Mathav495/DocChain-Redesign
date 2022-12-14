@@ -143,19 +143,19 @@
 {:else if Queue_msg}
 <QueueMsg position="absolute bottom-20 right-2" on:click={hideQueuemsg} /> 
 {/if}
-<div class="fixed  bottom-0 right-0 w-5/6 mr-4 mx-auto justify-center items-center bg-black px-4 mb-2 md:justify-center">
+<div class="fixed  bottom-0 right-0 w-5/6 mr-4 mx-auto justify-center items-center bg-black px-4 md:justify-center">
   <div class="mx-auto flex flex-col items-center px-3 py-3 md:flex-row md:justify-center md:w-full">
     <div class=" flex w-full pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left">
       <h1 class="title-font text-2xl font-medium text-red-600 md:text-2xl">Please verify document details before proceed</h1>
     </div>
     <div class="mx-auto flex flex-shrink-0 items-center space-x-6 md:ml-auto md:mr-0">
-      <button class=" inline-flex items-center rounded-lg border border-red-600 text-red-600 py-3 px-5 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click={releaseDoc} id="release">
+      <button class=" inline-flex items-center rounded-lg border border-red-600 text-red-600 py-2 px-5 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click={releaseDoc} id="release">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
         </svg>
         <span class="title-font ml-2 font-bold text-base">Release</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" id="confirm">
+      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-2 px-5 hover:bg-green-600 hover:text-white focus:outline-none" id="confirm">
         {#if load}
         <svg role="status" class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-600" viewBox="0 0 24 24" />
       {:else}
@@ -169,7 +169,7 @@
         {/if}
         <span class="title-font ml-2 font-bold text-base">Confirm</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" on:click={getsignature} id="sign">
+      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-2 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" on:click={getsignature} id="sign">
         {#if load}
           <svg role="status" class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-600" viewBox="0 0 24 24" />
         {:else}
@@ -179,7 +179,7 @@
         {/if}
         <span class="title-font ml-2 font-bold text-base">sign_ID</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-3 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" id="publish" on:click|once={disablerelease} on:click={publishdoc}>
+      <button class="inline-flex items-center rounded-lg border border-green-600 text-green-600 py-2 px-5 hover:bg-green-600 hover:text-white focus:outline-none" style="display: none" id="publish" on:click|once={disablerelease} on:click={publishdoc}>
         {#if load}
           <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-600" viewBox="0 0 24 24" />
         {:else}
