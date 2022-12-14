@@ -91,7 +91,7 @@
       <div class=" py-3 w-1/5 lg:w-2/5 tracking-wider">Actions</div>
     </div>
 
-    <div class="overflow-y-auto max-h-80 border-2 border-slate-200">
+    <div class="overflow-y-auto min-h-[19rem] max-h-[19rem] border-2 border-slate-200">
       {#if newData}
         {#each newData as newData}
           <div class=" border-b-2 border-gray-200 flex font-semibold text-sm lg:text-base">
@@ -142,7 +142,7 @@
         {/each}
       {:else}
         <div class="pt-20 w-1/2 mx-auto">
-          <h1 class="text-lg font-bold tracking-wide p-2 flex justify-center items-center bg-teal-200 rounded-lg">No Pending ID's</h1>
+          <h1 class="text-lg font-bold tracking-wide p-2 flex justify-center items-center bg-slate-300 rounded-lg">No Pending ID's</h1>
         </div>
       {/if}
     </div>
