@@ -10,7 +10,7 @@
   import { readAsArrayBuffer, readAsImage, readAsPDF, readAsDataURL } from '../utils/asyncReader.js';
   import { ggID } from '../utils/helper.js';
   import { save } from '../utils/PDF.js';
-    import Loading from './Loading.svelte';
+  import Loading from './Loading.svelte';
   const genID = ggID();
   let pdfFile;
   let pdfName = '';
@@ -22,6 +22,9 @@
   let selectedPageIndex = -1;
   let saving = false;
   let addingDrawing = false;
+  let nextbtn = true;
+  let prevbtn = true;
+  let currentpage, _PDFDOC, _total_pages, showpdf;
 
   /**
    * getting saved blob image from localstorage
@@ -37,18 +40,43 @@
   // for test purpose
   onMount(async () => {
     try {
-      const res = await fetch('/assets/Handbook on SHG.pdf');
+      const res = await fetch(blob);
       const pdfBlob = await res.blob();
       await addPDF(pdfBlob);
       selectedPageIndex = 0;
-      // setTimeout(() => {
-      //   fetchFont(currentFont);
-      //   prepareAssets();
-      // }, 5000);
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
+      let loadingTask = pdfjsLib.getDocument(blob);
+      loadingTask = loadingTask.promise;
+      _PDFDOC = await loadingTask;
+      _total_pages = _PDFDOC.numPages;
+      console.log(_total_pages);
+      console.log(_PDFDOC);
+      currentpage = 1;
+      showPage(1);
     } catch (e) {
       console.log(e);
     }
   });
+
+  const showPage = async (pageno) => {
+    let page = await _PDFDOC.getPage(pageno);
+    console.log('Page loaded');
+    let viewport = page.getViewport({ scale: 1 });
+
+    // Prepare canvas using PDF page dimensions
+    let canvas = document.getElementById('mycanvas');
+    let context = canvas.getContext('2d');
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    // Render PDF page into canvas context
+    let renderContext = {
+      canvasContext: context,
+      viewport: viewport,
+    };
+    await page.render(renderContext).promise;
+    // document.getElementById('pdf-preview').src = canvas.toDataURL();
+  };
 
   async function onUploadPDF(e) {
     const files = e.target.files || (e.dataTransfer && e.dataTransfer.files);
@@ -62,6 +90,36 @@
       console.log(e);
     }
   }
+
+
+
+  const nextpage = () => {
+    if (currentpage < _total_pages) {
+      console.log('initial', currentpage);
+      showPage(currentpage + 1);
+      currentpage++;
+      console.log('final', currentpage);
+    }
+  };
+
+  $: if (currentpage < _total_pages) {
+    nextbtn = true;
+  } else {
+    nextbtn = false;
+  }
+  $: if (currentpage > 1) {
+    prevbtn = true;
+  } else {
+    prevbtn = false;
+  }
+  const previouspage = () => {
+    if (currentpage > 1) {
+      console.log('initial', currentpage);
+      showPage(currentpage - 1);
+      currentpage--;
+      console.log('final', currentpage);
+    }
+  };
   async function addPDF(file) {
     try {
       const pdf = await readAsPDF(file);
@@ -184,9 +242,25 @@
   <div
     class="flex justify-center text-center items-center
      shadow-lg"
+     
   >
-    <input type="file" name="pdf" id="pdf" on:change={onUploadPDF} class="hidden" />
-    <input type="file" id="image" name="image" class="hidden" on:change={onUploadImage} />
+  <canvas id="mycanvas" class="border-2 rounded-md overflow-hidden" />
+  <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
+  <div class="flex justify-center items-center gap-8 pt-3">
+    <button on:click={previouspage} disabled={!prevbtn}>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-black'}">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+      </svg>
+    </button>
+    <h1 class="text-lg text-black font-bold">{currentpage}</h1>
+    <button on:click={nextpage} disabled={!nextbtn}>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-black'}">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+      </svg>
+    </button>
+  </div>
+    <!-- <input type="file" name="pdf" id="pdf" on:change={onUploadPDF} class="hidden" />
+    <input type="file" id="image" name="image" class="hidden" on:change={onUploadImage} /> -->
     <!-- <div class="relative fixed top-0 flex h-10 bg-gray-400 rounded-lg overflow-hidden
       md:mr-4">
       <label
@@ -200,7 +274,7 @@
         <span class="ml-3 text-gray-900 text-base font-bold">Add-Image</span>
       </label>
       svelte-ignore a11y-click-events-have-key-events -->
-      <!-- <label
+    <!-- <label
         class=" flex items-center justify-center h-full w-32 bg-teal-300 hover:bg-gray-500
         cursor-pointer"
         for="id"
