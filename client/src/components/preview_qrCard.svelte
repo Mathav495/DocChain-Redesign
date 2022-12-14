@@ -2,6 +2,7 @@
   import axios from 'axios';
   import { onMount } from 'svelte';
   export let bgcolor;
+ 
   let token = localStorage.getItem('token');
   let randomPattern;
   let issuerName;
