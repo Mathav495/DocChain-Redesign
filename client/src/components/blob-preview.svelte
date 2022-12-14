@@ -21,7 +21,7 @@
   onMount(async (e) => {
     try {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
-      let loadingTask = pdfjsLib.getDocument('/assets/Handbook on SHG.pdf');
+      let loadingTask = pdfjsLib.getDocument(blob);
       loadingTask = loadingTask.promise;
       _PDFDOC = await loadingTask;
       _total_pages = _PDFDOC.numPages;
@@ -29,21 +29,11 @@
       console.log(_PDFDOC);
       currentpage = 1;
       showPage(1);
-      const reader = new FileReader(loadingTask);
+      // const reader = new FileReader(loadingTask);
     } catch (e) {
       console.log(e);
     }
   });
-  // const reader = new FileReader();
-  // const fileInfo = event.target.files[0];
-  // if (fileInfo) {
-  //   reader.readAsBinaryString(event.target.files[0]);
-  //   reader.onloadend = () => {
-  //     const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
-  //     console.log('Number of Pages:', count);
-  //   };
-  // }
-
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno);
     console.log('Page loaded');
@@ -60,7 +50,10 @@
       viewport: viewport,
     };
     await page.render(renderContext).promise;
+    
   };
+
+
   const nextpage = () => {
     if (currentpage < _total_pages) {
       console.log('initial', currentpage);
