@@ -4,7 +4,6 @@
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
   import Nav from '../components/Nav.svelte'
-  // import axios from 'axios';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   import FinalPrev from '../components/final_prev.svelte';
   let qr = localStorage.getItem('qrcode');

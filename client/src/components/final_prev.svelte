@@ -1,8 +1,11 @@
 <script>
   import BlobPreview from './blob-preview.svelte';
   import PreviewQrCard from './preview_qrCard.svelte';
+  
 
   export let id;
+ 
+  
   let load
   let token = localStorage.getItem('token');
   let documentID = localStorage.getItem('documentID');
