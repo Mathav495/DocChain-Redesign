@@ -17,6 +17,7 @@
   let documentID = localStorage.getItem('documentID');
   let bgcolor = localStorage.getItem('bgGradient');
   let displaypreview = false;
+
   /**
    * Submitting file for generating filehash
    */
@@ -244,9 +245,9 @@
                       <svg class="mx-auto h-12 w-12 text-gray-900" stroke="black" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                       </svg>
-                      <span class="inline-flex">Upload a file</span>
-                      <input on:change|stopPropagation={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
-                      <span class="pl-1">or drag and drop</span>
+                      <span class="inline-flex">Choose a file</span>
+                      <input on:change|stopPropagation|preventDefault={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
+                      <span class="pl-1">to preview and upload</span>
                       <p class="text-xs mt-2 text-gray-600">Upload JPEG, PNG, JPG, PDF files</p>
                     </label>
                   </div>

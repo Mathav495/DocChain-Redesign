@@ -6,7 +6,7 @@
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   import Previewpage from '../components/previewpage.svelte';
   import PrevFooter from '../components/prev_footer.svelte';
-  let bgcolor = localStorage.getItem('bggradient');
+  let bgcolor = localStorage.getItem('bgGradient');
   console.log(bgcolor);
   let token = localStorage.getItem('token');
   let fileHash = localStorage.getItem('filehash');
@@ -19,7 +19,7 @@
   console.log('qrcodocURL', proposedURL);
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
-  let signmsg, Queue_msg
+  let signmsg, Queue_msg;
 
   let hideNavbar = true;
   const hideNav = () => {
@@ -65,8 +65,8 @@
       <div class="md:hidden block">
         <Header on:navShow={showNav} />
       </div>
-      <Previewpage {bgcolor}  />
-      <PrevFooter {signmsg} {Queue_msg}/>
+      <Previewpage {bgcolor} />
+      <PrevFooter {signmsg} {Queue_msg} />
     </div>
     <!--small screen navbar-->
     <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">

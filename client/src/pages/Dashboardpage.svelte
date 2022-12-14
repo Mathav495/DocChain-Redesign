@@ -96,7 +96,7 @@
   </button>
 </div>
 
-<style>
+<style global>
   /* @media screen and (min-width: 768px) {
     .width768px {
       width: 27rem;

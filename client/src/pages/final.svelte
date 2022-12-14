@@ -13,7 +13,7 @@
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
 
-  let bgcolor = localStorage.getItem('bggradient');
+  let bgcolor = localStorage.getItem('bgGradient');
   console.log(bgcolor);
   /**
    * getting saved blob image from localstorage
