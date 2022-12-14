@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import Loading from './Loading.svelte';
   let src;
   let currentpage, _PDFDOC, _total_pages;
 
@@ -17,10 +18,10 @@
   let blob = localStorage.getItem('blobpdf');
   console.log(blob);
 
-  onMount(async () => {
-    try {  
+  onMount(async (e) => {
+    try {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
-      let loadingTask = pdfjsLib.getDocument('/assets/Handbook on SHG.pdf')
+      let loadingTask = pdfjsLib.getDocument('/assets/Handbook on SHG.pdf');
       loadingTask = loadingTask.promise;
       _PDFDOC = await loadingTask;
       _total_pages = _PDFDOC.numPages;
@@ -28,10 +29,20 @@
       console.log(_PDFDOC);
       currentpage = 1;
       showPage(1);
+      const reader = new FileReader(loadingTask);
     } catch (e) {
       console.log(e);
     }
   });
+  // const reader = new FileReader();
+  // const fileInfo = event.target.files[0];
+  // if (fileInfo) {
+  //   reader.readAsBinaryString(event.target.files[0]);
+  //   reader.onloadend = () => {
+  //     const count = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
+  //     console.log('Number of Pages:', count);
+  //   };
+  // }
 
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno);
@@ -86,17 +97,28 @@
     <div class="flex max-w-full lg:w-full h-[750px] flex-col rounded-md">
       <canvas id="mycanvas" class="border-2 rounded-md overflow-hidden drop-shadow-lg" />
       <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
-      <div class="flex justify-center items-center gap-8 pt-3">
+      <div class="flex justify-center items-center gap-4 pt-3">
         <button on:click={previouspage} disabled={!prevbtn}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-black'}">
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-black'}">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg> -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6  {!prevbtn ? 'text-gray-600' : 'text-black'}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
           </svg>
+          
+
+
         </button>
-        <h1 class="text-lg text-black font-bold">{currentpage}</h1>
+        <h1 class="text-lg text-black font-bold"> {currentpage} / { _total_pages}</h1>
         <button on:click={nextpage} disabled={!nextbtn}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-black'}">
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-black'}">
             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg> -->
+
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 {!nextbtn ? 'text-gray-600' : 'text-black'}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z" />
           </svg>
+          
         </button>
       </div>
     </div>
