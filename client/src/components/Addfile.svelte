@@ -237,7 +237,7 @@
           <!-- svelte-ignore missing-declaration -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
           {#if displayDropzone}
-            <div class="sm:col-span-6 cursor-pointer" id="dropzone" on:click={toClickinput} in:fade={{ duration: 1500 }} out:fade={{ duration: 500 }}>
+            <div class="sm:col-span-6 cursor-pointer" id="dropzone" on:click={toClickinput} in:fade={{ duration: 1500 }} out:fade={{ duration: 100 }}>
               <div class="flex justify-center items-center rounded-md border-1 border-dashed border-blue-600 bg-slate-200  py-10">
                 <div class="space-y-1 text-center">
                   <div class="flex flex-col text-base text-gray-600">
@@ -267,7 +267,7 @@
 
   {#if displaypreview}
     {#if showpdf}
-      <div class="flex w-full lg:w-[38.5rem] flex-col rounded-md" in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }}>
+      <div class="flex w-full lg:w-[38.5rem] flex-col rounded-md" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
         <canvas id="mycanvas" class="border-2 rounded-md overflow-hidden" />
         <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
         <div class="flex justify-center items-center gap-8 pt-3">
@@ -295,7 +295,7 @@
         {/if}
       </div>
     {:else}
-      <div class="flex w-full lg:w-[38.5rem] flex-col" in:fade={{ duration: 4000 }} out:fade={{ duration: 1000 }}>
+      <div class="flex w-full lg:w-[38.5rem] flex-col" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
         <div class="w-full h-[40rem] rounded-md justify-center items-center flex border-2">
           <div>
             <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
