@@ -97,12 +97,12 @@
   </button>
 </div>
 
-<style>
-  /* @media screen and (min-width: 768px) {
+<style global>
+  @media screen and (min-width: 768px) {
     .width768px {
       width: 27rem;
     }
-  } */
+  }
   @media screen and (min-width: 1024px) {
     .width1024px {
       width: 24rem;
