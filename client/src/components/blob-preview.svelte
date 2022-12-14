@@ -42,7 +42,7 @@
     console.log('Page loaded');
     let viewport = page.getViewport({ scale: 1 });
     // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById('mycanvas');
+    let canvas = document.getElementById('canvas');
     let context = canvas.getContext('2d');
     canvas.height = viewport.height;
     canvas.width = viewport.width;
@@ -91,7 +91,7 @@
       <Loading />
     {:else}
       <div class=" relative flex max-w-full flex-col rounded-md">
-        <canvas id="mycanvas" class="border-2 rounded-md overflow-hidden drop-shadow-lg" />
+        <canvas id="canvas" class="border-2 rounded-md overflow-hidden drop-shadow-lg" />
         <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
         <div class="flex justify-center items-center absolute bottom-2 inset-x-0 gap-3">
           <button on:click={previouspage} disabled={!prevbtn}>
