@@ -1,5 +1,5 @@
 <script>
-  import { fade, fly } from 'svelte/transition';
+  import { fade } from 'svelte/transition';
   import Dashboard2 from '../components/Dashboard2.svelte';
   import Header from '../components/Header.svelte';
   import Headerlogo from '../components/Headerlogo.svelte';
