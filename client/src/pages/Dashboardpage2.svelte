@@ -1,4 +1,5 @@
 <script>
+  import { fade, fly } from 'svelte/transition';
   import Dashboard2 from '../components/Dashboard2.svelte';
   import Header from '../components/Header.svelte';
   import Headerlogo from '../components/Headerlogo.svelte';
@@ -80,7 +81,7 @@
       <Logout on:theme={changeClr} />
     </div>
   </div>
-  <div class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto">
+  <div transition:fade={{ x: 100, duration: 500 }} class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto">
     <div class="lg:hidden block">
       <Header on:navShow={showNav} />
     </div>
