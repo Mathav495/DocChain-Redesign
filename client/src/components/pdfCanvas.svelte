@@ -24,7 +24,7 @@
   let addingDrawing = false;
   let nextbtn = true;
   let prevbtn = true;
-  let currentpage, _PDFDOC, _total_pages, showpdf, errormsg;
+  let currentpage, _PDFDOC, _total_pages, showpdf;
 
   /**
    * getting saved blob image from localstorage
