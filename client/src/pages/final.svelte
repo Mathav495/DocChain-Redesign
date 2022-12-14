@@ -3,10 +3,7 @@
   import Header from '../components/Header.svelte';
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
-  import Nav from '../components/Nav.svelte';
-  import Previewpage from '../components/previewpage.svelte';
-  import PrevFooter from '../components/prev_footer.svelte';
-  // import axios from 'axios';
+  import Nav from '../components/Nav.svelte'
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   import FinalPrev from '../components/final_prev.svelte';
   let qr = localStorage.getItem('qrcode');
@@ -64,13 +61,13 @@
 </script>
 
 <main>
-  <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-2 pr-2">
-    <div class="lg:w-88 md:w-3/8 hidden p-8 md:flex flex-col items-start justify-between">
+  <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4">
+    <div class="lg:w-88 md:w-3/8 hidden p-4 md:flex flex-col items-start justify-between">
       <Logo />
       <Nav />
       <Logout on:theme={changeClr} />
     </div>
-    <div class="lg:w-full relative overflow-auto md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-8 ml-2 md:ml-0">
+    <div class="lg:w-full relative overflow-auto md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-4 ml-2 md:ml-0">
       <div class="md:hidden block">
         <Header on:navShow={showNav} />
       </div>

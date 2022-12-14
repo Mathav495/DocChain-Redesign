@@ -6,7 +6,7 @@
   import ErrorInfo from './ErrorInfo.svelte';
   const dispatch = createEventDispatcher();
   export let id;
-  let dateexpired, issuer, doctype, signatory, docTitle, valid, date, sampleData, options, errormsg, name;
+  export let dateexpired, issuer, doctype, signatory, docTitle, valid, date, sampleData, options, errormsg, name;
   let displayerror = false;
   let error = {
     dateexpired: '',
@@ -105,11 +105,9 @@
       );
       console.log(data);
       let metadata = data.metadata;
+      console.log(metadata.receiver)
       console.log(metadata);
-      // let name = data.metadata.receiver.name;
-      // console.log(receiver);
-      // let date = data.metadata.options.date;
-      // console.log(date);
+      // localStorage.setItem("issuer",data.issuer)
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem('docDetails'));
         console.log('localdata', localdata);
