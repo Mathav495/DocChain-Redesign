@@ -44,13 +44,13 @@
   <title>Add File</title>
 </svelte:head>
 
-<div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4">
-  <div class="lg:w-88 md:w-3/8 hidden p-8 md:flex flex-col items-start justify-between">
+<div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4" id="file_upload">
+  <div class="lg:w-88 md:w-2/8 hidden p-8 md:flex flex-col items-start justify-between">
     <Logo />
     <Nav />
     <Logout on:theme={changeClr} />
   </div>
-  <div class="lg:w-full md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md  ml-2 md:ml-0 overflow-auto">
+  <div class="lg:w-full md:w-6/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md  ml-2 md:ml-0 overflow-auto">
     <div class="md:hidden block">
       <Header on:navShow={showNav} />
     </div>
