@@ -176,7 +176,7 @@
     </HeaderFileupload>
   </div>
 
-  <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-1/2 px-4 py-4">
+  <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-1/2 p-4">
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col  space-y-5">
         <div class="flex flex-col w-full  space-y-2">

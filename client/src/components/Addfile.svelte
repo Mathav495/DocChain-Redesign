@@ -283,7 +283,7 @@
   <!-- For image preview -->
   <div class="{displaypreview && !showpdf ? 'flex' : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
     <div class="max-w-full min-w-[22.5rem] min-h-[24.35rem] max-h-[40rem] justify-center items-center flex">
-      <div class="border-2 rounded-md overflow-hidden">
+      <div class="border-2 rounded-md shadow-[0_0_8px_0_rgba(0,0,0,0.15)] overflow-hidden">
         <img src={blobimage} class="max-w-full min-w-[22.5rem] min-h-[24.35rem] max-h-[40rem]" id="File" alt="Preview" />
       </div>
     </div>
