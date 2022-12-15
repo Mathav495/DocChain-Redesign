@@ -32,7 +32,7 @@
     <div class="pt-3">
       <h1 class="text-lg font-medium tracking-wide text-white capitalize">{issuerName}</h1>
       <h1 class="text-xl font-bold font-mono text-white ">{id}</h1>
-      <h1 class="text-base font-semibold text-white "><slot name="title" /></h1>
+      <!-- <h1 class="text-base font-semibold text-white "><slot name="title" /></h1> -->
     </div>
   </div>
 </div>

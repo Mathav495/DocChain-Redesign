@@ -77,15 +77,6 @@
     } else {
       error.doctype = '';
     }
-    if (docTitle == '') {
-      error.docTitle = 'Fill the Document Title';
-      setTimeout(() => {
-        error.docTitle = '';
-      }, 3000);
-      valid = false;
-    } else {
-      error.docTitle = '';
-    }
     if (signatory == '') {
       error.signatory = 'Fill the Signatory name';
       setTimeout(() => {
@@ -196,7 +187,7 @@
         </div>
         <div class="flex flex-col w-full space-y-2">
           <label for="docTitle" class="text-sm text-black tracking-wide font-bold">Document Title</label>
-          <input placeholder={error.docTitle ? error.docTitle : 'Enter document title'} bind:value={docTitle} type="text" class={error.docTitle ? 'input-error' : 'input-normal'} name="docTitle" id="docTitle" />
+          <input placeholder="Enter document title" bind:value={docTitle} type="text" class="input-normal" name="docTitle" id="docTitle" />
         </div>
       </div>
       <div class="flex pt-5">
