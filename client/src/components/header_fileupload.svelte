@@ -30,7 +30,7 @@
       <img src="/assets/sample.jpg" alt="qrcode" class="rounded overflow-hidden w-20 h-20 lg:w-[100px] lg:h-[100px]" />
     </div>
     <div class="pt-3">
-      <h1 class="text-lg font-medium tracking-wide text-white capitalize">{issuerName}</h1>
+      <h1 class="text-base font-medium tracking-wide text-white capitalize">{issuerName}</h1>
       <h1 class="text-xl font-bold font-mono text-white ">{id}</h1>
       <!-- <h1 class="text-base font-semibold text-white "><slot name="title" /></h1> -->
     </div>

@@ -31,13 +31,7 @@
   const onsubmitdata = async () => {
     console.log(dateexpired, issuer, signatory, docTitle, doctype);
     valid = true;
-    if (dateexpired == '') {
-      error.dateexpired = 'Fill the Expiry Date';
-      setTimeout(() => {
-        error.dateexpired = '';
-      }, 3000);
-      valid = false;
-    } else if (dateexpired) {
+    if (dateexpired) {
       console.log(dateexpired);
       let currentDate = new Date().getTime();
       console.log(currentDate);
@@ -99,10 +93,26 @@
           signatory: signatory,
         },
       };
-      options = {
-        title: docTitle,
-        expireOn: date,
-      };
+      if (date) {
+        if (docTitle) {
+          options = {
+            title: docTitle,
+            expireOn: date,
+          };
+        } else {
+          options = {
+            expireOn: date,
+          };
+        }
+      } else {
+        if (docTitle) {
+          options = {
+            title: docTitle,
+          };
+        } else {
+          options = {};
+        }
+      }
       console.log(documentID);
       const { data } = await axios.post(
         'https://test.swagger.print2block.in/docs/add-data',
