@@ -179,15 +179,15 @@
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col  space-y-5">
         <div class="flex flex-col w-full  space-y-2">
-          <label for="issuer" class="text-sm text-black tracking-wide font-bold">Issued to</label>
+          <label for="issuer" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Issued to</label>
           <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class={error.issuer ? 'input-error' : 'input-normal'} />
         </div>
         <div class="flex flex-col w-full  space-y-2">
-          <label for="doctype" class="text-sm text-black tracking-wide font-bold">Document Type</label>
+          <label for="doctype" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Document Type</label>
           <input placeholder={error.doctype ? error.doctype : 'Enter document type'} bind:value={doctype} type="text" class={error.doctype ? 'input-error' : 'input-normal'} name="doctype" id="doctype" />
         </div>
         <div class="flex flex-col w-full space-y-2">
-          <label for="signatory" class="text-sm text-black tracking-wide font-bold">Signatory</label>
+          <label for="signatory" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Signatory</label>
           <input placeholder={error.signatory ? error.signatory : 'Enter signatory name'} name="signatory" bind:value={signatory} id="signatory" type="text" class={error.signatory ? 'input-error' : 'input-normal'} />
         </div>
         <div class="flex flex-col w-full space-y-2">
