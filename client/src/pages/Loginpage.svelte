@@ -1,6 +1,7 @@
 <script>
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
+  import { globals } from 'svelte/internal';
   import ErrorInfo from '../components/ErrorInfo.svelte';
   import Emailicon from '../icons/Emailicon.svelte';
   import Eye from '../icons/Eye.svelte';
