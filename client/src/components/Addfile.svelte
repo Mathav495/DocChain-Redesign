@@ -210,7 +210,7 @@
   };
 </script>
 
-<div class="relative h-auto w-full flex flex-col items-center justify-center gap-4 lg:gap-0 p-4">
+<div class="relative h-auto w-full flex flex-col items-center justify-center gap-4  p-4">
   <div class="w-full h-full bg-[#000000cc] absolute  flex items-end justify-center p-4" class:hidden={!displayConfirm}>
     <div class="z-10 flex flex-col lg:flex-row w-full lg:w-3/5  bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
       <div>
@@ -228,90 +228,73 @@
     </div>
   </div>
 
-  <div class=" w-full lg:w-[38.5rem] flex flex-col gap-4">
-    <HeaderFileupload {id} {bgcolor} />
+  <HeaderFileupload {id} {bgcolor} />
 
-    <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
-      <div>
-        <div class="flex w-full flex-col">
-          <!-- svelte-ignore missing-declaration -->
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
-          {#if displayDropzone}
-            <div class="sm:col-span-6 cursor-pointer" id="dropzone" on:click={toClickinput} in:fade={{ duration: 1500 }} out:fade={{ duration: 100 }}>
-              <div class="flex justify-center items-center rounded-md border-1 border-dashed border-blue-600 bg-slate-200  py-10">
-                <div class="space-y-1 text-center">
-                  <div class="flex flex-col text-base text-gray-600">
-                    <label for="file-upload" class=" relative cursor-pointer rounded-md  font-semibold text-blue-800" id="dropzone">
-                      <svg class="mx-auto h-12 w-12 text-gray-900" stroke="black" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                      <span class="inline-flex">Choose a file</span>
-                      <input on:change|stopPropagation|preventDefault={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
-                      <span class="pl-1">to preview and upload</span>
-                      <p class="text-xs mt-2 text-gray-600">Upload JPEG, PNG, JPG, PDF files</p>
-                    </label>
-                  </div>
-                </div>
+  <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data" class="w-full lg:w-[38.5rem]">
+    <div class="flex w-full flex-col">
+      <!-- svelte-ignore missing-declaration -->
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      {#if displayDropzone}
+        <div class="sm:col-span-6 cursor-pointer" id="dropzone" on:click={toClickinput} in:fade={{ duration: 1500 }} out:fade={{ duration: 100 }}>
+          <div class="flex justify-center items-center rounded-md border-1 border-dashed border-blue-600 bg-slate-200  py-10">
+            <div class="space-y-1 text-center">
+              <div class="flex flex-col text-base text-gray-600">
+                <label for="file-upload" class=" relative cursor-pointer rounded-md  font-semibold text-blue-800" id="dropzone">
+                  <svg class="mx-auto h-12 w-12 text-gray-900" stroke="black" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span class="inline-flex">Choose a file</span>
+                  <input on:change|stopPropagation|preventDefault={ondisplay} id="file-upload" name="userimage" type="file" class="sr-only" accept="image/*,.pdf" />
+                  <span class="pl-1">to preview and upload</span>
+                  <p class="text-xs mt-2 text-gray-600">Upload JPEG, PNG, JPG, PDF files</p>
+                </label>
               </div>
             </div>
-          {/if}
+          </div>
         </div>
-      </div>
-    </form>
-    {#if displayerror}
-      <div class="mx-auto">
-        <ErrorInfo {errormsg} on:click={() => (displayerror = false)} />
-      </div>
-    {/if}
+      {/if}
+    </div>
+  </form>
+  {#if displayerror}
+    <div class="mx-auto">
+      <ErrorInfo {errormsg} on:click={() => (displayerror = false)} />
+    </div>
+  {/if}
+
+  <!-- For pdf preview -->
+  <div class="{displaypreview && showpdf ? 'flex' : 'hidden'}  w-full lg:w-[38.5rem] flex-col rounded-md" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
+    <canvas id="mycanvas" class="border-2 rounded-md overflow-hidden" />
+    <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
+    <div class="flex justify-center items-center gap-8 pt-3">
+      <button on:click={previouspage} disabled={!prevbtn}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-black'}">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+        </svg>
+      </button>
+      <h1 class="text-lg text-black font-bold">{currentpage} / {_total_pages}</h1>
+      <button on:click={nextpage} disabled={!nextbtn}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-black'}">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+      </button>
+    </div>
   </div>
 
-  {#if displaypreview}
-    {#if showpdf}
-      <div class="flex w-full lg:w-[38.5rem] flex-col rounded-md" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
-        <canvas id="mycanvas" class="border-2 rounded-md overflow-hidden" />
-        <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
-        <div class="flex justify-center items-center gap-8 pt-3">
-          <button on:click={previouspage} disabled={!prevbtn}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-black'}">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-            </svg>
-          </button>
-          <h1 class="text-lg text-black font-bold">{currentpage} / {_total_pages}</h1>
-          <button on:click={nextpage} disabled={!nextbtn}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-black'}">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-            </svg>
-          </button>
-        </div>
-        {#if showpdf}
-          <div class="flex mx-auto gap-4 pt-3">
-            <div class="flex">
-              <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
-            </div>
-            <div class="flex">
-              <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide"> Confirm and Continue </button>
-            </div>
-          </div>
-        {/if}
+  <!-- For image preview -->
+  <div class="{displaypreview && !showpdf ? 'flex' : 'hidden'} flex w-full lg:w-[38.5rem] flex-col" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
+    <div class="w-full max-h-[40rem] rounded-md justify-center items-center flex border-2">
+      <div>
+        <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
       </div>
-    {:else}
-      <div class="flex w-full lg:w-[38.5rem] flex-col" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
-        <div class="w-full h-[40rem] rounded-md justify-center items-center flex border-2">
-          <div>
-            <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
-          </div>
-        </div>
-        {#if !showpdf}
-          <div class="flex mx-auto gap-4 pt-3">
-            <div class="flex">
-              <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
-            </div>
-            <div class="flex">
-              <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Confirm and Continue</button>
-            </div>
-          </div>
-        {/if}
-      </div>
-    {/if}
-  {/if}
+    </div>
+  </div>
+
+  <div class="{displaypreview ? 'flex' : 'hidden'} mx-auto gap-4 pt-3">
+    <div class="flex">
+      <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
+    </div>
+    <div class="flex">
+      <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Confirm and Continue</button>
+    </div>
+  </div>
 </div>

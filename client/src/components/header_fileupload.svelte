@@ -23,15 +23,15 @@
   });
 </script>
 
-<div class=" w-full  rounded-md flex items-center  gap-1" style="background:{bgcolor}" in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }}>
-  <div id="header_card" class="w-full flex px-2 py-2" style="background:{bgpattern}">
-    <div class="flex">
-      <img src={qr} alt="qrcode" class="p-1 w-20 h-20 rounded-md overflow-hidden lg:w-[100px] lg:h-[100px]" />
-      <img src="/assets/sample.jpg" alt="qrcode" class="p-1 rounded-md overflow-hidden w-20 h-20 lg:w-[100px] lg:h-[100px]" />
+<div class="  w-full lg:w-[38.5rem] rounded-md flex items-center  gap-1" style="background:{bgcolor}" in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }}>
+  <div id="header_card" class="w-full flex flex-col px-4 py-4" style="background:{bgpattern}">
+    <div class="flex gap-4">
+      <img src={qr} alt="qrcode" class="w-20 h-20 rounded overflow-hidden lg:w-[100px] lg:h-[100px]" />
+      <img src="/assets/sample.jpg" alt="qrcode" class="rounded overflow-hidden w-20 h-20 lg:w-[100px] lg:h-[100px]" />
     </div>
-    <div class="px-3 space-y-2 justify-center items-start flex flex-col">
-      <h1 class="text-base font-semibold text-white capitalize ">{issuerName}</h1>
-      <h1 class="text-base font-semibold font-mono text-white ">{id}</h1>
+    <div class="pt-3">
+      <h1 class="text-lg font-medium tracking-wide text-white capitalize">{issuerName}</h1>
+      <h1 class="text-xl font-bold font-mono text-white ">{id}</h1>
       <h1 class="text-base font-semibold text-white "><slot name="title" /></h1>
     </div>
   </div>
