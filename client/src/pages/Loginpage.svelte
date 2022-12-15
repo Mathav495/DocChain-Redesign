@@ -105,7 +105,7 @@
       <h1 class="text-2xl text-white tracking-wide font-normal">DocChain</h1>
     </div>
 
-    <div class="mt-20 flex justify-center xl:justify-start">
+    <div class="pt-20 flex justify-center xl:justify-start">
       <h1 class="text-white text-4xl font-bold">Login</h1>
     </div>
     <div class="flex justify-center xl:justify-start">
