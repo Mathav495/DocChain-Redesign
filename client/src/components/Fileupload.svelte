@@ -37,8 +37,26 @@
         error.dateexpired = '';
       }, 3000);
       valid = false;
+    } else if (dateexpired) {
+      console.log(dateexpired);
+      let currentDate = new Date().getTime();
+      console.log(currentDate);
+      let expireDate = new Date(dateexpired).getTime();
+      console.log(expireDate);
+      if (currentDate > expireDate) {
+        document.querySelector('#docdate').type = 'text';
+        dateexpired = '';
+        error.dateexpired = 'Choose the valid date';
+        setTimeout(() => {
+          error.dateexpired = '';
+        }, 3000);
+        valid = false;
+      } else {
+        error.dateexpired = '';
+        date = new Date(dateexpired).toISOString();
+        console.log(date);
+      }
     } else {
-      date = new Date(dateexpired).toISOString();
       error.dateexpired = '';
     }
     if (issuer == '') {
@@ -174,7 +192,7 @@
         </div>
         <div class="flex flex-col w-full space-y-2">
           <label for="docid" class="text-sm text-black tracking-wide font-bold">Date Expired</label>
-          <input bind:value={dateexpired} placeholder={error.dateexpired ? error.dateexpired : 'Enter expiry date'} type="text" onfocus="(this.type = 'date')" class={error.dateexpired ? 'input-error' : 'input-normal'} name="docid" id="docid" />
+          <input bind:value={dateexpired} placeholder={error.dateexpired ? error.dateexpired : 'Enter expiry date'} type="text" onfocus="(this.type = 'date')" class={error.dateexpired ? 'input-error' : 'input-normal'} name="docdate" id="docdate" />
         </div>
         <div class="flex flex-col w-full space-y-2">
           <label for="docTitle" class="text-sm text-black tracking-wide font-bold">Document Title</label>
