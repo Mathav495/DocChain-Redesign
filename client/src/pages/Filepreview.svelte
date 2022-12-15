@@ -66,7 +66,7 @@
         <Header on:navShow={showNav} />
       </div>
       <Previewpage {bgcolor} />
-      <PrevFooter {signmsg} {Queue_msg} />
+      <!-- <PrevFooter {signmsg} {Queue_msg} /> -->
     </div>
     <!--small screen navbar-->
     <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">

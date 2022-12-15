@@ -1,9 +1,11 @@
 <script>
   import BlobPreview from './blob-preview.svelte';
-  import PreviewQrCard from './preview_qrCard.svelte'
+  import PreviewQrCard from './preview_qrCard.svelte';
+  import PrevFooter from './prev_footer.svelte';
 
-   export let id;
- 
+  export let id;
+  let signmsg, Queue_msg;
+
   let fileHash = localStorage.getItem('filehash');
   console.log('filehash', fileHash);
   let dataHash = localStorage.getItem('datahash');
@@ -17,7 +19,9 @@
   let bgcolor = localStorage.getItem('bgGradient');
 </script>
 
-<div class=" mx-auto w-full h-auto flex flex-wrap xl:flex-nowrap">
+<!-- <div class="flex-col"> -->
+<div class="relative mx-auto w-full h-auto flex flex-wrap xl:flex-nowrap">
+  <PrevFooter {signmsg} {Queue_msg} />
   <div class="flex w-full rounded-lg xl:mr-4 xl:w-3/5 lg:w-3/5 mb-10">
     <BlobPreview />
   </div>
@@ -55,3 +59,5 @@
     </div>
   </div>
 </div>
+
+<!-- </div> -->
