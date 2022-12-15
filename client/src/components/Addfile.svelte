@@ -228,7 +228,7 @@
     </div>
   </div>
 
-  <div class=" w-full lg:w-[38.5rem] flex flex-col gap-4">
+  <div class="w-full lg:w-[38.5rem] flex flex-col gap-4">
     <HeaderFileupload {id} {bgcolor} />
 
     <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data">
@@ -296,7 +296,7 @@
       </div>
     {:else}
       <div class="flex w-full lg:w-[38.5rem] flex-col" in:fade={{ duration: 4000 }} out:fade={{ duration: 1000 }}>
-        <div class="w-full h-[40rem] rounded-md justify-center items-center flex border-2">
+        <div class="w-full max-h-[40rem] rounded-md justify-center items-center flex border-2">
           <div>
             <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
           </div>
