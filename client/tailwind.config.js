@@ -22,7 +22,9 @@ module.exports = {
         6: '6px',
       },
       boxShadow: {
-        around: '0px 0px 8px 0px rgb(0 0 0/.15)',
+        around: '0px 0px 8px 0px',
+        slide: '0px 0px 2px 0px',
+        bottom: 'rgba(0, 0, 0, 0.35) 0px -20px 30px -30px inset',
       },
     },
     cursor: {
