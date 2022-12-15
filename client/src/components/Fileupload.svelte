@@ -6,7 +6,12 @@
   import ErrorInfo from './ErrorInfo.svelte';
   const dispatch = createEventDispatcher();
   export let id;
-  export let dateexpired, issuer, doctype, signatory, docTitle, valid, date, sampleData, options, errormsg, name;
+  let dateexpired = '';
+  let issuer = '';
+  let doctype = '';
+  let signatory = '';
+  let docTitle = '';
+  let valid, date, sampleData, options, errormsg;
   let displayerror = false;
   let error = {
     dateexpired: '',
@@ -26,7 +31,7 @@
   const onsubmitdata = async () => {
     console.log(dateexpired, issuer, signatory, docTitle, doctype);
     valid = true;
-    if (dateexpired == undefined) {
+    if (dateexpired == '') {
       error.dateexpired = 'Fill the Expiry Date';
       setTimeout(() => {
         error.dateexpired = '';
@@ -36,7 +41,7 @@
       date = new Date(dateexpired).toISOString();
       error.dateexpired = '';
     }
-    if (issuer == undefined) {
+    if (issuer == '') {
       error.issuer = 'Fill the Issuer name';
       setTimeout(() => {
         error.issuer = '';
@@ -45,7 +50,7 @@
     } else {
       error.issuer = '';
     }
-    if (doctype == undefined) {
+    if (doctype == '') {
       error.doctype = 'Fill the Document Type';
       setTimeout(() => {
         error.doctype = '';
@@ -54,7 +59,7 @@
     } else {
       error.doctype = '';
     }
-    if (docTitle == undefined) {
+    if (docTitle == '') {
       error.docTitle = 'Fill the Document Title';
       setTimeout(() => {
         error.docTitle = '';
@@ -63,7 +68,7 @@
     } else {
       error.docTitle = '';
     }
-    if (signatory == undefined) {
+    if (signatory == '') {
       error.signatory = 'Fill the Signatory name';
       setTimeout(() => {
         error.signatory = '';
@@ -105,7 +110,7 @@
       );
       console.log(data);
       let metadata = data.metadata;
-      console.log(metadata.receiver)
+      console.log(metadata.receiver);
       console.log(metadata);
       // localStorage.setItem("issuer",data.issuer)
       if (data.dataHash) {

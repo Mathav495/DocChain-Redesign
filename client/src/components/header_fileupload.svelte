@@ -20,7 +20,6 @@
         'x-access-token': token,
       },
     });
-    issuerName = data.userData.name;
   });
 </script>
 
