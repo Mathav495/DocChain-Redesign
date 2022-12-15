@@ -210,7 +210,7 @@
   };
 </script>
 
-<div class="relative h-auto w-full flex flex-col items-center justify-center gap-4  p-4">
+<div class="relative h-auto w-full flex flex-col items-center justify-center gap-3  p-4">
   <div class="w-full h-full bg-[#000000cc] absolute  flex items-end justify-center p-4" class:hidden={!displayConfirm}>
     <div class="z-10 flex flex-col lg:flex-row w-full lg:w-3/5  bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
       <div>
@@ -236,7 +236,7 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       {#if displayDropzone}
         <div class="sm:col-span-6 cursor-pointer" id="dropzone" on:click={toClickinput} in:fade={{ duration: 1500 }} out:fade={{ duration: 100 }}>
-          <div class="flex justify-center items-center rounded-md border-1 border-dashed border-blue-600 bg-slate-200  py-10">
+          <div class="flex justify-center items-center rounded-md border-1 border-dashed border-blue-600 bg-slate-200  py-14">
             <div class="space-y-1 text-center">
               <div class="flex flex-col text-base text-gray-600">
                 <label for="file-upload" class=" relative cursor-pointer rounded-md  font-semibold text-blue-800" id="dropzone">
@@ -281,10 +281,10 @@
   </div>
 
   <!-- For image preview -->
-  <div class="{displaypreview && !showpdf ? 'flex' : 'hidden'} flex w-full lg:w-[38.5rem] flex-col" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
-    <div class="w-full max-h-[40rem] rounded-md justify-center items-center flex border-2">
-      <div>
-        <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
+  <div class="{displaypreview && !showpdf ? 'flex' : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
+    <div class="max-w-full min-w-[22.5rem] min-h-[24.35rem] max-h-[40rem] justify-center items-center flex">
+      <div class="border-2 rounded-md overflow-hidden">
+        <img src={blobimage} class="max-w-full min-w-[22.5rem] min-h-[24.35rem] max-h-[40rem]" id="File" alt="Preview" />
       </div>
     </div>
   </div>
