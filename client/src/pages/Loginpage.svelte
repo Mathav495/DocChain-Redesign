@@ -141,7 +141,7 @@
             </div>
           </div>
         </div>
-        <h1 class="text-gray-400 hover:text-white underline underline-offset-4 text-base tracking-wide mt-5 mb-5 cursor-pointer font-normal">Forgot Password?</h1>
+        <h1 class="text-gray-400 hover:text-white underline underline-offset-4 text-base tracking-wide pt-5 pb-5 cursor-pointer font-normal">Forgot Password?</h1>
         <div>
           <button class="w-96 mt-5 text-white font-medium active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 tracking-wider uppercase rounded text-lg">login</button>
         </div>
