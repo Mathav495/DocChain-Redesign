@@ -143,9 +143,9 @@
 {:else if Queue_msg}
   <QueueMsg position="absolute bottom-28 right-4" on:click={hideQueuemsg} />
 {/if}
-<div class="absolute w-4/6 justify-center flex items-end mx-auto z-10 bottom-0 inset-x-0">
-  <div class=" border-2 border-gray-100 flex px- py-4 w-full mx-auto  bg-gray-200 xl:flex-nowrap rounded-lg flex-wrap">
-    <div class="container px-4 mx-auto flex items-center md:flex-row flex-col sm:right-0">
+<div class="absolute w-3/5 justify-center flex items-end mx-auto z-10 bottom-0 inset-x-0">
+  <div class="  flex px- py-4 w-full mx-auto  bg-white xl:flex-nowrap rounded-lg flex-wrap shadow-[0_0_8px_0_rgba(0,0,0,0.15)]">
+    <div class="px-4 mx-auto flex items-center md:flex-row flex-col">
       <div class=" flex w-full pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left">
         <h1 class="title-font text-2xl font-bold text-red-600 md:text-2xl">Please verify document details before proceed</h1>
       </div>

@@ -104,9 +104,13 @@
         },
       );
       console.log(data);
-      let metadata = data.metadata;
+      // let metadata = data.metadata;
+      localStorage.setItem('metadata', JSON.stringify(data.metadata));
+      let metadata =JSON.parse(localStorage.getItem('metadata'));
       console.log(metadata.receiver)
-      console.log(metadata);
+      localStorage.setItem("options", JSON.stringify(data.options));
+      let options = JSON.parse(localStorage.getItem("options"));
+      console.log(options)     
       // localStorage.setItem("issuer",data.issuer)
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem('docDetails'));

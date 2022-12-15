@@ -85,15 +85,14 @@
 
 <div class="flex w-full flex-col">
   {#if (src = blobimage)}
-    <img class="w-full rounded-md " src={blobimage} alt="document" />
+    <img class="w-full rounded-md mb-10" src={blobimage} alt="document" />
   {:else}
     {#if loading}
       <Loading />
     {:else}
       <div class=" relative flex max-w-full flex-col rounded-md">
-        <canvas id="blobcanv" class="border-2 rounded-md overflow-hidden drop-shadow-lg" />
-        <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
-        <div class="flex justify-center items-center absolute bottom-2 inset-x-0 gap-3">
+        <canvas id="blobcanv" class="border-2 rounded-md overflow-hidden drop-shadow-lg mb-10" />
+              <div class="flex justify-center items-center absolute bottom-2 inset-x-0 gap-3">
           <button on:click={previouspage} disabled={!prevbtn}>
            
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6  {!prevbtn ? 'text-gray-600' : 'text-black'}">
