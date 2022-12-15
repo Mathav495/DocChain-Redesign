@@ -101,9 +101,9 @@
 </svelte:head>
 <div class="absolute w-full top-0 left-0">
   <div class="w-full xl:w-1/3 p-10 h-screen bg-black/50">
-    <div class="flex justify-center xl:justify-start">
-      <img class=" mr-2 inline-block animate-pulse align-top " src="assets\icon1.png" alt="icon1" />
-      <h1 class="text-2xl text-white tracking-wide font-normal">DocChain</h1>
+    <div class="flex gap-2 justify-center items-center xl:justify-start">
+      <img class="animate-pulse" src="assets\icon1.png" alt="icon1" />
+      <h1 class="text-2xl text-white tracking-wide font-normal pt-0.5">DocChain</h1>
     </div>
 
     <div class="pt-20 flex justify-center xl:justify-start">
@@ -111,7 +111,7 @@
     </div>
     <div class="flex justify-center xl:justify-start">
       <form on:submit|preventDefault={onLogin} novalidate="novalidate">
-        <div class="w-96 mt-10 group">
+        <div class="w-96 pt-10 group">
           <label for="Email" class="text-xl relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-400 group-hover:text-white tracking-wide">Email</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -120,16 +120,16 @@
             <input bind:value={Email} type="email" id="Email" placeholder={error.Email ? error.Email : 'Enter Your Email'} class="w-full mt-2 pl-9  placeholder:text-base  bg-black focus:bg-black text-blue-500 rounded border {error.Email ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500 animate-shakeX' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8" />
           </div>
         </div>
-        <div class="w-96 pt-8 group">
+        <div class="w-96 pt-10 group">
           <label for="Password" class="text-xl after:content-['*'] after:ml-1 group-hover:text-white  after:text-red-500 text-gray-400 tracking-wide">Password</label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-2">
               <PasswordIcons />
             </span>
             {#if type == 'password'}
-              <input bind:value={Password} type="password" id="Password" placeholder={error.Password ? error.Password : 'Enter Your Password'} class="w-full placeholder:text-base mt-2 bg-black pl-10  focus:bg-black text-blue-500 rounded border {error.Password ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
+              <input bind:value={Password} type="password" id="Password" placeholder={error.Password ? error.Password : 'Enter Your Password'} class="w-full placeholder:text-base mt-2 bg-black pl-10  focus:bg-black text-blue-500 rounded border {error.Password ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500 animate-shakeX' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
             {:else}
-              <input bind:value={Password} type="text" id="Password" placeholder={error.Password ? error.Password : 'Enter Your Password'} class="w-full mt-2 bg-black pl-10 placeholder:text-base focus:bg-black text-blue-500 rounded border {error.Password ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
+              <input bind:value={Password} type="text" id="Password" placeholder={error.Password ? error.Password : 'Enter Your Password'} class="w-full mt-2 bg-black pl-10 placeholder:text-base focus:bg-black text-blue-500 rounded border {error.Password ? 'border-red-500 ring-2 ring-red-500 placeholder:text-red-500 animate-shakeX' : 'border-gray-300 placeholder:text-blue-500'} focus:border-white focus:ring-1 focus:ring-white  text-lg outline-none py-1 px-3 leading-8" />
             {/if}
 
             <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -152,7 +152,7 @@
           {/if}
         </div>
       </form>
-      <h1 class="absolute bottom-0  pb-10 text-base font-medium tracking-wide text-neutral-400">
+      <h1 class="absolute bottom-0 pb-10 text-base font-medium tracking-wide text-neutral-400">
         Don't have an account? <span class="text-gray-400 hover:text-white tracking-wide cursor-pointer underline underline-offset-4">Contact us</span>
       </h1>
     </div>
