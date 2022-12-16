@@ -111,9 +111,9 @@
   };
 
   document.addEventListener('DOMContentLoaded', (e) => {
-    const confirm = document.getElementById('confirm');
-    const sign = document.getElementById('sign');
-    const publish = document.getElementById('publish');
+    const confirm = document.querySelector('#confirm');
+    const sign = document.querySelector('#sign');
+    const publish = document.querySelector('#publish');
     // e.stopPropagation();
 
     // whenever the enter button is clicked
