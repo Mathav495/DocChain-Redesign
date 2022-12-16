@@ -30,8 +30,10 @@
   let bgcolor = localStorage.getItem('bgGradient');
   let metadata = JSON.parse(localStorage.getItem('metadata'));
   console.log(metadata);
-  let options = JSON.parse(localStorage.getItem('options'));
-  console.log(options);
+  // document.getElementById("name").innerHTML = metadata.receiver.name;
+  // console.log(metadata.document.type)
+  // ocument.getElementById("id").innerHTML = metadata.document.type;
+  // console.log(typeof(metadata.document.type))
 </script>
 
 <!-- <div class="flex-col"> -->

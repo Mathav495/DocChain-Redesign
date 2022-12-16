@@ -24,6 +24,8 @@
     try {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
       let loadingTask = pdfjsLib.getDocument(blob);
+      // const response = await fetch(blob);
+      // const blob = await response.blob();
       loadingTask = loadingTask.promise;
       _PDFDOC = await loadingTask;
       _total_pages = _PDFDOC.numPages;
@@ -86,12 +88,12 @@
 
 <div class="flex w-full flex-col">
   {#if (src = blobimage)}
-    <img class="w-full rounded-md mb-10" src={blobimage} alt="document" />
+    <img class="block shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-md mb-10 max-w-full min-w-[22.5rem] min-h-[24.35rem] max-h-[40rem]" src={blobimage} alt="document" />
   {:else if loading}
     <Loading />
   {:else}
     <div class=" relative flex max-w-full flex-col rounded-md">
-      <canvas id="blobcanv" class="border-2 rounded-md overflow-hidden drop-shadow-lg mb-10 aspect-auto" />
+      <canvas id="blobcanv" class="border-2 block rounded-md overflow-hidden max-w-full lg:w-[38.5rem] shadow-[0_0_8px_0_rgba(0,0,0,0.15)]  mb-10 aspect-auto" />
       <div class="flex justify-center items-center absolute bottom-12 inset-x-0 gap-3">
         <button on:click={previouspage} disabled={!prevbtn}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6  {!prevbtn ? 'text-gray-600' : 'text-black'}">
@@ -104,7 +106,6 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z" />
           </svg>
         </button>
-
       </div>
     </div>
   {/if}

@@ -129,10 +129,9 @@
       );
       console.log(data);
       // let metadata = data.metadata;
-      window.localStorage.setItem('metadata', JSON.stringify(data.metadata));
-      let metadata = JSON.parse(window.localStorage.getItem('metadata'));
+      localStorage.setItem('metadata', JSON.stringify(data.metadata));
+      let metadata = JSON.parse(localStorage.getItem('metadata'));
       console.log(metadata);
-
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem('docDetails'));
         console.log('localdata', localdata);

@@ -85,7 +85,6 @@
       Queue_msg = false;
     }, 1000);
     load = false;
-    // window.location.assign(proposedURL, '_blank');
     navigate(`/final`);
     // }
   };
@@ -117,21 +116,21 @@
     // e.stopPropagation();
 
     // whenever the enter button is clicked
-    // document.onload = function () {
-    confirm.addEventListener('click', (e) => {
+
+    confirm.addEventListener('click', () => {
       console.log('confirm clicked');
       confirm.style.display = 'none';
       sign.style.display = 'inline-flex';
+      publish.style.display = 'none';
       console.log('sign-triggered');
     });
-    sign.addEventListener('click', (e) => {
+    sign.addEventListener('click', () => {
       // e.stopPropagation();
       sign.style.display = 'none';
       confirm.style.display = 'none';
       publish.style.display = 'inline-flex';
       console.log('publishing triggered');
     });
-    // };
   });
   const hideSignmsg = () => {
     signmsg = false;
@@ -142,18 +141,18 @@
 </script>
 
 {#if signmsg}
-  <SignidMsg position="absolute bottom-28 right-4" on:click={hideSignmsg} />
+  <SignidMsg position="absolute z-20 bottom-28 right-4" on:click={hideSignmsg} />
 {:else if Queue_msg}
-  <QueueMsg position="absolute bottom-28 right-4" on:click={hideQueuemsg} />
+  <QueueMsg position="absolute z-20 bottom-28 right-4" on:click={hideQueuemsg} />
 {/if}
-<div class="absolute w-5/6 flex mx-auto z-10 bottom-0 inset-x-0">
+<div class="fixed w-3/5 flex justify-end items-end z-10 bottom-10 right-52 ">
   <div class="flex px-4 py-4 justify-between mx-auto bg-white rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]  items-center md:flex-row flex-col">
     <div class=" mx-auto flex  md:flex-row flex-col items-end">
       <div class=" flex w-full pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left">
         <h1 class="title-font text-2xl font-bold text-red-600 md:text-2xl">Please verify document details before proceed</h1>
       </div>
       <div class="mx-auto flex flex-shrink-0 items-center space-x-6 md:ml-auto md:mr-0">
-        <button class=" inline-flex items-center rounded-lg border border-red-600 text-red-600 py-2 px-8 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click={releaseDoc} id="release">
+        <button class=" inline-flex items-center rounded-lg border border-red-600 text-red-600 py-2 px-8 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click|preventDefault={releaseDoc} id="release">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
           </svg>
@@ -173,7 +172,7 @@
           {/if}
           <span class="title-font ml-2 font-bold text-base">Confirm</span>
         </button>
-        <button class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-8 hover:bg-green-900 hover:text-white focus:outline-none" style="display: none" on:click={getsignature} id="sign">
+        <button class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-8 hover:bg-green-900 hover:text-white focus:outline-none" style="display: none" on:click|preventDefault|stopPropagation={getsignature} id="sign">
           {#if load}
             <svg role="status" class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-900" viewBox="0 0 24 24" />
           {:else}
@@ -183,7 +182,7 @@
           {/if}
           <span class="title-font ml-2 font-bold text-base">Signature</span>
         </button>
-        <button class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-8 hover:bg-green-900 hover:text-white focus:outline-none" style="display: none" id="publish" on:click|once={disablerelease} on:click={publishdoc}>
+        <button class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-8 hover:bg-green-900 hover:text-white focus:outline-none" style="display: none" id="publish" on:click|once={disablerelease} on:click|preventDefault|stopPropagation={publishdoc}>
           {#if load}
             <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-900" viewBox="0 0 24 24" />
           {:else}
