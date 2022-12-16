@@ -95,6 +95,7 @@
       displayDropzone = false;
       showpdf = false;
       blobimage = URL.createObjectURL(File);
+      console.log(blobimage);
       localStorage.setItem('blobimage', blobimage);
       return;
     } else if (File.type == 'application/pdf') {
@@ -136,7 +137,7 @@
 
   const showPdf = async (blob) => {
     // await pageloader();
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js';
     let loadingTask = pdfjsLib.getDocument(blob);
     loadingTask = loadingTask.promise;
     _PDFDOC = await loadingTask;
