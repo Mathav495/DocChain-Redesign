@@ -119,10 +119,11 @@
     // whenever the enter button is clicked
     window.onload = function () {
       confirm.addEventListener('click', (e) => {
+        e.stopPropagation();
+        console.log('confirm clicked');
         confirm.style.display = 'none';
         sign.style.display = 'inline-flex';
         console.log('sign-triggered');
-        e.stopPropagation();
       });
       sign.addEventListener('click', (e) => {
         sign.style.display = 'none';
@@ -132,7 +133,6 @@
       });
     };
   });
-
   const hideSignmsg = () => {
     signmsg = false;
   };
@@ -147,8 +147,8 @@
   <QueueMsg position="absolute bottom-28 right-4" on:click={hideQueuemsg} />
 {/if}
 <div class="absolute w-5/6 flex mx-auto z-10 bottom-0 inset-x-0">
-  <div class="container flex px-4 py-4 w-full mx-auto bg-white  rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]  items-center md:flex-row flex-col">
-    <div class="px-4 mx-auto flex  justify-between md:flex-row flex-col">
+  <div class="flex px-4 py-4 justify-between mx-auto bg-white rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]  items-center md:flex-row flex-col">
+    <div class=" mx-auto flex  md:flex-row flex-col items-end">
       <div class=" flex w-full pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left">
         <h1 class="title-font text-2xl font-bold text-red-600 md:text-2xl">Please verify document details before proceed</h1>
       </div>
@@ -181,7 +181,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
             </svg>
           {/if}
-          <span class="title-font ml-2 font-bold text-base">Sign_ID</span>
+          <span class="title-font ml-2 font-bold text-base">Signature</span>
         </button>
         <button class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-8 hover:bg-green-900 hover:text-white focus:outline-none" style="display: none" id="publish" on:click|once={disablerelease} on:click={publishdoc}>
           {#if load}

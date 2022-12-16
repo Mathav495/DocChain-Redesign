@@ -23,7 +23,7 @@
     loading = true;
     try {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
-      let loadingTask = pdfjsLib.getDocument(blob);
+      let loadingTask = pdfjsLib.getDocument('/assets/Handbook on SHG.pdf');
       loadingTask = loadingTask.promise;
       _PDFDOC = await loadingTask;
       _total_pages = _PDFDOC.numPages;
