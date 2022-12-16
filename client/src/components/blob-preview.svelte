@@ -37,12 +37,13 @@
       console.log(e);
     }
   });
+
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno);
     console.log('Page loaded');
     let viewport = page.getViewport({ scale: 1 });
     // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById('canvas');
+    let canvas = document.getElementById('blobcanv');
     let context = canvas.getContext('2d');
     canvas.height = viewport.height;
     canvas.width = viewport.width;
@@ -85,36 +86,26 @@
 
 <div class="flex w-full flex-col">
   {#if (src = blobimage)}
-    <img class="w-full rounded-md " src={blobimage} alt="document" />
+    <img class="w-full rounded-md mb-10" src={blobimage} alt="document" />
+  {:else if loading}
+    <Loading />
   {:else}
-    {#if loading}
-      <Loading />
-    {:else}
-      <div class=" relative flex max-w-full flex-col rounded-md">
-        <canvas id="canvas" class="border-2 rounded-md overflow-hidden drop-shadow-lg" />
-        <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
-        <div class="flex justify-center items-center absolute bottom-2 inset-x-0 gap-3">
-          <button on:click={previouspage} disabled={!prevbtn}>
-            <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-black'}">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-          </svg> -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6  {!prevbtn ? 'text-gray-600' : 'text-black'}">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
-            </svg>
-          </button>
-          <h1 class="text-lg text-black font-bold">{currentpage} / {_total_pages}</h1>
-          <button on:click={nextpage} disabled={!nextbtn}>
-            <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-black'}">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg> -->
+    <div class=" relative flex max-w-full flex-col rounded-md">
+      <canvas id="blobcanv" class="border-2 rounded-md overflow-hidden drop-shadow-lg mb-10 aspect-auto" />
+      <div class="flex justify-center items-center absolute bottom-12 inset-x-0 gap-3">
+        <button on:click={previouspage} disabled={!prevbtn}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6  {!prevbtn ? 'text-gray-600' : 'text-black'}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />
+          </svg>
+        </button>
+        <h1 class="text-lg text-black font-bold">showing {currentpage} of {_total_pages}</h1>
+        <button on:click={nextpage} disabled={!nextbtn}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 {!nextbtn ? 'text-gray-600' : 'text-black'}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z" />
+          </svg>
+        </button>
 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 {!nextbtn ? 'text-gray-600' : 'text-black'}">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062A1.125 1.125 0 013 16.81V8.688zM12.75 8.688c0-.864.933-1.405 1.683-.977l7.108 4.062a1.125 1.125 0 010 1.953l-7.108 4.062a1.125 1.125 0 01-1.683-.977V8.688z" />
-            </svg>
-          </button>
-        </div>
       </div>
-    {/if}
-    <!-- <PdfCanvas /> -->
+    </div>
   {/if}
 </div>
