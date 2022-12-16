@@ -122,6 +122,7 @@
         confirm.style.display = 'none';
         sign.style.display = 'inline-flex';
         console.log('sign-triggered');
+        e.stopPropagation();
       });
       sign.addEventListener('click', (e) => {
         sign.style.display = 'none';
