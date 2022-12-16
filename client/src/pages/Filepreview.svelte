@@ -6,6 +6,7 @@
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   import Previewpage from '../components/previewpage.svelte';
   import PrevFooter from '../components/prev_footer.svelte';
+  import { construct_svelte_component_dev } from 'svelte/internal';
   let bgcolor = localStorage.getItem('bgGradient');
   console.log(bgcolor);
   let token = localStorage.getItem('token');
@@ -20,7 +21,18 @@
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
   let signmsg, Queue_msg;
-
+  export let id;
+  let localfile = JSON.parse(localStorage.getItem('docDetails'));
+  console.log('localfile', localfile);
+  localfile.find((localfile) => {
+    if (localfile.documentID == id) {
+      console.log(localfile);
+      console.log('same id', localfile.documentID);
+      console.log('filehash', localfile.filehash);
+      localfile.filehash = true;
+      console.log(localfile);
+    }
+  });
   let hideNavbar = true;
   const hideNav = () => {
     hideNavbar = true;
@@ -65,8 +77,8 @@
       <div class="md:hidden block">
         <Header on:navShow={showNav} />
       </div>
-      <Previewpage {bgcolor} />
-      <PrevFooter {signmsg} {Queue_msg} />
+      <Previewpage {id} />
+      <!-- <PrevFooter {signmsg} {Queue_msg} /> -->
     </div>
     <!--small screen navbar-->
     <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">

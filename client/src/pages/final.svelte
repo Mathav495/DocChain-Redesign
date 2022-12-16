@@ -3,9 +3,11 @@
   import Header from '../components/Header.svelte';
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
-  import Nav from '../components/Nav.svelte'
+  import Nav from '../components/Nav.svelte';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
   import FinalPrev from '../components/final_prev.svelte';
+  export let id;
+
   let qr = localStorage.getItem('qrcode');
   console.log('qrcode', qr);
   let proposedURL = localStorage.getItem('docURL');
@@ -26,6 +28,17 @@
    */
   let blob = localStorage.getItem('blobpdf');
   console.log(blob);
+  let localfile = JSON.parse(localStorage.getItem('docDetails'));
+  console.log('localfile', localfile);
+  localfile.find((localfile) => {
+    if (localfile.documentID == id) {
+      console.log(localfile);
+      console.log('same id', localfile.documentID);
+      console.log('filehash', localfile.filehash);
+      localfile.filehash = true;
+      console.log(localfile);
+    }
+  });
 
   let hideNavbar = true;
   const hideNav = () => {
@@ -71,7 +84,7 @@
       <div class="md:hidden block">
         <Header on:navShow={showNav} />
       </div>
-      <FinalPrev {bgcolor} />
+      <FinalPrev {id} {bgcolor} />
       <!-- <PrevFooter /> -->
       <!-- <section class="body-font text-gray-600"> -->
       <!-- <div class="mx-auto flex flex-wrap justify-center md:ml-0 md:justify-start py-5">

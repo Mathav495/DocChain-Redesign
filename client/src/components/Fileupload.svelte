@@ -128,10 +128,11 @@
         },
       );
       console.log(data);
-      let metadata = data.metadata;
-      console.log(metadata.receiver);
+      // let metadata = data.metadata;
+      window.localStorage.setItem('metadata', JSON.stringify(data.metadata));
+      let metadata = JSON.parse(window.localStorage.getItem('metadata'));
       console.log(metadata);
-      // localStorage.setItem("issuer",data.issuer)
+
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem('docDetails'));
         console.log('localdata', localdata);
@@ -153,7 +154,7 @@
       console.log('datahash', dataHash);
       if (data.dataHash) {
         errormsg = '';
-        navigate('/preview');
+        navigate(`/publish/${id}`);
       } else {
         if (data.error) {
           errormsg = data.errorCode;
