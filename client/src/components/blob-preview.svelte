@@ -23,7 +23,7 @@
     loading = true;
     try {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
-      let loadingTask = pdfjsLib.getDocument('/assets/Handbook on SHG.pdf');
+      let loadingTask = pdfjsLib.getDocument(blob);
       loadingTask = loadingTask.promise;
       _PDFDOC = await loadingTask;
       _total_pages = _PDFDOC.numPages;
@@ -91,7 +91,7 @@
     <Loading />
   {:else}
     <div class=" relative flex max-w-full flex-col rounded-md">
-      <canvas id="blobcanv" class="border-2 rounded-md overflow-hidden drop-shadow-lg mb-10 aspect-square" />
+      <canvas id="blobcanv" class="border-2 rounded-md overflow-hidden drop-shadow-lg mb-10 aspect-auto" />
       <div class="flex justify-center items-center absolute bottom-12 inset-x-0 gap-3">
         <button on:click={previouspage} disabled={!prevbtn}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6  {!prevbtn ? 'text-gray-600' : 'text-black'}">

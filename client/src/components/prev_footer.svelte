@@ -110,28 +110,28 @@
     document.getElementById('release').disabled = true;
   };
 
-  document.addEventListener('DOMContentLoaded', (e) => {
+  document.addEventListener('DOMContentLoaded', function () {
     const confirm = document.getElementById('confirm');
     const sign = document.getElementById('sign');
     const publish = document.getElementById('publish');
     // e.stopPropagation();
 
     // whenever the enter button is clicked
-    window.onload = function () {
-      confirm.addEventListener('click', (e) => {
-        e.stopPropagation();
-        console.log('confirm clicked');
-        confirm.style.display = 'none';
-        sign.style.display = 'inline-flex';
-        console.log('sign-triggered');
-      });
-      sign.addEventListener('click', (e) => {
-        sign.style.display = 'none';
-        confirm.style.display = 'none';
-        publish.style.display = 'inline-flex';
-        console.log('publishing triggered');
-      });
-    };
+    // document.onload = function () {
+    confirm.addEventListener('click', (e) => {
+      console.log('confirm clicked');
+      confirm.style.display = 'none';
+      sign.style.display = 'inline-flex';
+      console.log('sign-triggered');
+    });
+    sign.addEventListener('click', (e) => {
+      // e.stopPropagation();
+      sign.style.display = 'none';
+      confirm.style.display = 'none';
+      publish.style.display = 'inline-flex';
+      console.log('publishing triggered');
+    });
+    // };
   });
   const hideSignmsg = () => {
     signmsg = false;
