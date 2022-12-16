@@ -93,8 +93,8 @@
     <Loading />
   {:else}
     <div class=" relative flex max-w-full flex-col rounded-md">
-      <canvas id="blobcanv" class="border-2 block rounded-md overflow-hidden max-w-full lg:w-[38.5rem] shadow-[0_0_8px_0_rgba(0,0,0,0.15)]  mb-10 aspect-auto" />
-      <div class="flex justify-center items-center absolute bottom-12 inset-x-0 gap-3">
+      <canvas id="blobcanv" class="border-2 block rounded-md overflow-hidden max-w-full  shadow-[0_0_8px_0_rgba(0,0,0,0.15)]  mb-28 aspect-auto" />
+      <div class="flex justify-center items-center absolute bottom-20 inset-x-0 gap-3">
         <button on:click={previouspage} disabled={!prevbtn}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6  {!prevbtn ? 'text-gray-600' : 'text-black'}">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953l7.108-4.062A1.125 1.125 0 0121 8.688v8.123zM11.25 16.811c0 .864-.933 1.405-1.683.977l-7.108-4.062a1.125 1.125 0 010-1.953L9.567 7.71a1.125 1.125 0 011.683.977v8.123z" />

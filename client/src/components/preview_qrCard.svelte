@@ -39,7 +39,7 @@
     </div>
   </div>
 </div> -->
-<div class="  w-full shadow-xl rounded-md flex items-center  gap-1" style="background:{bgcolor}">
+<div class="  w-full shadow-xl rounded-md flex items-center gap-1" style="background:{bgcolor}">
   <div id="header_card" class="w-full flex flex-col px-4 py-4" style="background:{bgpattern}">
     <div class="flex gap-4">
       <img src={qr} alt="qrcode" class="w-20 h-20 rounded overflow-hidden lg:w-[100px] lg:h-[100px]" />

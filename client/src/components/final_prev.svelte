@@ -3,6 +3,7 @@
   import PreviewQrCard from './preview_qrCard.svelte';
 
   export let id;
+  let bgpattern;
   let blob = localStorage.getItem('blobpdf');
   console.log(blob);
   let localfile = JSON.parse(localStorage.getItem('docDetails'));
@@ -38,7 +39,7 @@
     <BlobPreview />
   </div>
   <div class="flex w-full flex-col xl:w-2/5 lg:w-2/5">
-    <PreviewQrCard {id} {bgcolor} />
+    <PreviewQrCard {id} {bgcolor} {bgpattern} />
     <div class="border-2 border-gray-200 shadow-lg rounded-lg mt-4">
       <div class="mt-5 ml-4">
         <div class="relative ">

@@ -13,6 +13,7 @@
   let docTitle = '';
   let valid, date, sampleData, options, errormsg;
   let displayerror = false;
+
   let error = {
     dateexpired: '',
     issuer: '',
@@ -153,7 +154,7 @@
       console.log('datahash', dataHash);
       if (data.dataHash) {
         errormsg = '';
-        navigate(`/publish/${id}`);
+        navigate(`/preview/${id}`);
       } else {
         if (data.error) {
           errormsg = data.errorCode;
