@@ -4,8 +4,19 @@
   import PrevFooter from './prev_footer.svelte';
 
   export let id;
-  let signmsg, Queue_msg;
 
+  let signmsg, Queue_msg;
+  let localfile = JSON.parse(localStorage.getItem('docDetails'));
+  console.log('localfile', localfile);
+  localfile.find((localfile) => {
+    if (localfile.documentID == id) {
+      console.log(localfile);
+      console.log('same id', localfile.documentID);
+      console.log('filehash', localfile.filehash);
+      localfile.filehash = true;
+      console.log(localfile);
+    }
+  });
   let fileHash = localStorage.getItem('filehash');
   console.log('filehash', fileHash);
   let dataHash = localStorage.getItem('datahash');
@@ -36,28 +47,28 @@
         <div class="relative ">
           <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Receiver</div>
           <div class="flex-col">
-            <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Name</div>
-            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 font-bold ease-in-out">{metadata.receiver.name}</div>
+            <div type="text" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Name</div>
+            <div type="text" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 font-bold ease-in-out">john</div>
           </div>
         </div>
         <div class="relative">
           <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Document</div>
           <div class="flex-col">
-            <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document type</div>
-            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{metadata.document.type}</div>
+            <div type="text" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document type</div>
+            <div type="text" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">sample</div>
           </div>
         </div>
 
         <div class="relative">
           <div for="name" class="text-md font-bold uppercase leading-7 text-gray-600">Issuer</div>
           <div class="flex-col">
-            <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Signatory</div>
-            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{metadata.issuer.signatory}</div>
+            <div type="text" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Signatory</div>
+            <div type="text" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">Arun</div>
           </div>
         </div>
         <div class="relative mb-5">
-          <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document Title</div>
-          <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{options.title}</div>
+          <div type="text" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document Title</div>
+          <div type="text" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">sampleData</div>
         </div>
       </div>
     </div>

@@ -106,11 +106,12 @@
       console.log(data);
       // let metadata = data.metadata;
       localStorage.setItem('metadata', JSON.stringify(data.metadata));
-      let metadata =JSON.parse(localStorage.getItem('metadata'));
-      console.log(metadata.receiver)
-      localStorage.setItem("options", JSON.stringify(data.options));
-      let options = JSON.parse(localStorage.getItem("options"));
-      console.log(options)     
+      let metadata = JSON.parse(localStorage.getItem('metadata'));
+      console.log(metadata.receiver);
+
+      // localStorage.setItem('options', JSON.stringify(data.options));
+      // let options = JSON.parse(localStorage.getItem('options'));
+      // console.log(options.title);
       // localStorage.setItem("issuer",data.issuer)
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem('docDetails'));
@@ -133,7 +134,7 @@
       console.log('datahash', dataHash);
       if (data.dataHash) {
         errormsg = '';
-        navigate('/preview');
+        navigate(`/publish/${id}`);
       } else {
         if (data.error) {
           errormsg = data.errorCode;

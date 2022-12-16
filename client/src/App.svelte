@@ -10,7 +10,6 @@
   import Dashboardpage3 from './pages/Dashboardpage3.svelte';
   import Adddatapage from './pages/Adddatapage.svelte';
   export let url = '';
-
 </script>
 
 <Router {url}>
@@ -26,7 +25,9 @@
     <Route path="/add-data/:id" let:params>
       <Adddatapage id={params.id} />
     </Route>
-    <Route path="/preview"><Filepreview /></Route>
+    <Route path="/publish/:id" let:params>
+      <Filepreview id={params.id} />
+    </Route>
     <Route path="/final"><Final /></Route>
   </main>
 </Router>
