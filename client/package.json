@@ -24,6 +24,7 @@
     "tailwindcss": "^3.2.4"
   },
   "dependencies": {
+    "animated-tailwindcss": "^3.3.0",
     "axios": "^1.2.0",
     "pdfjs-dist": "^2.7.570",
     "sirv-cli": "^2.0.0",

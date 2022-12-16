@@ -4,11 +4,11 @@
   import Final from './pages/final.svelte';
   import { Route, Router } from 'svelte-routing';
   import Publishdoc from './pages/Publishdoc.svelte';
-  import Fileuploadpage from './pages/Fileuploadpage.svelte';
   import Filepreview from './pages/Filepreview.svelte';
   import Dashboardpage2 from './pages/Dashboardpage2.svelte';
   import Dashboardpage3 from './pages/Dashboardpage3.svelte';
   import Adddatapage from './pages/Adddatapage.svelte';
+  import Fileuploadpage from './pages/Fileuploadpage.svelte';
   export let url = '';
 </script>
 

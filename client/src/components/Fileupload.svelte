@@ -6,7 +6,12 @@
   import ErrorInfo from './ErrorInfo.svelte';
   const dispatch = createEventDispatcher();
   export let id;
-  export let dateexpired, issuer, doctype, signatory, docTitle, valid, date, sampleData, options, errormsg, name;
+  let dateexpired = '';
+  let issuer = '';
+  let doctype = '';
+  let signatory = '';
+  let docTitle = '';
+  let valid, date, sampleData, options, errormsg;
   let displayerror = false;
   let error = {
     dateexpired: '',
@@ -26,17 +31,29 @@
   const onsubmitdata = async () => {
     console.log(dateexpired, issuer, signatory, docTitle, doctype);
     valid = true;
-    if (dateexpired == undefined) {
-      error.dateexpired = 'Fill the Expiry Date';
-      setTimeout(() => {
+    if (dateexpired) {
+      console.log(dateexpired);
+      let currentDate = new Date().getTime();
+      console.log(currentDate);
+      let expireDate = new Date(dateexpired).getTime();
+      console.log(expireDate);
+      if (currentDate > expireDate) {
+        document.querySelector('#docdate').type = 'text';
+        dateexpired = '';
+        error.dateexpired = 'Choose the valid date';
+        setTimeout(() => {
+          error.dateexpired = '';
+        }, 3000);
+        valid = false;
+      } else {
         error.dateexpired = '';
-      }, 3000);
-      valid = false;
+        date = new Date(dateexpired).toISOString();
+        console.log(date);
+      }
     } else {
-      date = new Date(dateexpired).toISOString();
       error.dateexpired = '';
     }
-    if (issuer == undefined) {
+    if (issuer == '') {
       error.issuer = 'Fill the Issuer name';
       setTimeout(() => {
         error.issuer = '';
@@ -45,7 +62,7 @@
     } else {
       error.issuer = '';
     }
-    if (doctype == undefined) {
+    if (doctype == '') {
       error.doctype = 'Fill the Document Type';
       setTimeout(() => {
         error.doctype = '';
@@ -54,16 +71,7 @@
     } else {
       error.doctype = '';
     }
-    if (docTitle == undefined) {
-      error.docTitle = 'Fill the Document Title';
-      setTimeout(() => {
-        error.docTitle = '';
-      }, 3000);
-      valid = false;
-    } else {
-      error.docTitle = '';
-    }
-    if (signatory == undefined) {
+    if (signatory == '') {
       error.signatory = 'Fill the Signatory name';
       setTimeout(() => {
         error.signatory = '';
@@ -85,10 +93,26 @@
           signatory: signatory,
         },
       };
-      options = {
-        title: docTitle,
-        expireOn: date,
-      };
+      if (date) {
+        if (docTitle) {
+          options = {
+            title: docTitle,
+            expireOn: date,
+          };
+        } else {
+          options = {
+            expireOn: date,
+          };
+        }
+      } else {
+        if (docTitle) {
+          options = {
+            title: docTitle,
+          };
+        } else {
+          options = {};
+        }
+      }
       console.log(documentID);
       const { data } = await axios.post(
         'https://test.swagger.print2block.in/docs/add-data',
@@ -107,7 +131,6 @@
       // let metadata = data.metadata;
       window.localStorage.setItem('metadata', JSON.stringify(data.metadata));
       let metadata = JSON.parse(window.localStorage.getItem('metadata'));
-
       console.log(metadata);
 
       if (data.dataHash) {
@@ -154,28 +177,28 @@
     </HeaderFileupload>
   </div>
 
-  <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-1/2 px-4 py-4">
+  <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-1/2 p-4">
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col  space-y-5">
         <div class="flex flex-col w-full  space-y-2">
-          <label for="issuer" class="text-sm text-black tracking-wide font-bold">Issued to</label>
+          <label for="issuer" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Issued to</label>
           <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class={error.issuer ? 'input-error' : 'input-normal'} />
         </div>
         <div class="flex flex-col w-full  space-y-2">
-          <label for="doctype" class="text-sm text-black tracking-wide font-bold">Document Type</label>
+          <label for="doctype" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Document Type</label>
           <input placeholder={error.doctype ? error.doctype : 'Enter document type'} bind:value={doctype} type="text" class={error.doctype ? 'input-error' : 'input-normal'} name="doctype" id="doctype" />
         </div>
         <div class="flex flex-col w-full space-y-2">
-          <label for="signatory" class="text-sm text-black tracking-wide font-bold">Signatory</label>
+          <label for="signatory" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Signatory</label>
           <input placeholder={error.signatory ? error.signatory : 'Enter signatory name'} name="signatory" bind:value={signatory} id="signatory" type="text" class={error.signatory ? 'input-error' : 'input-normal'} />
         </div>
         <div class="flex flex-col w-full space-y-2">
           <label for="docid" class="text-sm text-black tracking-wide font-bold">Date Expired</label>
-          <input bind:value={dateexpired} placeholder={error.dateexpired ? error.dateexpired : 'Enter expiry date'} type="text" onfocus="(this.type = 'date')" class={error.dateexpired ? 'input-error' : 'input-normal'} name="docid" id="docid" />
+          <input bind:value={dateexpired} placeholder={error.dateexpired ? error.dateexpired : 'Enter expiry date'} type="text" onfocus="(this.type = 'date')" class={error.dateexpired ? 'input-error' : 'input-normal'} name="docdate" id="docdate" />
         </div>
         <div class="flex flex-col w-full space-y-2">
           <label for="docTitle" class="text-sm text-black tracking-wide font-bold">Document Title</label>
-          <input placeholder={error.docTitle ? error.docTitle : 'Enter document title'} bind:value={docTitle} type="text" class={error.docTitle ? 'input-error' : 'input-normal'} name="docTitle" id="docTitle" />
+          <input placeholder="Enter document title" bind:value={docTitle} type="text" class="input-normal" name="docTitle" id="docTitle" />
         </div>
       </div>
       <div class="flex pt-5">
