@@ -228,12 +228,7 @@
     </div>
   </div>
 
-<<<<<<< HEAD
-  <div class="w-full lg:w-[38.5rem] flex flex-col gap-4">
-    <HeaderFileupload {id} {bgcolor} />
-=======
   <HeaderFileupload {id} {bgcolor} />
->>>>>>> 7061f44f28daac0585601914e788079b2473fb2b
 
   <form id="form" method="post" action="/docs/initiate" enctype="multipart/form-data" class="w-full lg:w-[38.5rem]">
     <div class="flex w-full flex-col">
@@ -291,38 +286,18 @@
       <div class="border-2 rounded-md shadow-[0_0_8px_0_rgba(0,0,0,0.15)] overflow-hidden">
         <img src={blobimage} class="max-w-full min-w-[22.5rem] min-h-[24.35rem] max-h-[40rem]" id="File" alt="Preview" />
       </div>
-<<<<<<< HEAD
-    {:else}
-      <div class="flex w-full lg:w-[38.5rem] flex-col" in:fade={{ duration: 4000 }} out:fade={{ duration: 1000 }}>
-        <div class="w-full max-h-[40rem] rounded-md justify-center items-center flex border-2">
-          <div>
-            <img src={blobimage} class="w-full max-h-[40rem]" id="File" alt="Preview" />
-          </div>
-        </div>
-        {#if !showpdf}
-          <div class="flex mx-auto gap-4 pt-3">
-            <div class="flex">
-              <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
-            </div>
-            <div class="flex">
-              <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Confirm and Continue</button>
-            </div>
-          </div>
-        {/if}
-      </div>
-    {/if}
-  {/if}
-=======
     </div>
   </div>
 
-  <div class="{displaypreview ? 'flex' : 'hidden'} mx-auto gap-4 pt-3">
+  <div class="{displaypreview ? 'flex' : 'hidden'} justify-between gap-4 pt-3 lg:w-[38.5rem]">
     <div class="flex">
-      <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
+      <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
     </div>
     <div class="flex">
-      <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Confirm and Continue</button>
+      <a href="/sign" class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide">Sign Doc</a>
+    </div>
+    <div class="flex">
+      <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide">Confirm and Continue</button>
     </div>
   </div>
->>>>>>> 7061f44f28daac0585601914e788079b2473fb2b
 </div>
