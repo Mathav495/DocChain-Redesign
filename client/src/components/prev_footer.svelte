@@ -109,7 +109,7 @@
     document.getElementById('release').disabled = true;
   };
 
-  document.addEventListener('DOMContentLoaded', function () {
+  window.addEventListener('click', function () {
     const confirm = document.getElementById('confirm');
     const sign = document.getElementById('sign');
     const publish = document.getElementById('publish');
@@ -121,7 +121,7 @@
       console.log('confirm clicked');
       confirm.style.display = 'none';
       sign.style.display = 'inline-flex';
-      publish.style.display = 'none';
+      // publish.style.display = 'none';
       console.log('sign-triggered');
     });
     sign.addEventListener('click', () => {
@@ -141,15 +141,15 @@
 </script>
 
 {#if signmsg}
-  <SignidMsg position="absolute z-20 bottom-0 right-0" on:click={hideSignmsg} />
+  <SignidMsg position="absolute z-20 bottom-20 right-0" on:click={hideSignmsg} />
 {:else if Queue_msg}
-  <QueueMsg position="absolute z-20 bottom-0 right-0" on:click={hideQueuemsg} />
+  <QueueMsg position="absolute z-20 bottom-20	 right-0" on:click={hideQueuemsg} />
 {/if}
 <div class="fixed w-8/12 flex justify-end items-end z-10 bottom-8 right-32">
-  <div class="container mx-auto bg-white/30 flex flex-col items-center px-2 py-2 md:flex-row shadow-[0_0_8px_0_rgba(0,0,0,0.15)]">
+  <div class="container mx-auto bg-white/30 flex flex-col items-center px-4 py-2 md:flex-row rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]">
     <div class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left sm:right-0 sm:text-right ">
-      <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-600">Confirmation</h2>
-      <h1 class="title-font text-lg font-medium text-red-600 md:text-xl">please verify document details,You cannot verify once you click confirm.Otherwise click release to new document</h1>
+      <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Confirmation</h2>
+      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">please verify document details,You cannot verify once you click confirm.Otherwise click release to new document</h1>
     </div>
     <div class="mx-auto flex flex-shrink-0 items-center space-x-4 md:ml-auto md:mr-0">
       <button class="inline-flex items-center rounded-lg border border-red-600 py-2 px-8 text-red-600 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click|preventDefault={releaseDoc} id="release">

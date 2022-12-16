@@ -133,6 +133,9 @@
       localStorage.setItem('metadata', JSON.stringify(data.metadata));
       let metadata = JSON.parse(localStorage.getItem('metadata'));
       console.log(metadata);
+      // localStorage.setItem('options', JSON.stringify(data.options));
+      // let options = JSON.parse(localStorage.getItem('options'));
+      // console.log(options);
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem('docDetails'));
         console.log('localdata', localdata);
