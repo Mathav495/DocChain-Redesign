@@ -9,6 +9,7 @@
   import HeaderFileupload from './header_fileupload.svelte';
   import ErrorInfo from './ErrorInfo.svelte';
   export let id;
+  let Pdfurl;
   let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf, errormsg;
   let displayConfirm = false;
   let displayerror = false;
@@ -114,6 +115,15 @@
       return;
     } else if (File.type == 'application/pdf') {
       showpdf = true;
+
+      const reader = new FileReader(); // constructor
+      reader.readAsDataURL(File); //(base 64 data url)
+      reader.addEventListener('load', function () {
+        Pdfurl = reader.result;
+        console.log(Pdfurl);
+        localStorage.setItem('Pdfurl', Pdfurl);
+      });
+
       let blob = URL.createObjectURL(File);
       localStorage.setItem('blobpdf', blob);
       console.log(blob);
