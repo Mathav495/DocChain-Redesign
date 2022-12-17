@@ -130,12 +130,21 @@
       );
       console.log(data);
       // let metadata = data.metadata;
-      localStorage.setItem('metadata', JSON.stringify(data.metadata));
-      let metadata = JSON.parse(localStorage.getItem('metadata'));
+      localStorage.setItem('metadata', data.metadata);
+      var metadata = JSON.parse(localStorage.getItem('metadata'));
       console.log(metadata);
-      // localStorage.setItem('options', JSON.stringify(data.options));
-      // let options = JSON.parse(localStorage.getItem('options'));
-      // console.log(options);
+      console.log(typeof metadata);
+      console.log(metadata.receiver.name);
+      // metadata['receiver']['name'];
+      // typeof metadata['receiver']['name'];
+      // console.log(metadata['receiver']['name']);
+      // console.log(metadata['document']['type']);
+      // console.log(metadata['issuer']['signatory']);
+      localStorage.setItem('options', data.options);
+      var options = JSON.parse(localStorage.getItem('options'));
+      console.log(options.title);
+      console.log(options.expireOn);
+
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem('docDetails'));
         console.log('localdata', localdata);

@@ -32,6 +32,13 @@
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
   let bgcolor = localStorage.getItem('bgGradient');
+  let metadata = JSON.parse(localStorage.getItem('metadata'));
+  console.log(metadata.receiver.name);
+  console.log(metadata.document.type);
+  console.log(metadata.issuer.signatory);
+  var options = JSON.parse(localStorage.getItem('options'));
+  console.log(options.title);
+  console.log(options.expireOn);
 </script>
 
 <div class=" mx-auto w-full h-auto flex flex-wrap xl:flex-nowrap">
@@ -46,14 +53,14 @@
           <div for="name" class="text-md font-bold  leading-7 text-gray-600">Receiver</div>
           <div class="flex-col">
             <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Name</div>
-            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 font-bold ease-in-out">John</div>
+            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 font-bold ease-in-out">{metadata.receiver.name}</div>
           </div>
         </div>
         <div class="relative">
           <div for="name" class="text-md font-bold  leading-7 text-gray-600">Document</div>
           <div class="flex-col">
             <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document type</div>
-            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">sample</div>
+            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{metadata.document.type}</div>
           </div>
         </div>
 
@@ -61,12 +68,12 @@
           <div for="name" class="text-md font-bold  leading-7 text-gray-600">Issuer</div>
           <div class="flex-col">
             <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Signatory</div>
-            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">Arun</div>
+            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{metadata.issuer.signatory}</div>
           </div>
         </div>
         <div class="relative mb-5">
           <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document Title</div>
-          <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">sampleData</div>
+          <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{options.title}</div>
         </div>
         <div class="relative">
           <div for="name" class="text-md font-bold  leading-7 text-gray-600">Data hash (SHA256)</div>

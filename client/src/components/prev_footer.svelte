@@ -15,7 +15,7 @@
   signmsg = false;
   Queue_msg = false;
 
-  let issuerName;
+  let issuerName, src;
 
   let token = localStorage.getItem('token');
   let fileHash = localStorage.getItem('filehash');
@@ -29,6 +29,14 @@
   let imgurl = localStorage.getItem('img');
   console.log('imgUrl', imgurl);
   let documentID = localStorage.getItem('documentID');
+  let blobimage = localStorage.getItem('blobimage');
+  console.log(blobimage);
+
+  /**
+   * getting saved pdf blob from local storage
+   */
+  let blob = localStorage.getItem('blobpdf');
+  console.log(blob);
 
   onMount(async () => {
     const { data } = await axios.get('https://test.swagger.print2block.in/account/user', {
@@ -117,10 +125,12 @@
 
     // whenever the enter button is clicked
 
-    confirm.addEventListener('click', () => {
+    confirm.addEventListener('click', (e) => {
       console.log('confirm clicked');
+      e.stopPropagation();
       confirm.style.display = 'none';
       sign.style.display = 'inline-flex';
+
       // publish.style.display = 'none';
       console.log('sign-triggered');
     });
@@ -141,24 +151,32 @@
 </script>
 
 {#if signmsg}
-  <SignidMsg position="absolute z-20 bottom-20 right-0" on:click={hideSignmsg} />
+  {#if (src = blobimage)}
+    <SignidMsg position="absolute z-10 -bottom-20 right-0" on:click={hideSignmsg} />
+  {:else}
+    <SignidMsg position="absolute z-10 bottom-10 right-0" on:click={hideSignmsg} />
+  {/if}
 {:else if Queue_msg}
-  <QueueMsg position="absolute z-20 bottom-20	 right-0" on:click={hideQueuemsg} />
+  {#if (src = blobimage)}
+    <QueueMsg position="absolute z-10 -bottom-20 right-0" on:click={hideQueuemsg} />
+  {:else}
+    <QueueMsg position="absolute z-10 bottom-10	 right-0" on:click={hideQueuemsg} />
+  {/if}
 {/if}
 <div class="fixed w-8/12 flex justify-end items-end z-10 bottom-8 right-32">
-  <div class="container mx-auto bg-white/30 flex flex-col items-center px-4 py-2 md:flex-row rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]">
-    <div class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left sm:right-0 sm:text-right ">
+  <div class="container mx-auto bg-white/30 flex flex-col items-center px-4 py-2 md:flex-row md:right-0 rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]">
+    <div class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left ">
       <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Confirmation</h2>
       <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">please verify document details,You cannot verify once you click confirm.Otherwise click release to new document</h1>
     </div>
     <div class="mx-auto flex flex-shrink-0 items-center space-x-4 md:ml-auto md:mr-0">
-      <button class="inline-flex items-center rounded-lg border border-red-600 py-2 px-8 text-red-600 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click|preventDefault={releaseDoc} id="release">
+      <button class="inline-flex items-center rounded-lg border border-red-600 py-2 px-5 text-red-600 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click|preventDefault={releaseDoc} id="release">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
         </svg>
         <span class="title-font ml-2 text-base font-bold">Release</span>
       </button>
-      <button type="button" class="inline-flex items-center rounded-lg border border-green-900 py-2 px-8 text-green-900 hover:bg-green-900 hover:text-white focus:outline-none" id="confirm">
+      <button type="button" class="inline-flex items-center rounded-lg border border-green-900 py-2 px-5 text-green-900 hover:bg-green-900 hover:text-white focus:outline-none" id="confirm">
         {#if load}
           <svg role="status" class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-900" viewBox="0 0 24 24" />
         {:else}
@@ -172,7 +190,7 @@
         {/if}
         <span class="title-font ml-2 text-base font-bold">Confirm</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-8 hover:bg-green-900 hover:text-white focus:outline-none" style="display: none" on:click|preventDefault|stopPropagation={getsignature} id="sign">
+      <button class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-5 hover:bg-green-900 hover:text-white focus:outline-none" style="display: none" on:click|preventDefault|stopPropagation={getsignature} id="sign">
         {#if load}
           <svg role="status" class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-900" viewBox="0 0 24 24" />
         {:else}
@@ -182,7 +200,7 @@
         {/if}
         <span class="title-font ml-2 font-bold text-base">Signature</span>
       </button>
-      <button class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-8 hover:bg-green-900 hover:text-white focus:outline-none" style="display: none" id="publish" on:click|once={disablerelease} on:click|preventDefault|stopPropagation={publishdoc}>
+      <button class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-5 hover:bg-green-900 hover:text-white focus:outline-none" style="display: none" id="publish" on:click|once={disablerelease} on:click|preventDefault|stopPropagation={publishdoc}>
         {#if load}
           <svg role="status" class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-900" viewBox="0 0 24 24" />
         {:else}

@@ -88,7 +88,7 @@
 
 <div class="flex w-full flex-col">
   {#if (src = blobimage)}
-    <img class="block shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-md mb-10 max-w-full min-w-[22.5rem] min-h-[24.35rem] max-h-[40rem]" src={blobimage} alt="document" />
+    <img class="block shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-md mb-10 w-full " src={blobimage} alt="document" />
   {:else if loading}
     <Loading />
   {:else}
@@ -110,3 +110,11 @@
     </div>
   {/if}
 </div>
+
+<style>
+  #blobcanv {
+    height: 100vh;
+    width: 100vw;
+    display: block;
+  }
+</style>
