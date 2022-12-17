@@ -13,6 +13,8 @@
   let currentpage, _PDFDOC, _total_pages;
   let qrcode = localStorage.getItem('qrcode');
   console.log(qrcode);
+  let token = localStorage.getItem('token');
+  console.log(token);
   let initvalues;
   const showPdf = async (blob) => {
     console.log('get blob');
