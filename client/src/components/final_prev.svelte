@@ -45,6 +45,18 @@
     <PreviewQrCard {id} {bgcolor} {bgpattern} />
     <div class="border-2 border-gray-200 shadow-lg rounded-lg mt-4">
       <div class="mt-5 ml-4">
+        <div class="relative">
+          <div for="name" class="text-md font-bold  leading-7 text-gray-600">Data hash (SHA256)</div>
+          <div class="flex-col">
+            <div type="text" id="name" name="name" class="w-full rounded px-3 text-base leading-8 text-gray-600 transition-colors duration-200 ease-in-out break-words">{dataHash}</div>
+          </div>
+        </div>
+        <div class="relative mb-4">
+          <div for="name" class="text-md font-bold  leading-7 text-gray-600">File hash (SHA256)</div>
+          <div class="flex-col">
+            <div type="text" id="name" name="name" class="w-full rounded px-3 text-base  leading-8 text-gray-600 transition-colors duration-200 ease-in-out break-words">{fileHash}</div>
+          </div>
+        </div>
         <div class="relative ">
           <div for="name" class="text-md font-bold  leading-7 text-gray-600">Receiver</div>
           <div class="flex-col">
@@ -70,18 +82,6 @@
         <div class="relative mb-5">
           <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document Title</div>
           <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{options.title}</div>
-        </div>
-        <div class="relative">
-          <div for="name" class="text-md font-bold  leading-7 text-gray-600">Data hash (SHA256)</div>
-          <div class="flex-col">
-            <div type="text" id="name" name="name" class="w-full rounded px-3 text-base leading-8 text-gray-600 transition-colors duration-200 ease-in-out break-words">{dataHash}</div>
-          </div>
-        </div>
-        <div class="relative mb-4">
-          <div for="name" class="text-md font-bold  leading-7 text-gray-600">File hash (SHA256)</div>
-          <div class="flex-col">
-            <div type="text" id="name" name="name" class="w-full rounded px-3 text-base  leading-8 text-gray-600 transition-colors duration-200 ease-in-out break-words">{fileHash}</div>
-          </div>
         </div>
       </div>
     </div>

@@ -121,6 +121,9 @@
     const confirm = document.getElementById('confirm');
     const sign = document.getElementById('sign');
     const publish = document.getElementById('publish');
+    const signature = document.getElementById('Signature');
+    const publishdoc = document.getElementById('PublishDoc');
+    const confirmation = document.getElementById('Confirmation');
     // e.stopPropagation();
 
     // whenever the enter button is clicked
@@ -130,6 +133,8 @@
       e.stopPropagation();
       confirm.style.display = 'none';
       sign.style.display = 'inline-flex';
+      signature.style.display = 'inline-flex';
+      confirmation.style.display = 'none';
 
       // publish.style.display = 'none';
       console.log('sign-triggered');
@@ -139,6 +144,8 @@
       sign.style.display = 'none';
       confirm.style.display = 'none';
       publish.style.display = 'inline-flex';
+      signature.style.display = 'none';
+      publishdoc.style.display = 'inline-flex';
       console.log('publishing triggered');
     });
   });
@@ -164,10 +171,18 @@
   {/if}
 {/if}
 <div class="fixed w-8/12 flex justify-end items-end z-10 bottom-8 right-32 xl:right-20">
-  <div class="container mx-auto bg-white/30 flex flex-col items-center px-4 py-2 md:flex-row md:right-0 rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]">
-    <div class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left ">
+  <div class="container mx-auto bg-white flex flex-col items-center px-4 py-2 md:flex-row md:right-0 rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]">
+    <div id="Confirmation" class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left ">
       <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Confirmation</h2>
-      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">please verify document details,You cannot verify once you click confirm.Otherwise click release to new document</h1>
+      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">please verify document details,if needed to modify click Release to generate new document</h1>
+    </div>
+    <div id="Signature" class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left " style="display: none">
+      <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Signature Generation</h2>
+      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">Clck Signature to generate yuor Signature.</h1>
+    </div>
+    <div id="PublishDoc" class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left " style="display: none">
+      <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Publish to BlockChain</h2>
+      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">Clck Publish to publish your document to BlockChain.</h1>
     </div>
     <div class="mx-auto flex flex-shrink-0 items-center space-x-4 md:ml-auto md:mr-0">
       <button class="inline-flex items-center rounded-lg border border-red-600 py-2 px-5 text-red-600 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click|preventDefault={releaseDoc} id="release">
@@ -208,7 +223,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 019 9v.375M10.125 2.25A3.375 3.375 0 0113.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 013.375 3.375M9 15l2.25 2.25L15 12" />
           </svg>
         {/if}
-        <span class="title-font ml-2 font-bold text-base">Submit</span>
+        <span class="title-font ml-2 font-bold text-base">Publish</span>
       </button>
     </div>
   </div>
