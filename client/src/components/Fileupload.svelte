@@ -19,6 +19,13 @@
       inputvalue: '',
     },
   ];
+  let documentDetails = [
+    {
+      label: 1,
+      labelName: 'Fieldname',
+      inputvalue: '',
+    },
+  ];
   let displayerror = false;
   let error = {
     dateexpired: '',
@@ -257,20 +264,36 @@
           <div>
             <h1 class="text-base tracking-wide font-bold ">Document Details</h1>
           </div>
+
           <div class="flex flex-col w-full  space-y-2">
             <label for="doctype" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Document Type</label>
             <input placeholder={error.doctype ? error.doctype : 'Enter document type'} bind:value={doctype} type="text" class={error.doctype ? 'input-error' : 'input-normal'} name="doctype" id="doctype" />
           </div>
-          <div class="flex flex-col w-full  space-y-2">
-            <label for="new_field" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
-              >Field name
 
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-              </svg>
-            </label>
-            <input name="new_field" id="new_field" type="text" class="input-normal" />
-          </div>
+          {#each documentDetails as docDetails}
+            <div class="flex flex-col w-full  space-y-2">
+              <div class="flex">
+                <div class="flex" id="b{docDetails.label}">
+                  <label for="label{docDetails.label}" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
+                    >Field name
+
+                    <svg on:click={() => hideLabel_docDetails(docDetails.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                    </svg>
+                  </label>
+                </div>
+                <div class="hidden items-center gap-2" id="c{docDetails.label}">
+                  <input placeholder="Enter Field name" bind:value={docDetails.labelName} type="text" class="field-input" />
+                  <svg on:click={() => updateLabel_docDetails(docDetails.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <input name="label{docDetails.label}" id="label{docDetails.label}" type="text" class="input-normal" />
+              </div>
+            </div>
+          {/each}
         </div>
 
         <div class="flex flex-col w-full pb-5 border-b-2 space-y-3">
