@@ -1,4 +1,6 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
   // import pdfjsLib from '/public/lib/pdf.js';
   // import pdfjsWorker from '/public/lib/pdf.worker.js';
   import axios from 'axios';
@@ -89,12 +91,15 @@
     console.log([...formData]);
     let datum = [...formData][0];
     File = datum[1];
+    localStorage.setItem('file', File);
     console.log(File.type);
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       displaypreview = true;
       displayDropzone = false;
       showpdf = false;
       blobimage = URL.createObjectURL(File);
+      console.log(blobimage);
+      dispatch('blobimage', File);
       localStorage.setItem('blobimage', blobimage);
       return;
     } else if (File.type == 'application/pdf') {
@@ -102,6 +107,7 @@
       let blob = URL.createObjectURL(File);
       localStorage.setItem('blobpdf', blob);
       console.log(blob);
+      dispatch('blob', File);
       await showPdf(blob);
       displayDropzone = false;
       displaypreview = true;
@@ -208,6 +214,10 @@
     displayConfirm = false;
     ondisplaydropzone();
   };
+
+  const signDoc = () => {
+    navigate('/sign');
+  };
 </script>
 
 <div class="relative h-auto w-full flex flex-col items-center justify-center gap-3  p-4">
@@ -289,12 +299,15 @@
     </div>
   </div>
 
-  <div class="{displaypreview ? 'flex' : 'hidden'} mx-auto gap-4 pt-3">
+  <div class="{displaypreview ? 'flex' : 'hidden'} justify-between gap-4 pt-3 lg:w-[38.5rem]">
     <div class="flex">
-      <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
+      <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
     </div>
     <div class="flex">
-      <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-10 py-1 text-sm lg:text-lg font-bold tracking-wide">Confirm and Continue</button>
+      <button on:click={signDoc} class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide">Sign Doc</button>
+    </div>
+    <div class="flex">
+      <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide">Confirm and Continue</button>
     </div>
   </div>
 </div>
