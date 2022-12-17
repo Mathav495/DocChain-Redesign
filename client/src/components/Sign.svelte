@@ -69,7 +69,6 @@
     };
     const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/initiate', initvalues, {
       headers: {
-        'Content-Type': 'multipart/form-data',
         'x-access-token': token,
       },
     });
