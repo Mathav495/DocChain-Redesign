@@ -1,6 +1,7 @@
 <script>
   export let img;
   export let pdf;
+  let src;
   console.log(img);
   console.log(pdf);
   // let blobImg = URL.createObjectURL(img);
@@ -46,25 +47,68 @@
   };
   showPdf(blobPdf);
 
-  const giveSign = () => {
-    pdfPosition.init({
-      triggerButtons: '.show-signature-overlay',
-      imageTarget: '#mycanvas1',
-      positionTextbox: 'positions',
-    });
+  // pdfPosition.init({
+  //   triggerButtons: '.show-signature-overlay',
+  //   imageTarget: '#mycanvas1',
+  //   positionTextbox: 'positions',
+  // });
+
+  let nextbtn = true;
+  let prevbtn = true;
+  const nextpage = () => {
+    if (currentpage < _total_pages) {
+      console.log('initial', currentpage);
+      showPage(currentpage + 1);
+      currentpage++;
+      console.log('final', currentpage);
+    }
+  };
+
+  $: if (currentpage < _total_pages) {
+    nextbtn = true;
+  } else {
+    nextbtn = false;
+  }
+  $: if (currentpage > 1) {
+    prevbtn = true;
+  } else {
+    prevbtn = false;
+  }
+  const previouspage = () => {
+    if (currentpage > 1) {
+      console.log('initial', currentpage);
+      showPage(currentpage - 1);
+      currentpage--;
+      console.log('final', currentpage);
+    }
   };
 </script>
 
 <div class="flex">
   <div class="w-1/2">
-    <button on:click={giveSign} class="show-signature-overlay">Select Signature Placement</button>
+    <div class="flex items-center justify-start">
+      <label for="pageNo" class="text-lg font-semibold w-1/2">Select Page No</label>
+      <div class="flex items-center justify-start gap-5 w-1/2">
+        <button on:click={previouspage} disabled={!prevbtn}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-black'}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+        <h1 class="text-lg text-black font-bold">{currentpage} / {_total_pages}</h1>
+        <button on:click={nextpage} disabled={!nextbtn}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!nextbtn ? 'stroke-gray-600' : 'stroke-black'}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <!-- <button class="show-signature-overlay">Select Signature Placement</button> -->
   </div>
   <div class="w-1/2">
-    {#if blobPdf}
-      <canvas id="mycanvas1" class="border-2 rounded-md overflow-hidden" />
-    {/if}
-    {#if blobImg}
-      <img src={blobImg} alt="img" class="w-full h-full" />
+    {#if (src = blobImg)}
+      <img class="w-full h-full rounded-md mb-10" src={blobImg} alt="document" />
+    {:else}
+      <canvas id="mycanvas1" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
     {/if}
   </div>
 </div>
