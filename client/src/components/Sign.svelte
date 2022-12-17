@@ -83,6 +83,10 @@
   <div class="w-full bg-[#000000cc] absolute items-end flex justify-center p-4">
     <div class="w-full lg:w-3/5 bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
       <h1 class="text-2xl text-slate-800 font-bold pb-3">Confirm Request</h1>
+      <div class="flex gap-3">
+        <h1 class="text-lg text-slate-800 font-semibold flex items-center">One Time Password</h1>
+        <input type="text" placeholder="12345" class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8" />
+      </div>
     </div>
   </div>
   <div class="flex">
