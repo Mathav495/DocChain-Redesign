@@ -13,6 +13,7 @@
   let docTitle = '';
   let valid, date, sampleData, options, errormsg;
   let displayerror = false;
+  let hideLabel_1 = false;
   let error = {
     dateexpired: '',
     issuer: '',
@@ -180,25 +181,85 @@
   <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-1/2 p-4">
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col  space-y-5">
-        <div class="flex flex-col w-full  space-y-2">
-          <label for="issuer" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Issued to</label>
-          <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class={error.issuer ? 'input-error' : 'input-normal'} />
+        <div class="flex flex-col w-full pb-5 border-b-2 space-y-3">
+          <div>
+            <h1 class="text-base tracking-wide font-bold ">Receiver Details</h1>
+          </div>
+          <div class="flex flex-col w-full  space-y-2">
+            <label for="issuer" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Issued to</label>
+            <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class={error.issuer ? 'input-error' : 'input-normal'} />
+          </div>
+          <div class="flex flex-col w-full  space-y-2">
+            <label for="new_field" class="{hideLabel_1 ? 'hidden' : 'block'} text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
+              >Field name
+
+              <svg on:click={() => (hideLabel_1 = true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+              </svg>
+
+              <div class="flex items-center gap-2">
+                <input placeholder="Enter Field name" type="text" class="field-input" />
+                <svg on:click={updateLabel()} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+            </label>
+            <input name="new_field" id="new_field" type="text" class="input-normal" />
+          </div>
         </div>
-        <div class="flex flex-col w-full  space-y-2">
-          <label for="doctype" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Document Type</label>
-          <input placeholder={error.doctype ? error.doctype : 'Enter document type'} bind:value={doctype} type="text" class={error.doctype ? 'input-error' : 'input-normal'} name="doctype" id="doctype" />
+
+        <div class="flex flex-col w-full pb-5 border-b-2 space-y-3">
+          <div>
+            <h1 class="text-base tracking-wide font-bold ">Document Details</h1>
+          </div>
+          <div class="flex flex-col w-full  space-y-2">
+            <label for="doctype" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Document Type</label>
+            <input placeholder={error.doctype ? error.doctype : 'Enter document type'} bind:value={doctype} type="text" class={error.doctype ? 'input-error' : 'input-normal'} name="doctype" id="doctype" />
+          </div>
+          <div class="flex flex-col w-full  space-y-2">
+            <label for="new_field" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
+              >Field name
+
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+              </svg>
+            </label>
+            <input name="new_field" id="new_field" type="text" class="input-normal" />
+          </div>
         </div>
-        <div class="flex flex-col w-full space-y-2">
-          <label for="signatory" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Signatory</label>
-          <input placeholder={error.signatory ? error.signatory : 'Enter signatory name'} name="signatory" bind:value={signatory} id="signatory" type="text" class={error.signatory ? 'input-error' : 'input-normal'} />
+
+        <div class="flex flex-col w-full pb-5 border-b-2 space-y-3">
+          <div>
+            <h1 class="text-base tracking-wide font-bold ">Signatory Details</h1>
+          </div>
+          <div class="flex flex-col w-full space-y-2">
+            <label for="signatory" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Signatory</label>
+            <input placeholder={error.signatory ? error.signatory : 'Enter signatory name'} name="signatory" bind:value={signatory} id="signatory" type="text" class={error.signatory ? 'input-error' : 'input-normal'} />
+          </div>
+          <div class="flex flex-col w-full  space-y-2">
+            <label for="new_field" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
+              >Field name
+
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+              </svg>
+            </label>
+            <input name="new_field" id="new_field" type="text" class="input-normal" />
+          </div>
         </div>
-        <div class="flex flex-col w-full space-y-2">
-          <label for="docid" class="text-sm text-black tracking-wide font-bold">Date Expired</label>
-          <input bind:value={dateexpired} placeholder={error.dateexpired ? error.dateexpired : 'Enter expiry date'} type="text" onfocus="(this.type = 'date')" class={error.dateexpired ? 'input-error' : 'input-normal'} name="docdate" id="docdate" />
-        </div>
-        <div class="flex flex-col w-full space-y-2">
-          <label for="docTitle" class="text-sm text-black tracking-wide font-bold">Document Title</label>
-          <input placeholder="Enter document title" bind:value={docTitle} type="text" class="input-normal" name="docTitle" id="docTitle" />
+
+        <div class="flex flex-col w-full  space-y-3">
+          <div>
+            <h1 class="text-base tracking-wide font-bold ">Optional Details</h1>
+          </div>
+          <div class="flex flex-col w-full space-y-2">
+            <label for="docid" class="text-sm text-black tracking-wide font-bold">Date Expired</label>
+            <input bind:value={dateexpired} placeholder={error.dateexpired ? error.dateexpired : 'Enter expiry date'} type="text" onfocus="(this.type = 'date')" class={error.dateexpired ? 'input-error' : 'input-normal'} name="docdate" id="docdate" />
+          </div>
+          <div class="flex flex-col w-full space-y-2">
+            <label for="docTitle" class="text-sm text-black tracking-wide font-bold">Document Title</label>
+            <input placeholder="Enter document title" bind:value={docTitle} type="text" class="input-normal" name="docTitle" id="docTitle" />
+          </div>
         </div>
       </div>
       <div class="flex pt-5">
@@ -219,6 +280,9 @@
     @apply h-9 w-full rounded-md border-2 border-slate-200  bg-white p-1 pl-2 text-base font-bold placeholder:font-semibold placeholder:text-slate-500  focus:outline-none focus:ring-2 focus:ring-slate-800;
   }
   .input-error {
-    @apply h-9 w-full rounded-lg border-2 border-red-500 p-1 pl-2 text-base font-bold ring-1 ring-red-500 placeholder:font-semibold  placeholder:text-red-500  focus:outline-none;
+    @apply h-9 w-full rounded-md border-2 border-red-500 p-1 pl-2 text-base font-bold ring-1 ring-red-500 placeholder:font-semibold  placeholder:text-red-500  focus:outline-none;
+  }
+  .field-input {
+    @apply h-6 w-full rounded-md border-2 border-slate-200  bg-white p-1 pl-2 text-base font-bold placeholder:font-semibold placeholder:text-slate-500  focus:outline-none focus:ring-2 focus:ring-slate-800;
   }
 </style>
