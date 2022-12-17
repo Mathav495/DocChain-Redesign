@@ -29,12 +29,7 @@
   console.log('imgUrl', imgurl);
   let bgcolor = localStorage.getItem('bgGradient');
   let metadata = JSON.parse(localStorage.getItem('metadata'));
-  console.log(metadata.receiver.name);
-  console.log(metadata.document.type);
-  console.log(metadata.issuer.signatory);
-  var options = JSON.parse(localStorage.getItem('options'));
-  console.log(options.title);
-  console.log(options.expireOn);
+  let options = JSON.parse(localStorage.getItem('options'));
 </script>
 
 <!-- <div class="flex-col"> -->

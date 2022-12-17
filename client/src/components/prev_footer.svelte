@@ -154,16 +154,16 @@
   {#if (src = blobimage)}
     <SignidMsg position="absolute z-10 -bottom-20 right-0" on:click={hideSignmsg} />
   {:else}
-    <SignidMsg position="absolute z-10 bottom-10 right-0" on:click={hideSignmsg} />
+    <SignidMsg position="absolute z-20 bottom-24 right-0" on:click={hideSignmsg} />
   {/if}
 {:else if Queue_msg}
   {#if (src = blobimage)}
     <QueueMsg position="absolute z-10 -bottom-20 right-0" on:click={hideQueuemsg} />
   {:else}
-    <QueueMsg position="absolute z-10 bottom-10	 right-0" on:click={hideQueuemsg} />
+    <QueueMsg position="absolute z-20 bottom-24	 right-0" on:click={hideQueuemsg} />
   {/if}
 {/if}
-<div class="fixed w-8/12 flex justify-end items-end z-10 bottom-8 right-32">
+<div class="fixed w-8/12 flex justify-end items-end z-10 bottom-8 right-32 xl:right-20">
   <div class="container mx-auto bg-white/30 flex flex-col items-center px-4 py-2 md:flex-row md:right-0 rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]">
     <div class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left ">
       <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Confirmation</h2>

@@ -1,5 +1,6 @@
 <script>
-  import BlobPreview from './blob-preview.svelte';
+  // import BlobPreview from './blob-preview.svelte';
+  import FinalBlobPreview from './final_blob_preview.svelte';
   import PreviewQrCard from './preview_qrCard.svelte';
 
   export let id;
@@ -33,17 +34,12 @@
   console.log('imgUrl', imgurl);
   let bgcolor = localStorage.getItem('bgGradient');
   let metadata = JSON.parse(localStorage.getItem('metadata'));
-  console.log(metadata.receiver.name);
-  console.log(metadata.document.type);
-  console.log(metadata.issuer.signatory);
-  var options = JSON.parse(localStorage.getItem('options'));
-  console.log(options.title);
-  console.log(options.expireOn);
+  let options = JSON.parse(localStorage.getItem('options'));
 </script>
 
 <div class=" mx-auto w-full h-auto flex flex-wrap xl:flex-nowrap">
   <div class="flex w-full rounded-lg xl:mr-4 xl:w-3/5 lg:w-3/5 mb-10">
-    <BlobPreview />
+    <FinalBlobPreview />
   </div>
   <div class="flex w-full flex-col xl:w-2/5 lg:w-2/5">
     <PreviewQrCard {id} {bgcolor} {bgpattern} />

@@ -45,7 +45,7 @@
     console.log('Page loaded');
     let viewport = page.getViewport({ scale: 1 });
     // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById('blobcanv');
+    let canvas = document.getElementById('canv');
     let context = canvas.getContext('2d');
     canvas.height = viewport.height;
     canvas.width = viewport.width;
@@ -88,13 +88,13 @@
 
 <div class="flex w-full flex-col">
   {#if (src = blobimage)}
-    <img class="block shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-md mb-10 w-full " src={blobimage} alt="document" />
+    <img class="block shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-md w-full " src={blobimage} alt="document" />
   {:else if loading}
     <Loading />
   {:else}
-    <div class=" relative flex max-w-full flex-col rounded-md">
-      <canvas id="blobcanv" class="border-2 block rounded-md overflow-hidden max-w-full  shadow-[0_0_8px_0_rgba(0,0,0,0.15)]  mb-28 aspect-auto" />
-      <div class="flex justify-center items-center absolute bottom-20 inset-x-0 gap-3">
+    <div class="  flex max-w-full flex-col rounded-md">
+      <canvas id="canv" class="border-2 block rounded-md overflow-hidden max-w-full  shadow-[0_0_8px_0_rgba(0,0,0,0.15)] aspect-auto" />
+      <div class="flex justify-center items-center abolute bottom-0 inset-x-0 gap-3">
         <button on:click={previouspage} disabled={!prevbtn}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-200' : 'stroke-black'}">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
