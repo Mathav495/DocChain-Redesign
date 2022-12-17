@@ -79,17 +79,24 @@
   };
 </script>
 
-<div class="flex">
-  <div class="w-1/2">
-    <button on:click={giveSign} class="show-signature-overlay">Select Signature Placement</button>
+<div class="relative w-full flex flex-col items-center justify-center gap-3  p-4">
+  <div class="w-full bg-[#000000cc] absolute items-end flex justify-center p-4">
+    <div class="w-full lg:w-3/5 bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
+      <h1 class="text-2xl text-slate-800 font-bold pb-3">Confirm Request</h1>
+    </div>
   </div>
-  <div class="w-1/2">
-    {#if blobPdf}
-      <canvas id="mycanvas1" class="border-2 rounded-md overflow-hidden" />
-    {/if}
-    {#if blobImg}
-      <img src={blobImg} alt="img" class="w-full h-full" />
-    {/if}
+  <div class="flex">
+    <div class="w-1/2">
+      <button on:click={giveSign} class="show-signature-overlay">Select Signature Placement</button>
+    </div>
+    <div class="w-1/2">
+      {#if blobPdf}
+        <canvas id="mycanvas1" class="border-2 rounded-md overflow-hidden" />
+      {/if}
+      {#if blobImg}
+        <img src={blobImg} alt="img" class="w-full h-full" />
+      {/if}
+    </div>
   </div>
+  <button on:click={initiate} class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">initiate</button>
 </div>
-<button on:click={initiate} class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">initiate</button>
