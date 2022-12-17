@@ -87,6 +87,9 @@
         <h1 class="text-lg text-slate-800 font-semibold flex items-center">One Time Password</h1>
         <input type="text" placeholder="12345" class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8" />
       </div>
+      <div class="pt-5">
+        <button class=" text-white font-medium active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 tracking-wider rounded text-lg">Confirm Request</button>
+      </div>
     </div>
   </div>
   <div class="flex">
