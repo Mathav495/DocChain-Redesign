@@ -10,7 +10,9 @@
   console.log('pdf', blobPdf);
   let blobImg = localStorage.getItem('blobimage');
   console.log('img', blobImg);
-  let currentpage, _PDFDOC, _total_pages;
+  let currentpage = 0,
+    _PDFDOC,
+    _total_pages = 0;
 
   const showPdf = async (blob) => {
     console.log('get blob');
@@ -82,13 +84,14 @@
       console.log('final', currentpage);
     }
   };
+  const signaturePlacement = () => {};
 </script>
 
 <div class="flex">
-  <div class="w-1/2">
+  <div class="w-1/2 flex flex-col gap-5">
     <div class="flex items-center justify-start">
       <label for="pageNo" class="text-lg font-semibold w-1/2">Select Page No</label>
-      <div class="flex items-center justify-start gap-5 w-1/2">
+      <div class="flex items-center justify-start gap-5 w-1/2 px-4">
         <button on:click={previouspage} disabled={!prevbtn}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-black'}">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -102,7 +105,12 @@
         </button>
       </div>
     </div>
-    <!-- <button class="show-signature-overlay">Select Signature Placement</button> -->
+    <div class="flex items-center justify-start">
+      <label for="placement" class="text-lg font-semibold w-1/2">Select Signature Placement</label>
+      <div class="flex items-center justify-start gap-5 w-1/2 px-4">
+        <button on:click={signaturePlacement} id="placement" class="show-signature-overlay w-8 h-4 bg-sky-300 border rounded-full flex items-center justify-start"> <div class="w-3 h-3 bg-black rounded-full" /></button>
+      </div>
+    </div>
   </div>
   <div class="w-1/2">
     {#if (src = blobImg)}
