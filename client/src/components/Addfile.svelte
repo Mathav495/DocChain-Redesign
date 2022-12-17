@@ -104,6 +104,7 @@
       reader.addEventListener('load', function () {
         Imageurl = reader.result;
         console.log(Imageurl);
+        localStorage.setItem('imageUrl', Imageurl);
       });
 
       blobimage = URL.createObjectURL(File);
