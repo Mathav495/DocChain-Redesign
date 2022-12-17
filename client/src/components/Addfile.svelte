@@ -105,7 +105,6 @@
         Imageurl = reader.result;
         console.log(Imageurl);
       });
-      dispatch('Imageurl', Imageurl);
 
       blobimage = URL.createObjectURL(File);
       console.log(blobimage);

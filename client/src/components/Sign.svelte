@@ -1,6 +1,4 @@
 <script>
-  export let ImageUrl;
-  console.log(ImageUrl);
   import axios from 'axios';
   export let img;
   export let pdf;

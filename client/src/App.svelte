@@ -12,7 +12,6 @@
   import Signpage from './pages/Signpage.svelte';
   export let url = '';
   let pdf, img;
-  let ImageUrl;
   const blobPdf = (e) => {
     console.log('pdf', e.detail);
     pdf = e.detail;
@@ -25,11 +24,6 @@
     console.log(img);
     console.log(URL.createObjectURL(img));
   };
-
-  const imageurl = (e) => {
-    ImageUrl = e.detail;
-    console.log(ImageUrl);
-  };
 </script>
 
 <Router {url}>
@@ -39,9 +33,9 @@
     <Route path="/publish"><Publishdoc /></Route>
     <Route path="/dash2"><Dashboardpage2 /></Route>
     <Route path="/dash3"><Dashboardpage3 /></Route>
-    <Route path="/sign"><Signpage {pdf} {img} {ImageUrl} /></Route>
+    <Route path="/sign"><Signpage {pdf} {img} /></Route>
     <Route path="/add-file/:id" let:params>
-      <Fileuploadpage id={params.id} on:blob={blobPdf} on:blobimage={blobImg} on:Imageurl={imageurl} />
+      <Fileuploadpage id={params.id} on:blob={blobPdf} on:blobimage={blobImg} />
     </Route>
     <Route path="/add-data/:id" let:params>
       <Adddatapage id={params.id} />
