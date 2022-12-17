@@ -11,18 +11,13 @@
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
   import Signpage from './pages/Signpage.svelte';
   export let url = '';
-  let pdf, img;
-  const blobPdf = (e) => {
-    console.log('pdf', e.detail);
-    pdf = e.detail;
-    console.log(pdf);
-    console.log(URL.createObjectURL(pdf));
-  };
-  const blobImg = (e) => {
-    console.log('img', e.detail);
-    img = e.detail;
-    console.log(img);
-    console.log(URL.createObjectURL(img));
+  let file, link;
+  const getFile = (e) => {
+    console.log('file', e.detail);
+    file = e.detail;
+    link = URL.createObjectURL(file);
+    console.log(file);
+    console.log(URL.createObjectURL(file));
   };
 </script>
 
@@ -33,9 +28,9 @@
     <Route path="/publish"><Publishdoc /></Route>
     <Route path="/dash2"><Dashboardpage2 /></Route>
     <Route path="/dash3"><Dashboardpage3 /></Route>
-    <Route path="/sign"><Signpage {pdf} {img} /></Route>
+    <Route path="/sign"><Signpage {file} {link} /></Route>
     <Route path="/add-file/:id" let:params>
-      <Fileuploadpage id={params.id} on:blob={blobPdf} on:blobimage={blobImg} />
+      <Fileuploadpage id={params.id} on:file={getFile} />
     </Route>
     <Route path="/add-data/:id" let:params>
       <Adddatapage id={params.id} />

@@ -1,37 +1,135 @@
 <script>
+  let pdfPosition = {};
+  pdfPosition.options = {};
+  pdfPosition.init = function (options = {}) {
+    if (!options.triggerButtons) throw console.error('No triggerButton class is provided');
+    if (!options.imageTarget) throw console.error('No imageTarget id is provided');
+    if (!options.positionTextbox) throw console.error('No positionTextbox id is provided');
+    options.lockHorizontalCenter = false || options.lockHorizontalCenter;
+    pdfPosition.options = options;
+    let s = document.createElement('img');
+    s.src = 'https://print2block.com/test/img/signSample.png';
+    let a = 841 / 85;
+    let b = 594.65 / 495;
+    let c = document.createElement('canvas');
+    let d = c.getContext('2d');
+    let f = false;
+    let [x, y] = [(c.width - c.width / b) / 2, (c.height - c.height / a) / 2];
+    let w, h;
+    let t = document.getElementById(options.imageTarget);
+    pdfPosition.position = [];
+    pdfPosition.position[0] = Math.floor((x * 594.65) / c.width);
+    pdfPosition.position[1] = Math.floor(((c.height - y) * 841) / c.height - 85);
+    pdfPosition.position[2] = Math.floor((x * 594.65) / c.width + 495);
+    pdfPosition.position[3] = Math.floor(((c.height - y) * 841) / c.height);
+    pdfPosition.lastposition = pdfPosition.position;
+
+    let triggerButtons = document.querySelectorAll(options.triggerButtons);
+    for (let i = 0; i < triggerButtons.length; i++) {
+      triggerButtons[i].addEventListener('click', () => {
+        c.width = t.width;
+        c.height = t.height;
+        d.fillStyle = '#0095ff5e';
+        d.fillRect(0, 0, c.width, c.height);
+        c.style.position = 'absolute';
+        c.style.left = t.offsetLeft + 'px';
+        c.style.top = t.offsetTop + 'px';
+        t.parentElement.append(c);
+        w = c.width / b;
+        h = c.height / a;
+        d.drawImage(s, x, y, w, h);
+        f = true;
+      });
+    }
+
+    c.onmousemove = function drawSignature(e) {
+      if (f) {
+        d.clearRect(0, 0, c.width, c.height);
+        d.fillStyle = '#0095ff5e';
+        d.fillRect(0, 0, c.width, c.height);
+        if (pdfPosition.options.lockHorizontalCenter) x = (c.width - w) / 2;
+        else x = (e.offsetX >= 0 ? Math.round(e.offsetX) : 0) - c.width / b / 2;
+        y = (e.offsetY > -0 ? Math.round(e.offsetY) : 0) - c.height / a / 2;
+        d.drawImage(s, x, y, w, h);
+      }
+    };
+
+    c.onclick = function calculatePositions() {
+      if (f) {
+        f = false;
+        d.clearRect(0, 0, c.width, c.height);
+        d.drawImage(s, x, y, w, h);
+        pdfPosition.lastposition = pdfPosition.position;
+        pdfPosition.position[0] = Math.floor((x * 594.65) / c.width);
+        pdfPosition.position[1] = Math.floor(((c.height - y) * 841) / c.height - 85);
+        pdfPosition.position[2] = Math.floor((x * 594.65) / c.width + 495);
+        pdfPosition.position[3] = Math.floor(((c.height - y) * 841) / c.height);
+        if (options.positionTextbox) document.getElementById(options.positionTextbox).value = pdfPosition.position.toString();
+      }
+    };
+  };
+
   // import pdfPosition from '/public/lib/signPosition.js';
-  export let img;
-  export let pdf;
+  export let file;
+  export let link;
+  console.log(link);
+  console.log(file);
+  localStorage.setItem('file', file);
+
   let src;
-  console.log(img);
-  console.log(pdf);
+  let imageUrl, pdfUrl;
+  if (file.type == 'image/png' || file.type == 'image/jpg' || file.type == 'image/jpeg') {
+    console.log('image uplpaded');
+    // const reader = new FileReader(); // constructor
+    // reader.readAsDataURL(link); //(base 64 data url)
+    // reader.addEventListener('load', function () {
+    //   Imageurl = reader.result;
+    //   console.log(Imageurl);
+    //   localStorage.setItem('imageUrl', Imageurl);
+    imageUrl = localStorage.getItem('imageUrl');
+    console.log(imageUrl);
+    // });
+  } else if (file.type == 'application/pdf') {
+    console.log('pdf uplpaded');
+    // const reader = new FileReader(); // constructor
+    // reader.readAsDataURL(link); //(base 64 data url)
+    // reader.addEventListener('load', function () {
+    //   Pdfurl = reader.result;
+    //   console.log(Pdfurl);
+    //   localStorage.setItem('pdfUrl', Pdfurl);
+    pdfUrl = localStorage.getItem('Pdfurl');
+    console.log(pdfUrl);
+    // });
+  }
+  // imageUrl = localStorage.getItem('imageUrl');
+  // pdfUrl = localStorage.getItem('Pdfurl');
+
   // let blobImg = URL.createObjectURL(img);
   // let blobPdf = URL.createObjectURL(pdf);
-  let blobPdf = localStorage.getItem('blobpdf');
-  console.log('pdf', blobPdf);
-  let blobImg = localStorage.getItem('blobimage');
-  console.log('img', blobImg);
+  // let blobPdf = localStorage.getItem('blobpdf');
+  // console.log('pdf', blobPdf);
+  // let blobImg = localStorage.getItem('blobimage');
+  // console.log('img', blobImg);
   let currentpage = 0,
     _PDFDOC,
     _total_pages = 0;
 
-  const showPdf = async (blob) => {
-    console.log('get blob');
+  const showPdf = async (url) => {
     // await pageloader();
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js';
-    let loadingTask = pdfjsLib.getDocument(blob);
+    let loadingTask = pdfjsLib.getDocument(url);
     loadingTask = loadingTask.promise;
     _PDFDOC = await loadingTask;
     _total_pages = _PDFDOC.numPages;
-    console.log(_total_pages);
-    console.log(_PDFDOC);
+    // console.log(_total_pages);
+    // console.log(_PDFDOC);
     currentpage = 1;
     showPage(1);
   };
 
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno);
-    console.log('Page loaded');
+    // console.log('Page loaded');
     let viewport = page.getViewport({ scale: 2 });
 
     // Prepare canvas using PDF page dimensions
@@ -48,13 +146,13 @@
     await page.render(renderContext).promise;
     // document.getElementById('pdf-preview').src = canvas.toDataURL();
   };
-  showPdf(blobPdf);
+  showPdf(pdfUrl);
 
-  // pdfPosition.init({
-  //   triggerButtons: '.show-signature-overlay',
-  //   imageTarget: '#mycanvas1',
-  //   positionTextbox: 'positions',
-  // });
+  pdfPosition.init({
+    triggerButtons: '.show-signature-overlay',
+    imageTarget: '#mycanvas1',
+    positionTextbox: 'positions',
+  });
 
   let nextbtn = true;
   let prevbtn = true;
@@ -85,12 +183,15 @@
       console.log('final', currentpage);
     }
   };
-  let position = false;
+  let position = false,
+    bgclr = false;
   const signaturePlacement = () => {
     if (position == false) {
       position = true;
+      bgclr = true;
     } else {
       position = false;
+      bgclr = false;
     }
   };
   let clr = '#BEBEBE';
@@ -127,7 +228,7 @@
           <button class="show-signature-overlay text-lg rounded-md bg-indigo-500 hover:bg-indigo-600 px-3 py-1 text-white border-2 border-indig0-700 font-semibold">Select Signature Placement</button>
         </div>
         <div class="flex items-center justify-start gap-5 w-1/2 px-4">
-          <button on:click={signaturePlacement} id="placement" class:justify-end={position} class="show-signature-overlay w-8 h-5 bg-sky-300 border rounded-full flex items-center px-0.5"> <div class="w-3 h-3 bg-black rounded-full" /></button>
+          <button on:click={signaturePlacement} id="placement" class:justify-end={position} class:bg-indigo-300={bgclr} class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"> <div class="w-3 h-3 bg-black rounded-full" /></button>
           <p class="text-sm">Lock Horizontal control</p>
         </div>
       </div>
@@ -177,9 +278,10 @@
     </div>
   </div>
   <div class="w-4/12">
-    {#if (src = blobImg)}
-      <img class="w-full h-full rounded-md mb-10" src={blobImg} alt="document" />
-    {:else}
+    {#if file.type == 'image/png' || file.type == 'image/jpg' || file.type == 'image/jpeg'}
+      <img class="w-full h-full rounded-md mb-10" src={imageUrl} alt="document" />
+    {/if}
+    {#if file.type == 'application/pdf'}
       <canvas id="mycanvas1" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
     {/if}
   </div>

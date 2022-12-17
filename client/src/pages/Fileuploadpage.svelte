@@ -54,7 +54,7 @@
     <div class="md:hidden block">
       <Header on:navShow={showNav} />
     </div>
-    <Addfile {id} on:blob on:blobimage />
+    <Addfile {id} on:file />
   </div>
   <!--small screen navbar-->
   <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">
