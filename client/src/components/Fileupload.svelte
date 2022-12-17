@@ -213,6 +213,38 @@
     temp2.classList.add('flex');
     temp2.classList.remove('hidden');
   };
+
+  const hideLabel_docDetails = (value) => {
+    console.log(value);
+    let temp = document.getElementById(`b${value}`);
+    console.log(temp);
+    temp.classList.add('hidden');
+    let temp2 = document.getElementById(`c${value}`);
+    console.log(temp2);
+    temp2.classList.add('flex');
+    temp2.classList.remove('hidden');
+  };
+
+  const updateLabel_docDetails = (value) => {
+    let initial_value = value;
+    let increment_value = value + 1;
+    console.log(value);
+    console.log(documentDetails);
+    let nextData = {
+      label: increment_value,
+      labelName: 'Fieldname',
+    };
+    documentDetails = [...documentDetails, nextData];
+    console.log(documentDetails);
+    let temp = document.getElementById(`b${initial_value}`);
+    console.log(temp);
+    temp.classList.add('flex');
+    temp.classList.remove('hidden');
+    let temp2 = document.getElementById(`c${initial_value}`);
+    console.log(temp2);
+    temp2.classList.remove('flex');
+    temp2.classList.add('hidden');
+  };
 </script>
 
 <div class="space-y-3 flex flex-col justify-center items-center">
@@ -274,9 +306,8 @@
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
                 <div class="flex" id="b{docDetails.label}">
-                  <label for="label{docDetails.label}" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
-                    >Field name
-
+                  <label for="doclabel{docDetails.label}" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
+                    >{docDetails.labelName}
                     <svg on:click={() => hideLabel_docDetails(docDetails.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                     </svg>
@@ -290,7 +321,7 @@
                 </div>
               </div>
               <div>
-                <input name="label{docDetails.label}" id="label{docDetails.label}" type="text" class="input-normal" />
+                <input name="doclabel{docDetails.label}" id="doclabel{docDetails.label}" type="text" class="input-normal" />
               </div>
             </div>
           {/each}
