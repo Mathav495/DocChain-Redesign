@@ -92,8 +92,9 @@
     console.log([...formData]);
     let datum = [...formData][0];
     File = datum[1];
+    dispatch('File', File);
     console.log(File);
-    localStorage.setItem('file', File);
+    localStorage.setItem('file', [...formData]);
     console.log(File.type);
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       displaypreview = true;

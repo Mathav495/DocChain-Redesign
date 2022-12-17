@@ -17,12 +17,13 @@
 
   let imageUrl = localStorage.getItem('imageUrl');
   console.log(imageUrl);
+  // imageUrl1 = imageUrl.split(';base64,').pop();
 
   let Pdfurl = localStorage.getItem('Pdfurl');
-  console.log(Pdfurl);
 
   let token = localStorage.getItem('token');
   console.log(token);
+
   let initvalues;
   const showPdf = async (blob) => {
     console.log('get blob');
@@ -57,7 +58,7 @@
     await page.render(renderContext).promise;
     // document.getElementById('pdf-preview').src = canvas.toDataURL();
   };
-  showPdf(blobPdf);
+  showPdf(Pdfurl);
 
   const giveSign = () => {
     pdfPosition.init({
@@ -70,9 +71,11 @@
   const initiate = async () => {
     console.log('initiate');
     // modal = true;
+    console.log(Pdfurl);
     initvalues = {
       signer: '819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3',
-      file: Pdfurl,
+      file: pdf,
+
       signPage: '0',
       signPosition: '50, 315, 545, 400',
       signField: 'signature',
@@ -80,7 +83,11 @@
       signBGColor: '#1e10da',
       url: qrcode,
     };
-    const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/initiate', initvalues);
+    const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/initiate', initvalues, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     console.log(data);
   };
 </script>
@@ -105,7 +112,7 @@
       <button on:click={giveSign} class="show-signature-overlay">Select Signature Placement</button>
     </div>
     <div class="w-1/2">
-      {#if blobPdf}
+      {#if Pdfurl}
         <canvas id="mycanvas1" class="border-2 rounded-md overflow-hidden" />
       {/if}
       {#if blobImg}
