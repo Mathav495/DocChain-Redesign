@@ -8,7 +8,6 @@
   import QueueMsg from './Queue_msg.svelte';
   const dispatch = createEventDispatcher();
   let load = false;
-  export let confirnmsg;
   export let signmsg;
   export let Queue_msg;
 

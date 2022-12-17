@@ -1,6 +1,6 @@
 <script>
-  // import pdfjsLib from 'pdfjs-dist/build/pdf';
-  // import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
+  // import pdfjsLib from '/public/lib/pdf.js';
+  // import pdfjsWorker from '/public/lib/pdf.worker.js';
   import axios from 'axios';
   import { navigate } from 'svelte-routing';
   import { fade } from 'svelte/transition';
@@ -136,7 +136,7 @@
 
   const showPdf = async (blob) => {
     // await pageloader();
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js';
     let loadingTask = pdfjsLib.getDocument(blob);
     loadingTask = loadingTask.promise;
     _PDFDOC = await loadingTask;
@@ -150,7 +150,7 @@
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno);
     console.log('Page loaded');
-    let viewport = page.getViewport({ scale: 1 });
+    let viewport = page.getViewport({ scale: 2 });
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById('mycanvas');
@@ -282,9 +282,9 @@
 
   <!-- For image preview -->
   <div class="{displaypreview && !showpdf ? 'flex' : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
-    <div class="max-w-full min-w-[22.5rem] min-h-[24.35rem] max-h-[40rem] justify-center items-center flex">
+    <div class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem] justify-center items-center flex">
       <div class="border-2 rounded-md shadow-[0_0_8px_0_rgba(0,0,0,0.15)] overflow-hidden">
-        <img src={blobimage} class="max-w-full min-w-[22.5rem] min-h-[24.35rem] max-h-[40rem]" id="File" alt="Preview" />
+        <img src={blobimage} class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem]" id="File" alt="Preview" />
       </div>
     </div>
   </div>
