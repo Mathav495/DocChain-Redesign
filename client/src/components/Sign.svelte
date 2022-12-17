@@ -10,7 +10,9 @@
   let blobImg = localStorage.getItem('blobimage');
   console.log('img', blobImg);
   let currentpage, _PDFDOC, _total_pages;
-
+  let qrcode = localStorage.getItem('qrcode');
+  console.log(qrcode);
+  let values;
   const showPdf = async (blob) => {
     console.log('get blob');
     // await pageloader();
@@ -53,6 +55,19 @@
       positionTextbox: 'positions',
     });
   };
+  const initiate = () => {
+    console.log('initiate');
+    values = {
+      signer: '819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3',
+      file: blobPdf,
+      signPage: '0',
+      signPosition: '50, 315, 545, 400',
+      signField: 'signature',
+      reason: 'testing purpose',
+      signBGColor: '#1e10da ',
+      url: qrcode,
+    };
+  };
 </script>
 
 <div class="flex">
@@ -68,4 +83,11 @@
     {/if}
   </div>
 </div>
-<button class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">initiate</button>
+<button on:click={initiate} class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">initiate</button>
+
+<!-- sampleData = {
+  email: Email,
+  password: Password,
+};
+const { data } = await axios.post('https://test.swagger.print2block.in/auth/login', sampleData);
+console.log(data); -->
