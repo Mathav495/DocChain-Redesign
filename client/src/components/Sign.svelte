@@ -9,8 +9,8 @@
   let blobImg = localStorage.getItem('blobimage');
   console.log('img', blobImg);
   let currentpage, _PDFDOC, _total_pages;
-  let qrcode = localStorage.getItem('qrcode');
-  console.log(qrcode);
+  let docURL = localStorage.getItem('docURL');
+  console.log(docURL);
 
   let imageUrl = localStorage.getItem('imageUrl');
   console.log(imageUrl);
@@ -64,7 +64,7 @@
       positionTextbox: 'positions',
     });
   };
-  let modal = false;
+
   const initiate = async () => {
     console.log('initiate');
     // modal = true;
@@ -77,7 +77,7 @@
       signField: 'signature',
       reason: 'testing purpose',
       signBGColor: '#1e10da',
-      url: qrcode,
+      url: docURL,
     };
     const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/initiate', initvalues, {
       headers: {
@@ -85,6 +85,7 @@
       },
     });
     console.log(data);
+    console.log(data.signRequest.id);
   };
 </script>
 
