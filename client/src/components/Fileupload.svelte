@@ -11,15 +11,15 @@
   let doctype = '';
   let signatory = '';
   let docTitle = '';
-  let valid, date, sampleData, options, errormsg, newinput_1;
+  let valid, date, sampleData, options, errormsg;
   let receiver = [
     {
       label: 1,
       labelName: 'Fieldname',
+      inputvalue: '',
     },
   ];
   let displayerror = false;
-  let hideLabel_1 = false;
   let error = {
     dateexpired: '',
     issuer: '',
@@ -231,7 +231,7 @@
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
                 <div class="flex" id={receiver.label}>
-                  <label for="new_field" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
+                  <label for="label{receiver.label}" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
                     >{receiver.labelName}
 
                     <svg on:click={() => hideLabel(receiver.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
@@ -246,8 +246,9 @@
                   </svg>
                 </div>
               </div>
-
-              <input name="new_field" bind:value={newinput_1} id="new_field" type="text" class="input-normal" />
+              <div>
+                <input name="label{receiver.label}" bind:value={receiver.inputvalue} id="label{receiver.label}" type="text" class="input-normal" />
+              </div>
             </div>
           {/each}
         </div>
