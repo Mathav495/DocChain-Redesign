@@ -1,4 +1,6 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
   // import pdfjsLib from 'pdfjs-dist/build/pdf';
   // import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
   import axios from 'axios';
@@ -89,6 +91,7 @@
     console.log([...formData]);
     let datum = [...formData][0];
     File = datum[1];
+    localStorage.setItem('file', File);
     console.log(File.type);
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       displaypreview = true;
@@ -96,6 +99,7 @@
       showpdf = false;
       blobimage = URL.createObjectURL(File);
       console.log(blobimage);
+      dispatch('blobimage', File);
       localStorage.setItem('blobimage', blobimage);
       return;
     } else if (File.type == 'application/pdf') {
@@ -103,6 +107,7 @@
       let blob = URL.createObjectURL(File);
       localStorage.setItem('blobpdf', blob);
       console.log(blob);
+      dispatch('blob', File);
       await showPdf(blob);
       displayDropzone = false;
       displaypreview = true;
@@ -209,6 +214,10 @@
     displayConfirm = false;
     ondisplaydropzone();
   };
+
+  const signDoc = () => {
+    navigate('/sign');
+  };
 </script>
 
 <div class="relative h-auto w-full flex flex-col items-center justify-center gap-3  p-4">
@@ -295,7 +304,7 @@
       <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide">Choose Different file</button>
     </div>
     <div class="flex">
-      <a href="/sign" class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide">Sign Doc</a>
+      <button on:click={signDoc} class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide">Sign Doc</button>
     </div>
     <div class="flex">
       <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide">Confirm and Continue</button>

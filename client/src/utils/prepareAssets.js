@@ -1,7 +1,7 @@
 const scripts = [
   {
     name: 'pdfjsLib',
-    src: 'https://unpkg.com/pdfjs-dist@2.7.570/build/pdf.min.js',
+    src: 'https://unpkg.com/pdfjs-dist@2.9.359/build/pdf.min.js',
   },
   {
     name: 'PDFLib',
@@ -33,7 +33,7 @@ export function prepareAsset({ name, src }) {
     };
     script.onerror = () => {
       reject(`The script ${name} didn't load correctly.`);
-      alert(`Some scripts did not load correctly. Please reload and try again.`)
+      alert(`Some scripts did not load correctly. Please reload and try again.`);
     };
     document.body.appendChild(script);
   });

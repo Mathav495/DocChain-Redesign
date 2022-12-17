@@ -1,4 +1,6 @@
 <script>
+  export let img;
+  export let pdf;
   import { fade } from 'svelte/transition';
   import Header from '../components/Header.svelte';
   import Headerlogo from '../components/Headerlogo.svelte';
@@ -8,6 +10,8 @@
   import Nav from '../components/Nav.svelte';
   import Sign from '../components/Sign.svelte';
   import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
+  console.log(img);
+  console.log(pdf);
   let hideNavbar = true;
   let animate = document.querySelector('#particles-js');
   console.log(animate);
@@ -84,7 +88,7 @@
       <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>
-      <Sign />
+      <Sign {pdf} {img} />
     </div>
   </div>
   <!--small screen navbar-->
