@@ -1,4 +1,5 @@
 <script>
+  // import pdfPosition from '/public/lib/signPosition.js';
   export let img;
   export let pdf;
   let src;
@@ -84,11 +85,18 @@
       console.log('final', currentpage);
     }
   };
-  const signaturePlacement = () => {};
+  let position = false;
+  const signaturePlacement = () => {
+    if (position == false) {
+      position = true;
+    } else {
+      position = false;
+    }
+  };
 </script>
 
 <div class="flex">
-  <div class="w-1/2 flex flex-col gap-5">
+  <div class="w-8/12 flex flex-col gap-5">
     <div class="flex items-center justify-start">
       <label for="pageNo" class="text-lg font-semibold w-1/2">Select Page No</label>
       <div class="flex items-center justify-start gap-5 w-1/2 px-4">
@@ -106,13 +114,16 @@
       </div>
     </div>
     <div class="flex items-center justify-start">
-      <label for="placement" class="text-lg font-semibold w-1/2">Select Signature Placement</label>
+      <div class=" w-1/2">
+        <button class="text-lg rounded-md bg-indigo-500 hover:bg-indigo-600 px-3 py-1 text-white border-2 border-indig0-700 font-semibold">Select Signature Placement</button>
+      </div>
       <div class="flex items-center justify-start gap-5 w-1/2 px-4">
-        <button on:click={signaturePlacement} id="placement" class="show-signature-overlay w-8 h-4 bg-sky-300 border rounded-full flex items-center justify-start"> <div class="w-3 h-3 bg-black rounded-full" /></button>
+        <button on:click={signaturePlacement} id="placement" class:justify-end={position} class="show-signature-overlay w-8 h-5 bg-sky-300 border rounded-full flex items-center px-0.5"> <div class="w-3 h-3 bg-black rounded-full" /></button>
+        <p class="text-sm">Lock Horizontal control</p>
       </div>
     </div>
   </div>
-  <div class="w-1/2">
+  <div class="w-4/12">
     {#if (src = blobImg)}
       <img class="w-full h-full rounded-md mb-10" src={blobImg} alt="document" />
     {:else}
