@@ -1,9 +1,6 @@
 <script>
   import axios from 'axios';
-  export let img;
-  export let pdf;
-  console.log(img);
-  console.log(pdf);
+  export let file;
   // let blobImg = URL.createObjectURL(img);
   // let blobPdf = URL.createObjectURL(pdf);
 
@@ -71,11 +68,10 @@
   const initiate = async () => {
     console.log('initiate');
     // modal = true;
-    console.log(Pdfurl);
+
     initvalues = {
       signer: '819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3',
-      file: pdf,
-
+      file: file,
       signPage: '0',
       signPosition: '50, 315, 545, 400',
       signField: 'signature',

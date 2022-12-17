@@ -92,7 +92,9 @@
     console.log([...formData]);
     let datum = [...formData][0];
     File = datum[1];
-    dispatch('File', File);
+    if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg' || File.type == 'application/pdf') {
+      dispatch('File', File);
+    }
     console.log(File);
     localStorage.setItem('file', [...formData]);
     console.log(File.type);
@@ -111,7 +113,6 @@
 
       blobimage = URL.createObjectURL(File);
       console.log(blobimage);
-      dispatch('blobimage', File);
       localStorage.setItem('blobimage', blobimage);
       return;
     } else if (File.type == 'application/pdf') {
@@ -128,7 +129,6 @@
       let blob = URL.createObjectURL(File);
       localStorage.setItem('blobpdf', blob);
       console.log(blob);
-      dispatch('blob', File);
       await showPdf(blob);
       displayDropzone = false;
       displaypreview = true;
