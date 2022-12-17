@@ -19,7 +19,7 @@
   let documentID = localStorage.getItem('documentID');
   let bgcolor = localStorage.getItem('bgGradient');
   let displaypreview = false;
-
+  let Imageurl;
   /**
    * Submitting file for generating filehash
    */
@@ -91,12 +91,22 @@
     console.log([...formData]);
     let datum = [...formData][0];
     File = datum[1];
+    console.log(File);
     localStorage.setItem('file', File);
     console.log(File.type);
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       displaypreview = true;
       displayDropzone = false;
       showpdf = false;
+
+      const reader = new FileReader(); // constructor
+      reader.readAsDataURL(File); //(base 64 data url)
+      reader.addEventListener('load', function () {
+        Imageurl = reader.result;
+        console.log(Imageurl);
+      });
+      dispatch('Imageurl', Imageurl);
+
       blobimage = URL.createObjectURL(File);
       console.log(blobimage);
       dispatch('blobimage', File);

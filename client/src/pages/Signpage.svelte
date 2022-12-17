@@ -1,4 +1,5 @@
 <script>
+  export let ImageUrl;
   export let img;
   export let pdf;
   import { fade } from 'svelte/transition';
@@ -88,7 +89,7 @@
       <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>
-      <Sign {pdf} {img} />
+      <Sign {pdf} {img} {ImageUrl} />
     </div>
   </div>
   <!--small screen navbar-->

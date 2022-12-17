@@ -1,4 +1,6 @@
 <script>
+  export let ImageUrl;
+  console.log(ImageUrl);
   import axios from 'axios';
   export let img;
   export let pdf;
@@ -6,6 +8,7 @@
   console.log(pdf);
   // let blobImg = URL.createObjectURL(img);
   // let blobPdf = URL.createObjectURL(pdf);
+
   let blobPdf = localStorage.getItem('blobpdf');
   console.log('pdf', blobPdf);
   let blobImg = localStorage.getItem('blobimage');
