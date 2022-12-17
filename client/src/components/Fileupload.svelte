@@ -176,15 +176,35 @@
     }
   };
   const updateLabel = (value) => {
+    let initial_value = value;
+    let increment_value = value + 1;
     console.log(value);
     console.log(receiver);
     let nextData = {
-      label: value++,
+      label: increment_value,
       labelName: 'Fieldname',
     };
     receiver = [...receiver, nextData];
     console.log(receiver);
-    hideLabel_1 = false;
+    let temp = document.getElementById(initial_value);
+    console.log(temp);
+    temp.classList.add('flex');
+    temp.classList.remove('hidden');
+    let temp2 = document.getElementById(`a${initial_value}`);
+    console.log(temp2);
+    temp2.classList.remove('flex');
+    temp2.classList.add('hidden');
+  };
+
+  const hideLabel = (value) => {
+    console.log(value);
+    let temp = document.getElementById(value);
+    console.log(temp);
+    temp.classList.add('hidden');
+    let temp2 = document.getElementById(`a${value}`);
+    console.log(temp2);
+    temp2.classList.add('flex');
+    temp2.classList.remove('hidden');
   };
 </script>
 
@@ -210,14 +230,16 @@
           {#each receiver as receiver}
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
-                <label for="new_field" class="{hideLabel_1 ? 'hidden' : 'block'} text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
-                  >{receiver.labelName}
+                <div class="flex" id={receiver.label}>
+                  <label for="new_field" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
+                    >{receiver.labelName}
 
-                  <svg on:click={() => (hideLabel_1 = true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                  </svg>
-                </label>
-                <div class="flex items-center gap-2 {!hideLabel_1 ? 'hidden' : 'block'}">
+                    <svg on:click={() => hideLabel(receiver.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                    </svg>
+                  </label>
+                </div>
+                <div class="hidden items-center gap-2" id="a{receiver.label}">
                   <input placeholder="Enter Field name" bind:value={receiver.labelName} type="text" class="field-input" />
                   <svg on:click={() => updateLabel(receiver.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
