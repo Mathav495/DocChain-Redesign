@@ -79,8 +79,8 @@
   };
 </script>
 
-<div class="relative w-full flex flex-col items-center justify-center gap-3  p-4">
-  <div class="w-full bg-[#000000cc] absolute items-end flex justify-center p-4">
+<div class="relative h-auto w-full flex flex-col items-center justify-center gap-3">
+  <div class="w-full h-full bg-[#000000cc] absolute items-start flex justify-center p-4">
     <div class="w-full lg:w-3/5 bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
       <h1 class="text-2xl text-slate-800 font-bold pb-3">Confirm Request</h1>
       <div class="flex gap-3">
