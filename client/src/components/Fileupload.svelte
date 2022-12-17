@@ -11,8 +11,13 @@
   let doctype = '';
   let signatory = '';
   let docTitle = '';
-  let valid, date, sampleData, options, errormsg, newinput_1, newlabel;
-  let Label1;
+  let valid, date, sampleData, options, errormsg, newinput_1;
+  let receiver = [
+    {
+      label: 1,
+      labelName: 'Fieldname',
+    },
+  ];
   let displayerror = false;
   let hideLabel_1 = false;
   let error = {
@@ -172,7 +177,13 @@
   };
   const updateLabel = (value) => {
     console.log(value);
-    Label1 = newlabel;
+    console.log(receiver);
+    let nextData = {
+      label: value++,
+      labelName: 'Fieldname',
+    };
+    receiver = [...receiver, nextData];
+    console.log(receiver);
     hideLabel_1 = false;
   };
 </script>
@@ -196,24 +207,27 @@
             <input placeholder={error.issuer ? error.issuer : 'Enter issuer name'} bind:value={issuer} name="issuer" id="issuer" type="text" class={error.issuer ? 'input-error' : 'input-normal'} />
           </div>
 
-          <div class="flex flex-col w-full  space-y-2">
-            <div class="flex">
-              <label for="new_field" class="{hideLabel_1 ? 'hidden' : 'block'} text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
-                >{Label1 ? Label1 : 'Field name'}
+          {#each receiver as receiver}
+            <div class="flex flex-col w-full  space-y-2">
+              <div class="flex">
+                <label for="new_field" class="{hideLabel_1 ? 'hidden' : 'block'} text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
+                  >{receiver.labelName}
 
-                <svg on:click={() => (hideLabel_1 = true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                </svg>
-              </label>
-              <div class="flex items-center gap-2 {!hideLabel_1 ? 'hidden' : 'block'}">
-                <input placeholder="Enter Field name" bind:value={newlabel} type="text" class="field-input" />
-                <svg on:click={() => updateLabel(1)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                  <svg on:click={() => (hideLabel_1 = true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                  </svg>
+                </label>
+                <div class="flex items-center gap-2 {!hideLabel_1 ? 'hidden' : 'block'}">
+                  <input placeholder="Enter Field name" bind:value={receiver.labelName} type="text" class="field-input" />
+                  <svg on:click={() => updateLabel(receiver.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
               </div>
+
+              <input name="new_field" bind:value={newinput_1} id="new_field" type="text" class="input-normal" />
             </div>
-            <input name="new_field" bind:value={newinput_1} id="new_field" type="text" class="input-normal" />
-          </div>
+          {/each}
         </div>
 
         <div class="flex flex-col w-full pb-5 border-b-2 space-y-3">
