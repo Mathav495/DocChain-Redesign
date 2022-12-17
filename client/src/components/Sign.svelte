@@ -12,7 +12,7 @@
   let currentpage, _PDFDOC, _total_pages;
   let qrcode = localStorage.getItem('qrcode');
   console.log(qrcode);
-  let values;
+  let initvalues;
   const showPdf = async (blob) => {
     console.log('get blob');
     // await pageloader();
@@ -55,9 +55,9 @@
       positionTextbox: 'positions',
     });
   };
-  const initiate = () => {
+  const initiate = async () => {
     console.log('initiate');
-    values = {
+    initvalues = {
       signer: '819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3',
       file: blobPdf,
       signPage: '0',
@@ -67,6 +67,12 @@
       signBGColor: '#1e10da ',
       url: qrcode,
     };
+    const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/initiate', initvalues, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'x-access-token': token,
+      },
+    });
   };
 </script>
 
