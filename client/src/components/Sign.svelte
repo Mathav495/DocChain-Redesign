@@ -3,7 +3,7 @@
   export let file;
   // let blobImg = URL.createObjectURL(img);
   // let blobPdf = URL.createObjectURL(pdf);
-
+  let signreq;
   let blobPdf = localStorage.getItem('blobpdf');
   console.log('pdf', blobPdf);
   let blobImg = localStorage.getItem('blobimage');
@@ -64,7 +64,7 @@
       positionTextbox: 'positions',
     });
   };
-
+  let modal = false;
   const initiate = async () => {
     console.log('initiate');
     // modal = true;
@@ -85,24 +85,34 @@
       },
     });
     console.log(data);
-    console.log(data.signRequest.id);
+    signreq = data.signRequest.id;
+    console.log(signreq);
+    modal = true;
+  };
+  const ConfirmRequest = async () => {
+    const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/confirm', {
+      requestid: signreq,
+      otp: '12345',
+    });
+    console.log(data);
   };
 </script>
 
 <div class="relative h-auto w-full flex flex-col items-center justify-center gap-3">
-  <div class="w-full flex h-full bg-[#000000cc] absolute items-start justify-center p-4">
-    <div class="w-full lg:w-3/5 bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
-      <h1 class="text-2xl text-slate-800 font-bold pb-3">Confirm Request</h1>
-      <div class="flex gap-3">
-        <h1 class="text-lg text-slate-800 font-semibold flex items-center">One Time Password</h1>
-        <input type="text" placeholder="12345" class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8" />
-      </div>
-      <div class="pt-5">
-        <button class=" text-white font-medium bg-blue-700 py-2 px-4 hover:bg-blue-800 tracking-wider rounded text-lg">Confirm Request</button>
+  {#if modal}
+    <div class="w-full flex h-full bg-[#000000cc] absolute items-start justify-center p-4">
+      <div class="w-full lg:w-3/5 bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
+        <h1 class="text-2xl text-slate-800 font-bold pb-3">Confirm Request</h1>
+        <div class="flex gap-3">
+          <h1 class="text-lg text-slate-800 font-semibold flex items-center">One Time Password</h1>
+          <input type="text" placeholder="12345" class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8" />
+        </div>
+        <div class="pt-5">
+          <button on:click={ConfirmRequest} class=" text-white font-medium bg-blue-700 py-2 px-4 hover:bg-blue-800 tracking-wider rounded text-lg">Confirm Request</button>
+        </div>
       </div>
     </div>
-  </div>
-
+  {/if}
   <div class="flex">
     <div class="w-1/2">
       <button on:click={giveSign} class="show-signature-overlay">Select Signature Placement</button>
