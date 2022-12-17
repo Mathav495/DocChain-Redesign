@@ -1,4 +1,5 @@
 <script>
+  import axios from 'axios';
   export let img;
   export let pdf;
   console.log(img);
@@ -72,6 +73,7 @@
         'x-access-token': token,
       },
     });
+    console.log(data);
   };
 </script>
 
@@ -89,10 +91,3 @@
   </div>
 </div>
 <button on:click={initiate} class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">initiate</button>
-
-<!-- sampleData = {
-  email: Email,
-  password: Password,
-};
-const { data } = await axios.post('https://test.swagger.print2block.in/auth/login', sampleData);
-console.log(data); -->
