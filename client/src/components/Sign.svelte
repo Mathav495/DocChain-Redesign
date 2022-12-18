@@ -1,6 +1,7 @@
 <script>
   import axios from 'axios';
   export let file;
+  let otp = '';
   // let blobImg = URL.createObjectURL(img);
   // let blobPdf = URL.createObjectURL(pdf);
   let signreq;
@@ -92,9 +93,10 @@
   const ConfirmRequest = async () => {
     const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/confirm', {
       requestid: signreq,
-      otp: '12345',
+      otp: otp,
     });
     console.log(data);
+    console.log(data.signRequest.signedFile);
   };
 </script>
 
@@ -105,7 +107,7 @@
         <h1 class="text-2xl text-slate-800 font-bold pb-3">Confirm Request</h1>
         <div class="flex gap-3">
           <h1 class="text-lg text-slate-800 font-semibold flex items-center">One Time Password</h1>
-          <input type="text" placeholder="12345" class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8" />
+          <input bind:value={otp} type="text" placeholder="12345" class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8" />
         </div>
         <div class="pt-5">
           <button on:click={ConfirmRequest} class=" text-white font-medium bg-blue-700 py-2 px-4 hover:bg-blue-800 tracking-wider rounded text-lg">Confirm Request</button>
