@@ -1,34 +1,18 @@
 <script>
-
   import axios from 'axios';
-  import { navigate } from 'svelte-routing';
   export let file;
   let otp = '';
   let SignFile;
   // let blobImg = URL.createObjectURL(img);
   // let blobPdf = URL.createObjectURL(pdf);
   let signreq;
-  let blobPdf = localStorage.getItem('blobpdf');
-  console.log('pdf', blobPdf);
-  let blobImg = localStorage.getItem('blobimage');
-  console.log('img', blobImg);
-  let currentpage, _PDFDOC, _total_pages;
   let docURL = localStorage.getItem('docURL');
   console.log(docURL);
-
-  let imageUrl = localStorage.getItem('imageUrl');
-  console.log(imageUrl);
   // imageUrl1 = imageUrl.split(';base64,').pop();
-
-  let Pdfurl = localStorage.getItem('Pdfurl');
-
   let token = localStorage.getItem('token');
   console.log(token);
 
   let initvalues;
-  const showPdf = async (blob) => {
-    console.log('get blob');
-    // await pageloader();
   let pdfPosition = {};
   pdfPosition.options = {};
   pdfPosition.init = function (options = {}) {
@@ -99,8 +83,6 @@
     };
   };
 
-  // import pdfPosition from '/public/lib/signPosition.js';
-
   const showPdf = async (url) => {
     console.log(url);
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js';
@@ -131,7 +113,7 @@
     // document.getElementById('pdf-preview').src = canvas.toDataURL();
   };
   let src;
-  let base64, url, imageUrl, pdfUrl;
+  let base64, imageUrl, url, pdfUrl;
   base64 = localStorage.getItem('base64');
   console.log(base64);
   url = base64.split(';base64,');
@@ -209,35 +191,6 @@
       downloadpdf.click();
     }
   };
-</script>
-
-<div class="relative h-auto w-full flex flex-col items-center justify-center gap-3">
-  {#if modal}
-    <div class="w-full flex h-full bg-[#000000cc] absolute items-start justify-center p-4">
-      <div class="w-full lg:w-3/5 bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
-        <h1 class="text-2xl text-slate-800 font-bold pb-3">Confirm Request</h1>
-        <div class="flex gap-3">
-          <h1 class="text-lg text-slate-800 font-semibold flex items-center">One Time Password</h1>
-          <input bind:value={otp} type="text" placeholder="12345" class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8" />
-        </div>
-        <div class="pt-5">
-          <button on:click={ConfirmRequest} class=" text-white font-medium bg-blue-700 py-2 px-4 hover:bg-blue-800 tracking-wider rounded text-lg">Confirm Request</button>
-        </div>
-      </div>
-    </div>
-  {/if}
-  <div class="flex">
-    <div class="w-1/2">
-      <button on:click={giveSign} class="show-signature-overlay">Select Signature Placement</button>
-    </div>
-    <div class="w-1/2">
-      {#if Pdfurl}
-        <canvas id="mycanvas1" class="border-2 rounded-md overflow-hidden" />
-      {/if}
-      {#if blobImg}
-        <img src={blobImg} alt="img" class="w-full h-full" />
-      {/if}
-    </div>
   let nextbtn = true;
   let prevbtn = true;
   const nextpage = () => {
@@ -292,7 +245,21 @@
   };
 </script>
 
-<div class="flex">
+<div class="relative h-auto w-full flex flex-col items-center justify-center gap-3">
+  {#if modal}
+    <div class="w-full flex h-full bg-[#000000cc] absolute items-start justify-center p-4">
+      <div class="w-full lg:w-3/5 bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
+        <h1 class="text-2xl text-slate-800 font-bold pb-3">Confirm Request</h1>
+        <div class="flex gap-3">
+          <h1 class="text-lg text-slate-800 font-semibold flex items-center">One Time Password</h1>
+          <input bind:value={otp} type="text" placeholder="12345" class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8" />
+        </div>
+        <div class="pt-5">
+          <button on:click={ConfirmRequest} class=" text-white font-medium bg-blue-700 py-2 px-4 hover:bg-blue-800 tracking-wider rounded text-lg">Confirm Request</button>
+        </div>
+      </div>
+    </div>
+  {/if}
   <div class="w-8/12 flex flex-col gap-10">
     <div>
       <span class="text-base rounded-md font-bold bg-black text-white px-1 tracking-wider">STEP 1</span>
