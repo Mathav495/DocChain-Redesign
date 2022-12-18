@@ -177,18 +177,9 @@
     console.log(SignFile);
     if (SignFile) {
       console.log(SignFile);
-      const { data } = await axios.get(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
-      console.log(data);
-      // let blobPdf = URL.createObjectURL(data);
-      // console.log(blobPdf);
-      // navigate(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
 
-      let downloadpdf = document.createElement('a');
-      downloadpdf.setAttribute('href', `https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
-      // downloadpdf.href = `https://pdfsign.test.print2block.in/signature/download/${SignFile}`;
-      // downloadpdf.setAttribute('download', SignFile);
-      downloadpdf.setAttribute('target', '_blank');
-      downloadpdf.click();
+      const { data } = await axios.get(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`, { responseType: 'blob' });
+      console.log(data);
     }
   };
   let nextbtn = true;
