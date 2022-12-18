@@ -1,5 +1,5 @@
 <script>
-  export let file;
+  export let file, id;
   import { fade } from 'svelte/transition';
   import Header from '../components/Header.svelte';
   import Headerlogo from '../components/Headerlogo.svelte';
@@ -85,7 +85,7 @@
       <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>
-      <Sign {file} />
+      <Sign {file} {id} on:blob />
     </div>
   </div>
   <!--small screen navbar-->

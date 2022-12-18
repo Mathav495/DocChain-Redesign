@@ -1,6 +1,8 @@
 <script>
+  export let id;
   import axios from 'axios';
   import { createEventDispatcher } from 'svelte';
+  import { navigate } from 'svelte-routing';
   const dispatch = createEventDispatcher();
   export let file;
   let otp = '';
@@ -187,6 +189,7 @@
       console.log(blob);
       modal = false;
       showPdf(blob);
+      navigate(`/add-file/${id}`);
     }
     dispatch('blob', blob);
   };

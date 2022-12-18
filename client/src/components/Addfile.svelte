@@ -1,4 +1,7 @@
 <script>
+  export let bloblink;
+  console.log(bloblink);
+
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
   // import pdfjsLib from '/public/lib/pdf.js';
@@ -95,7 +98,6 @@
       dispatch('File', File);
     }
     console.log(File);
-    localStorage.setItem('file', [...formData]);
     console.log(File.type);
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       displaypreview = true;
@@ -232,7 +234,7 @@
   };
 
   const signDoc = () => {
-    navigate('/sign');
+    navigate(`/sign/${id}`);
   };
 </script>
 
