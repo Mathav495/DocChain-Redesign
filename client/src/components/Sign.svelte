@@ -5,6 +5,7 @@
   export let file;
   let otp = '';
   let SignFile;
+  let blob;
   // let blobImg = URL.createObjectURL(img);
   // let blobPdf = URL.createObjectURL(pdf);
   let signreq;
@@ -182,11 +183,12 @@
       const { data } = await axios.get(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`, { responseType: 'blob' });
       console.log(data);
       console.log(data.type);
-      let blob = URL.createObjectURL(data);
+      blob = URL.createObjectURL(data);
       console.log(blob);
       modal = false;
       showPdf(blob);
     }
+    dispatch('blob', blob);
   };
   let nextbtn = true;
   let prevbtn = true;
