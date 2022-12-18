@@ -83,7 +83,7 @@
   /**
    * Function for previewing image or pdf when uploaded
    */
-
+  let Imageurl, Pdfurl;
   const ondisplay = async () => {
     console.log('displayed');
     const form = document.getElementById('form');
@@ -91,23 +91,36 @@
     console.log([...formData]);
     let datum = [...formData][0];
     File = datum[1];
+    dispatch('file', File);
     localStorage.setItem('file', File);
     console.log(File.type);
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       displaypreview = true;
       displayDropzone = false;
       showpdf = false;
+      const reader = new FileReader(); // constructor
+      reader.readAsDataURL(File); //(base 64 data url)
+      reader.addEventListener('load', function () {
+        Imageurl = reader.result;
+        console.log(Imageurl);
+        localStorage.setItem('base64', Imageurl);
+      });
       blobimage = URL.createObjectURL(File);
       console.log(blobimage);
-      dispatch('blobimage', File);
       localStorage.setItem('blobimage', blobimage);
       return;
     } else if (File.type == 'application/pdf') {
       showpdf = true;
+      const reader = new FileReader(); // constructor
+      reader.readAsDataURL(File); //(base 64 data url)
+      reader.addEventListener('load', function () {
+        Pdfurl = reader.result;
+        console.log(Pdfurl);
+        localStorage.setItem('base64', Pdfurl);
+      });
       let blob = URL.createObjectURL(File);
       localStorage.setItem('blobpdf', blob);
       console.log(blob);
-      dispatch('blob', File);
       await showPdf(blob);
       displayDropzone = false;
       displaypreview = true;
