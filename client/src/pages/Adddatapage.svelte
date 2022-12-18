@@ -41,7 +41,7 @@
 </script>
 
 <svelte:head>
-  <title>Add File</title>
+  <title>Add Data</title>
 </svelte:head>
 
 <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-2 pr-2">
