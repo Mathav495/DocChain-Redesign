@@ -9,7 +9,6 @@
   import Loading from './Loading.svelte';
   const dispatch = createEventDispatcher();
   let load = false;
-  export let confirnmsg;
   export let signmsg;
   export let Queue_msg;
   export let loader = false;

@@ -46,10 +46,12 @@
   onMount(async (e) => {
     loading = true;
     try {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
-      let loadingTask = pdfjsLib.getDocument('/assets/Rhymes1.pdf');
+      // pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/build/pdf.worker.min.js';
+      // let loadingTask = pdfjsLib.getDocument('/assets/Rhymes1.pdf');
       // const response = await fetch(blob);
       // const blob = await response.blob();
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js';
+      let loadingTask = pdfjsLib.getDocument(blob);
       loadingTask = loadingTask.promise;
       _PDFDOC = await loadingTask;
       _total_pages = _PDFDOC.numPages;

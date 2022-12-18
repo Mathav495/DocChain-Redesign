@@ -9,7 +9,15 @@
   import Dashboardpage3 from './pages/Dashboardpage3.svelte';
   import Adddatapage from './pages/Adddatapage.svelte';
   import Fileuploadpage from './pages/Fileuploadpage.svelte';
+  import Signpage from './pages/Signpage.svelte';
   export let url = '';
+  let file;
+  const getFile = (e) => {
+    console.log('file', e.detail);
+    file = e.detail;
+    console.log(file);
+    console.log(URL.createObjectURL(file));
+  };
 </script>
 
 <Router {url}>
@@ -19,8 +27,9 @@
     <Route path="/publish"><Publishdoc /></Route>
     <Route path="/dash2"><Dashboardpage2 /></Route>
     <Route path="/dash3"><Dashboardpage3 /></Route>
+    <Route path="/sign"><Signpage {file} /></Route>
     <Route path="/add-file/:id" let:params>
-      <Fileuploadpage id={params.id} />
+      <Fileuploadpage id={params.id} on:File={getFile} />
     </Route>
     <Route path="/add-data/:id" let:params>
       <Adddatapage id={params.id} />
