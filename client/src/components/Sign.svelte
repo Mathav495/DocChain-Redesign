@@ -79,7 +79,7 @@
       signPosition: '50, 315, 545, 400',
       signField: 'signature',
       reason: 'testing purpose',
-      signBGColor: '#1e10da',
+      signBGColor: '#32a4a8',
       url: docURL,
     };
     const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/initiate', initvalues, {
@@ -98,6 +98,7 @@
       requestid: signreq,
       otp: otp,
     });
+
     console.log(data);
     SignFile = data.signRequest.signedFile;
     console.log(SignFile);
@@ -105,7 +106,16 @@
       console.log(SignFile);
       const { data } = await axios.get(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
       console.log(data);
-      navigate(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
+      // let blobPdf = URL.createObjectURL(data);
+      // console.log(blobPdf);
+      // navigate(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
+
+      let downloadpdf = document.createElement('a');
+      downloadpdf.setAttribute('href', `https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
+      // downloadpdf.href = `https://pdfsign.test.print2block.in/signature/download/${SignFile}`;
+      // downloadpdf.setAttribute('download', SignFile);
+      downloadpdf.setAttribute('target', '_blank');
+      downloadpdf.click();
     }
   };
 </script>
