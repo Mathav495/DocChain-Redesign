@@ -1,5 +1,7 @@
 <script>
   import axios from 'axios';
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
   export let file;
   let otp = '';
   let SignFile;
