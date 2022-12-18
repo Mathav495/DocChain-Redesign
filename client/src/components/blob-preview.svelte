@@ -25,7 +25,7 @@
   //       docTargets[i].append(svg);
   //       svg.outerHTML = loadingSVG;
   //     }
-  //     let canvas = document.getElementById;
+  //     let canvas = document.getElementById
   //   }
   // };
 
