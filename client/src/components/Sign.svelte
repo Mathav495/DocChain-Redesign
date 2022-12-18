@@ -1,5 +1,6 @@
 <script>
   import axios from 'axios';
+  import { navigate } from 'svelte-routing';
   export let file;
   let otp = '';
   let SignFile;
@@ -104,6 +105,7 @@
       console.log(SignFile);
       const { data } = await axios.get(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
       console.log(data);
+      navigate(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
     }
   };
 </script>
@@ -119,7 +121,6 @@
         </div>
         <div class="pt-5">
           <button on:click={ConfirmRequest} class=" text-white font-medium bg-blue-700 py-2 px-4 hover:bg-blue-800 tracking-wider rounded text-lg">Confirm Request</button>
-          <!-- <button on:click={Confirmed} class=" text-white font-medium bg-blue-700 py-2 px-4 hover:bg-blue-800 tracking-wider rounded text-lg">Confirmed</button> -->
         </div>
       </div>
     </div>
@@ -137,5 +138,5 @@
       {/if}
     </div>
   </div>
-  <button on:click={initiate} class="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">initiate</button>
+  <button on:click={initiate} class="flex mx-auto mb-5 mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">initiate</button>
 </div>
