@@ -2,6 +2,7 @@
   import axios from 'axios';
   export let file;
   let otp = '';
+  let SignFile;
   // let blobImg = URL.createObjectURL(img);
   // let blobPdf = URL.createObjectURL(pdf);
   let signreq;
@@ -96,7 +97,8 @@
       otp: otp,
     });
     console.log(data);
-    console.log(data.signRequest.signedFile);
+    SignFile = data.signRequest.signedFile;
+    console.log(SignFile);
   };
 </script>
 
