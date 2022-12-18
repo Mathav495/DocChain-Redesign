@@ -115,6 +115,18 @@
       }
       console.log(rec_obj);
 
+      // document data
+      documentDetails = documentDetails.filter((documentDetails) => documentDetails.labelName != 'Fieldname' && documentDetails.inputvalue != '');
+      console.log(documentDetails);
+      console.log(documentDetails.length);
+      let doc_obj = new Object();
+      doc_obj.type = doctype;
+      for (let i = 0; i < documentDetails.length; i++) {
+        doc_obj[documentDetails[i].labelName] = documentDetails[i].inputvalue;
+      }
+      console.log(doc_obj);
+
+
       sampleData = {
         receiver: rec_obj,
         document: {
