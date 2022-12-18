@@ -9,7 +9,6 @@
   import HeaderFileupload from './header_fileupload.svelte';
   import ErrorInfo from './ErrorInfo.svelte';
   export let id;
-  let Pdfurl;
   let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf, errormsg;
   let displayConfirm = false;
   let displayerror = false;
@@ -20,7 +19,6 @@
   let documentID = localStorage.getItem('documentID');
   let bgcolor = localStorage.getItem('bgGradient');
   let displaypreview = false;
-  let Imageurl;
   /**
    * Submitting file for generating filehash
    */
@@ -122,6 +120,7 @@
         Pdfurl = reader.result;
         console.log(Pdfurl);
         localStorage.setItem('base64', Pdfurl);
+      });
       let blob = URL.createObjectURL(File);
       localStorage.setItem('blobpdf', blob);
       console.log(blob);
