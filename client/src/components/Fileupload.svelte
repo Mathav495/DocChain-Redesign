@@ -103,10 +103,20 @@
     }
     if (valid == true) {
       console.log('valid');
+
+      //receiver data
+      receiver = receiver.filter((receiver) => receiver.labelName != 'Fieldname' && receiver.inputvalue != '');
+      console.log(receiver);
+      console.log(receiver.length);
+      let rec_obj = new Object();
+      rec_obj.name = issuer;
+      for (let i = 0; i < receiver.length; i++) {
+        rec_obj[receiver[i].labelName] = receiver[i].inputvalue;
+      }
+      console.log(rec_obj);
+
       sampleData = {
-        receiver: {
-          name: issuer,
-        },
+        receiver: rec_obj,
         document: {
           type: doctype,
         },
@@ -114,6 +124,7 @@
           signatory: signatory,
         },
       };
+
       if (date) {
         if (docTitle) {
           options = {
@@ -134,6 +145,7 @@
           options = {};
         }
       }
+
       console.log(documentID);
       const { data } = await axios.post(
         'https://test.swagger.print2block.in/docs/add-data',
