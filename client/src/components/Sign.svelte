@@ -92,6 +92,7 @@
     modal = true;
   };
   const ConfirmRequest = async () => {
+    //post method .to give the input field to call api
     const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/confirm', {
       requestid: signreq,
       otp: otp,
@@ -99,6 +100,11 @@
     console.log(data);
     SignFile = data.signRequest.signedFile;
     console.log(SignFile);
+    if (SignFile) {
+      console.log(SignFile);
+      const { data } = await axios.get(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
+      console.log(data);
+    }
   };
 </script>
 
@@ -113,6 +119,7 @@
         </div>
         <div class="pt-5">
           <button on:click={ConfirmRequest} class=" text-white font-medium bg-blue-700 py-2 px-4 hover:bg-blue-800 tracking-wider rounded text-lg">Confirm Request</button>
+          <!-- <button on:click={Confirmed} class=" text-white font-medium bg-blue-700 py-2 px-4 hover:bg-blue-800 tracking-wider rounded text-lg">Confirmed</button> -->
         </div>
       </div>
     </div>
