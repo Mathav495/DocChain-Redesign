@@ -326,6 +326,17 @@
     temp2.classList.remove('flex');
     temp2.classList.add('hidden');
   };
+
+  const show_edit_icon = (value) => {
+    console.log(value);
+    let svgicon = document.getElementById(value);
+    svgicon.classList.remove('hidden');
+  };
+  const hide_edit_icon = (value) => {
+    console.log(value);
+    let svgicon = document.getElementById(value);
+    svgicon.classList.add('hidden');
+  };
 </script>
 
 <div class="space-y-3 flex flex-col justify-center items-center">
@@ -335,10 +346,11 @@
 
   <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-[38.5rem] p-4">
     <form on:submit|preventDefault={onsubmitdata}>
-      <div class="flex flex-col  space-y-5">
-        <div class="flex flex-col w-full p-3 border-b-2 space-y-3">
-          <div>
-            <h1 class="text-base tracking-wide font-bold ">Receiver Details</h1>
+      <div class="flex flex-col space-y-3">
+        <div class="flex flex-col w-full  border-b-2 pb-3 space-y-3">
+          <div class="border-b-2">
+            <h1 class="text-lg tracking-wide font-bold ">Receiver Details</h1>
+            <p class="pb-3 text-xs tracking-wider text-gray-500 font-semibold ">Details related to the client who receives the document</p>
           </div>
           <div class="flex flex-col w-full  space-y-2">
             <label for="issuer" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Issued to</label>
@@ -348,19 +360,19 @@
           {#each receiver as receiver}
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
-                <div class="flex" id={receiver.label}>
+                <div class="flex" id={receiver.label} on:mouseover={show_edit_icon(`edit${receiver.label}`)} on:mouseout={hide_edit_icon(`edit${receiver.label}`)}>
                   <label for="label{receiver.label}" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
                     >{receiver.labelName}
 
-                    <svg on:click={() => hideLabel_receiver(receiver.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                    <svg on:click={() => hideLabel_receiver(receiver.label)} id="edit{receiver.label}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden cursor-pointer w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                     </svg>
                   </label>
                 </div>
                 <div class="hidden items-center gap-2" id="a{receiver.label}">
                   <input placeholder="Enter Field name" bind:value={receiver.labelName} type="text" class="field-input" />
-                  <svg on:click={() => updateLabel_receiver(receiver.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg on:click={() => updateLabel_receiver(receiver.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
                 </div>
               </div>
@@ -371,9 +383,10 @@
           {/each}
         </div>
 
-        <div class="flex flex-col w-full p-3 border-2 space-y-3">
-          <div>
+        <div class="flex flex-col w-full  border-b-2 pb-3 space-y-3">
+          <div class="border-b-2">
             <h1 class="text-base tracking-wide font-bold ">Document Details</h1>
+            <p class="pb-3 text-xs tracking-wider text-gray-500 font-semibold ">Details related to the client who receives the document</p>
           </div>
 
           <div class="flex flex-col w-full  space-y-2">
@@ -394,8 +407,8 @@
                 </div>
                 <div class="hidden items-center gap-2" id="c{docDetails.label}">
                   <input placeholder="Enter Field name" bind:value={docDetails.labelName} type="text" class="field-input" />
-                  <svg on:click={() => updateLabel_docDetails(docDetails.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg on:click={() => updateLabel_docDetails(docDetails.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
                 </div>
               </div>
@@ -406,9 +419,10 @@
           {/each}
         </div>
 
-        <div class="flex flex-col w-full p-3 border-2 space-y-3">
-          <div>
+        <div class="flex flex-col w-full border-b-2 pb-3 space-y-3">
+          <div class="border-b-2">
             <h1 class="text-base tracking-wide font-bold ">Signatory Details</h1>
+            <p class="pb-3 text-xs tracking-wider text-gray-500 font-semibold ">Details related to the client who receives the document</p>
           </div>
           <div class="flex flex-col w-full space-y-2">
             <label for="signatory" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Signatory</label>
@@ -429,8 +443,8 @@
                 </div>
                 <div class="hidden items-center gap-2" id="e{signDetails.label}">
                   <input placeholder="Enter Field name" bind:value={signDetails.labelName} type="text" class="field-input" />
-                  <svg on:click={() => updateLabel_signDetails(signDetails.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg on:click={() => updateLabel_signDetails(signDetails.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
                 </div>
               </div>
@@ -441,9 +455,10 @@
           {/each}
         </div>
 
-        <div class="flex flex-col w-full border-2 p-3 space-y-3">
-          <div>
+        <div class="flex flex-col w-full border-b-2  pb-3 space-y-3">
+          <div class="border-b-2">
             <h1 class="text-base tracking-wide font-bold ">Optional Details</h1>
+            <p class="pb-3 text-xs tracking-wider text-gray-500 font-semibold ">Details related to the client who receives the document</p>
           </div>
           <div class="flex flex-col w-full space-y-2">
             <label for="docid" class="text-sm text-black tracking-wide font-bold">Date Expired</label>

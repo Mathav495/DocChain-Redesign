@@ -91,6 +91,7 @@
     console.log([...formData]);
     let datum = [...formData][0];
     File = datum[1];
+
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg' || File.type == 'application/pdf') {
       dispatch('File', File);
     }
