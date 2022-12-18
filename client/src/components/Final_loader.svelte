@@ -1,0 +1,91 @@
+<div style="min-height: 100vh; align-items: center!important; justify-content: center!important; display: flex; flex-direction:column">
+  <div class="box">
+    <div class="b b1" />
+    <div class="b b2" />
+    <div class="b b3" />
+    <div class="b b4" />
+  </div>
+  <h4
+    style="
+              text-align: center;
+              font-size: 1.25rem;
+              margin-top: 100px;
+              font-family: roboto;
+                   position:absolute
+            "
+  >
+    Your Document is being added to BlockChain, Please wait...
+  </h4>
+</div>
+
+<style>
+  /* body {
+  margin: 0;
+  padding: 0;
+  background-color: aliceblue;
+} */
+
+  .box {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+  }
+
+  .box .b {
+    border-radius: 50%;
+    border-left: 5px solid;
+    border-right: 5px solid;
+    border-top: 4px solid transparent !important;
+    border-bottom: 4px solid transparent !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: ro 2s infinite;
+  }
+
+  .box .b1 {
+    border-color: #4a69bd;
+    width: 120px;
+    height: 120px;
+  }
+
+  .box .b2 {
+    border-color: #f6b93b;
+    width: 100px;
+    height: 100px;
+    animation-delay: 0.2s;
+  }
+
+  .box .b3 {
+    border-color: #2ecc71;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0.4s;
+  }
+
+  .box .b4 {
+    border-color: #34495e;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0.6s;
+  }
+
+  @keyframes ro {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    50% {
+      transform: translate(-50%, -50%) rotate(-180deg);
+    }
+
+    100% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+  }
+</style>

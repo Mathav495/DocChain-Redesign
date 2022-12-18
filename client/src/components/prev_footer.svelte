@@ -6,11 +6,13 @@
   import ConfirmMsg from './confirm_msg.svelte';
   import SignidMsg from './signid_msg.svelte';
   import QueueMsg from './Queue_msg.svelte';
+  import Loading from './Loading.svelte';
   const dispatch = createEventDispatcher();
   let load = false;
   export let confirnmsg;
   export let signmsg;
   export let Queue_msg;
+  export let loader = false;
 
   signmsg = false;
   Queue_msg = false;
@@ -68,6 +70,7 @@
 
   const publishdoc = async () => {
     load = true;
+    loader = true;
     Queue_msg = true;
     let signature = localStorage.getItem('signature');
     console.log('signature', signature);
@@ -92,6 +95,9 @@
     setTimeout(() => {
       Queue_msg = false;
     }, 1000);
+    setTimeout(() => {
+      loader = false;
+    }, 3000);
     load = false;
     navigate(`/final`);
     // }
@@ -124,13 +130,14 @@
     const signature = document.getElementById('Signature');
     const publishdoc = document.getElementById('PublishDoc');
     const confirmation = document.getElementById('Confirmation');
+    const loader = document.getElementById('loader');
     // e.stopPropagation();
 
     // whenever the enter button is clicked
 
-    confirm.addEventListener('click', (e) => {
+    confirm.addEventListener('click', () => {
       console.log('confirm clicked');
-      e.stopPropagation();
+      // e.stopPropagation();
       confirm.style.display = 'none';
       sign.style.display = 'inline-flex';
       signature.style.display = 'inline-flex';
@@ -146,6 +153,9 @@
       publish.style.display = 'inline-flex';
       signature.style.display = 'none';
       publishdoc.style.display = 'inline-flex';
+      setTimeout(() => {
+        loader.style.display = 'block';
+      }, 3000);
       console.log('publishing triggered');
     });
   });
@@ -157,6 +167,9 @@
   };
 </script>
 
+<!-- {#if loader}
+  <Loading />
+{:else} -->
 {#if signmsg}
   {#if (src = blobimage)}
     <SignidMsg position="absolute z-10 -bottom-20 right-0" on:click={hideSignmsg} />
@@ -174,15 +187,15 @@
   <div class="container mx-auto bg-white flex flex-col items-center px-4 py-2 md:flex-row md:right-0 rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]">
     <div id="Confirmation" class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left ">
       <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Confirmation</h2>
-      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">please verify document details,if needed to modify click Release to generate new document</h1>
+      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">please verify document details,if needed to modify click <strong> Release</strong> to generate new document</h1>
     </div>
     <div id="Signature" class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left " style="display: none">
       <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Signature Generation</h2>
-      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">Clck Signature to generate yuor Signature.</h1>
+      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">Clck <strong>Signature</strong> to generate your Signature.</h1>
     </div>
     <div id="PublishDoc" class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left " style="display: none">
       <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Publish to BlockChain</h2>
-      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">Clck Publish to publish your document to BlockChain.</h1>
+      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">Clck <strong>Publish</strong> to publish your document to BlockChain.</h1>
     </div>
     <div class="mx-auto flex flex-shrink-0 items-center space-x-4 md:ml-auto md:mr-0">
       <button class="inline-flex items-center rounded-lg border border-red-600 py-2 px-5 text-red-600 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click|preventDefault={releaseDoc} id="release">
@@ -228,3 +241,4 @@
     </div>
   </div>
 </div>
+<!-- {/if} -->
