@@ -65,20 +65,20 @@
   });
 
   const showPage = async (pageno) => {
-    let docTargets = document.querySelectorAll('.canvas');
-    for (let i = 0; i < docTargets.length; i++) {
-      if (rTime > 500) {
-        docTargets[i].childNodes[0].remove();
-        let svg = document.createElement('svg');
-        docTargets[i].append(svg);
-        svg.outerHTML = loadingSVG;
-      }
-      // let canvas = document.getElementById('blobcanv');
-      // // canvas.className = "w-100 border rounded-5 shadow"
-      // await showPage(pageno, canvas);
-      // if (canvas.width < canvas.height) canvas.classList.add('mw-800');
-      // docTargets[i].replaceChild(canvas, docTargets[i].children[0]);
-    }
+    // let docTargets = document.querySelectorAll('.canvas');
+    // for (let i = 0; i < docTargets.length; i++) {
+    //   if (rTime > 100) {
+    //     docTargets[i].childNodes[0].remove();
+    //     let svg = document.createElement('svg');
+    //     docTargets[i].append(svg);
+    //     svg.outerHTML = loadingSVG;
+    //   }
+    //   // let canvas = document.getElementById('blobcanv');
+    //   // // canvas.className = "w-100 border rounded-5 shadow"
+    //   // await showPage(pageno, canvas);
+    //   // if (canvas.width < canvas.height) canvas.classList.add('mw-800');
+    //   // docTargets[i].replaceChild(canvas, docTargets[i].children[0]);
+    // }
     let page = await _PDFDOC.getPage(pageno);
     console.log('Page loaded');
     let viewport = page.getViewport({ scale: 1 });

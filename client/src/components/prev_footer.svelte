@@ -183,7 +183,7 @@
     <QueueMsg position="absolute z-20 bottom-24	 right-0" on:click={hideQueuemsg} />
   {/if}
 {/if}
-<div class="fixed w-8/12 flex justify-end items-end z-10 bottom-8 right-32 xl:right-20">
+<div class="absolute w-5/6 mx-auto flex justify-center items-center z-10 bottom-0  inset-x-0">
   <div class="container mx-auto bg-white flex flex-col items-center px-4 py-2 md:flex-row md:right-0 rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]">
     <div id="Confirmation" class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left ">
       <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Confirmation</h2>
@@ -191,11 +191,11 @@
     </div>
     <div id="Signature" class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left " style="display: none">
       <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Signature Generation</h2>
-      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">Clck <strong>Signature</strong> to generate your Signature.</h1>
+      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">Clck <strong>Signature</strong> to generate your Signature.If needed to modify click <strong> Release</strong> to generate new document</h1>
     </div>
     <div id="PublishDoc" class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left " style="display: none">
       <h2 class="title-font mb-1 text-md font-medium tracking-widest text-blue-500">Publish to BlockChain</h2>
-      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">Clck <strong>Publish</strong> to publish your document to BlockChain.</h1>
+      <h1 class="title-font text-lg font-medium text-slate-500 md:text-xl">Clck <strong>Publish</strong> to publish your document to BlockChain. You cannot <strong>Release</strong> after publishing the document</h1>
     </div>
     <div class="mx-auto flex flex-shrink-0 items-center space-x-4 md:ml-auto md:mr-0">
       <button class="inline-flex items-center rounded-lg border border-red-600 py-2 px-5 text-red-600 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200" on:click|preventDefault={releaseDoc} id="release">

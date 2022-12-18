@@ -19,12 +19,6 @@
 </div>
 
 <style>
-  /* body {
-  margin: 0;
-  padding: 0;
-  background-color: aliceblue;
-} */
-
   .box {
     width: 200px;
     height: 200px;
