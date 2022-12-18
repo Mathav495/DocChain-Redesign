@@ -126,15 +126,21 @@
       }
       console.log(doc_obj);
 
+      //signatory data
+      signatoryDetails = signatoryDetails.filter((signatoryDetails) => signatoryDetails.labelName != 'Fieldname' && signatoryDetails.inputvalue != '');
+      console.log(signatoryDetails);
+      console.log(signatoryDetails.length);
+      let sign_obj = new Object();
+      sign_obj.signatory = signatory;
+      for (let i = 0; i < signatoryDetails.length; i++) {
+        sign_obj[signatoryDetails[i].labelName] = signatoryDetails[i].inputvalue;
+      }
+      console.log(sign_obj);
 
       sampleData = {
         receiver: rec_obj,
-        document: {
-          type: doctype,
-        },
-        issuer: {
-          signatory: signatory,
-        },
+        document: doc_obj,
+        issuer: sign_obj,
       };
 
       if (date) {
