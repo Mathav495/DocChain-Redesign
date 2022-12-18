@@ -37,7 +37,7 @@ export default {
     name: 'app',
     file: 'public/build/bundle.js',
     // inlineDynamicImports: true,
-    external: '/public/lib/signPosition.js',
+    // external: '/public/lib/signPosition.js',
   },
   plugins: [
     svelte({
