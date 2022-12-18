@@ -329,17 +329,15 @@
 </script>
 
 <div class="space-y-3 flex flex-col justify-center items-center">
-  <div class="w-full lg:w-1/2">
-    <HeaderFileupload {id} {bgcolor}>
-      <h1 slot="title" class="text-base text-white">{docTitle ? docTitle : 'Untitled Document'}</h1>
-    </HeaderFileupload>
-  </div>
+  <HeaderFileupload {id} {bgcolor}>
+    <h1 slot="title" class="text-base text-white">{docTitle ? docTitle : 'Untitled Document'}</h1>
+  </HeaderFileupload>
 
-  <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-1/2 p-4">
+  <div class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-[38.5rem] p-4">
     <form on:submit|preventDefault={onsubmitdata}>
       <div class="flex flex-col  space-y-5">
-        <div class="relative flex flex-col w-full p-3 border-2 space-y-3">
-          <div class="absolute -top-3 z-10 left-3 bg-white px-2">
+        <div class="flex flex-col w-full p-3 border-b-2 space-y-3">
+          <div>
             <h1 class="text-base tracking-wide font-bold ">Receiver Details</h1>
           </div>
           <div class="flex flex-col w-full  space-y-2">
@@ -373,8 +371,8 @@
           {/each}
         </div>
 
-        <div class="flex relative flex-col w-full p-3 border-2 space-y-3">
-          <div class="absolute -top-3 z-10 left-3 bg-white px-2">
+        <div class="flex flex-col w-full p-3 border-2 space-y-3">
+          <div>
             <h1 class="text-base tracking-wide font-bold ">Document Details</h1>
           </div>
 
@@ -408,8 +406,8 @@
           {/each}
         </div>
 
-        <div class="flex flex-col relative w-full p-3 border-2 space-y-3">
-          <div class="absolute -top-3 z-10 left-3 bg-white px-2">
+        <div class="flex flex-col w-full p-3 border-2 space-y-3">
+          <div>
             <h1 class="text-base tracking-wide font-bold ">Signatory Details</h1>
           </div>
           <div class="flex flex-col w-full space-y-2">
@@ -443,8 +441,8 @@
           {/each}
         </div>
 
-        <div class="flex flex-col relative w-full border-2 p-3 space-y-3">
-          <div class="absolute -top-3 z-10 left-3 bg-white px-2">
+        <div class="flex flex-col w-full border-2 p-3 space-y-3">
+          <div>
             <h1 class="text-base tracking-wide font-bold ">Optional Details</h1>
           </div>
           <div class="flex flex-col w-full space-y-2">
