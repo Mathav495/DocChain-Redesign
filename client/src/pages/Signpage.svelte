@@ -1,4 +1,5 @@
 <script>
+  export let file;
   import { fade } from 'svelte/transition';
   import Header from '../components/Header.svelte';
   import Headerlogo from '../components/Headerlogo.svelte';
@@ -76,7 +77,7 @@
       <Logout on:theme={changeClr} />
     </div>
   </div>
-  <div transition:fade={{ x: 100, duration: 500 }} class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto">
+  <div transition:fade={{ x: 100, duration: 500 }} class="w-full flex flex-col bg-white text-gray-900 rounded-md ml-4 overflow-auto">
     <div class="lg:hidden block">
       <Header on:navShow={showNav} />
     </div>
@@ -84,7 +85,7 @@
       <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>
-      <Sign />
+      <Sign {file} />
     </div>
   </div>
   <!--small screen navbar-->
