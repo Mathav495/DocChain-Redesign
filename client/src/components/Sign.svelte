@@ -96,7 +96,7 @@
 
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno);
-    let viewport = page.getViewport({ scale: 0.67 });
+    let viewport = page.getViewport({ scale: 2 });
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById('mycanvas1');
@@ -177,9 +177,13 @@
     console.log(SignFile);
     if (SignFile) {
       console.log(SignFile);
-
       const { data } = await axios.get(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`, { responseType: 'blob' });
       console.log(data);
+      console.log(data.type);
+      let blob = URL.createObjectURL(data);
+      console.log(blob);
+      modal = false;
+      showPdf(blob);
     }
   };
   let nextbtn = true;
@@ -187,7 +191,7 @@
   const nextpage = () => {
     if (currentpage < _total_pages) {
       console.log('initial', currentpage);
-      showPage(currentpage + 1);
+      showPage(currentpage + 1); //showPage(2)
       currentpage++;
       console.log('final', currentpage);
     }
