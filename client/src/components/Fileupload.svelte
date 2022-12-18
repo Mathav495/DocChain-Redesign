@@ -386,7 +386,7 @@
         <div class="flex flex-col w-full  border-b-2 pb-3 space-y-3">
           <div class="border-b-2">
             <h1 class="text-base tracking-wide font-bold ">Document Details</h1>
-            <p class="pb-3 text-xs tracking-wider text-gray-500 font-semibold ">Details related to the client who receives the document</p>
+            <p class="pb-3 text-xs tracking-wider text-gray-500 font-semibold ">Details related to the document</p>
           </div>
 
           <div class="flex flex-col w-full  space-y-2">
@@ -422,7 +422,7 @@
         <div class="flex flex-col w-full border-b-2 pb-3 space-y-3">
           <div class="border-b-2">
             <h1 class="text-base tracking-wide font-bold ">Signatory Details</h1>
-            <p class="pb-3 text-xs tracking-wider text-gray-500 font-semibold ">Details related to the client who receives the document</p>
+            <p class="pb-3 text-xs tracking-wider text-gray-500 font-semibold ">Details related to the person who is authorised to issue this document</p>
           </div>
           <div class="flex flex-col w-full space-y-2">
             <label for="signatory" class="after:content-['*'] after:ml-1 after:text-red-500 text-sm text-black tracking-wide font-bold">Signatory</label>
@@ -432,11 +432,11 @@
           {#each signatoryDetails as signDetails}
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
-                <div class="flex" id="d{signDetails.label}">
+                <div class="flex" id="d{signDetails.label}" on:mouseover={show_edit_icon(`edit_sign${signDetails.label}`)} on:mouseout={hide_edit_icon(`edit_sign${signDetails.label}`)}>
                   <label for="signlabel{signDetails.label}" class=" text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
                     >{signDetails.labelName}
 
-                    <svg on:click={() => hideLabel_signDetails(signDetails.label)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-5 h-5">
+                    <svg on:click={() => hideLabel_signDetails(signDetails.label)} id="edit_sign{signDetails.label}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden cursor-pointer w-5 h-5">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                     </svg>
                   </label>
@@ -458,7 +458,7 @@
         <div class="flex flex-col w-full border-b-2  pb-3 space-y-3">
           <div class="border-b-2">
             <h1 class="text-base tracking-wide font-bold ">Optional Details</h1>
-            <p class="pb-3 text-xs tracking-wider text-gray-500 font-semibold ">Details related to the client who receives the document</p>
+            <p class="pb-3 text-xs tracking-wider text-gray-500 font-semibold ">Optional details such as expiry date and document title</p>
           </div>
           <div class="flex flex-col w-full space-y-2">
             <label for="docid" class="text-sm text-black tracking-wide font-bold">Date Expired</label>
