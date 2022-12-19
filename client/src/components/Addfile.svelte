@@ -224,7 +224,6 @@
 
   const hideConfirmation = () => {
     displayConfirm = false;
-    ondisplaydropzone();
   };
 
   const signDoc = () => {
