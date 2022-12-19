@@ -1,22 +1,22 @@
 <script>
-  let token = localStorage.getItem('token');
-  let documentID = localStorage.getItem('documentID');
-  let fileHash = localStorage.getItem('filehash');
-  console.log('filehash', fileHash);
-  let dataHash = localStorage.getItem('datahash');
-  console.log('datahash', dataHash);
-  let qr = localStorage.getItem('qrcode');
-  console.log('qrcode', qr);
-  let proposedURL = localStorage.getItem('docURL');
-  console.log('qrcodocURL', proposedURL);
-  let imgurl = localStorage.getItem('img');
-  console.log('imgUrl', imgurl);
+  let token = localStorage.getItem('token')
+  let documentID = localStorage.getItem('documentID')
+  let fileHash = localStorage.getItem('filehash')
+  console.log('filehash', fileHash)
+  let dataHash = localStorage.getItem('datahash')
+  console.log('datahash', dataHash)
+  let qr = localStorage.getItem('qrcode')
+  console.log('qrcode', qr)
+  let proposedURL = localStorage.getItem('docURL')
+  console.log('qrcodocURL', proposedURL)
+  let imgurl = localStorage.getItem('img')
+  console.log('imgUrl', imgurl)
 
-  let animate = document.querySelector('#particles-js');
-  console.log(animate);
+  let animate = document.querySelector('#particles-js')
+  console.log(animate)
   window.addEventListener('load', function () {
-    animate.style.display = 'none';
-  });
+    animate.style.display = 'none'
+  })
 </script>
 
 <div class="flex flex-col bg-white ">
@@ -30,7 +30,7 @@
     <h1 class="text-base tracking-normal">
       <strong class="hidden font-semibold text-slate-900 lg:inline-flex text-lg">This Document is Issued on Blockchain by</strong>
       <strong class=" hidden font-semibold text-blue-800 lg:inline-flex text-lg">Print2Block</strong>
-      <strong class="font-semibold text-slate-900 no-underline  text-lg">powered by: </strong>    
+      <strong class="font-semibold text-slate-900 no-underline  text-lg">powered by: </strong>
 
       <strong class="font-semibold text-sky-600 no-underline hover:text-blue-800 hover:underline text-lg"><a href="https://print2block.com/" rel="noreferrer" target="_blank">DocChain.io</a></strong>
     </h1>

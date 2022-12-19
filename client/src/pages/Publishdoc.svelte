@@ -1,42 +1,42 @@
 <script>
-  import DocIdform from '../components/docIdform.svelte';
-  import Logo from '../components/Logo.svelte';
-  import Logout from '../components/Logout.svelte';
-  import Nav from '../components/Nav.svelte';
-  import Header from '../components/Header.svelte';
+  import DocIdform from '../components/docIdform.svelte'
+  import Logo from '../components/Logo.svelte'
+  import Logout from '../components/Logout.svelte'
+  import Nav from '../components/Nav.svelte'
+  import Header from '../components/Header.svelte'
 
-  import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
-  let hideNavbar = true;
+  import SmallScreenNavbar from '../components/Small_screen_navbar.svelte'
+  let hideNavbar = true
   const hideNav = () => {
-    hideNavbar = true;
-  };
+    hideNavbar = true
+  }
 
   const showNav = () => {
     if (hideNavbar == false) {
-      hideNavbar = true;
+      hideNavbar = true
     } else {
-      hideNavbar = false;
+      hideNavbar = false
     }
-  };
+  }
   let Black = true,
     Yellow = false,
     Red = false,
-    Gray = false;
+    Gray = false
   const changeClr = (e) => {
-    (Black = false), (Yellow = false), (Red = false), (Gray = false);
+    ;(Black = false), (Yellow = false), (Red = false), (Gray = false)
     if (e.detail == 'Black') {
-      Black = true;
+      Black = true
     }
     if (e.detail == 'Yellow') {
-      Yellow = true;
+      Yellow = true
     }
     if (e.detail == 'Red') {
-      Red = true;
+      Red = true
     }
     if (e.detail == 'Gray') {
-      Gray = true;
+      Gray = true
     }
-  };
+  }
 </script>
 
 <div class:bg-black={Black} class:bg-yellow-700={Yellow} class:bg-red-700={Red} class="relative text-white h-screen w-screen flex flex-row py-4 pr-4">

@@ -4,7 +4,7 @@ module.exports = {
   trailingComma: "all",
   singleQuote: true,
   jsxBracketSameLine: true,
-  semi: true,
+  semi: false,
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
   // svelteSortOrder: markup - styles - scripts
