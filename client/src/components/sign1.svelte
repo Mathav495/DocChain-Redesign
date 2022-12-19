@@ -1,4 +1,7 @@
 <script>
+  import { is_empty } from 'svelte/internal'
+  import { flip } from 'svelte/types/runtime/animate'
+
   export let data1
   export let totalPages
   console.log(data1)
@@ -110,7 +113,42 @@
     SelectPageno = false
     details = true
     dot2 = true
+    tick2 = true
     empty = false
+  }
+  const backBtn2 = () => {
+    console.log('back2')
+    borderBlue2 = false
+    empty2 = false
+    tick3 = true
+    dot3 = true
+    signPage = false
+    SelectPageno = true
+  }
+  let borderBlue3 = false,
+    empty3 = false,
+    tick4 = true,
+    dot4 = true,
+    otp = false
+  const nextBtn3 = () => {
+    console.log('next3')
+    tick3 = false
+    dot3 = true
+    dot4 = false
+    empty3 = true
+    borderBlue3 = true
+    signPage = false
+    otp = true
+  }
+  const backBtn3 = () => {
+    borderBlue3 = false
+    dot4 = true
+    empty3 = false
+    signPage = true
+    otp = false
+  }
+  const nextBtn4 = () => {
+    console.log('next4')
   }
   let pageNo
   $: showPage(pageNo)
@@ -160,7 +198,7 @@
         <button class="relative pr-8 sm:pr-20">
           <!-- Current Step -->
           <div class="absolute inset-0 flex items-center">
-            <div class="h-0.5 w-full bg-gray-200" />
+            <div class:bg-indigo-600={borderBlue3} class="h-0.5 w-full bg-gray-200" />
           </div>
           <div class:hidden={empty2} class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white">
             <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
@@ -182,13 +220,13 @@
           <div class="absolute inset-0 flex items-center">
             <div class="h-0.5 w-full bg-gray-200" />
           </div>
-          <div href="#c" class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white">
+          <div class:hidden={empty3} class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white">
             <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
           </div>
-          <div href="#c" class:hidden={true} class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white">
+          <div class:hidden={dot4} class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white">
             <span class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800" />
           </div>
-          <div href="#b" class:hidden={true} class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800">
+          <div class:hidden={tick4} class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800">
             <!-- Heroicon name: mini/check -->
             <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" />
@@ -304,14 +342,17 @@
             <div class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600">{data1.signerDetails.organisation}</div>
           </div>
           <div class="flex items-center justify-between border-t border-white pt-4">
-            <div class="space-y-2">
-              <button on:click={switchId} class="bg-indigo-400 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Switch Account</button>
-              <form class:hidden={switchIdForm}>
-                <input type="text" class="w-52 px-2 py-1 bg-white border border-gray-500 rounded-md" />
-                <button class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Switch</button>
-              </form>
-            </div>
-            <button on:click={nextBtn1} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Next</button>
+            <button on:click={backBtn2} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Back</button>
+            <button on:click={nextBtn3} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Next</button>
+          </div>
+        </div>
+      {/if}
+      {#if otp}
+        <div class="flex flex-col gap-4">
+          <h1 class="text-white text-lg tracking-wide font-semibold border-b border-white">SIGN DETAILS</h1>
+          <div class="flex items-center justify-between border-t border-white pt-4">
+            <button on:click={backBtn3} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Back</button>
+            <button on:click={nextBtn4} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Next</button>
           </div>
         </div>
       {/if}
