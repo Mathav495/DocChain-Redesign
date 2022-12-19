@@ -85,7 +85,7 @@
       <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>
-      <Sign {file} {id} on:blob />
+      <Sign {file} {id} on:blob on:myFile />
     </div>
   </div>
   <!--small screen navbar-->

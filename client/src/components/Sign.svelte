@@ -176,7 +176,6 @@
       requestid: signreq,
       otp: otp,
     });
-
     console.log(data);
     SignFile = data.signRequest.signedFile;
     console.log(SignFile);
@@ -184,6 +183,12 @@
       console.log(SignFile);
       const { data } = await axios.get(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`, { responseType: 'blob' });
       console.log(data);
+      const myFile = new File([data], SignFile, {
+        type: data.type,
+      });
+      console.log(myFile);
+      dispatch('myFile', myFile);
+
       console.log(data.type);
       blob = URL.createObjectURL(data);
       console.log(blob);

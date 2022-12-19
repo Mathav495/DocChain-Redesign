@@ -12,6 +12,7 @@
   import Signpage from './pages/Signpage.svelte';
   export let url = '';
   let file, bloblink;
+  let MyFile;
   const getFile = (e) => {
     console.log('file', e.detail);
     file = e.detail;
@@ -21,6 +22,10 @@
   const blobUrl = (e) => {
     bloblink = e.detail;
     console.log(bloblink);
+  };
+  const myfile = (e) => {
+    MyFile = e.detail;
+    console.log(MyFile);
   };
 </script>
 
@@ -32,10 +37,10 @@
     <Route path="/dash2"><Dashboardpage2 /></Route>
     <Route path="/dash3"><Dashboardpage3 /></Route>
     <Route path="/sign/:id" let:params>
-      <Signpage {file} id={params.id} on:blob={blobUrl} />
+      <Signpage {file} id={params.id} on:blob={blobUrl} on:myFile={myfile} />
     </Route>
     <Route path="/add-file/:id" let:params>
-      <Fileuploadpage id={params.id} on:File={getFile} {bloblink} />
+      <Fileuploadpage id={params.id} on:File={getFile} {bloblink} {MyFile} />
     </Route>
     <Route path="/add-data/:id" let:params>
       <Adddatapage id={params.id} />

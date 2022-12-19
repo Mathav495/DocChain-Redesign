@@ -1,7 +1,7 @@
 <script>
-  export let bloblink;
+  export let bloblink, MyFile;
   console.log(bloblink);
-
+  console.log(MyFile);
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
   // import pdfjsLib from '/public/lib/pdf.js';
@@ -161,6 +161,9 @@
       await showPdf(bloblink);
       displaypreview = true;
       showpdf = true;
+    }
+    if (MyFile) {
+      File = MyFile;
     }
   };
   displaySignedPdf();

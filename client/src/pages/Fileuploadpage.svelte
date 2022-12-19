@@ -1,5 +1,5 @@
 <script>
-  export let bloblink;
+  export let bloblink, MyFile;
 
   import Logo from '../components/Logo.svelte';
   import Logout from '../components/Logout.svelte';
@@ -56,7 +56,7 @@
     <div class="md:hidden block">
       <Header on:navShow={showNav} />
     </div>
-    <Addfile {id} on:File {bloblink} />
+    <Addfile {id} on:File {bloblink} {MyFile} />
   </div>
   <!--small screen navbar-->
   <button class:hidden={hideNavbar} on:click|self={hideNav} class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8">
