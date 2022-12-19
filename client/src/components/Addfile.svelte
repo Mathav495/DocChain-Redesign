@@ -24,6 +24,10 @@
   let displaypreview = false;
 
   /**
+   * to display signed pdf in add file page
+   */
+
+  /**
    * Submitting file for generating filehash
    */
   const onSubmitFile = async () => {
@@ -91,8 +95,9 @@
     console.log('displayed');
     const form = document.getElementById('form');
     const formData = new FormData(form);
-    console.log([...formData]);
+    console.log([...formData]); //spread opearator
     let datum = [...formData][0];
+    console.log(datum);
     File = datum[1];
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg' || File.type == 'application/pdf') {
       dispatch('File', File);
@@ -115,7 +120,6 @@
       localStorage.setItem('blobimage', blobimage);
       return;
     } else if (File.type == 'application/pdf') {
-      showpdf = true;
       const reader = new FileReader(); // constructor
       reader.readAsDataURL(File); //(base 64 data url)
       reader.addEventListener('load', function () {
@@ -129,6 +133,7 @@
       await showPdf(blob);
       displayDropzone = false;
       displaypreview = true;
+      showpdf = true;
       return;
     } else {
       displaypreview = false;
@@ -136,27 +141,6 @@
       return;
     }
   };
-
-  // onMount(async () => {
-  //   import('pdfjs-dist/build/pdf')
-  //     .then(({ pdfjsLib }) => {
-  //       pdfjs = pdfjsLib;
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-
-  //   import('pdfjs-dist/build/pdf.worker.entry')
-  //     .then(({ pdfjsWorker }) => {
-  //       jsWorker = pdfjsWorker;
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-
-  //   // pdfjsLib = (await import('pdfjs-dist/build/pdf')).default;
-  //   // pdfjsWorker = (await import('pdfjs-dist/build/pdf.worker.entry')).default;
-  // });
 
   const showPdf = async (blob) => {
     // await pageloader();
@@ -312,7 +296,7 @@
   <div class="{displaypreview && !showpdf ? 'flex' : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
     <div class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem] justify-center items-center flex">
       <div class="border-2 rounded-md shadow-[0_0_8px_0_rgba(0,0,0,0.15)] overflow-hidden">
-        <img src={blobimage} class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem]" id="File" alt="Preview" />
+        <img src={Imageurl} class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem]" id="File" alt="Preview" />
       </div>
     </div>
   </div>
