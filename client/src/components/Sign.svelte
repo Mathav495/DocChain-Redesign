@@ -1,149 +1,150 @@
 <script>
-  import axios from 'axios';
-  export let file;
-  let otp = '';
-  let SignFile;
+  // import pdfPosition from 'https://print2block.com/test/js/calc-sign-place-min.js'
+  import axios from 'axios'
+  export let file
+  let otp = ''
+  let SignFile
   // let blobImg = URL.createObjectURL(img);
   // let blobPdf = URL.createObjectURL(pdf);
-  let signreq;
-  let docURL = localStorage.getItem('docURL');
-  console.log(docURL);
+  let signreq
+  let docURL = localStorage.getItem('docURL')
+  console.log(docURL)
   // imageUrl1 = imageUrl.split(';base64,').pop();
-  let token = localStorage.getItem('token');
-  console.log(token);
+  let token = localStorage.getItem('token')
+  console.log(token)
 
-  let initvalues;
+  let initvalues
 
-  let pdfPosition = {};
-  pdfPosition.options = {};
-  pdfPosition.init = function (options = {}) {
-    if (!options.triggerButtons) throw console.error('No triggerButton class is provided');
-    if (!options.imageTarget) throw console.error('No imageTarget id is provided');
-    if (!options.positionTextbox) throw console.error('No positionTextbox id is provided');
-    options.lockHorizontalCenter = false || options.lockHorizontalCenter;
-    pdfPosition.options = options;
-    let s = document.createElement('img');
-    s.src = 'https://print2block.com/test/img/signSample.png';
-    let a = 841 / 85;
-    let b = 594.65 / 495;
-    let c = document.createElement('canvas');
-    let d = c.getContext('2d');
-    let f = false;
-    let [x, y] = [(c.width - c.width / b) / 2, (c.height - c.height / a) / 2];
-    let w, h;
-    let t = document.getElementById(options.imageTarget);
-    pdfPosition.position = [];
-    pdfPosition.position[0] = Math.floor((x * 594.65) / c.width);
-    pdfPosition.position[1] = Math.floor(((c.height - y) * 841) / c.height - 85);
-    pdfPosition.position[2] = Math.floor((x * 594.65) / c.width + 495);
-    pdfPosition.position[3] = Math.floor(((c.height - y) * 841) / c.height);
-    pdfPosition.lastposition = pdfPosition.position;
+  // let pdfPosition = {};
+  // pdfPosition.options = {};
+  // pdfPosition.init = function (options = {}) {
+  //   if (!options.triggerButtons) throw console.error('No triggerButton class is provided');
+  //   if (!options.imageTarget) throw console.error('No imageTarget id is provided');
+  //   if (!options.positionTextbox) throw console.error('No positionTextbox id is provided');
+  //   options.lockHorizontalCenter = false || options.lockHorizontalCenter;
+  //   pdfPosition.options = options;
+  //   let s = document.createElement('img');
+  //   s.src = 'https://print2block.com/test/img/signSample.png';
+  //   let a = 841 / 85;
+  //   let b = 594.65 / 495;
+  //   let c = document.createElement('canvas');
+  //   let d = c.getContext('2d');
+  //   let f = false;
+  //   let [x, y] = [(c.width - c.width / b) / 2, (c.height - c.height / a) / 2];
+  //   let w, h;
+  //   let t = document.getElementById(options.imageTarget);
+  //   pdfPosition.position = [];
+  //   pdfPosition.position[0] = Math.floor((x * 594.65) / c.width);
+  //   pdfPosition.position[1] = Math.floor(((c.height - y) * 841) / c.height - 85);
+  //   pdfPosition.position[2] = Math.floor((x * 594.65) / c.width + 495);
+  //   pdfPosition.position[3] = Math.floor(((c.height - y) * 841) / c.height);
+  //   pdfPosition.lastposition = pdfPosition.position;
 
-    let triggerButtons = document.querySelectorAll(options.triggerButtons);
-    for (let i = 0; i < triggerButtons.length; i++) {
-      triggerButtons[i].addEventListener('click', () => {
-        c.width = t.width;
-        c.height = t.height;
-        d.fillStyle = '#0095ff5e';
-        d.fillRect(0, 0, c.width, c.height);
-        c.style.position = 'absolute';
-        c.style.left = t.offsetLeft + 'px';
-        c.style.top = t.offsetTop + 'px';
-        t.parentElement.append(c);
-        w = c.width / b;
-        h = c.height / a;
-        d.drawImage(s, x, y, w, h);
-        f = true;
-      });
-    }
+  //   let triggerButtons = document.querySelectorAll(options.triggerButtons);
+  //   for (let i = 0; i < triggerButtons.length; i++) {
+  //     triggerButtons[i].addEventListener('click', () => {
+  //       c.width = t.width;
+  //       c.height = t.height;
+  //       d.fillStyle = '#0095ff5e';
+  //       d.fillRect(0, 0, c.width, c.height);
+  //       c.style.position = 'absolute';
+  //       c.style.left = t.offsetLeft + 'px';
+  //       c.style.top = t.offsetTop + 'px';
+  //       t.parentElement.append(c);
+  //       w = c.width / b;
+  //       h = c.height / a;
+  //       d.drawImage(s, x, y, w, h);
+  //       f = true;
+  //     });
+  //   }
 
-    c.onmousemove = function drawSignature(e) {
-      if (f) {
-        d.clearRect(0, 0, c.width, c.height);
-        d.fillStyle = '#0095ff5e';
-        d.fillRect(0, 0, c.width, c.height);
-        if (pdfPosition.options.lockHorizontalCenter) x = (c.width - w) / 2;
-        else x = (e.offsetX >= 0 ? Math.round(e.offsetX) : 0) - c.width / b / 2;
-        y = (e.offsetY > -0 ? Math.round(e.offsetY) : 0) - c.height / a / 2;
-        d.drawImage(s, x, y, w, h);
-      }
-    };
+  //   c.onmousemove = function drawSignature(e) {
+  //     if (f) {
+  //       d.clearRect(0, 0, c.width, c.height);
+  //       d.fillStyle = '#0095ff5e';
+  //       d.fillRect(0, 0, c.width, c.height);
+  //       if (pdfPosition.options.lockHorizontalCenter) x = (c.width - w) / 2;
+  //       else x = (e.offsetX >= 0 ? Math.round(e.offsetX) : 0) - c.width / b / 2;
+  //       y = (e.offsetY > -0 ? Math.round(e.offsetY) : 0) - c.height / a / 2;
+  //       d.drawImage(s, x, y, w, h);
+  //     }
+  //   };
 
-    c.onclick = function calculatePositions() {
-      if (f) {
-        f = false;
-        d.clearRect(0, 0, c.width, c.height);
-        d.drawImage(s, x, y, w, h);
-        pdfPosition.lastposition = pdfPosition.position;
-        pdfPosition.position[0] = Math.floor((x * 594.65) / c.width);
-        pdfPosition.position[1] = Math.floor(((c.height - y) * 841) / c.height - 85);
-        pdfPosition.position[2] = Math.floor((x * 594.65) / c.width + 495);
-        pdfPosition.position[3] = Math.floor(((c.height - y) * 841) / c.height);
-        if (options.positionTextbox) document.getElementById(options.positionTextbox).value = pdfPosition.position.toString();
-      }
-    };
-  };
+  //   c.onclick = function calculatePositions() {
+  //     if (f) {
+  //       f = false;
+  //       d.clearRect(0, 0, c.width, c.height);
+  //       d.drawImage(s, x, y, w, h);
+  //       pdfPosition.lastposition = pdfPosition.position;
+  //       pdfPosition.position[0] = Math.floor((x * 594.65) / c.width);
+  //       pdfPosition.position[1] = Math.floor(((c.height - y) * 841) / c.height - 85);
+  //       pdfPosition.position[2] = Math.floor((x * 594.65) / c.width + 495);
+  //       pdfPosition.position[3] = Math.floor(((c.height - y) * 841) / c.height);
+  //       if (options.positionTextbox) document.getElementById(options.positionTextbox).value = pdfPosition.position.toString();
+  //     }
+  //   };
+  // };
 
   const showPdf = async (url) => {
-    console.log(url);
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js';
-    let loadingTask = pdfjsLib.getDocument(url);
-    loadingTask = loadingTask.promise;
-    _PDFDOC = await loadingTask;
-    _total_pages = _PDFDOC.numPages;
-    currentpage = 1;
-    showPage(1);
-  };
+    console.log(url)
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js'
+    let loadingTask = pdfjsLib.getDocument(url)
+    loadingTask = loadingTask.promise
+    _PDFDOC = await loadingTask
+    _total_pages = _PDFDOC.numPages
+    currentpage = 1
+    showPage(1)
+  }
 
   const showPage = async (pageno) => {
-    let page = await _PDFDOC.getPage(pageno);
-    let viewport = page.getViewport({ scale: 0.67 });
+    let page = await _PDFDOC.getPage(pageno)
+    let viewport = page.getViewport({ scale: 0.67 })
 
     // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById('mycanvas1');
-    let context = canvas.getContext('2d');
-    canvas.height = viewport.height;
-    canvas.width = viewport.width;
+    let canvas = document.getElementById('mycanvas1')
+    let context = canvas.getContext('2d')
+    canvas.height = viewport.height
+    canvas.width = viewport.width
 
     // Render PDF page into canvas context
     let renderContext = {
       canvasContext: context,
       viewport: viewport,
-    };
-    await page.render(renderContext).promise;
+    }
+    await page.render(renderContext).promise
     // document.getElementById('pdf-preview').src = canvas.toDataURL();
-  };
-  let src;
-  let base64, imageUrl, url, pdfUrl;
-  base64 = localStorage.getItem('base64');
-  console.log(base64);
-  url = base64.split(';base64,');
+  }
+  let src
+  let base64, imageUrl, url, pdfUrl
+  base64 = localStorage.getItem('base64')
+  console.log(base64)
+  url = base64.split(';base64,')
   if (url[0] == 'data:image/png' || url[0] == 'data:image/jpg' || url[0] == 'data:image/jpeg') {
-    console.log('image uplpaded');
-    imageUrl = base64;
-    console.log(imageUrl);
+    console.log('image uplpaded')
+    imageUrl = base64
+    console.log(imageUrl)
   } else if (url[0] == 'data:application/pdf') {
-    console.log('pdf uplpaded');
-    pdfUrl = base64;
-    showPdf(pdfUrl);
-    console.log(pdfUrl);
+    console.log('pdf uplpaded')
+    pdfUrl = base64
+    showPdf(pdfUrl)
+    console.log(pdfUrl)
   } else {
-    console.log('logged');
+    console.log('logged')
   }
   let currentpage = 0,
     _PDFDOC,
-    _total_pages = 0;
+    _total_pages = 0
 
   const trigger = () => {
     pdfPosition.init({
       triggerButtons: '.show-signature-overlay',
       imageTarget: 'mycanvas1',
       positionTextbox: 'positions',
-    });
-  };
-  let modal = false;
+    })
+  }
+  let modal = false
   const initiate = async () => {
-    console.log('initiate');
+    console.log('initiate')
     // modal = true;
 
     initvalues = {
@@ -155,95 +156,95 @@
       reason: 'testing purpose',
       signBGColor: '#32a4a8',
       url: docURL,
-    };
+    }
     const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/initiate', initvalues, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    });
-    console.log(data);
-    signreq = data.signRequest.id;
-    console.log(signreq);
-    modal = true;
-  };
+    })
+    console.log(data)
+    signreq = data.signRequest.id
+    console.log(signreq)
+    modal = true
+  }
   const ConfirmRequest = async () => {
     //post method .to give the input field to call api
     const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/confirm', {
       requestid: signreq,
       otp: otp,
-    });
+    })
 
-    console.log(data);
-    SignFile = data.signRequest.signedFile;
-    console.log(SignFile);
+    console.log(data)
+    SignFile = data.signRequest.signedFile
+    console.log(SignFile)
     if (SignFile) {
-      console.log(SignFile);
-      const { data } = await axios.get(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
-      console.log(data);
+      console.log(SignFile)
+      const { data } = await axios.get(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`)
+      console.log(data)
       // let blobPdf = URL.createObjectURL(data);
       // console.log(blobPdf);
       // navigate(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
 
-      let downloadpdf = document.createElement('a');
-      downloadpdf.setAttribute('href', `https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
+      let downloadpdf = document.createElement('a')
+      downloadpdf.setAttribute('href', `https://pdfsign.test.print2block.in/signature/download/${SignFile}`)
       // downloadpdf.href = `https://pdfsign.test.print2block.in/signature/download/${SignFile}`;
       // downloadpdf.setAttribute('download', SignFile);
-      downloadpdf.setAttribute('target', '_blank');
-      downloadpdf.click();
+      downloadpdf.setAttribute('target', '_blank')
+      downloadpdf.click()
     }
-  };
-  let nextbtn = true;
-  let prevbtn = true;
+  }
+  let nextbtn = true
+  let prevbtn = true
   const nextpage = () => {
     if (currentpage < _total_pages) {
-      console.log('initial', currentpage);
-      showPage(currentpage + 1);
-      currentpage++;
-      console.log('final', currentpage);
+      console.log('initial', currentpage)
+      showPage(currentpage + 1)
+      currentpage++
+      console.log('final', currentpage)
     }
-  };
+  }
 
   $: if (currentpage < _total_pages) {
-    nextbtn = true;
+    nextbtn = true
   } else {
-    nextbtn = false;
+    nextbtn = false
   }
   $: if (currentpage > 1) {
-    prevbtn = true;
+    prevbtn = true
   } else {
-    prevbtn = false;
+    prevbtn = false
   }
   const previouspage = () => {
     if (currentpage > 1) {
-      console.log('initial', currentpage);
-      showPage(currentpage - 1);
-      currentpage--;
-      console.log('final', currentpage);
+      console.log('initial', currentpage)
+      showPage(currentpage - 1)
+      currentpage--
+      console.log('final', currentpage)
     }
-  };
+  }
   let position = false,
     bgclr = false,
-    bold = false;
+    bold = false
   const signaturePlacement = () => {
-    if (pdfPosition.options.lockHorizontalCenter) pdfPosition.options.lockHorizontalCenter = false;
-    else pdfPosition.options.lockHorizontalCenter = true;
+    if (pdfPosition.options.lockHorizontalCenter) pdfPosition.options.lockHorizontalCenter = false
+    else pdfPosition.options.lockHorizontalCenter = true
     if (position == false) {
-      position = true;
-      bgclr = true;
-      bold = true;
+      position = true
+      bgclr = true
+      bold = true
       // pdfPosition.options.lockHorizontalCenter = false;
     } else {
-      position = false;
-      bgclr = false;
-      bold = false;
+      position = false
+      bgclr = false
+      bold = false
       // pdfPosition.options.lockHorizontalCenter = true;
     }
-  };
+  }
 
-  let clr = '#BEBEBE';
+  let clr = '#BEBEBE'
   const chooseClr = () => {
-    console.log(clr);
-  };
+    console.log(clr)
+  }
 </script>
 
 <div class="relative h-auto w-full flex items-center justify-center gap-3">
