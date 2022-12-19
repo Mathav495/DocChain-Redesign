@@ -104,7 +104,7 @@
       reader.readAsDataURL(File); //(base 64 data url)
       reader.addEventListener('load', function () {
         Imageurl = reader.result;
-        console.log(Imageurl);
+        // console.log(Imageurl);
         localStorage.setItem('base64', Imageurl);
       });
       blobimage = URL.createObjectURL(File);
@@ -232,7 +232,8 @@
   };
 
   const signDoc = () => {
-    navigate('/sign');
+    // navigate('/sign');
+    dispatch('steps');
   };
 </script>
 

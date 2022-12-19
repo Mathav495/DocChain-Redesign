@@ -13,6 +13,7 @@
   console.log(token);
 
   let initvalues;
+
   let pdfPosition = {};
   pdfPosition.options = {};
   pdfPosition.init = function (options = {}) {
@@ -245,7 +246,7 @@
   };
 </script>
 
-<div class="relative h-auto w-full flex flex-col items-center justify-center gap-3">
+<div class="relative h-auto w-full flex items-center justify-center gap-3">
   {#if modal}
     <div class="w-full flex h-full bg-[#000000cc] absolute items-start justify-center p-4">
       <div class="w-full lg:w-3/5 bg-white shadow-[0_0_8px_0_rgba(0,0,0,0.15)] p-5 rounded-md">
@@ -260,7 +261,7 @@
       </div>
     </div>
   {/if}
-  <div class="w-8/12 flex flex-col gap-10">
+  <div class="w-8/12 flex-col gap-10">
     <div>
       <span class="text-base rounded-md font-bold bg-black text-white px-1 tracking-wider">STEP 1</span>
       <div class="flex items-center justify-start mt-2">
@@ -351,6 +352,6 @@
     {:else}
       <canvas id="mycanvas1" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
     {/if}
+    <button on:click={initiate} class="flex mx-auto mb-5 mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">initiate</button>
   </div>
-  <button on:click={initiate} class="flex mx-auto mb-5 mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">initiate</button>
 </div>

@@ -24,7 +24,7 @@
   });
 </script>
 
-<div class="  w-full lg:w-[38.5rem] rounded-md flex items-center  gap-1" style="background:{bgcolor}" in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }}>
+<div class=" w-full lg:w-[38.5rem] rounded-md flex items-center  gap-1" style="background:{bgcolor}" in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }}>
   <div id="header_card" class="w-full flex flex-col px-4 py-4" style="background:{bgpattern}">
     <div class="flex gap-4">
       <img src={qr} alt="qrcode" class="w-20 h-20 rounded overflow-hidden lg:w-[100px] lg:h-[100px]" />
