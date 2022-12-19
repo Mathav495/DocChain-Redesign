@@ -24,10 +24,6 @@
   let displaypreview = false;
 
   /**
-   * to display signed pdf in add file page
-   */
-
-  /**
    * Submitting file for generating filehash
    */
   const onSubmitFile = async () => {
@@ -154,6 +150,20 @@
     currentpage = 1;
     showPage(1);
   };
+
+  /**
+   * to display signed pdf in add file page
+   */
+
+  const displaySignedPdf = async () => {
+    if (bloblink) {
+      displayDropzone = false;
+      await showPdf(bloblink);
+      displaypreview = true;
+      showpdf = true;
+    }
+  };
+  displaySignedPdf();
 
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno);
