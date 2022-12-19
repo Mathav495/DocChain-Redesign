@@ -56,6 +56,13 @@
     stepModal = true;
     addfile = true;
   };
+  let totalPages = [];
+  const pageNumbers = (e) => {
+    for (let i = 1; i <= e.detail; i++) {
+      totalPages.push(i);
+    }
+    console.log(totalPages);
+  };
 </script>
 
 <svelte:head>
@@ -73,10 +80,10 @@
       <Header on:navShow={showNav} />
     </div>
     <div class="relative ">
-      <Addfile {id} on:File on:steps={() => Modal(signerId)} />
+      <Addfile {id} on:File on:steps={() => Modal(signerId)} on:totalPage={pageNumbers} />
       {#if stepModal}
         <div class="absolute top-0 bg-gray-300/80 w-full h-full p-4">
-          <Sign1 {data1} />
+          <Sign1 {data1} {totalPages} />
         </div>
       {/if}
     </div>

@@ -163,6 +163,7 @@
     loadingTask = loadingTask.promise;
     _PDFDOC = await loadingTask;
     _total_pages = _PDFDOC.numPages;
+    dispatch('totalPage', _total_pages);
     console.log(_total_pages);
     console.log(_PDFDOC);
     currentpage = 1;
