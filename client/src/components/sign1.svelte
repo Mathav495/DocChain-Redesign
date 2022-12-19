@@ -4,14 +4,14 @@
 
   export let data1
   export let totalPages
-  console.log(data1)
-  console.log('sign1')
+  // console.log(data1)
+  // console.log('sign1')
 
   let currentpage = 0,
     _PDFDOC,
     _total_pages = 0
   const showPdf = async (url) => {
-    console.log(url)
+    // console.log(url)
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js'
     let loadingTask = pdfjsLib.getDocument(url)
     loadingTask = loadingTask.promise
@@ -23,20 +23,20 @@
   let src
   let base64, imageUrl, url, pdfUrl
   base64 = localStorage.getItem('base64')
-  console.log(base64)
+  // console.log(base64)
   url = base64.split(';base64,')
   const findFile = async () => {
     if (url[0] == 'data:image/png' || url[0] == 'data:image/jpg' || url[0] == 'data:image/jpeg') {
-      console.log('image uplpaded')
+      // console.log('image uplpaded')
       imageUrl = base64
-      console.log(imageUrl)
+      // console.log(imageUrl)
     } else if (url[0] == 'data:application/pdf') {
-      console.log('pdf uplpaded')
+      // console.log('pdf uplpaded')
       pdfUrl = base64
       await showPdf(pdfUrl)
-      console.log(pdfUrl)
+      // console.log(pdfUrl)
     } else {
-      console.log('logged')
+      // console.log('logged')
     }
   }
   findFile()
@@ -47,6 +47,35 @@
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById('mycanvas3')
+    let context = canvas.getContext('2d')
+    canvas.height = viewport.height
+    canvas.width = viewport.width
+
+    // Render PDF page into canvas context
+    let renderContext = {
+      canvasContext: context,
+      viewport: viewport,
+    }
+    await page.render(renderContext).promise
+    // document.getElementById('pdf-preview').src = canvas.toDataURL();
+  }
+  const showSignPage = async (base64, pageNo) => {
+    // console.log(base64)
+    console.log(pageNo)
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js'
+    let loadingTask = pdfjsLib.getDocument(base64)
+    loadingTask = loadingTask.promise
+    _PDFDOC = await loadingTask
+    _total_pages = _PDFDOC.numPages
+    currentpage = 1
+    signPageNo(pageNo)
+  }
+  const signPageNo = async (pageNo) => {
+    let page = await _PDFDOC.getPage(pageNo)
+    let viewport = page.getViewport({ scale: 2 })
+
+    // Prepare canvas using PDF page dimensions
+    let canvas = document.getElementById('mycanvas4')
     let context = canvas.getContext('2d')
     canvas.height = viewport.height
     canvas.width = viewport.width
@@ -72,15 +101,8 @@
     dot1 = false,
     tick1 = true,
     empty = false,
-    borderBlue1 = false
-  const back1 = () => {
-    details = true
-    SelectPageno = false
-    borderBlue1 = false
-    dot2 = true
-    empty = false
-  }
-  let dot2 = true,
+    borderBlue1 = false,
+    dot2 = true,
     SelectPageno = false,
     dot3 = true
   const nextBtn1 = () => {
@@ -97,7 +119,10 @@
     tick2 = true,
     tick3 = true,
     signPage = false
-  const nextBtn2 = () => {
+  const nextBtn2 = (pageNo) => {
+    console.log(pageNo)
+    base64 = localStorage.getItem('base64')
+    showSignPage(base64, pageNo)
     empty2 = true
     dot3 = false
     borderBlue2 = true
@@ -117,7 +142,7 @@
     empty = false
   }
   const backBtn2 = () => {
-    console.log('back2')
+    // console.log('back2')
     borderBlue2 = false
     empty2 = false
     tick3 = true
@@ -152,6 +177,10 @@
   }
   let pageNo
   $: showPage(pageNo)
+  let clr = '#BEBEBE'
+  const chooseClr = () => {
+    console.log(clr)
+  }
 </script>
 
 <div class="w-full h-auto bg-gray-300/80 p-4">
@@ -303,9 +332,7 @@
               </select>
               <div>
                 {#if (src = imageUrl)}
-                  <div>
-                    <img class="w-auto h-auto rounded-md" src={imageUrl} alt="document" />
-                  </div>
+                  <img class="w-auto h-auto rounded-md" src={imageUrl} alt="document" />
                 {:else}
                   <canvas id="mycanvas3" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
                 {/if}
@@ -314,7 +341,7 @@
           </div>
           <div class="flex items-center justify-between border-t border-white pt-4">
             <button on:click={backBtn1} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Back</button>
-            <button on:click={nextBtn2} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Next</button>
+            <button on:click={() => nextBtn2(pageNo)} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Next</button>
           </div>
         </div>
       {/if}
@@ -322,25 +349,18 @@
         <div class="flex flex-col gap-4">
           <h1 class="text-white text-lg tracking-wide font-semibold border-b border-white">SIGN DETAILS</h1>
           <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Name:</p>
-            <div class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600">{data1.signerDetails.name}</div>
+            <p class="text-base text-gray-600 w-96 font-semibold">Reason for Digital Signature:</p>
+            <input type="text" class="w-full border border-gray-400 px-2 py-1 rounded-md" />
           </div>
           <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Id:</p>
-            <div class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600 overflow-auto">{data1.signerDetails.id}</div>
+            <p class="text-base text-gray-600 w-96 font-semibold">Signature Background color:</p>
+            <input on:input={chooseClr} bind:value={clr} class="w-full border border-gray-500 bg-gray-100 px-2 py-1 rounded-md" type="color" name="Identity" id="Identity" />
           </div>
           <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Email:</p>
-            <div class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600">{data1.signerDetails.email}</div>
+            <p class="text-base text-gray-600 w-96 font-semibold">QR Data (eg: Trust URL):</p>
+            <input type="text" class="w-full border border-gray-400 px-2 py-1 rounded-md" />
           </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Contact:</p>
-            <div class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600">{data1.signerDetails.contact}</div>
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Organisation:</p>
-            <div class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600">{data1.signerDetails.organisation}</div>
-          </div>
+          <canvas id="mycanvas4" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
           <div class="flex items-center justify-between border-t border-white pt-4">
             <button on:click={backBtn2} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Back</button>
             <button on:click={nextBtn3} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Next</button>
