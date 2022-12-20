@@ -1,29 +1,29 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-  const dispatch = createEventDispatcher();
+  import { createEventDispatcher } from 'svelte'
+  const dispatch = createEventDispatcher()
   // import pdfjsLib from '/public/lib/pdf.js';
   // import pdfjsWorker from '/public/lib/pdf.worker.js';
-  import axios from 'axios';
-  import { navigate } from 'svelte-routing';
-  import { fade } from 'svelte/transition';
-  import HeaderFileupload from './header_fileupload.svelte';
-  import ErrorInfo from './ErrorInfo.svelte';
-  export let id;
-  let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf, errormsg;
-  let displayConfirm = false;
-  let displayerror = false;
-  let displayDropzone = true;
-  let nextbtn = true;
-  let prevbtn = true;
-  let token = localStorage.getItem('token');
-  let documentID = localStorage.getItem('documentID');
-  let bgcolor = localStorage.getItem('bgGradient');
-  let displaypreview = false;
+  import axios from 'axios'
+  import { navigate } from 'svelte-routing'
+  import { fade } from 'svelte/transition'
+  import HeaderFileupload from './header_fileupload.svelte'
+  import ErrorInfo from './ErrorInfo.svelte'
+  export let id
+  let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf, errormsg
+  let displayConfirm = false
+  let displayerror = false
+  let displayDropzone = true
+  let nextbtn = true
+  let prevbtn = true
+  let token = localStorage.getItem('token')
+  let documentID = localStorage.getItem('documentID')
+  let bgcolor = localStorage.getItem('bgGradient')
+  let displaypreview = false
   /**
    * Submitting file for generating filehash
    */
   const onSubmitFile = async () => {
-    console.log(File);
+    console.log(File)
     if (File.name != '') {
       const { data } = await axios.post(
         'https://test.swagger.print2block.in/docs/add-file',
@@ -37,103 +37,102 @@
             'x-access-token': token,
           },
         },
-      );
-      console.log(data);
-      console.log(data.lastModifiedDate);
+      )
+      console.log(data)
+      console.log(data.lastModifiedDate)
       // dispatch('filehash', data.fileHash);
-      localStorage.setItem('filehash', data.fileHash);
-      let fileHash = localStorage.getItem('filehash');
-      console.log('filehash', fileHash);
+      localStorage.setItem('filehash', data.fileHash)
+      let fileHash = localStorage.getItem('filehash')
+      console.log('filehash', fileHash)
       if (data.fileHash) {
         // For local storage
-        let localfile = JSON.parse(localStorage.getItem('docDetails'));
-        console.log('localfile', localfile);
+        let localfile = JSON.parse(localStorage.getItem('docDetails'))
+        console.log('localfile', localfile)
         localfile.find((localfile) => {
           if (localfile.documentID == id) {
-            console.log(localfile);
-            console.log('same id', localfile.documentID);
-            console.log('filehash', localfile.filehash);
-            localfile.filehash = true;
-            console.log(localfile);
+            console.log(localfile)
+            console.log('same id', localfile.documentID)
+            console.log('filehash', localfile.filehash)
+            localfile.filehash = true
+            console.log(localfile)
           }
-        });
-        console.log(localfile, 'local');
-        localStorage.setItem('docDetails', JSON.stringify(localfile));
+        })
+        console.log(localfile, 'local')
+        localStorage.setItem('docDetails', JSON.stringify(localfile))
 
         //For navigating to next page
-        navigate(`/add-data/${id}`);
+        navigate(`/add-data/${id}`)
       } else {
         if (data.error) {
-          displayConfirm = false;
-          displaypreview = false;
-          displayDropzone = true;
-          errormsg = data.errorCode;
-          let arr = errormsg.split(':');
-          errormsg = arr[2].replaceAll('_', ' ');
-          displayerror = true;
+          displayConfirm = false
+          displaypreview = false
+          displayDropzone = true
+          errormsg = data.errorCode
+          let arr = errormsg.split(':')
+          errormsg = arr[2].replaceAll('_', ' ')
+          displayerror = true
           setTimeout(() => {
-            displayerror = false;
-          }, 3000);
+            displayerror = false
+          }, 3000)
         }
       }
     }
-  };
+  }
 
   /**
    * Function for previewing image or pdf when uploaded
    */
-  let Imageurl, Pdfurl;
+  let Imageurl, Pdfurl
   const ondisplay = async () => {
-    console.log('displayed');
-    const form = document.getElementById('form');
-    const formData = new FormData(form);
-    console.log([...formData]);
-    let datum = [...formData][0];
-    File = datum[1];
+    console.log('displayed')
+    const form = document.getElementById('form')
+    const formData = new FormData(form)
+    console.log([...formData])
+    let datum = [...formData][0]
+    File = datum[1]
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg' || File.type == 'application/pdf') {
-      dispatch('File', File);
+      dispatch('File', File)
     }
-    console.log(File);
-    localStorage.setItem('file', [...formData]);
-    console.log(File.type);
+    console.log(File)
+    localStorage.setItem('file', [...formData])
+    console.log(File.type)
     if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
-      displaypreview = true;
-      displayDropzone = false;
-      showpdf = false;
-      const reader = new FileReader(); // constructor
-      reader.readAsDataURL(File); //(base 64 data url)
+      displaypreview = true
+      displayDropzone = false
+      showpdf = false
+      const reader = new FileReader() // constructor
+      reader.readAsDataURL(File) //(base 64 data url)
       reader.addEventListener('load', function () {
-        Imageurl = reader.result;
+        Imageurl = reader.result
         // console.log(Imageurl);
-        localStorage.setItem('base64', Imageurl);
-      });
-      blobimage = URL.createObjectURL(File);
-      console.log(blobimage);
-      localStorage.setItem('blobimage', blobimage);
-      return;
+        localStorage.setItem('base64', Imageurl)
+      })
+      blobimage = URL.createObjectURL(File)
+      console.log(blobimage)
+      localStorage.setItem('blobimage', blobimage)
+      return
     } else if (File.type == 'application/pdf') {
-      showpdf = true;
-
-      const reader = new FileReader(); // constructor
-      reader.readAsDataURL(File); //(base 64 data url)
+      showpdf = true
+      const reader = new FileReader() // constructor
+      reader.readAsDataURL(File) //(base 64 data url)
       reader.addEventListener('load', function () {
-        Pdfurl = reader.result;
-        console.log(Pdfurl);
-        localStorage.setItem('base64', Pdfurl);
-      });
-      let blob = URL.createObjectURL(File);
-      localStorage.setItem('blobpdf', blob);
-      console.log(blob);
-      await showPdf(blob);
-      displayDropzone = false;
-      displaypreview = true;
-      return;
+        Pdfurl = reader.result
+        console.log(Pdfurl)
+        localStorage.setItem('base64', Pdfurl)
+      })
+      let blob = URL.createObjectURL(File)
+      localStorage.setItem('blobpdf', blob)
+      console.log(blob)
+      await showPdf(blob)
+      displayDropzone = false
+      displaypreview = true
+      return
     } else {
-      displaypreview = false;
-      showpdf = false;
-      return;
+      displaypreview = false
+      showpdf = false
+      return
     }
-  };
+  }
 
   // onMount(async () => {
   //   import('pdfjs-dist/build/pdf')
@@ -158,84 +157,84 @@
 
   const showPdf = async (blob) => {
     // await pageloader();
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js';
-    let loadingTask = pdfjsLib.getDocument(blob);
-    loadingTask = loadingTask.promise;
-    _PDFDOC = await loadingTask;
-    _total_pages = _PDFDOC.numPages;
-    dispatch('totalPage', _total_pages);
-    console.log(_total_pages);
-    console.log(_PDFDOC);
-    currentpage = 1;
-    showPage(1);
-  };
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js'
+    let loadingTask = pdfjsLib.getDocument(blob)
+    loadingTask = loadingTask.promise
+    _PDFDOC = await loadingTask
+    _total_pages = _PDFDOC.numPages
+    dispatch('totalPage', _total_pages)
+    console.log(_total_pages)
+    console.log(_PDFDOC)
+    currentpage = 1
+    showPage(1)
+  }
 
   const showPage = async (pageno) => {
-    let page = await _PDFDOC.getPage(pageno);
-    console.log('Page loaded');
-    let viewport = page.getViewport({ scale: 2 });
+    let page = await _PDFDOC.getPage(pageno)
+    console.log('Page loaded')
+    let viewport = page.getViewport({ scale: 2 })
 
     // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById('mycanvas');
-    let context = canvas.getContext('2d');
-    canvas.height = viewport.height;
-    canvas.width = viewport.width;
+    let canvas = document.getElementById('mycanvas')
+    let context = canvas.getContext('2d')
+    canvas.height = viewport.height
+    canvas.width = viewport.width
 
     // Render PDF page into canvas context
     let renderContext = {
       canvasContext: context,
       viewport: viewport,
-    };
-    await page.render(renderContext).promise;
+    }
+    await page.render(renderContext).promise
     // document.getElementById('pdf-preview').src = canvas.toDataURL();
-  };
+  }
 
   const toClickinput = () => {
-    document.getElementById('file-upload').click();
-  };
+    document.getElementById('file-upload').click()
+  }
 
   const nextpage = () => {
     if (currentpage < _total_pages) {
-      console.log('initial', currentpage);
-      showPage(currentpage + 1);
-      currentpage++;
-      console.log('final', currentpage);
+      console.log('initial', currentpage)
+      showPage(currentpage + 1)
+      currentpage++
+      console.log('final', currentpage)
     }
-  };
+  }
 
   $: if (currentpage < _total_pages) {
-    nextbtn = true;
+    nextbtn = true
   } else {
-    nextbtn = false;
+    nextbtn = false
   }
   $: if (currentpage > 1) {
-    prevbtn = true;
+    prevbtn = true
   } else {
-    prevbtn = false;
+    prevbtn = false
   }
   const previouspage = () => {
     if (currentpage > 1) {
-      console.log('initial', currentpage);
-      showPage(currentpage - 1);
-      currentpage--;
-      console.log('final', currentpage);
+      console.log('initial', currentpage)
+      showPage(currentpage - 1)
+      currentpage--
+      console.log('final', currentpage)
     }
-  };
+  }
 
   const ondisplaydropzone = () => {
-    displayDropzone = true;
-    displaypreview = false;
-  };
+    displayDropzone = true
+    displaypreview = false
+  }
 
   const hideConfirmation = () => {
-    displayConfirm = false;
-    ondisplaydropzone();
-  };
+    displayConfirm = false
+    ondisplaydropzone()
+  }
 
   const signDoc = () => {
     // navigate('/sign');
-    dispatch('steps');
-  };
+    dispatch('steps')
+  }
 </script>
 
 <div class="relative h-auto w-full flex flex-col items-center justify-center gap-3  p-4">

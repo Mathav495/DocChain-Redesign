@@ -34,7 +34,7 @@
     <Route path="/add-data/:id" let:params>
       <Adddatapage id={params.id} />
     </Route>
-    <Route path="/publish/:id" let:params>
+    <Route path="/preview/:id" let:params>
       <Filepreview id={params.id} />
     </Route>
     <Route path="/final"><Final /></Route>

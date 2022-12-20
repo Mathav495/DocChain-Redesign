@@ -34,6 +34,7 @@
     },
   ];
   let displayerror = false;
+
   let error = {
     dateexpired: '',
     issuer: '',
@@ -180,9 +181,20 @@
       );
       console.log(data);
       // let metadata = data.metadata;
-      window.localStorage.setItem('metadata', JSON.stringify(data.metadata));
-      let metadata = JSON.parse(window.localStorage.getItem('metadata'));
+      localStorage.setItem('metadata', data.metadata);
+      var metadata = JSON.parse(localStorage.getItem('metadata'));
       console.log(metadata);
+      console.log(typeof metadata);
+      console.log(metadata.receiver.name);
+      // metadata['receiver']['name'];
+      // typeof metadata['receiver']['name'];
+      // console.log(metadata['receiver']['name']);
+      // console.log(metadata['document']['type']);
+      // console.log(metadata['issuer']['signatory']);
+      localStorage.setItem('options', data.options);
+      var options = JSON.parse(localStorage.getItem('options'));
+      console.log(options.title);
+      console.log(options.expireOn);
 
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem('docDetails'));
@@ -205,7 +217,7 @@
       console.log('datahash', dataHash);
       if (data.dataHash) {
         errormsg = '';
-        navigate(`/publish/${id}`);
+        navigate(`/preview/${id}`);
       } else {
         if (data.error) {
           errormsg = data.errorCode;

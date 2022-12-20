@@ -1,7 +1,7 @@
 <script>
   import axios from 'axios';
   import { onMount } from 'svelte';
-  export let bgcolor;
+  export let bgcolor, bgpattern;
 
   let token = localStorage.getItem('token');
   let randomPattern;
@@ -28,15 +28,26 @@
   });
 </script>
 
-<div class=" w-full shadow-xl rounded-md flex items-center p-2 gap-1" style="background:{bgcolor}">
-  <div id="header_card" class="w-full flex p-1">
-    <div class="flex">
-      <img src={qr} alt="qrcode" class="p-1 w-28 h-28 lg:w-28 lg:h-28 rounded-md" />
-      <img src="/assets/sample.jpg" alt="qrcode" class="p-1 ml-2 w-28 h-28 lg:w-28 lg:h-28 rounded-md" />
+<!-- 
+<div class="w-full shadow-xl rounded-md flex items-center p-2" style="background:{bgcolor}">
+  <div class="flex gap-3" id="header_card">
+    <img class="h-24 w-24 overflow-hidden rounded object-cover object-center" src={qr} alt="qr" />
+    <img class="h-24 w-24 overflow-hidden rounded object-cover object-center" src="/assets/sample.jpg" alt="logo" />
+    <div class="space-y-2 flex flex-col justify-center">
+      <div class="flex py-1 text-sm font-bold text-white">{issuerName}</div>
+      <div class="flex py-1 text-sm font-bold uppercase text-white">{documentID}</div>
     </div>
-    <div class="px-3 space-y-2 justify-center items-center flex flex-col">
-      <h1 class="text-base font-semibold text-white capitalize self-start">{issuerName}</h1>
-      <h1 class="text-base font-semibold font-mono text-white capitalize">{documentID}</h1>
+  </div>
+</div> -->
+<div class="  w-full shadow-xl rounded-md flex items-center gap-1" style="background:{bgcolor}">
+  <div id="header_card" class="w-full flex flex-col px-4 py-4" style="background:{bgpattern}">
+    <div class="flex gap-4">
+      <img src={qr} alt="qrcode" class="w-20 h-20 rounded overflow-hidden lg:w-[100px] lg:h-[100px]" />
+      <img src="/assets/sample.jpg" alt="qrcode" class="rounded overflow-hidden w-20 h-20 lg:w-[100px] lg:h-[100px]" />
+    </div>
+    <div class="pt-3">
+      <h1 class="text-base font-medium tracking-wide text-white capitalize">{issuerName}</h1>
+      <h1 class="text-xl font-bold font-mono text-white ">{documentID}</h1>
     </div>
   </div>
 </div>
