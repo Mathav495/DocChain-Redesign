@@ -11,7 +11,7 @@
   let doctype = ""
   let signatory = ""
   let docTitle = ""
-  let valid, date, sampleData, options, errormsg
+  let valid, date, sampleData, errormsg
   let receiver = [
     {
       label: 0,
@@ -242,109 +242,55 @@
       }
     }
   }
-  const updateLabel_receiver = (value) => {
+
+  /**
+   * Function to update the data related to receiver , docdetails , signdetails
+   * @param id1 {String} string value for finding the element(label component)
+   * @param id2 {String} string value for finding the element(input component)
+   * @param dataToBeModified {String} it denotes the name of the array to be modified
+   * @param value {Number} label value for individual labelName
+   */
+  const updateLabel = (id1, id2, dataToBeModified, value) => {
     let initial_value = value
     let increment_value = value + 1
-    console.log(value)
-    console.log(receiver)
-    let nextData,
-      count = 0
-    receiver.find((receiver) => {
-      if (receiver.labelName == "Fieldname") {
-        count++
-      }
-    })
-    console.log(count)
-    console.log(receiver.length)
-    if (count == 0) {
-      nextData = {
-        label: increment_value,
-        labelName: "Fieldname",
-      }
-      receiver = [...receiver, nextData]
+    if (dataToBeModified == "receiver") {
+      updateData(receiver, increment_value)
+    } else if (dataToBeModified == "documentDetails") {
+      updateData(documentDetails, increment_value)
+    } else if (dataToBeModified == "signatoryDetails") {
+      updateData(signatoryDetails, increment_value)
     }
-    let temp = document.getElementById(`z${initial_value}`)
-    console.log(temp)
+    let temp = document.getElementById(id1 + initial_value)
     temp.classList.add("flex")
     temp.classList.remove("hidden")
-    let temp2 = document.getElementById(`a${initial_value}`)
-    console.log(temp2)
+    let temp2 = document.getElementById(id2 + initial_value)
     temp2.classList.remove("flex")
     temp2.classList.add("hidden")
   }
 
-  const updateLabel_docDetails = (value) => {
-    let initial_value = value
-    let increment_value = value + 1
-    console.log(value)
-    console.log(documentDetails)
-
+  const updateData = (dataToBeUpdated, increment_value) => {
+    console.log(dataToBeUpdated)
     let nextData,
       count = 0
-    documentDetails.find((documentDetails) => {
-      if (documentDetails.labelName == "Fieldname") {
+    dataToBeUpdated.find((dataToBeUpdated) => {
+      if (dataToBeUpdated.labelName == "Fieldname") {
         count++
       }
     })
-    console.log(count)
     if (count == 0) {
       nextData = {
         label: increment_value,
         labelName: "Fieldname",
       }
-      documentDetails = [...documentDetails, nextData]
+      dataToBeUpdated = [...dataToBeUpdated, nextData]
     }
-
-    console.log(documentDetails)
-    let temp = document.getElementById(`b${initial_value}`)
-    console.log(temp)
-    temp.classList.add("flex")
-    temp.classList.remove("hidden")
-    let temp2 = document.getElementById(`c${initial_value}`)
-    console.log(temp2)
-    temp2.classList.remove("flex")
-    temp2.classList.add("hidden")
-  }
-
-  const updateLabel_signDetails = (value) => {
-    let initial_value = value
-    let increment_value = value + 1
-    console.log(value)
-    console.log(signatoryDetails)
-
-    let nextData,
-      count = 0
-    signatoryDetails.find((signatoryDetails) => {
-      if (signatoryDetails.labelName == "Fieldname") {
-        count++
-      }
-    })
-    console.log(count)
-    if (count == 0) {
-      nextData = {
-        label: increment_value,
-        labelName: "Fieldname",
-      }
-      signatoryDetails = [...signatoryDetails, nextData]
-    }
-    console.log(signatoryDetails)
-    let temp = document.getElementById(`d${initial_value}`)
-    console.log(temp)
-    temp.classList.add("flex")
-    temp.classList.remove("hidden")
-    let temp2 = document.getElementById(`e${initial_value}`)
-    console.log(temp2)
-    temp2.classList.remove("flex")
-    temp2.classList.add("hidden")
+    console.log(dataToBeUpdated)
   }
 
   const hideLabel = (id1, id2, value) => {
-    console.log(value)
     let temp = document.getElementById(id1 + value)
-    console.log(temp)
     temp.classList.add("hidden")
     let temp2 = document.getElementById(id2 + value)
-    console.log(temp2)
     temp2.classList.add("flex")
     temp2.classList.remove("hidden")
   }
@@ -453,7 +399,8 @@
                   />
                   <div class="pl-3">
                     <svg
-                      on:click={() => updateLabel_receiver(receiver.label)}
+                      on:click={() =>
+                        updateLabel("z", "a", "receiver", receiver.label)}
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -578,7 +525,13 @@
                     class="field-input"
                   />
                   <svg
-                    on:click={() => updateLabel_docDetails(docDetails.label)}
+                    on:click={() =>
+                      updateLabel(
+                        "b",
+                        "c",
+                        "documentDetails",
+                        docDetails.label
+                      )}
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -692,7 +645,13 @@
                     class="field-input"
                   />
                   <svg
-                    on:click={() => updateLabel_signDetails(signDetails.label)}
+                    on:click={() =>
+                      updateLabel(
+                        "d",
+                        "e",
+                        "signatoryDetails",
+                        signDetails.label
+                      )}
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
