@@ -1,71 +1,69 @@
 <script>
-  import { fade } from 'svelte/transition';
-  import Dashboard3 from '../components/Dashboard3.svelte';
-  import Header from '../components/Header.svelte';
-  import Headerlogo from '../components/Headerlogo.svelte';
-  import Loader from '../components/Loader.svelte';
-  import Logo from '../components/Logo.svelte';
-  import Logout from '../components/Logout.svelte';
-  import Nav from '../components/Nav.svelte';
-  import SmallScreenNavbar from '../components/Small_screen_navbar.svelte';
-  let hideNavbar = true;
-  let animate = document.querySelector('#particles-js');
-  console.log(animate);
-  animate.style.display = 'none';
+  import { fade } from 'svelte/transition'
+  import Dashboard3 from '../components/Dashboard3.svelte'
+  import Header from '../components/Header.svelte'
+  import Headerlogo from '../components/Headerlogo.svelte'
+  import Loader from '../components/Loader.svelte'
+  import Logo from '../components/Logo.svelte'
+  import Logout from '../components/Logout.svelte'
+  import Nav from '../components/Nav.svelte'
+  import SmallScreenNavbar from '../components/Small_screen_navbar.svelte'
+  let hideNavbar = true
+
   /**
    * This is the function to hide a samll screen navbar
    */
   const hideNav = () => {
-    hideNavbar = true;
-  };
+    hideNavbar = true
+  }
 
   /**
    * This is the function to show and hide a samll screen navbar
    */
   const showNav = () => {
     if (hideNavbar == false) {
-      hideNavbar = true;
+      hideNavbar = true
     } else {
-      hideNavbar = false;
+      hideNavbar = false
     }
-  };
+  }
   let Black = true,
     Yellow = false,
     Red = false,
-    Gray = false;
+    Gray = false
   const changeClr = (e) => {
-    (Black = false), (Yellow = false), (Red = false), (Gray = false);
+    ;(Black = false), (Yellow = false), (Red = false), (Gray = false)
     if (e.detail == 'Black') {
-      Black = true;
+      Black = true
     }
     if (e.detail == 'Yellow') {
-      Yellow = true;
+      Yellow = true
     }
     if (e.detail == 'Red') {
-      Red = true;
+      Red = true
     }
     if (e.detail == 'Gray') {
-      Gray = true;
+      Gray = true
     }
-  };
+  }
   let hide = false,
     show = true,
-    headerHide = true;
+    headerHide = true
   const HideNavbar = () => {
     if (hide == false) {
-      hide = true;
-      console.log('hide');
-      headerHide = false;
-      show = false;
+      hide = true
+      console.log('hide')
+      headerHide = false
+      show = false
       // document.getElementById('header').classList.remove('md:mb-0');
     } else {
-      hide = false;
-      console.log('show');
-      headerHide = true;
-      show = true;
+      hide = false
+      console.log('show')
+      headerHide = true
+      show = true
       // document.getElementById('header').classList.add('md:mb-0');
     }
-  };
+  }
 </script>
 
 <div id="load3">

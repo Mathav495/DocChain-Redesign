@@ -147,6 +147,7 @@
   }
   let modal = false
   const initiate = async () => {
+    //get signer id
     console.log('initiate')
     // modal = true;
 
@@ -171,7 +172,7 @@
     modal = true
   }
   const ConfirmRequest = async () => {
-    //post method .to give the input field to call api
+    //get file name
     const { data } = await axios.post('https://pdfsign.test.print2block.in/signature/confirm', {
       requestid: signreq,
       otp: otp,
