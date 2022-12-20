@@ -1,7 +1,6 @@
 <script>
   import axios from "axios"
   import { onMount } from "svelte"
-  import Loader from "./Loader.svelte"
   import Pagination from "./pagination.svelte"
   import Usagecard3 from "./Usagecard3.svelte"
 

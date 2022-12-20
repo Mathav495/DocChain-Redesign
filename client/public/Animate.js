@@ -16,7 +16,6 @@ const grads = [
   'linear-gradient( 99deg,  rgba(115,18,81,1) 10.6%, rgba(28,28,28,1) 118% )',
   'linear-gradient( 63.1deg,  rgba(5,23,111,1) 16.4%, rgba(24,95,240,1) 64.5% )',
 ]
-
 const changeGradient = () => {
   let random = Math.floor(Math.random() * grads.length)
   console.log(random)

@@ -1,10 +1,13 @@
 <script>
+  import axios from "axios"
   import Logo from "../components/Logo.svelte"
   import Logout from "../components/Logout.svelte"
   import Nav from "../components/Nav.svelte"
   import SmallScreenNavbar from "../components/Small_screen_navbar.svelte"
   import Header from "../components/Header.svelte"
   import Addfile from "../components/Addfile.svelte"
+  import Sign1 from "../components/sign1.svelte"
+
   export let id
   let hideNavbar = true
   const hideNav = () => {
@@ -38,6 +41,30 @@
       Gray = true
     }
   }
+
+  let stepModal = false,
+    addfile = false,
+    data1,
+    signerId =
+      "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3"
+  const Modal = async (signerId) => {
+    const { data } = await axios.get(
+      `https://pdfsign.test.print2block.in/blockchain/signer/get?signer=${signerId}`
+    )
+    console.log(data)
+    data1 = data
+    console.log(data1)
+    console.log(data.signerDetails.email)
+    stepModal = true
+    addfile = true
+  }
+  let totalPages = []
+  const pageNumbers = (e) => {
+    for (let i = 1; i <= e.detail; i++) {
+      totalPages.push(i)
+    }
+    console.log(totalPages)
+  }
 </script>
 
 <svelte:head>
@@ -59,12 +86,24 @@
     <Logout on:theme={changeClr} />
   </div>
   <div
-    class="lg:w-full md:w-6/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md  ml-2 md:ml-0 overflow-auto"
+    class="lg:w-full md:w-6/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md ml-2 md:ml-0 overflow-auto"
   >
     <div class="md:hidden block">
       <Header on:navShow={showNav} />
     </div>
-    <Addfile {id} on:File {bloblink} {MyFile} />
+    <div class="relative ">
+      <Addfile
+        {id}
+        on:File
+        on:steps={() => Modal(signerId)}
+        on:totalPage={pageNumbers}
+      />
+      {#if stepModal}
+        <div class="absolute top-0 w-full h-full bg-gray-300/80">
+          <Sign1 {data1} {totalPages} />
+        </div>
+      {/if}
+    </div>
   </div>
   <!--small screen navbar-->
   <button
