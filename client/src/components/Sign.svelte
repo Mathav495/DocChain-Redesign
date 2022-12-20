@@ -8,86 +8,13 @@
   let otp = ''
   let SignFile
   let blob
-  // let blobImg = URL.createObjectURL(img);
-  // let blobPdf = URL.createObjectURL(pdf);
   let signreq
   let docURL = localStorage.getItem('docURL')
   console.log(docURL)
   // imageUrl1 = imageUrl.split(';base64,').pop();
   let token = localStorage.getItem('token')
   console.log(token)
-
   let initvalues
-  let pdfPosition = {}
-  pdfPosition.options = {}
-  pdfPosition.init = function (options = {}) {
-    if (!options.triggerButtons) throw console.error('No triggerButton class is provided')
-    if (!options.imageTarget) throw console.error('No imageTarget id is provided')
-    if (!options.positionTextbox) throw console.error('No positionTextbox id is provided')
-    options.lockHorizontalCenter = false || options.lockHorizontalCenter
-    pdfPosition.options = options
-    let s = document.createElement('img')
-    s.src = 'https://print2block.com/test/img/signSample.png'
-    let a = 841 / 85
-    let b = 594.65 / 495
-    let c = document.createElement('canvas')
-    let d = c.getContext('2d')
-    let f = false
-    let [x, y] = [(c.width - c.width / b) / 2, (c.height - c.height / a) / 2]
-    let w, h
-    let t = document.getElementById(options.imageTarget)
-    pdfPosition.position = []
-    pdfPosition.position[0] = Math.floor((x * 594.65) / c.width)
-    pdfPosition.position[1] = Math.floor(((c.height - y) * 841) / c.height - 85)
-    pdfPosition.position[2] = Math.floor((x * 594.65) / c.width + 495)
-    pdfPosition.position[3] = Math.floor(((c.height - y) * 841) / c.height)
-    pdfPosition.lastposition = pdfPosition.position
-
-    let triggerButtons = document.querySelectorAll(options.triggerButtons)
-    for (let i = 0; i < triggerButtons.length; i++) {
-      triggerButtons[i].addEventListener('click', () => {
-        c.width = t.width
-        c.height = t.height
-        d.fillStyle = '#0095ff5e'
-        d.fillRect(0, 0, c.width, c.height)
-        c.style.position = 'absolute'
-        c.style.left = t.offsetLeft + 'px'
-        c.style.top = t.offsetTop + 'px'
-        t.parentElement.append(c)
-        w = c.width / b
-        h = c.height / a
-        d.drawImage(s, x, y, w, h)
-        f = true
-      })
-    }
-
-    c.onmousemove = function drawSignature(e) {
-      if (f) {
-        d.clearRect(0, 0, c.width, c.height)
-        d.fillStyle = '#0095ff5e'
-        d.fillRect(0, 0, c.width, c.height)
-        if (pdfPosition.options.lockHorizontalCenter) x = (c.width - w) / 2
-        else x = (e.offsetX >= 0 ? Math.round(e.offsetX) : 0) - c.width / b / 2
-        y = (e.offsetY > -0 ? Math.round(e.offsetY) : 0) - c.height / a / 2
-        d.drawImage(s, x, y, w, h)
-      }
-    }
-
-    c.onclick = function calculatePositions() {
-      if (f) {
-        f = false
-        d.clearRect(0, 0, c.width, c.height)
-        d.drawImage(s, x, y, w, h)
-        pdfPosition.lastposition = pdfPosition.position
-        pdfPosition.position[0] = Math.floor((x * 594.65) / c.width)
-        pdfPosition.position[1] = Math.floor(((c.height - y) * 841) / c.height - 85)
-        pdfPosition.position[2] = Math.floor((x * 594.65) / c.width + 495)
-        pdfPosition.position[3] = Math.floor(((c.height - y) * 841) / c.height)
-        if (options.positionTextbox) document.getElementById(options.positionTextbox).value = pdfPosition.position.toString()
-      }
-    }
-  }
-
   const showPdf = async (url) => {
     console.log(url)
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js'

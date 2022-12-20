@@ -1,11 +1,7 @@
 <script>
   export let bloblink, MyFile
-
-  console.log(MyFile)
   import { createEventDispatcher } from 'svelte'
   const dispatch = createEventDispatcher()
-  // import pdfjsLib from '/public/lib/pdf.js';
-  // import pdfjsWorker from '/public/lib/pdf.worker.js';
   import axios from 'axios'
   import { navigate } from 'svelte-routing'
   import { fade } from 'svelte/transition'
