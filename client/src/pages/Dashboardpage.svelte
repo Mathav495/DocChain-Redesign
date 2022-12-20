@@ -1,15 +1,14 @@
 <script>
-  import { fade } from 'svelte/transition'
-  import Dashboard from '../components/Dashboard.svelte'
-  import Header from '../components/Header.svelte'
-  import Headerlogo from '../components/Headerlogo.svelte'
-  import Loader from '../components/Loader.svelte'
-  import Logo from '../components/Logo.svelte'
-  import Logout from '../components/Logout.svelte'
-  import Nav from '../components/Nav.svelte'
-  import SmallScreenNavbar from '../components/Small_screen_navbar.svelte'
+  import { fade } from "svelte/transition"
+  import Dashboard from "../components/Dashboard.svelte"
+  import Header from "../components/Header.svelte"
+  import Headerlogo from "../components/Headerlogo.svelte"
+  import Loader from "../components/Loader.svelte"
+  import Logo from "../components/Logo.svelte"
+  import Logout from "../components/Logout.svelte"
+  import Nav from "../components/Nav.svelte"
+  import SmallScreenNavbar from "../components/Small_screen_navbar.svelte"
   let hideNavbar = true
-
   /**
    * This is the function to hide a samll screen navbar
    */
@@ -33,16 +32,16 @@
     Gray = false
   const changeClr = (e) => {
     ;(Black = false), (Yellow = false), (Red = false), (Gray = false)
-    if (e.detail == 'Black') {
+    if (e.detail == "Black") {
       Black = true
     }
-    if (e.detail == 'Yellow') {
+    if (e.detail == "Yellow") {
       Yellow = true
     }
-    if (e.detail == 'Red') {
+    if (e.detail == "Red") {
       Red = true
     }
-    if (e.detail == 'Gray') {
+    if (e.detail == "Gray") {
       Gray = true
     }
   }
@@ -52,13 +51,13 @@
   const HideNavbar = () => {
     if (hide == false) {
       hide = true
-      console.log('hide')
+      console.log("hide")
       headerHide = false
       show = false
       // document.getElementById('header').classList.remove('md:mb-0');
     } else {
       hide = false
-      console.log('show')
+      console.log("show")
       headerHide = true
       show = true
       // document.getElementById('header').classList.add('md:mb-0');

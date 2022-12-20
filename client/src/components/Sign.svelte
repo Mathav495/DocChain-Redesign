@@ -182,12 +182,10 @@
       position = true
       bgclr = true
       bold = true
-      // pdfPosition.options.lockHorizontalCenter = false;
     } else {
       position = false
       bgclr = false
       bold = false
-      // pdfPosition.options.lockHorizontalCenter = true;
     }
   }
 
@@ -230,7 +228,7 @@
       </div>
     </div>
   {/if}
-  <div class="w-8/12 flex flex-col gap-10">
+  <div class="w-8/12 flex-col gap-10">
     <div>
       <span
         class="text-base rounded-md font-bold bg-black text-white px-1 tracking-wider"
@@ -428,6 +426,12 @@
         class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto"
       />
     {/if}
+    <button
+      on:click={initiate}
+      class="flex mx-auto mb-5 mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+    >
+      initiate
+    </button>
   </div>
   <button
     on:click={initiate}
