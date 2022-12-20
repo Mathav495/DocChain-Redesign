@@ -69,7 +69,7 @@
   }
   const signPageNo = async (pageNo) => {
     let page = await _PDFDOC.getPage(pageNo)
-    let viewport = page.getViewport({ scale: 0.76 })
+    let viewport = page.getViewport({ scale: 1.135 })
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById('mycanvas3')
@@ -174,7 +174,7 @@
   }
   let pageNo
   $: showPage(pageNo)
-  let clr = '#BEBEBE'
+  let clr = '#FFFFFF'
   const chooseClr = () => {
     console.log(clr)
   }
@@ -191,7 +191,14 @@
       }
     })
   }
+  let toggleBtn = true,
+    fieldName = 'Signer',
+    date
   const trigger = async () => {
+    document.getElementById('btnDisable').setAttribute('disabled', 'true')
+    date = new Date().toJSON()
+    fieldName = `Signer ${date}`
+    toggleBtn = false
     await loadLibrary('pdf', '/lib/signPosition.js')
     console.log(pdfPosition)
     pdfPosition.init({
@@ -201,8 +208,21 @@
     })
   }
 
+  // let bgclr = false,
+  //   ballblk = true
+  // const btnclr = () => {
+  //   if (ballblk) {
+  //     ballblk = false
+  //     ballwht = true
+  //   } else {
+  //     bgclr = false
+  //     ballblk = true
+  //   }
+  // }
   let position = false,
+    ballwht = false,
     bgclr = false,
+    ballblk = true,
     bold = false
   const signaturePlacement = () => {
     if (pdfPosition.options.lockHorizontalCenter) pdfPosition.options.lockHorizontalCenter = false
@@ -210,10 +230,14 @@
     if (position == false) {
       position = true
       bgclr = true
+      ballblk = false
+      ballwht = true
       bold = true
       // pdfPosition.options.lockHorizontalCenter = false;
     } else {
       position = false
+      ballblk = true
+      ballwht = false
       bgclr = false
       bold = false
       // pdfPosition.options.lockHorizontalCenter = true;
@@ -347,8 +371,8 @@
           </div>
           <div class="flex items-center justify-between border-t border-white pt-4">
             <div class="space-y-2">
-              <button on:click={switchId} class="bg-indigo-400 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Switch Account</button>
-              <form class:hidden={switchIdForm}>
+              <button on:click={switchId} class="bg-indigo-400 hover:bg-indigo-500 px-2 py-1 rounded-md border hover:border-indigo-700 border-indigo-600 text-white text-base">Switch Account</button>
+              <form class:hidden={switchIdForm} class="flex gap-2">
                 <input type="text" class="w-52 px-2 py-1 bg-white border border-gray-500 rounded-md" />
                 <button class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Switch</button>
               </form>
@@ -361,18 +385,20 @@
         <div class="flex flex-col gap-4">
           <h1 class="text-white text-lg tracking-wide font-semibold border-b border-white">SELECT PAGE NO</h1>
           <div>
-            <div class="flex flex-col gap-4">
-              <p class="text-base text-gray-600 w-40 font-semibold">Page No:</p>
-              <select bind:value={pageNo} name="1" placeholder="Select Page No" id="pageNo" class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600 border-none">
-                {#each totalPages as totalPage}
-                  <option value={totalPage}>{totalPage}</option>
-                {/each}
-              </select>
+            <div class="flex flex-row gap-4">
+              <div class="w-96">
+                <p class="text-base text-gray-600 w-40 font-semibold">Select Page No:</p>
+                <select bind:value={pageNo} name="1" placeholder="Select Page No" id="pageNo" class="py-2 pl-4 bg-white w-full rounded-md text-base text-gray-600 border-none">
+                  {#each totalPages as totalPage}
+                    <option value={totalPage}>{totalPage}</option>
+                  {/each}
+                </select>
+              </div>
               <div>
                 {#if (src = imageUrl)}
                   <img class="w-auto h-auto rounded-md" src={imageUrl} alt="document" />
                 {:else}
-                  <canvas id="mycanvas2" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
+                  <canvas id="mycanvas2" class="border-2 rounded-md overflow-hidden w-full mx-auto h-auto" />
                 {/if}
               </div>
             </div>
@@ -388,25 +414,34 @@
           <h1 class="text-white text-lg tracking-wide font-semibold border-b border-white">SIGN DETAILS</h1>
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-96 font-semibold">Reason for Digital Signature:</p>
-            <input type="text" class="w-full border border-gray-400 px-2 py-1 rounded-md" />
+            <input type="text" value="For verification" class="w-full border border-gray-400 px-2 py-1 rounded-md" />
           </div>
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-96 font-semibold">Signature Background color:</p>
             <input on:input={chooseClr} bind:value={clr} class="w-full border border-gray-500 bg-gray-100 px-2 py-1 rounded-md" type="color" name="Identity" id="Identity" />
           </div>
           <div class="flex flex-row items-center">
+            <p class="text-base text-gray-600 w-96 font-semibold">Field Name</p>
+            <input type="text" class="w-full border border-gray-400 px-2 py-1 rounded-md" value={fieldName} disabled />
+          </div>
+          <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-96 font-semibold">QR Data (eg: Trust URL):</p>
-            <input type="text" class="w-full border border-gray-400 px-2 py-1 rounded-md" />
+            <input type="text" class="w-full border border-gray-400 px-2 py-1 rounded-md" value={base64} disabled />
+          </div>
+          <div class="flex flex-row items-start">
+            <div class="flex flex-col w-96 gap-2">
+              <div>
+                <button on:click={trigger} id="btnDisable" class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Select Signature Placement</button>
+              </div>
+
+              <div class:hidden={toggleBtn} class="flex items-center justify-start gap-5">
+                <button on:click={signaturePlacement} id="posControls" class:justify-end={position} class:bg-indigo-600={bgclr} class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"> <button class:bg-white={ballwht} class:bg-black={ballblk} class="w-3 h-3  rounded-full" /></button>
+                <p class:font-semibold={bold} class="text-base">Lock Horizontal control</p>
+              </div>
+            </div>
+            <canvas id="mycanvas3" class="border-2 rounded-md overflow-hidden w-full mx-auto h-auto" />
           </div>
 
-          <button on:click={trigger} class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">SIGN</button>
-          <div class="flex items-center justify-start gap-5 w-1/2 px-4">
-            <button on:click={signaturePlacement} id="posControls" class:justify-end={position} class:bg-indigo-600={bgclr} class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"> <div class="w-3 h-3 bg-black rounded-full" /></button>
-            <p class:font-semibold={bold} class="text-base">Lock Horizontal control</p>
-          </div>
-          <!-- <div class="show-signature-overlay overflow-hidden" /> -->
-
-          <canvas id="mycanvas3" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
           <div class="flex items-center justify-between border-t border-white pt-4">
             <button on:click={backBtn2} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Back</button>
             <button on:click={nextBtn3} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Next</button>

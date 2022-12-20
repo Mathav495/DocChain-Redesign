@@ -1,18 +1,17 @@
 <script>
-  import axios from 'axios';
-  import { onMount } from 'svelte';
-  import Loader from './Loader.svelte';
-  import Pagination from './pagination.svelte';
-  import Usagecard3 from './Usagecard3.svelte';
+  import axios from 'axios'
+  import { onMount } from 'svelte'
+  import Pagination from './pagination.svelte'
+  import Usagecard3 from './Usagecard3.svelte'
 
-  let hidden = true;
-  let token = localStorage.getItem('token');
+  let hidden = true
+  let token = localStorage.getItem('token')
   let usage = {
     initiated: 0,
     published: 0,
     revoked: 0,
-  };
-  console.log(token);
+  }
+  console.log(token)
   /**
    * onMount function to get a document usage details by calling api
    */
@@ -21,16 +20,14 @@
       headers: {
         'x-access-token': token,
       },
-    });
-    usage = data;
-    console.log(usage);
+    })
+    usage = data
+    console.log(usage)
 
-    let loader = document.getElementById('load');
-    loader.classList.add('hidden');
-    let home = document.getElementById('homepage');
-    home.classList.remove('hidden');
-    hidden = false;
-  });
+    document.getElementById('load').classList.add('hidden')
+    document.getElementById('homepage').classList.remove('hidden')
+    hidden = false
+  })
 </script>
 
 <div class:hidden class="flex flex-col gap-4">
