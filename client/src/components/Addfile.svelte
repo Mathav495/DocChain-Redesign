@@ -24,8 +24,8 @@
    * Submitting file for generating filehash
    */
   const onSubmitFile = async () => {
-    console.log(File)
-    if (File.name != "") {
+    // console.log(File)
+    if (File) {
       const { data } = await axios.post(
         "https://test.swagger.print2block.in/docs/add-file",
         {
@@ -48,14 +48,14 @@
       if (data.fileHash) {
         // For local storage
         let localfile = JSON.parse(localStorage.getItem("docDetails"))
-        console.log("localfile", localfile)
+        // console.log("localfile", localfile)
         localfile.find((localfile) => {
           if (localfile.documentID == id) {
-            console.log(localfile)
-            console.log("same id", localfile.documentID)
-            console.log("filehash", localfile.filehash)
+            // console.log(localfile)
+            // console.log("same id", localfile.documentID)
+            // console.log("filehash", localfile.filehash)
             localfile.filehash = true
-            console.log(localfile)
+            // console.log(localfile)
           }
         })
         console.log(localfile, "local")
@@ -69,8 +69,7 @@
           displaypreview = false
           displayDropzone = true
           errormsg = data.errorCode
-          let arr = errormsg.split(":")
-          errormsg = arr[2].replaceAll("_", " ")
+          errormsg = errormsg.replaceAll("P2BCODE::", "")
           displayerror = true
           setTimeout(() => {
             displayerror = false
@@ -146,27 +145,6 @@
     }
   }
 
-  // onMount(async () => {
-  //   import('pdfjs-dist/build/pdf')
-  //     .then(({ pdfjsLib }) => {
-  //       pdfjs = pdfjsLib;
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-
-  //   import('pdfjs-dist/build/pdf.worker.entry')
-  //     .then(({ pdfjsWorker }) => {
-  //       jsWorker = pdfjsWorker;
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-
-  //   // pdfjsLib = (await import('pdfjs-dist/build/pdf')).default;
-  //   // pdfjsWorker = (await import('pdfjs-dist/build/pdf.worker.entry')).default;
-  // });
-
   async function loadLibrary(id, location) {
     return new Promise((resolve) => {
       let elem = document.createElement("script")
@@ -220,31 +198,20 @@
 
   const nextpage = () => {
     if (currentpage < _total_pages) {
-      console.log("initial", currentpage)
-      showPage(currentpage + 1)
       currentpage++
-      console.log("final", currentpage)
+      showPage(currentpage)
     }
-  }
-
-  $: if (currentpage < _total_pages) {
-    nextbtn = true
-  } else {
-    nextbtn = false
-  }
-  $: if (currentpage > 1) {
-    prevbtn = true
-  } else {
-    prevbtn = false
   }
   const previouspage = () => {
     if (currentpage > 1) {
-      console.log("initial", currentpage)
-      showPage(currentpage - 1)
       currentpage--
-      console.log("final", currentpage)
+      showPage(currentpage)
     }
   }
+
+  $: nextbtn = currentpage < _total_pages
+
+  $: prevbtn = currentpage > 1
 
   const ondisplaydropzone = () => {
     displayDropzone = true

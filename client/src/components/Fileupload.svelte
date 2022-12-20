@@ -21,14 +21,14 @@
   ]
   let documentDetails = [
     {
-      label: 1,
+      label: 0,
       labelName: "Fieldname",
       inputvalue: "",
     },
   ]
   let signatoryDetails = [
     {
-      label: 1,
+      label: 0,
       labelName: "Fieldname",
       inputvalue: "",
     },
@@ -263,7 +263,7 @@
       }
       receiver = [...receiver, nextData]
     }
-    let temp = document.getElementById(initial_value)
+    let temp = document.getElementById(`z${initial_value}`)
     console.log(temp)
     temp.classList.add("flex")
     temp.classList.remove("hidden")
@@ -271,28 +271,6 @@
     console.log(temp2)
     temp2.classList.remove("flex")
     temp2.classList.add("hidden")
-  }
-
-  const hideLabel_receiver = (value) => {
-    console.log(value)
-    let temp = document.getElementById(value)
-    console.log(temp)
-    temp.classList.add("hidden")
-    let temp2 = document.getElementById(`a${value}`)
-    console.log(temp2)
-    temp2.classList.add("flex")
-    temp2.classList.remove("hidden")
-  }
-
-  const hideLabel_docDetails = (value) => {
-    console.log(value)
-    let temp = document.getElementById(`b${value}`)
-    console.log(temp)
-    temp.classList.add("hidden")
-    let temp2 = document.getElementById(`c${value}`)
-    console.log(temp2)
-    temp2.classList.add("flex")
-    temp2.classList.remove("hidden")
   }
 
   const updateLabel_docDetails = (value) => {
@@ -328,17 +306,6 @@
     temp2.classList.add("hidden")
   }
 
-  const hideLabel_signDetails = (value) => {
-    console.log(value)
-    let temp = document.getElementById(`d${value}`)
-    console.log(temp)
-    temp.classList.add("hidden")
-    let temp2 = document.getElementById(`e${value}`)
-    console.log(temp2)
-    temp2.classList.add("flex")
-    temp2.classList.remove("hidden")
-  }
-
   const updateLabel_signDetails = (value) => {
     let initial_value = value
     let increment_value = value + 1
@@ -369,6 +336,17 @@
     console.log(temp2)
     temp2.classList.remove("flex")
     temp2.classList.add("hidden")
+  }
+
+  const hideLabel = (id1, id2, value) => {
+    console.log(value)
+    let temp = document.getElementById(id1 + value)
+    console.log(temp)
+    temp.classList.add("hidden")
+    let temp2 = document.getElementById(id2 + value)
+    console.log(temp2)
+    temp2.classList.add("flex")
+    temp2.classList.remove("hidden")
   }
 
   const deletelabel = (type, value) => {
@@ -426,14 +404,14 @@
           {#each receiver as receiver}
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
-                <div class="flex group " id={receiver.label}>
+                <div class="flex group " id="z{receiver.label}">
                   <label
                     for="label{receiver.label}"
                     class="cursor-pointer text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
                   >
                     {receiver.labelName}
                     <svg
-                      on:click={() => hideLabel_receiver(receiver.label)}
+                      on:click={() => hideLabel("z", "a", receiver.label)}
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -466,28 +444,46 @@
                     </svg>
                   </label>
                 </div>
-                <div class="hidden items-center gap-2" id="a{receiver.label}">
+                <div class="hidden items-center" id="a{receiver.label}">
                   <input
                     placeholder="Enter Field name"
                     bind:value={receiver.labelName}
                     type="text"
                     class="field-input"
                   />
-                  <svg
-                    on:click={() => updateLabel_receiver(receiver.label)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="cursor-pointer w-5 h-5 hover:p-1 hover:bg-green-500 hover:rounded-full"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M4.5 12.75l6 6 9-13.5"
-                    />
-                  </svg>
+                  <div class="pl-3">
+                    <svg
+                      on:click={() => updateLabel_receiver(receiver.label)}
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="cursor-pointer w-5 h-5 hover:p-1 hover:bg-green-500 hover:rounded-full"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4.5 12.75l6 6 9-13.5"
+                      />
+                    </svg>
+                  </div>
+                  <div class="pl-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="cursor-pointer w-5 h-5 hover:p-1 hover:bg-red-500 hover:rounded-full"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </div>
               <div>
@@ -540,7 +536,7 @@
                   >
                     {docDetails.labelName}
                     <svg
-                      on:click={() => hideLabel_docDetails(docDetails.label)}
+                      on:click={() => hideLabel("b", "c", docDetails.label)}
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -651,7 +647,7 @@
                     {signDetails.labelName}
 
                     <svg
-                      on:click={() => hideLabel_signDetails(signDetails.label)}
+                      on:click={() => hideLabel("d", "e", signDetails.label)}
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
