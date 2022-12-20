@@ -1,7 +1,4 @@
 <script>
-  import { is_empty } from 'svelte/internal'
-  import { flip } from 'svelte/types/runtime/animate'
-
   export let data1
   export let totalPages
   // console.log(data1)
@@ -46,7 +43,7 @@
     let viewport = page.getViewport({ scale: 2 })
 
     // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById('mycanvas3')
+    let canvas = document.getElementById('mycanvas2')
     let context = canvas.getContext('2d')
     canvas.height = viewport.height
     canvas.width = viewport.width
@@ -72,10 +69,10 @@
   }
   const signPageNo = async (pageNo) => {
     let page = await _PDFDOC.getPage(pageNo)
-    let viewport = page.getViewport({ scale: 2 })
+    let viewport = page.getViewport({ scale: 0.76 })
 
     // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById('mycanvas4')
+    let canvas = document.getElementById('mycanvas3')
     let context = canvas.getContext('2d')
     canvas.height = viewport.height
     canvas.width = viewport.width
@@ -180,6 +177,47 @@
   let clr = '#BEBEBE'
   const chooseClr = () => {
     console.log(clr)
+  }
+
+  async function loadLibrary(id, location) {
+    return new Promise((resolve) => {
+      let elem = document.createElement('script')
+      elem.id = id
+      elem.type = 'application/javascript'
+      elem.src = location
+      document.body.appendChild(elem)
+      elem.onload = async function () {
+        resolve()
+      }
+    })
+  }
+  const trigger = async () => {
+    await loadLibrary('pdf', '/lib/signPosition.js')
+    console.log(pdfPosition)
+    pdfPosition.init({
+      triggerButtons: '.show-signature-overlay',
+      imageTarget: 'mycanvas3',
+      positionTextbox: 'positions',
+    })
+  }
+
+  let position = false,
+    bgclr = false,
+    bold = false
+  const signaturePlacement = () => {
+    if (pdfPosition.options.lockHorizontalCenter) pdfPosition.options.lockHorizontalCenter = false
+    else pdfPosition.options.lockHorizontalCenter = true
+    if (position == false) {
+      position = true
+      bgclr = true
+      bold = true
+      // pdfPosition.options.lockHorizontalCenter = false;
+    } else {
+      position = false
+      bgclr = false
+      bold = false
+      // pdfPosition.options.lockHorizontalCenter = true;
+    }
   }
 </script>
 
@@ -334,7 +372,7 @@
                 {#if (src = imageUrl)}
                   <img class="w-auto h-auto rounded-md" src={imageUrl} alt="document" />
                 {:else}
-                  <canvas id="mycanvas3" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
+                  <canvas id="mycanvas2" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
                 {/if}
               </div>
             </div>
@@ -360,7 +398,15 @@
             <p class="text-base text-gray-600 w-96 font-semibold">QR Data (eg: Trust URL):</p>
             <input type="text" class="w-full border border-gray-400 px-2 py-1 rounded-md" />
           </div>
-          <canvas id="mycanvas4" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
+
+          <button on:click={trigger} class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">SIGN</button>
+          <div class="flex items-center justify-start gap-5 w-1/2 px-4">
+            <button on:click={signaturePlacement} id="posControls" class:justify-end={position} class:bg-indigo-600={bgclr} class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"> <div class="w-3 h-3 bg-black rounded-full" /></button>
+            <p class:font-semibold={bold} class="text-base">Lock Horizontal control</p>
+          </div>
+          <!-- <div class="show-signature-overlay overflow-hidden" /> -->
+
+          <canvas id="mycanvas3" class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto" />
           <div class="flex items-center justify-between border-t border-white pt-4">
             <button on:click={backBtn2} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Back</button>
             <button on:click={nextBtn3} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Next</button>
