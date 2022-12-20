@@ -121,6 +121,7 @@
       return
     } else if (File.type == "application/pdf") {
       showpdf = true
+      await loadLibrary("pdfjs", "/lib/pdf.js")
       const reader = new FileReader() // constructor
       reader.readAsDataURL(File) //(base 64 data url)
       reader.addEventListener("load", function () {
@@ -239,7 +240,6 @@
   }
 
   const signDoc = () => {
-    navigate(`/sign/${id}`)
     dispatch("steps")
   }
 </script>
