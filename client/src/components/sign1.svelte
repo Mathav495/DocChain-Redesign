@@ -428,6 +428,10 @@
             <p class="text-base text-gray-600 w-96 font-semibold">QR Data (eg: Trust URL):</p>
             <input type="text" class="w-full border border-gray-400 px-2 py-1 rounded-md" value={base64} disabled />
           </div>
+          <div class="flex flex-row items-center">
+            <p class="text-base text-gray-600 w-96 font-semibold">Position Textbox</p>
+            <input id="positions" type="text" class="w-full border border-gray-400 px-2 py-1 rounded-md" disabled />
+          </div>
           <div class="flex flex-row items-start">
             <div class="flex flex-col w-96 gap-2">
               <div>
@@ -444,7 +448,7 @@
 
           <div class="flex items-center justify-between border-t border-white pt-4">
             <button on:click={backBtn2} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Back</button>
-            <button on:click={nextBtn3} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">Next</button>
+            <button on:click={nextBtn3} class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base">initiate</button>
           </div>
         </div>
       {/if}
