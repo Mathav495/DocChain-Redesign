@@ -1,6 +1,6 @@
 <script>
-  let portal;
-  $: portal && document.body.appendChild(portal);
+  let portal
+  $: portal && document.body.appendChild(portal)
 </script>
 
 <div bind:this={portal}>

@@ -1,4 +1,6 @@
-<div style="min-height: 100vh; align-items: center!important; justify-content: center!important; display: flex; flex-direction:column">
+<div
+  style="min-height: 100vh; align-items: center!important; justify-content: center!important; display: flex; flex-direction:column"
+>
   <div class="box">
     <div class="b b1" />
     <div class="b b2" />

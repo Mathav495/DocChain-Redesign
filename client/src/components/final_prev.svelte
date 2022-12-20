@@ -1,44 +1,44 @@
 <script>
   // import BlobPreview from './blob-preview.svelte';
-  import FinalBlobPreview from './final_blob_preview.svelte';
-  import PreviewQrCard from './preview_qrCard.svelte';
-  import FinalLoader from './Final_loader.svelte';
-  let loader = true;
+  import FinalBlobPreview from "./final_blob_preview.svelte"
+  import PreviewQrCard from "./preview_qrCard.svelte"
+  import FinalLoader from "./Final_loader.svelte"
+  let loader = true
   setTimeout(() => {
-    loader = false;
-  }, 5000);
-  export let id;
-  let bgpattern;
-  let blob = localStorage.getItem('blobpdf');
-  console.log(blob);
-  let localfile = JSON.parse(localStorage.getItem('docDetails'));
-  console.log('localfile', localfile);
+    loader = false
+  }, 5000)
+  export let id
+  let bgpattern
+  let blob = localStorage.getItem("blobpdf")
+  console.log(blob)
+  let localfile = JSON.parse(localStorage.getItem("docDetails"))
+  console.log("localfile", localfile)
   localfile.find((localfile) => {
     if (localfile.documentID == id) {
-      console.log(localfile);
-      console.log('same id', localfile.documentID);
-      console.log('filehash', localfile.filehash);
-      localfile.filehash = true;
-      console.log(localfile);
+      console.log(localfile)
+      console.log("same id", localfile.documentID)
+      console.log("filehash", localfile.filehash)
+      localfile.filehash = true
+      console.log(localfile)
     }
-  });
+  })
 
-  let load;
-  let token = localStorage.getItem('token');
-  let documentID = localStorage.getItem('documentID');
-  let fileHash = localStorage.getItem('filehash');
-  console.log('filehash', fileHash);
-  let dataHash = localStorage.getItem('datahash');
-  console.log('datahash', dataHash);
-  let qr = localStorage.getItem('qrcode');
-  console.log('qrcode', qr);
-  let proposedURL = localStorage.getItem('docURL');
-  console.log('qrcodocURL', proposedURL);
-  let imgurl = localStorage.getItem('img');
-  console.log('imgUrl', imgurl);
-  let bgcolor = localStorage.getItem('bgGradient');
-  let metadata = JSON.parse(localStorage.getItem('metadata'));
-  let options = JSON.parse(localStorage.getItem('options'));
+  let load
+  let token = localStorage.getItem("token")
+  let documentID = localStorage.getItem("documentID")
+  let fileHash = localStorage.getItem("filehash")
+  console.log("filehash", fileHash)
+  let dataHash = localStorage.getItem("datahash")
+  console.log("datahash", dataHash)
+  let qr = localStorage.getItem("qrcode")
+  console.log("qrcode", qr)
+  let proposedURL = localStorage.getItem("docURL")
+  console.log("qrcodocURL", proposedURL)
+  let imgurl = localStorage.getItem("img")
+  console.log("imgUrl", imgurl)
+  let bgcolor = localStorage.getItem("bgGradient")
+  let metadata = JSON.parse(localStorage.getItem("metadata"))
+  let options = JSON.parse(localStorage.getItem("options"))
 </script>
 
 {#if loader}
@@ -53,50 +53,147 @@
       <div class="border-2 border-gray-200 shadow-lg rounded-lg mt-4">
         <div class="mt-5 ml-4">
           <div class="relative">
-            <div for="name" class="text-md font-bold  leading-7 text-gray-600">Data hash (SHA256)</div>
+            <div for="name" class="text-md font-bold  leading-7 text-gray-600">
+              Data hash (SHA256)
+            </div>
             <div class="flex-col">
-              <div type="text" id="name" name="name" class="w-full rounded px-3 text-base leading-8 text-gray-600 transition-colors duration-200 ease-in-out break-words">{dataHash}</div>
+              <div
+                type="text"
+                id="name"
+                name="name"
+                class="w-full rounded px-3 text-base leading-8 text-gray-600 transition-colors duration-200 ease-in-out break-words"
+              >
+                {dataHash}
+              </div>
             </div>
           </div>
           <div class="relative mb-4">
-            <div for="name" class="text-md font-bold  leading-7 text-gray-600">File hash (SHA256)</div>
+            <div for="name" class="text-md font-bold  leading-7 text-gray-600">
+              File hash (SHA256)
+            </div>
             <div class="flex-col">
-              <div type="text" id="name" name="name" class="w-full rounded px-3 text-base  leading-8 text-gray-600 transition-colors duration-200 ease-in-out break-words">{fileHash}</div>
+              <div
+                type="text"
+                id="name"
+                name="name"
+                class="w-full rounded px-3 text-base  leading-8 text-gray-600 transition-colors duration-200 ease-in-out break-words"
+              >
+                {fileHash}
+              </div>
             </div>
           </div>
           <div class="relative ">
-            <div for="name" class="text-md font-bold  leading-7 text-gray-600">Receiver</div>
+            <div for="name" class="text-md font-bold  leading-7 text-gray-600">
+              Receiver
+            </div>
             <div class="flex-col">
-              <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Name</div>
-              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 font-bold ease-in-out">{metadata.receiver.name}</div>
+              <div
+                type="text"
+                id="name"
+                name="name"
+                class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out"
+              >
+                Name
+              </div>
+              <div
+                type="text"
+                id="name"
+                name="name"
+                class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 font-bold ease-in-out"
+              >
+                {metadata.receiver.name}
+              </div>
             </div>
           </div>
           <div class="relative">
-            <div for="name" class="text-md font-bold  leading-7 text-gray-600">Document</div>
+            <div for="name" class="text-md font-bold  leading-7 text-gray-600">
+              Document
+            </div>
             <div class="flex-col">
-              <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document type</div>
-              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{metadata.document.type}</div>
+              <div
+                type="text"
+                id="name"
+                name="name"
+                class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out"
+              >
+                Document type
+              </div>
+              <div
+                type="text"
+                id="name"
+                name="name"
+                class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold"
+              >
+                {metadata.document.type}
+              </div>
             </div>
           </div>
 
           <div class="relative">
-            <div for="name" class="text-md font-bold  leading-7 text-gray-600">Issuer</div>
+            <div for="name" class="text-md font-bold  leading-7 text-gray-600">
+              Issuer
+            </div>
             <div class="flex-col">
-              <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Signatory</div>
-              <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{metadata.issuer.signatory}</div>
+              <div
+                type="text"
+                id="name"
+                name="name"
+                class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out"
+              >
+                Signatory
+              </div>
+              <div
+                type="text"
+                id="name"
+                name="name"
+                class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold"
+              >
+                {metadata.issuer.signatory}
+              </div>
             </div>
           </div>
           <div class="relative mb-5">
-            <div type="text" id="name" name="name" class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out">Document Title</div>
-            <div type="text" id="name" name="name" class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold">{options.title}</div>
+            <div
+              type="text"
+              id="name"
+              name="name"
+              class="w-full rounded px-3 text-sm leading-8 text-gray-600 transition-colors duration-200 ease-in-out"
+            >
+              Document Title
+            </div>
+            <div
+              type="text"
+              id="name"
+              name="name"
+              class="text-md w-full rounded py-0 px-6 leading-8 text-gray-600 transition-colors duration-200 ease-in-out font-bold"
+            >
+              {options.title}
+            </div>
           </div>
         </div>
       </div>
-      <a class=" juustify-center inline-flex items-center rounded-lg border border-green-600 text-green-600 py-2 px-5 w-64 mt-4 shadow-lg text-center hover:bg-green-600 hover:text-white focus:outline-none" id="confirm" href={proposedURL} target="_blank" rel="noreferrer">
+      <a
+        class=" juustify-center inline-flex items-center rounded-lg border border-green-600 text-green-600 py-2 px-5 w-64 mt-4 shadow-lg text-center hover:bg-green-600 hover:text-white focus:outline-none"
+        id="confirm"
+        href={proposedURL}
+        target="_blank"
+        rel="noreferrer"
+      >
         {#if load}
-          <svg role="status" class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-600 text-center" viewBox="0 0 24 24" />
+          <svg
+            role="status"
+            class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-600 text-center"
+            viewBox="0 0 24 24"
+          />
         {:else}
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="h-6 w-6 text-center"
+          >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -104,7 +201,9 @@
             />
           </svg>
         {/if}
-        <span class="title-font ml-2 font-bold text-base text-center">View in Blockchain</span>
+        <span class="title-font ml-2 font-bold text-base text-center">
+          View in Blockchain
+        </span>
       </a>
     </div>
   </div>
