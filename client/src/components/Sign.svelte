@@ -1,95 +1,20 @@
 <script>
+  export let id
   import axios from "axios"
+  import { createEventDispatcher } from "svelte"
+  import { navigate } from "svelte-routing"
+  const dispatch = createEventDispatcher()
   export let file
   let otp = ""
   let SignFile
-  // let blobImg = URL.createObjectURL(img);
-  // let blobPdf = URL.createObjectURL(pdf);
+  let blob
   let signreq
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
   // imageUrl1 = imageUrl.split(';base64,').pop();
   let token = localStorage.getItem("token")
   console.log(token)
-
   let initvalues
-  let pdfPosition = {}
-  pdfPosition.options = {}
-  pdfPosition.init = function (options = {}) {
-    if (!options.triggerButtons)
-      throw console.error("No triggerButton class is provided")
-    if (!options.imageTarget)
-      throw console.error("No imageTarget id is provided")
-    if (!options.positionTextbox)
-      throw console.error("No positionTextbox id is provided")
-    options.lockHorizontalCenter = false || options.lockHorizontalCenter
-    pdfPosition.options = options
-    let s = document.createElement("img")
-    s.src = "https://print2block.com/test/img/signSample.png"
-    let a = 841 / 85
-    let b = 594.65 / 495
-    let c = document.createElement("canvas")
-    let d = c.getContext("2d")
-    let f = false
-    let [x, y] = [(c.width - c.width / b) / 2, (c.height - c.height / a) / 2]
-    let w, h
-    let t = document.getElementById(options.imageTarget)
-    pdfPosition.position = []
-    pdfPosition.position[0] = Math.floor((x * 594.65) / c.width)
-    pdfPosition.position[1] = Math.floor(((c.height - y) * 841) / c.height - 85)
-    pdfPosition.position[2] = Math.floor((x * 594.65) / c.width + 495)
-    pdfPosition.position[3] = Math.floor(((c.height - y) * 841) / c.height)
-    pdfPosition.lastposition = pdfPosition.position
-
-    let triggerButtons = document.querySelectorAll(options.triggerButtons)
-    for (let i = 0; i < triggerButtons.length; i++) {
-      triggerButtons[i].addEventListener("click", () => {
-        c.width = t.width
-        c.height = t.height
-        d.fillStyle = "#0095ff5e"
-        d.fillRect(0, 0, c.width, c.height)
-        c.style.position = "absolute"
-        c.style.left = t.offsetLeft + "px"
-        c.style.top = t.offsetTop + "px"
-        t.parentElement.append(c)
-        w = c.width / b
-        h = c.height / a
-        d.drawImage(s, x, y, w, h)
-        f = true
-      })
-    }
-
-    c.onmousemove = function drawSignature(e) {
-      if (f) {
-        d.clearRect(0, 0, c.width, c.height)
-        d.fillStyle = "#0095ff5e"
-        d.fillRect(0, 0, c.width, c.height)
-        if (pdfPosition.options.lockHorizontalCenter) x = (c.width - w) / 2
-        else x = (e.offsetX >= 0 ? Math.round(e.offsetX) : 0) - c.width / b / 2
-        y = (e.offsetY > -0 ? Math.round(e.offsetY) : 0) - c.height / a / 2
-        d.drawImage(s, x, y, w, h)
-      }
-    }
-
-    c.onclick = function calculatePositions() {
-      if (f) {
-        f = false
-        d.clearRect(0, 0, c.width, c.height)
-        d.drawImage(s, x, y, w, h)
-        pdfPosition.lastposition = pdfPosition.position
-        pdfPosition.position[0] = Math.floor((x * 594.65) / c.width)
-        pdfPosition.position[1] = Math.floor(
-          ((c.height - y) * 841) / c.height - 85
-        )
-        pdfPosition.position[2] = Math.floor((x * 594.65) / c.width + 495)
-        pdfPosition.position[3] = Math.floor(((c.height - y) * 841) / c.height)
-        if (options.positionTextbox)
-          document.getElementById(options.positionTextbox).value =
-            pdfPosition.position.toString()
-      }
-    }
-  }
-
   const showPdf = async (url) => {
     console.log(url)
     pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -198,23 +123,24 @@
     if (SignFile) {
       console.log(SignFile)
       const { data } = await axios.get(
-        `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
+        `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+        { responseType: "blob" }
       )
       console.log(data)
-      // let blobPdf = URL.createObjectURL(data);
-      // console.log(blobPdf);
-      // navigate(`https://pdfsign.test.print2block.in/signature/download/${SignFile}`);
+      const myFile = new File([data], SignFile, {
+        type: data.type,
+      })
+      console.log(myFile)
+      dispatch("myFile", myFile)
 
-      let downloadpdf = document.createElement("a")
-      downloadpdf.setAttribute(
-        "href",
-        `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
-      )
-      // downloadpdf.href = `https://pdfsign.test.print2block.in/signature/download/${SignFile}`;
-      // downloadpdf.setAttribute('download', SignFile);
-      downloadpdf.setAttribute("target", "_blank")
-      downloadpdf.click()
+      console.log(data.type)
+      blob = URL.createObjectURL(data)
+      console.log(blob)
+      modal = false
+      showPdf(blob)
+      navigate(`/add-file/${id}`)
     }
+    dispatch("blob", blob)
   }
   let nextbtn = true
   let prevbtn = true
@@ -423,9 +349,9 @@
       </div>
       <div class="flex items-center justify-start">
         <div class="mb-2 w-1/2">
-          <lable for="Identity" class="text-lg font-semibold">
+          <label for="Identity" class="text-lg font-semibold">
             Reason for Digital Signature
-          </lable>
+          </label>
         </div>
         <div class="flex items-center justify-start gap-5 w-1/2 px-4">
           <input
@@ -439,9 +365,9 @@
       </div>
       <div class="flex items-center justify-start">
         <div class="mb-2 w-1/2">
-          <lable for="Identity" class="text-lg font-semibold">
+          <label for="Identity" class="text-lg font-semibold">
             Signature Background color
-          </lable>
+          </label>
         </div>
         <div class="flex items-center justify-start gap-5 w-1/2 px-4">
           <input
@@ -456,9 +382,9 @@
       </div>
       <div class="flex items-center justify-start">
         <div class="mb-2 w-1/2">
-          <lable for="Identity" class="text-lg font-semibold">
+          <label for="Identity" class="text-lg font-semibold">
             QR Data (eg: Trust URL)
-          </lable>
+          </label>
         </div>
         <div class="flex items-center justify-start gap-5 w-1/2 px-4">
           <input
@@ -472,9 +398,9 @@
       </div>
       <div class="flex items-center justify-start">
         <div class="mb-2 w-1/2">
-          <lable for="Identity" class="text-lg font-semibold">
+          <label for="Identity" class="text-lg font-semibold">
             Position Textbox
-          </lable>
+          </label>
         </div>
         <div class="flex items-center justify-start gap-5 w-1/2 px-4">
           <input

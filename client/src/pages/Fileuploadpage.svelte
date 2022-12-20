@@ -64,7 +64,7 @@
     <div class="md:hidden block">
       <Header on:navShow={showNav} />
     </div>
-    <Addfile {id} on:File />
+    <Addfile {id} on:File {bloblink} {MyFile} />
   </div>
   <!--small screen navbar-->
   <button

@@ -1,13 +1,13 @@
 <script>
-  import { createEventDispatcher } from "svelte"
+  export let bloblink, MyFile
+  import { createEventDispatcher } from 'svelte'
   const dispatch = createEventDispatcher()
-  // import pdfjsLib from '/public/lib/pdf.js';
-  // import pdfjsWorker from '/public/lib/pdf.worker.js';
-  import axios from "axios"
-  import { navigate } from "svelte-routing"
-  import { fade } from "svelte/transition"
-  import HeaderFileupload from "./header_fileupload.svelte"
-  import ErrorInfo from "./ErrorInfo.svelte"
+  import axios from 'axios'
+  import { navigate } from 'svelte-routing'
+  import { fade } from 'svelte/transition'
+
+  import HeaderFileupload from './header_fileupload.svelte'
+  import ErrorInfo from './ErrorInfo.svelte'
   export let id
   let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf, errormsg
   let displayConfirm = false
@@ -15,9 +15,9 @@
   let displayDropzone = true
   let nextbtn = true
   let prevbtn = true
-  let token = localStorage.getItem("token")
-  let documentID = localStorage.getItem("documentID")
-  let bgcolor = localStorage.getItem("bgGradient")
+  let token = localStorage.getItem('token')
+  let documentID = localStorage.getItem('documentID')
+  let bgcolor = localStorage.getItem('bgGradient')
   let displaypreview = false
 
   /**
@@ -42,24 +42,24 @@
       console.log(data)
       console.log(data.lastModifiedDate)
       // dispatch('filehash', data.fileHash);
-      localStorage.setItem("filehash", data.fileHash)
-      let fileHash = localStorage.getItem("filehash")
-      console.log("filehash", fileHash)
+      localStorage.setItem('filehash', data.fileHash)
+      let fileHash = localStorage.getItem('filehash')
+      console.log('filehash', fileHash)
       if (data.fileHash) {
         // For local storage
-        let localfile = JSON.parse(localStorage.getItem("docDetails"))
-        // console.log("localfile", localfile)
+        let localfile = JSON.parse(localStorage.getItem('docDetails'))
+        console.log('localfile', localfile)
         localfile.find((localfile) => {
           if (localfile.documentID == id) {
-            // console.log(localfile)
-            // console.log("same id", localfile.documentID)
-            // console.log("filehash", localfile.filehash)
+            console.log(localfile)
+            console.log('same id', localfile.documentID)
+            console.log('filehash', localfile.filehash)
             localfile.filehash = true
-            // console.log(localfile)
+            console.log(localfile)
           }
         })
-        console.log(localfile, "local")
-        localStorage.setItem("docDetails", JSON.stringify(localfile))
+        console.log(localfile, 'local')
+        localStorage.setItem('docDetails', JSON.stringify(localfile))
 
         //For navigating to next page
         navigate(`/add-data/${id}`)
@@ -84,59 +84,48 @@
    */
   let Imageurl, Pdfurl
   const ondisplay = async () => {
-    console.log("displayed")
-    const form = document.getElementById("form")
+    console.log('displayed')
+    const form = document.getElementById('form')
     const formData = new FormData(form)
-    console.log([...formData])
+    console.log([...formData]) //spread opearator
     let datum = [...formData][0]
+    console.log(datum)
     File = datum[1]
-
-    if (
-      File.type == "image/png" ||
-      File.type == "image/jpg" ||
-      File.type == "image/jpeg" ||
-      File.type == "application/pdf"
-    ) {
-      dispatch("File", File)
+    if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg' || File.type == 'application/pdf') {
+      dispatch('File', File)
     }
     console.log(File)
-    localStorage.setItem("file", [...formData])
     console.log(File.type)
-    if (
-      File.type == "image/png" ||
-      File.type == "image/jpg" ||
-      File.type == "image/jpeg"
-    ) {
+    if (File.type == 'image/png' || File.type == 'image/jpg' || File.type == 'image/jpeg') {
       displaypreview = true
       displayDropzone = false
       showpdf = false
       const reader = new FileReader() // constructor
       reader.readAsDataURL(File) //(base 64 data url)
-      reader.addEventListener("load", function () {
+      reader.addEventListener('load', function () {
         Imageurl = reader.result
         console.log(Imageurl)
-        localStorage.setItem("base64", Imageurl)
+        localStorage.setItem('base64', Imageurl)
       })
       blobimage = URL.createObjectURL(File)
       console.log(blobimage)
-      localStorage.setItem("blobimage", blobimage)
+      localStorage.setItem('blobimage', blobimage)
       return
-    } else if (File.type == "application/pdf") {
-      await loadLibrary("pdfjs", "/lib/pdf.js")
-      showpdf = true
+    } else if (File.type == 'application/pdf') {
       const reader = new FileReader() // constructor
       reader.readAsDataURL(File) //(base 64 data url)
-      reader.addEventListener("load", function () {
+      reader.addEventListener('load', function () {
         Pdfurl = reader.result
         console.log(Pdfurl)
-        localStorage.setItem("base64", Pdfurl)
+        localStorage.setItem('base64', Pdfurl)
       })
       let blob = URL.createObjectURL(File)
-      localStorage.setItem("blobpdf", blob)
+      localStorage.setItem('blobpdf', blob)
       console.log(blob)
       await showPdf(blob)
       displayDropzone = false
       displaypreview = true
+      showpdf = true
       return
     } else {
       displaypreview = false
@@ -172,14 +161,31 @@
     showPage(1)
   }
 
+  /**
+   * to display signed pdf in add file page
+   */
+
+  const displaySignedPdf = async () => {
+    if (bloblink) {
+      displayDropzone = false
+      await showPdf(bloblink)
+      displaypreview = true
+      showpdf = true
+    }
+    if (MyFile) {
+      File = MyFile
+    }
+  }
+  displaySignedPdf()
+
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno)
-    console.log("Page loaded")
+    console.log('Page loaded')
     let viewport = page.getViewport({ scale: 2 })
 
     // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById("mycanvas")
-    let context = canvas.getContext("2d")
+    let canvas = document.getElementById('mycanvas')
+    let context = canvas.getContext('2d')
     canvas.height = viewport.height
     canvas.width = viewport.width
 
@@ -193,7 +199,7 @@
   }
 
   const toClickinput = () => {
-    document.getElementById("file-upload").click()
+    document.getElementById('file-upload').click()
   }
 
   const nextpage = () => {
@@ -224,7 +230,7 @@
   }
 
   const signDoc = () => {
-    navigate("/sign")
+    navigate(`/sign/${id}`)
   }
 </script>
 
@@ -385,9 +391,7 @@
 
   <!-- For image preview -->
   <div
-    class="{displaypreview && !showpdf
-      ? 'flex'
-      : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center"
+    class="{displaypreview && !showpdf ? 'flex' : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center"
     in:fade={{ duration: 2000 }}
     out:fade={{ duration: 1000 }}
   >
@@ -398,7 +402,7 @@
         class="border-2 rounded-md shadow-[0_0_8px_0_rgba(0,0,0,0.15)] overflow-hidden"
       >
         <img
-          src={blobimage}
+          src={Imageurl}
           class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem]"
           id="File"
           alt="Preview"

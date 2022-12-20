@@ -1,23 +1,23 @@
 <script>
-  import axios from "axios"
-  import { navigate } from "svelte-routing"
-  import ErrorInfo from "../components/ErrorInfo.svelte"
-  import Emailicon from "../icons/Emailicon.svelte"
-  import Eye from "../icons/Eye.svelte"
-  import Eyeslash from "../icons/Eyeslash.svelte"
-  import PasswordIcons from "../icons/Password.svelte"
-  let animate = document.querySelector("#particles-js")
+  import axios from 'axios'
+  import { navigate } from 'svelte-routing'
+  import ErrorInfo from '../components/ErrorInfo.svelte'
+  import Emailicon from '../icons/Emailicon.svelte'
+  import Eye from '../icons/Eye.svelte'
+  import Eyeslash from '../icons/Eyeslash.svelte'
+  import PasswordIcons from '../icons/Password.svelte'
+  let animate = document.querySelector('#particles-js')
   console.log(animate)
-  animate.style.display = "block"
-  let sampleData
+  animate.style.display = 'block'
+  let loginData
 
   let display = false
-  let type = "password"
-  let Email = "",
-    Password = ""
+  let type = 'password'
+  let Email = '',
+    Password = ''
   let error = {
-    Email: "",
-    Password: "",
+    Email: '',
+    Password: '',
   }
   /**
    * @type { boolean }
@@ -32,53 +32,56 @@
     valid = true
     const mail = /\S+@\S+\.\S+/g
     const result1 = mail.test(Email)
-    if (Email == "") {
+    if (Email == '') {
       error.Email = "Email can't be empty"
       setTimeout(() => {
-        error.Email = ""
+        error.Email = ''
       }, 3000)
       valid = false
     } else if (!result1) {
-      error.Email = "Please enter valid mail id"
-      Email = ""
+      error.Email = 'Please enter valid mail id'
+      Email = ''
       setTimeout(() => {
-        error.Email = ""
+        error.Email = ''
       }, 3000)
     } else {
-      error.Email = ""
+      error.Email = ''
     }
-    if (Password == "") {
+    if (Password == '') {
       error.Password = "Password can't be empty"
       setTimeout(() => {
-        error.Password = ""
+        error.Password = ''
       }, 3000)
       valid = false
     } else {
-      error.Password = ""
+      error.Password = ''
     }
     if (valid) {
-      sampleData = {
+      loginData = {
         email: Email,
         password: Password,
       }
-      const { data } = await axios.post(
-        "https://test.swagger.print2block.in/auth/login",
-        sampleData
-      )
-      console.log(data)
+      try {
+        const { data } = await axios.post('https://test.swagger.print2block.in/auth/login', loginData)
+        console.log(data)
 
-      if (!data.success) {
-        console.log(data.errorCode)
-        display = true
+        if (!data.success) {
+          console.log(data.errorCode)
+          display = true
 
-        setTimeout(() => {
-          display = false
-        }, 2000)
-      } else {
-        localStorage.setItem("token", data.token)
-        let token = localStorage.getItem("token")
-        console.log(token)
-        navigate("/dash")
+          setTimeout(() => {
+            display = false
+          }, 2000)
+        } else {
+          localStorage.setItem('token', data.token)
+          let token = localStorage.getItem('token')
+          console.log(token)
+          navigate('/dash')
+        }
+      } catch (error) {
+        // display = true
+        alert('cannot connect to services')
+        console.error(error)
       }
     }
   }
@@ -87,10 +90,10 @@
    * function for hide and show the password
    */
   const showPassword = () => {
-    if (type == "password") {
-      type = "text"
+    if (type == 'password') {
+      type = 'text'
     } else {
-      type = "password"
+      type = 'password'
     }
   }
   const hideErrmsg = () => {
