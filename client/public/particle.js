@@ -1,12 +1,14 @@
-particlesJS("particles-js", {
+console.log('particle.js')
+
+particlesJS('particles-js', {
   particles: {
     number: { value: 200, density: { enable: true, value_area: 800 } },
-    color: { value: "#ffffff" },
+    color: { value: '#ffffff' },
     shape: {
-      type: "polygon",
-      stroke: { width: 0, color: "red" },
+      type: 'polygon',
+      stroke: { width: 0, color: 'red' },
       polygon: { nb_sides: 5 },
-      image: { src: "img/github.svg", width: 100, height: 100 },
+      image: { src: 'img/github.svg', width: 100, height: 100 },
     },
     opacity: {
       value: 0.5,
@@ -21,26 +23,26 @@ particlesJS("particles-js", {
     line_linked: {
       enable: true,
       distance: 150,
-      color: "#ffffff",
+      color: '#ffffff',
       opacity: 0.4,
       width: 1,
     },
     move: {
       enable: true,
       speed: 6,
-      direction: "none",
+      direction: 'none',
       random: false,
       straight: false,
-      out_mode: "out",
+      out_mode: 'out',
       bounce: false,
       attract: { enable: false, rotateX: 600, rotateY: 1200 },
     },
   },
   interactivity: {
-    detect_on: "window",
+    detect_on: 'window',
     events: {
-      onhover: { enable: true, mode: "grab" },
-      onclick: { enable: true, mode: "push" },
+      onhover: { enable: true, mode: 'grab' },
+      onclick: { enable: true, mode: 'push' },
       resize: true,
     },
     modes: {

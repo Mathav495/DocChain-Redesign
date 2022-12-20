@@ -1,18 +1,15 @@
 <script>
-  export let file
+  export let file, id
   import { fade } from "svelte/transition"
   import Header from "../components/Header.svelte"
   import Headerlogo from "../components/Headerlogo.svelte"
-  // import Loader from '../components/Loader.svelte';
   import Logo from "../components/Logo.svelte"
   import Logout from "../components/Logout.svelte"
   import Nav from "../components/Nav.svelte"
   import Sign from "../components/Sign.svelte"
   import SmallScreenNavbar from "../components/Small_screen_navbar.svelte"
   let hideNavbar = true
-  let animate = document.querySelector("#particles-js")
-  console.log(animate)
-  animate.style.display = "none"
+
   /**
    * This is the function to hide a samll screen navbar
    */
@@ -99,7 +96,7 @@
       <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>
-      <Sign {file} />
+      <Sign {file} {id} on:blob on:myFile />
     </div>
   </div>
   <!--small screen navbar-->
