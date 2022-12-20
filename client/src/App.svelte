@@ -1,20 +1,21 @@
 <script>
-  import Loginpage from "./pages/Loginpage.svelte"
-  import Dashboardpage from "./pages/Dashboardpage.svelte"
-  import Final from "./pages/final.svelte"
-  import { Route, Router } from "svelte-routing"
-  import Publishdoc from "./pages/Publishdoc.svelte"
-  import Filepreview from "./pages/Filepreview.svelte"
-  import Dashboardpage2 from "./pages/Dashboardpage2.svelte"
-  import Dashboardpage3 from "./pages/Dashboardpage3.svelte"
-  import Adddatapage from "./pages/Adddatapage.svelte"
-  import Fileuploadpage from "./pages/Fileuploadpage.svelte"
-  import Signpage from "./pages/Signpage.svelte"
-  export let url = ""
+  console.log('app.svelte')
+  import Loginpage from './pages/Loginpage.svelte'
+  import Dashboardpage from './pages/Dashboardpage.svelte'
+  import Final from './pages/final.svelte'
+  import { Route, Router } from 'svelte-routing'
+  import Publishdoc from './pages/Publishdoc.svelte'
+  import Filepreview from './pages/Filepreview.svelte'
+  import Dashboardpage2 from './pages/Dashboardpage2.svelte'
+  import Dashboardpage3 from './pages/Dashboardpage3.svelte'
+  import Adddatapage from './pages/Adddatapage.svelte'
+  import Fileuploadpage from './pages/Fileuploadpage.svelte'
+  import Signpage from './pages/Signpage.svelte'
+  export let url = ''
   let file, bloblink
   let MyFile
   const getFile = (e) => {
-    console.log("file", e.detail)
+    console.log('file', e.detail)
     file = e.detail
     console.log(file)
     console.log(URL.createObjectURL(file))
@@ -58,6 +59,6 @@
   @tailwind utilities;
 
   main {
-    font-family: "Nunito", sans-serif;
+    font-family: 'Nunito', sans-serif;
   }
 </style>
