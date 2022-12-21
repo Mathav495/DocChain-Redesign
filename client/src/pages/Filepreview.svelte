@@ -4,7 +4,7 @@
   import Logout from "../components/Logout.svelte"
   import Nav from "../components/Nav.svelte"
   import SmallScreenNavbar from "../components/Small_screen_navbar.svelte"
-  import Previewpage from "../components/previewpage.svelte"
+  import Previewpage from "../components/previewComponent.svelte"
   import PrevFooter from "../components/prev_footer.svelte"
   import { construct_svelte_component_dev } from "svelte/internal"
   let bgcolor = localStorage.getItem("bgGradient")
