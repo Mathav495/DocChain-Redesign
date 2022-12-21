@@ -110,13 +110,6 @@
       displaypreview = true
       displayDropzone = false
       showpdf = false
-      const reader = new FileReader() // constructor
-      reader.readAsDataURL(File) //(base 64 data url)
-      reader.addEventListener("load", function () {
-        Imageurl = reader.result
-        // console.log(Imageurl);
-        localStorage.setItem("base64", Imageurl)
-      })
       blobimage = URL.createObjectURL(File)
       console.log(blobimage)
       localStorage.setItem("blobimage", blobimage)
@@ -124,13 +117,6 @@
     } else if (File.type == "application/pdf") {
       showpdf = true
       await loadLibrary("pdfjs", "/lib/pdf.js")
-      const reader = new FileReader() // constructor
-      reader.readAsDataURL(File) //(base 64 data url)
-      reader.addEventListener("load", function () {
-        Pdfurl = reader.result
-        console.log(Pdfurl)
-        localStorage.setItem("base64", Pdfurl)
-      })
       let blob = URL.createObjectURL(File)
       localStorage.setItem("blobpdf", blob)
       console.log(blob)

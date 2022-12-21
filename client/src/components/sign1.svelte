@@ -8,9 +8,7 @@
   $: if (modal) {
     nextBtn2()
   }
-  // console.log(data1)
-  // console.log('sign1')
-
+  let src
   let switchAccount = false,
     steps = false,
     modelHeading = false
@@ -50,18 +48,6 @@
     tick2 = true,
     tick3 = true,
     signPage = false
-  // const nextBtn2 = (pageNo) => {
-  // console.log(pageNo)
-  // base64 = localStorage.getItem("base64")
-  // showSignPage(base64, pageNo)
-  // empty2 = true
-  // dot3 = false
-  // borderBlue2 = true
-  // tick2 = false
-  // dot2 = true
-  // SelectPageno = false
-  // signPage = true
-  // }
   const backBtn1 = () => {
     empty2 = false
     dot3 = true
@@ -121,6 +107,8 @@
     console.log("next4")
   }
   let pageNo
+
+ $: showPage(pageNo)
   let clr = "#FFFFFF"
   const chooseClr = () => {
     console.log(clr)
@@ -138,6 +126,7 @@
       }
     })
   }
+
   let toggleBtn = true
   const trigger = async () => {
     document.getElementById("btnDisable").disabled = true
@@ -197,6 +186,7 @@
         VERIFY SIGN DETAILS
       </h1>
       <div class:hidden={steps} class="flex items-center justify-center ">
+
         <button class="relative pr-8 sm:pr-20">
           <!-- Completed Step -->
           <div class="absolute inset-0 flex items-center">
@@ -454,10 +444,12 @@
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-40 font-semibold">Name</p>
             <div class="py-2 pl-4 w-full text-base text-gray-600">
+
               {data1.signerDetails.name}
             </div>
           </div>
           <div class="flex flex-row items-center">
+
             <p class="text-base text-gray-600 w-40 font-semibold">Id</p>
             <div class="py-2 ml-4 w-full text-base text-gray-600 overflow-auto">
               {data1.signerDetails.id}
@@ -466,6 +458,7 @@
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-40 font-semibold">Email</p>
             <div class="py-2 pl-4 w-full text-base text-gray-600">
+
               {data1.signerDetails.email}
             </div>
           </div>
@@ -520,6 +513,7 @@
                   placeholder="Select Page No"
                   id="pageNo"
                   class="w-32 h-9 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
+
                 >
                   {#each totalPages as totalPage}
                     <option value={totalPage}>{totalPage}</option>
@@ -558,6 +552,7 @@
                     Lock Horizontal control
                   </p>
                 </div>
+
               </div>
             </div>
           </div>
@@ -578,6 +573,7 @@
               SIGN
             </button>
             <button id="autoClick3" on:click={nextBtn2} class="hidden">
+
               Next
             </button>
           </div>
@@ -624,7 +620,7 @@
               on:click={nextBtn3}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
-              Next
+              Initiate
             </button>
           </div>
         </div>
