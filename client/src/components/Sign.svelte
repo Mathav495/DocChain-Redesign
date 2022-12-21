@@ -4,7 +4,6 @@
   import { createEventDispatcher } from "svelte"
   import { navigate } from "svelte-routing"
   const dispatch = createEventDispatcher()
-  export let file
   let otp = ""
   let SignFile
   let blob
@@ -78,36 +77,7 @@
     })
   }
   let modal = false
-  const initiate = async () => {
-    //get signer id
-    console.log("initiate")
-    // modal = true;
 
-    initvalues = {
-      signer:
-        "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
-      file: file,
-      signPage: "0",
-      signPosition: "50, 315, 545, 400",
-      signField: "signature",
-      reason: "testing purpose",
-      signBGColor: "#32a4a8",
-      url: docURL,
-    }
-    const { data } = await axios.post(
-      "https://pdfsign.test.print2block.in/signature/initiate",
-      initvalues,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
-    console.log(data)
-    signreq = data.signRequest.id
-    console.log(signreq)
-    modal = true
-  }
   const ConfirmRequest = async () => {
     //get file name
     const { data } = await axios.post(
@@ -429,10 +399,4 @@
       />
     {/if}
   </div>
-  <button
-    on:click={initiate}
-    class="flex mx-auto mb-5 mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-  >
-    initiate
-  </button>
 </div>
