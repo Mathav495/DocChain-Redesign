@@ -181,7 +181,7 @@
   }
   let pageNo
   $: showPage(pageNo)
-  let clr = "#FFFFFF"
+  let clr = ""
   const chooseClr = () => {
     console.log(clr)
   }
