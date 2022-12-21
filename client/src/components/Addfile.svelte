@@ -193,7 +193,7 @@
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno)
     console.log("Page loaded")
-    let viewport = page.getViewport({ scale: 1 })
+    let viewport = page.getViewport({ scale: 1.03 })
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById("mycanvas")
@@ -252,10 +252,15 @@
     dispatch("steps")
   }
 
+  let fieldName, date
   const showModal = async () => {
     await loadLibrary("pdfPosition", "/lib/signPosition.js")
     console.log(pdfPosition.position)
     localStorage.setItem("position", pdfPosition.position)
+    date = new Date().toJSON()
+    fieldName = `Signer ${date}`
+    console.log(fieldName)
+    localStorage.setItem("fieldName", fieldName)
     dispatch("mShow")
     console.log("clicked")
   }
@@ -377,11 +382,11 @@
     on:click={showModal}
     class="{displaypreview && showpdf
       ? 'flex'
-      : 'hidden'}  w-full lg:w-[38.5rem] flex-col rounded-md"
+      : 'hidden'}  w-full lg:w-[38.5rem] mx-auto flex-col rounded-md"
     in:fade={{ duration: 2000 }}
     out:fade={{ duration: 1000 }}
   >
-    <canvas id="mycanvas" class="border-2 rounded-md overflow-hidden" />
+    <canvas id="mycanvas" class="border-2 rounded-md w-full overflow-hidden" />
     <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
     <div class="flex justify-center mx-auto items-center gap-8 pt-3">
       <button on:click={previouspage} disabled={!prevbtn}>
@@ -444,11 +449,10 @@
     </div>
   </div>
 
-  <!-- {#if btns} -->
   <div
     class="{displaypreview
       ? 'flex'
-      : 'hidden'} justify-between gap-3 pt-3 lg:w-[38.5rem] btn"
+      : 'hidden'} items-center justify-center gap-3 pt-3 lg:w-[38.5rem] btn"
   >
     <div class="flex">
       <button
@@ -476,5 +480,4 @@
       </button>
     </div>
   </div>
-  <!-- {/if} -->
 </div>

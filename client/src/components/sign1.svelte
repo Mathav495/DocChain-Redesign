@@ -29,6 +29,7 @@
     SelectPageno = false,
     dot3 = true
   const nextBtn1 = () => {
+    document.getElementById("disableBtn").disabled = false
     details = false
     dot1 = true
     tick1 = false
@@ -131,13 +132,8 @@
     })
   }
   let toggleBtn = true,
-    fieldName = "Signer",
     date
   const trigger = async () => {
-    document.getElementById("btnDisable").setAttribute("disabled", "true")
-    date = new Date().toJSON()
-    fieldName = `Signer ${date}`
-    console.log(fieldName)
     toggleBtn = false
     await loadLibrary("pdfPosition", "/lib/signPosition.js")
     console.log(pdfPosition)
@@ -175,7 +171,6 @@
   }
 
   const hideModal = () => {
-    document.getElementById("disableBtn").disabled = false
     document.getElementsByClassName("btn")[0].classList.add("hidden")
     dispatch("PageNo", pageNo)
   }
@@ -577,36 +572,6 @@
               name="Identity"
               id="Identity"
             />
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-96 font-semibold">Field Name</p>
-            <input
-              type="text"
-              class="w-full border border-gray-400 px-2 py-1 rounded-md"
-              value={fieldName}
-              disabled
-            />
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-96 font-semibold">
-              QR Data (eg: Trust URL):
-            </p>
-            <input
-              type="text"
-              class="w-full border border-gray-400 px-2 py-1 rounded-md"
-              disabled
-            />
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-96 font-semibold">
-              Position Textbox
-            </p>
-            <!-- <input
-              id="positions"
-              type="text"
-              class="w-full border border-gray-400 px-2 py-1 rounded-md"
-              disabled
-            /> -->
           </div>
           <div class="flex items-center justify-end border-t border-white pt-4">
             <button
