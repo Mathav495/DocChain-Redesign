@@ -5,6 +5,7 @@
 
   // console.log(data1)
   // console.log('sign1')
+  let download = false
   let borderBlue4 = false
   let empty4 = false
   let dot5 = true
@@ -305,6 +306,8 @@
     console.log(data)
     SignFile = data.signRequest.signedFile
     console.log(SignFile)
+    otp = false
+    download = true
     tick4 = false
     borderBlue4 = true
     dot4 = true
@@ -797,6 +800,36 @@
               placeholder="12345"
               class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
             />
+          </div>
+          <div
+            class="flex items-center justify-between border-t border-white pt-4"
+          >
+            <button
+              on:click={backBtn3}
+              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+            >
+              Back
+            </button>
+            <button
+              on:click={confirmRequest}
+              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+            >
+              confirmRequest
+            </button>
+          </div>
+        </div>
+      {/if}
+      {#if download}
+        <div class="flex flex-col gap-4">
+          <h1
+            class="text-white text-lg tracking-wide font-semibold border-b border-white"
+          >
+            SIGN DETAILS
+          </h1>
+          <div class="flex gap-3">
+            <h1 class="text-lg text-slate-800 font-semibold flex items-center">
+              click here!!!
+            </h1>
           </div>
           <div
             class="flex items-center justify-between border-t border-white pt-4"
