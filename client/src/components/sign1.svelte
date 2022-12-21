@@ -32,80 +32,10 @@
     showPage(1)
   }
   let src
-  let base64, imageUrl, url, pdfUrl
-  base64 = localStorage.getItem("base64")
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
-  // console.log(base64)
-  url = base64.split(";base64,")
-  const findFile = async () => {
-    if (
-      url[0] == "data:image/png" ||
-      url[0] == "data:image/jpg" ||
-      url[0] == "data:image/jpeg"
-    ) {
-      // console.log('image uplpaded')
-      imageUrl = base64
-      // console.log(imageUrl)
-    } else if (url[0] == "data:application/pdf") {
-      // console.log('pdf uplpaded')
-      pdfUrl = base64
-      await showPdf(pdfUrl)
-      // console.log(pdfUrl)
-    } else {
-      // console.log('logged')
-    }
-  }
-  findFile()
+ 
 
-  const showPage = async (pageno) => {
-    let page = await _PDFDOC.getPage(pageno)
-    let viewport = page.getViewport({ scale: 0.5 })
-
-    // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById("mycanvas2")
-    let context = canvas.getContext("2d")
-    canvas.height = viewport.height
-    canvas.width = viewport.width
-
-    // Render PDF page into canvas context
-    let renderContext = {
-      canvasContext: context,
-      viewport: viewport,
-    }
-    await page.render(renderContext).promise
-    // document.getElementById('pdf-preview').src = canvas.toDataURL();
-  }
-  const showSignPage = async (base64, pageNo) => {
-    // console.log(base64)
-    console.log(pageNo)
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js"
-    let loadingTask = pdfjsLib.getDocument(base64)
-    loadingTask = loadingTask.promise
-    _PDFDOC = await loadingTask
-    _total_pages = _PDFDOC.numPages
-    currentpage = 1
-    signPageNo(pageNo)
-  }
-  const signPageNo = async (pageNo) => {
-    let page = await _PDFDOC.getPage(pageNo)
-    let viewport = page.getViewport({ scale: 0.5 })
-
-    // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById("mycanvas3")
-    let context = canvas.getContext("2d")
-    canvas.height = viewport.height
-    canvas.width = viewport.width
-
-    // Render PDF page into canvas context
-    let renderContext = {
-      canvasContext: context,
-      viewport: viewport,
-    }
-    await page.render(renderContext).promise
-    // document.getElementById('pdf-preview').src = canvas.toDataURL();
-  }
   let switchIdForm = true
   const switchId = () => {
     if (switchIdForm == true) {
@@ -173,7 +103,6 @@
     tick4 = true,
     dot4 = true,
     otp = false
-
   const backBtn3 = () => {
     borderBlue3 = false
     dot4 = true
@@ -186,7 +115,8 @@
   }
   let pageNo
   $: showPage(pageNo)
-  let clr = ""
+
+  let clr = "#FFFFFF"
   const chooseClr = () => {
     console.log(clr)
   }
@@ -204,7 +134,6 @@
     })
   }
   let toggleBtn = true,
-    fieldName = "signer",
     date
   const trigger = async () => {
     document.getElementById("btnDisable").setAttribute("disabled", "true")
@@ -220,17 +149,6 @@
     })
   }
 
-  // let bgclr = false,
-  //   ballblk = true
-  // const btnclr = () => {
-  //   if (ballblk) {
-  //     ballblk = false
-  //     ballwht = true
-  //   } else {
-  //     bgclr = false
-  //     ballblk = true
-  //   }
-  // }
   let position = false,
     ballwht = false,
     bgclr = false,
@@ -466,6 +384,7 @@
               class:bg-indigo-600={borderBlue4}
               class="h-0.5 w-full bg-gray-200"
             />
+
           </div>
           <div
             class:hidden={empty3}
@@ -507,6 +426,7 @@
           </div>
           <div
             class:hidden={empty4}
+
             class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
           >
             <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
@@ -739,6 +659,7 @@
               class="w-full border border-gray-400 px-2 py-1 rounded-md"
               disabled
             />
+
           </div>
           <div class="flex flex-row items-start">
             <div class="flex flex-col w-96 gap-2">
@@ -789,12 +710,11 @@
             >
               Back
             </button>
-
             <button
               on:click={initiate}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
-              initiate
+              Initiate
             </button>
           </div>
         </div>
@@ -817,6 +737,7 @@
               class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
             />
           </div>
+
           <div
             class="flex items-center justify-between border-t border-white pt-4"
           >
