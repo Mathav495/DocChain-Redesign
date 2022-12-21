@@ -11,7 +11,7 @@
   let doctype = ""
   let signatory = ""
   let docTitle = ""
-  let valid, date, sampleData, errormsg
+  let valid, date, metaData, errormsg, options
   let receiver = [
     {
       label: 0,
@@ -75,7 +75,7 @@
     } else {
       error.dateexpired = ""
     }
-    if (issuer == "") {
+    if (!issuer) {
       error.issuer = "Fill the Issuer name"
       setTimeout(() => {
         error.issuer = ""
@@ -84,7 +84,7 @@
     } else {
       error.issuer = ""
     }
-    if (doctype == "") {
+    if (!doctype) {
       error.doctype = "Fill the Document Type"
       setTimeout(() => {
         error.doctype = ""
@@ -93,7 +93,7 @@
     } else {
       error.doctype = ""
     }
-    if (signatory == "") {
+    if (!signatory) {
       error.signatory = "Fill the Signatory name"
       setTimeout(() => {
         error.signatory = ""
@@ -102,54 +102,53 @@
     } else {
       error.signatory = ""
     }
-    if (valid == true) {
+    if (valid) {
       console.log("valid")
 
-      //receiver data
-      receiver = receiver.filter(
-        (receiver) =>
-          receiver.labelName != "Fieldname" && receiver.inputvalue != ""
-      )
+      // receiver data
       console.log(receiver)
       console.log(receiver.length)
       let rec_obj = new Object()
       rec_obj.name = issuer
       for (let i = 0; i < receiver.length; i++) {
-        rec_obj[receiver[i].labelName] = receiver[i].inputvalue
+        if (receiver[i].labelName != "Fieldname" && receiver[i].inputvalue) {
+          rec_obj[receiver[i].labelName] = receiver[i].inputvalue
+        }
       }
-      console.log(rec_obj)
+      console.log(rec_obj, "rec_obj")
 
       // document data
-      documentDetails = documentDetails.filter(
-        (documentDetails) =>
-          documentDetails.labelName != "Fieldname" &&
-          documentDetails.inputvalue != ""
-      )
       console.log(documentDetails)
       console.log(documentDetails.length)
       let doc_obj = new Object()
       doc_obj.type = doctype
       for (let i = 0; i < documentDetails.length; i++) {
-        doc_obj[documentDetails[i].labelName] = documentDetails[i].inputvalue
+        if (
+          documentDetails[i].labelName != "Fieldname" &&
+          documentDetails[i].inputvalue
+        ) {
+          doc_obj[documentDetails[i].labelName] = documentDetails[i].inputvalue
+        }
       }
-      console.log(doc_obj)
+      console.log(doc_obj, "doc_obj")
 
       //signatory data
-      signatoryDetails = signatoryDetails.filter(
-        (signatoryDetails) =>
-          signatoryDetails.labelName != "Fieldname" &&
-          signatoryDetails.inputvalue != ""
-      )
       console.log(signatoryDetails)
       console.log(signatoryDetails.length)
       let sign_obj = new Object()
       sign_obj.signatory = signatory
       for (let i = 0; i < signatoryDetails.length; i++) {
-        sign_obj[signatoryDetails[i].labelName] = signatoryDetails[i].inputvalue
+        if (
+          signatoryDetails[i].labelName != "Fieldname" &&
+          signatoryDetails[i].inputvalue
+        ) {
+          sign_obj[signatoryDetails[i].labelName] =
+            signatoryDetails[i].inputvalue
+        }
       }
-      console.log(sign_obj)
+      console.log(sign_obj, "sign_obj")
 
-      sampleData = {
+      metaData = {
         receiver: rec_obj,
         document: doc_obj,
         issuer: sign_obj,
@@ -181,7 +180,7 @@
         "https://test.swagger.print2block.in/docs/add-data",
         {
           documentID: documentID,
-          metadata: sampleData,
+          metadata: metaData,
           options: options,
         },
         {
@@ -193,19 +192,14 @@
       console.log(data)
       // let metadata = data.metadata;
       localStorage.setItem("metadata", data.metadata)
-      var metadata = JSON.parse(localStorage.getItem("metadata"))
+      let metadata = JSON.parse(localStorage.getItem("metadata"))
       console.log(metadata)
       console.log(typeof metadata)
       console.log(metadata.receiver.name)
-      // metadata['receiver']['name'];
-      // typeof metadata['receiver']['name'];
-      // console.log(metadata['receiver']['name']);
-      // console.log(metadata['document']['type']);
-      // console.log(metadata['issuer']['signatory']);
       localStorage.setItem("options", data.options)
-      var options = JSON.parse(localStorage.getItem("options"))
-      console.log(options.title)
-      console.log(options.expireOn)
+      let option = JSON.parse(localStorage.getItem("options"))
+      console.log(option.title)
+      console.log(option.expireOn)
 
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem("docDetails"))
@@ -232,8 +226,7 @@
       } else {
         if (data.error) {
           errormsg = data.errorCode
-          let arr = errormsg.split(":")
-          errormsg = arr[2].replaceAll("_", " ")
+          errormsg = errormsg.replaceAll("P2BCODE::", "")
           displayerror = true
           setTimeout(() => {
             displayerror = false
@@ -253,13 +246,54 @@
   const updateLabel = (id1, id2, dataToBeModified, value) => {
     let initial_value = value
     let increment_value = value + 1
+    console.log(receiver)
+    let nextData,
+      count = 0
+
     if (dataToBeModified == "receiver") {
-      updateData(receiver, increment_value)
+      receiver.find((receiver) => {
+        if (receiver.labelName == "Fieldname") {
+          count++
+        }
+      })
+      if (count == 0) {
+        nextData = {
+          label: increment_value,
+          labelName: "Fieldname",
+        }
+        receiver = [...receiver, nextData]
+        console.log(receiver)
+      }
     } else if (dataToBeModified == "documentDetails") {
-      updateData(documentDetails, increment_value)
-    } else if (dataToBeModified == "signatoryDetails") {
-      updateData(signatoryDetails, increment_value)
+      documentDetails.find((documentDetails) => {
+        if (documentDetails.labelName == "Fieldname") {
+          count++
+        }
+      })
+      if (count == 0) {
+        nextData = {
+          label: increment_value,
+          labelName: "Fieldname",
+        }
+        documentDetails = [...documentDetails, nextData]
+        console.log(documentDetails)
+      }
+    } else {
+      signatoryDetails.find((signatoryDetails) => {
+        if (signatoryDetails.labelName == "Fieldname") {
+          count++
+        }
+      })
+      if (count == 0) {
+        nextData = {
+          label: increment_value,
+          labelName: "Fieldname",
+        }
+        signatoryDetails = [...signatoryDetails, nextData]
+        console.log(signatoryDetails)
+      }
     }
+
     let temp = document.getElementById(id1 + initial_value)
     temp.classList.add("flex")
     temp.classList.remove("hidden")
@@ -268,25 +302,12 @@
     temp2.classList.add("hidden")
   }
 
-  const updateData = (dataToBeUpdated, increment_value) => {
-    console.log(dataToBeUpdated)
-    let nextData,
-      count = 0
-    dataToBeUpdated.find((dataToBeUpdated) => {
-      if (dataToBeUpdated.labelName == "Fieldname") {
-        count++
-      }
-    })
-    if (count == 0) {
-      nextData = {
-        label: increment_value,
-        labelName: "Fieldname",
-      }
-      dataToBeUpdated = [...dataToBeUpdated, nextData]
-    }
-    console.log(dataToBeUpdated)
-  }
-
+  /**
+   * Function to hide the label and show the edit section
+   * @param id1 {String} string value for finding the element(label component)
+   * @param id2 {String} string value for finding the element(input component)
+   * @param value {Number} label value for individual labelName
+   */
   const hideLabel = (id1, id2, value) => {
     let temp = document.getElementById(id1 + value)
     temp.classList.add("hidden")
@@ -295,15 +316,20 @@
     temp2.classList.remove("hidden")
   }
 
-  const deletelabel = (type, value) => {
-    console.log(type, value)
-    if (type == "receiver") {
+  /**
+   * Function to delete the customized label
+   * @param dataToBeModified {String} it denotes the name of the array to be modified
+   * @param value {Number} label value for individual labelName
+   */
+  const deletelabel = (dataToBeModified, value) => {
+    console.log(dataToBeModified, value)
+    if (dataToBeModified == "receiver") {
       receiver = receiver.filter((receiver) => receiver.label != value)
-    } else if (type == "docDetails") {
+    } else if (dataToBeModified == "docDetails") {
       documentDetails = documentDetails.filter(
         (documentDetails) => documentDetails.label != value
       )
-    } else if (type == "signDetails") {
+    } else if (dataToBeModified == "signDetails") {
       signatoryDetails = signatoryDetails.filter(
         (signatoryDetails) => signatoryDetails.label != value
       )
