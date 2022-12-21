@@ -12,27 +12,39 @@
   let signatory = ""
   let docTitle = ""
   let valid, date, metaData, errormsg, options
-  let receiver = [
-    {
-      label: 0,
-      labelName: "Fieldname",
-      inputvalue: "",
-    },
-  ]
-  let documentDetails = [
-    {
-      label: 0,
-      labelName: "Fieldname",
-      inputvalue: "",
-    },
-  ]
-  let signatoryDetails = [
-    {
-      label: 0,
-      labelName: "Fieldname",
-      inputvalue: "",
-    },
-  ]
+
+  let initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
+
+  if (!initialMetadata) {
+    let formDataDetails = {
+      receiver: [
+        {
+          label: 0,
+          labelName: "Fieldname",
+          inputvalue: "",
+        },
+      ],
+      documentDetails: [
+        {
+          label: 0,
+          labelName: "Fieldname",
+          inputvalue: "",
+        },
+      ],
+      signatoryDetails: [
+        {
+          label: 0,
+          labelName: "Fieldname",
+          inputvalue: "",
+        },
+      ],
+    }
+    localStorage.setItem("formDataDetails", JSON.stringify(formDataDetails))
+    initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
+  }
+
+  console.log(initialMetadata)
+  let receiver, documentDetails, signatoryDetails
   let displayerror = false
 
   let error = {
@@ -106,8 +118,8 @@
       console.log("valid")
 
       // receiver data
-      console.log(receiver)
-      console.log(receiver.length)
+      receiver = initialMetadata.receiver
+
       let rec_obj = new Object()
       rec_obj.name = issuer
       for (let i = 0; i < receiver.length; i++) {
@@ -118,8 +130,7 @@
       console.log(rec_obj, "rec_obj")
 
       // document data
-      console.log(documentDetails)
-      console.log(documentDetails.length)
+      documentDetails = initialMetadata.documentDetails
       let doc_obj = new Object()
       doc_obj.type = doctype
       for (let i = 0; i < documentDetails.length; i++) {
@@ -133,8 +144,7 @@
       console.log(doc_obj, "doc_obj")
 
       //signatory data
-      console.log(signatoryDetails)
-      console.log(signatoryDetails.length)
+      signatoryDetails = initialMetadata.signatoryDetails
       let sign_obj = new Object()
       sign_obj.signatory = signatory
       for (let i = 0; i < signatoryDetails.length; i++) {
@@ -242,11 +252,12 @@
   const updateLabel = (id1, id2, dataToBeModified, value) => {
     let initial_value = value
     let increment_value = value + 1
-    console.log(receiver)
+    console.log(initialMetadata.receiver)
     let nextData,
       count = 0
 
     if (dataToBeModified == "receiver") {
+      receiver = initialMetadata.receiver
       receiver.find((receiver) => {
         if (receiver.labelName == "Fieldname") {
           count++
@@ -257,10 +268,14 @@
           label: increment_value,
           labelName: "Fieldname",
         }
-        receiver = [...receiver, nextData]
+        initialMetadata.receiver = [...receiver, nextData]
         console.log(receiver)
+        console.log(initialMetadata.receiver, "receiver")
+        localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
+        initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
       }
     } else if (dataToBeModified == "documentDetails") {
+      documentDetails = initialMetadata.documentDetails
       documentDetails.find((documentDetails) => {
         if (documentDetails.labelName == "Fieldname") {
           count++
@@ -271,10 +286,13 @@
           label: increment_value,
           labelName: "Fieldname",
         }
-        documentDetails = [...documentDetails, nextData]
-        console.log(documentDetails)
+        initialMetadata.documentDetails = [...documentDetails, nextData]
+        console.log(initialMetadata)
+        localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
+        initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
       }
     } else {
+      signatoryDetails = initialMetadata.signatoryDetails
       signatoryDetails.find((signatoryDetails) => {
         if (signatoryDetails.labelName == "Fieldname") {
           count++
@@ -285,8 +303,10 @@
           label: increment_value,
           labelName: "Fieldname",
         }
-        signatoryDetails = [...signatoryDetails, nextData]
-        console.log(signatoryDetails)
+        initialMetadata.signatoryDetails = [...signatoryDetails, nextData]
+        console.log(initialMetadata)
+        localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
+        initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
       }
     }
 
@@ -312,6 +332,18 @@
     temp2.classList.remove("hidden")
   }
 
+  const cancelLabel = (id1, id2, value) => {
+    console.log(id1, id2, value)
+    let temp = document.getElementById(id1 + value)
+    temp.classList.add("flex")
+    temp.classList.remove("hidden")
+    let temp2 = document.getElementById(id2 + value)
+    temp2.classList.remove("flex")
+    temp2.classList.add("hidden")
+    initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
+    console.log(initialMetadata)
+  }
+
   /**
    * Function to delete the customized label
    * @param dataToBeModified {String} it denotes the name of the array to be modified
@@ -320,15 +352,30 @@
   const deletelabel = (dataToBeModified, value) => {
     console.log(dataToBeModified, value)
     if (dataToBeModified == "receiver") {
+      receiver = initialMetadata.receiver
+      console.log(receiver)
       receiver = receiver.filter((receiver) => receiver.label != value)
+      console.log(receiver)
+      initialMetadata.receiver = receiver
+      console.log(initialMetadata)
+      localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
+      initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
     } else if (dataToBeModified == "docDetails") {
+      documentDetails = initialMetadata.documentDetails
       documentDetails = documentDetails.filter(
         (documentDetails) => documentDetails.label != value
       )
+      initialMetadata.documentDetails = documentDetails
+      localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
+      initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
     } else if (dataToBeModified == "signDetails") {
+      signatoryDetails = initialMetadata.signatoryDetails
       signatoryDetails = signatoryDetails.filter(
         (signatoryDetails) => signatoryDetails.label != value
       )
+      initialMetadata.signatoryDetails = signatoryDetails
+      localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
+      initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
     }
   }
 </script>
@@ -369,7 +416,7 @@
             />
           </div>
 
-          {#each receiver as receiver}
+          {#each initialMetadata.receiver as receiver}
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
                 <div class="flex group " id="z{receiver.label}">
@@ -379,39 +426,39 @@
                     class="cursor-pointer text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
                   >
                     {receiver.labelName}
-                    <svg
-                      on:click={() => hideLabel("z", "a", receiver.label)}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="hidden group-hover:block cursor-pointer w-5 h-5"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                      />
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      on:click={() => deletelabel("receiver", receiver.label)}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="hidden {receiver.labelName == 'Fieldname'
-                        ? ''
-                        : 'group-hover:block'}  cursor-pointer w-5 h-5"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                      />
-                    </svg>
                   </label>
+                  <svg
+                    on:click={() => hideLabel("z", "a", receiver.label)}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="hidden group-hover:block cursor-pointer w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                    />
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    on:click={() => deletelabel("receiver", receiver.label)}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="hidden {receiver.labelName == 'Fieldname'
+                      ? ''
+                      : 'group-hover:block'}  cursor-pointer w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                    />
+                  </svg>
                 </div>
                 <div class="hidden items-center" id="a{receiver.label}">
                   <input
@@ -440,6 +487,7 @@
                   </div>
                   <div class="pl-3">
                     <svg
+                      on:click={() => cancelLabel("z", "a", receiver.label)}
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -496,7 +544,7 @@
             />
           </div>
 
-          {#each documentDetails as docDetails}
+          {#each initialMetadata.documentDetails as docDetails}
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
                 <div class="flex group" id="b{docDetails.label}">
@@ -506,40 +554,39 @@
                     class="cursor-pointer text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
                   >
                     {docDetails.labelName}
-                    <svg
-                      on:click={() => hideLabel("b", "c", docDetails.label)}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="hidden group-hover:block cursor-pointer w-5 h-5"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                      />
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      on:click={() =>
-                        deletelabel("docDetails", docDetails.label)}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="hidden {docDetails.labelName == 'Fieldname'
-                        ? ''
-                        : 'group-hover:block'}  cursor-pointer w-5 h-5"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                      />
-                    </svg>
                   </label>
+                  <svg
+                    on:click={() => hideLabel("b", "c", docDetails.label)}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="hidden group-hover:block cursor-pointer w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                    />
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    on:click={() => deletelabel("docDetails", docDetails.label)}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="hidden {docDetails.labelName == 'Fieldname'
+                      ? ''
+                      : 'group-hover:block'}  cursor-pointer w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                    />
+                  </svg>
                 </div>
                 <div class="hidden items-center gap-2" id="c{docDetails.label}">
                   <input
@@ -548,27 +595,46 @@
                     type="text"
                     class="field-input"
                   />
-                  <svg
-                    on:click={() =>
-                      updateLabel(
-                        "b",
-                        "c",
-                        "documentDetails",
-                        docDetails.label
-                      )}
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="cursor-pointer w-5 h-5 hover:p-1 hover:bg-green-500 hover:rounded-full"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M4.5 12.75l6 6 9-13.5"
-                    />
-                  </svg>
+                  <div class="pl-3">
+                    <svg
+                      on:click={() =>
+                        updateLabel(
+                          "b",
+                          "c",
+                          "documentDetails",
+                          docDetails.label
+                        )}
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="cursor-pointer w-5 h-5 hover:p-1 hover:bg-green-500 hover:rounded-full"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4.5 12.75l6 6 9-13.5"
+                      />
+                    </svg>
+                  </div>
+                  <div class="pl-3">
+                    <svg
+                      on:click={() => cancelLabel("b", "c", docDetails.label)}
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="cursor-pointer w-5 h-5 hover:p-1 hover:bg-red-500 hover:rounded-full"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </div>
               <div>
@@ -613,7 +679,7 @@
             />
           </div>
 
-          {#each signatoryDetails as signDetails}
+          {#each initialMetadata.signatoryDetails as signDetails}
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
                 <div class="flex group" id="d{signDetails.label}">
@@ -623,41 +689,40 @@
                     class="cursor-pointer text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
                   >
                     {signDetails.labelName}
-
-                    <svg
-                      on:click={() => hideLabel("d", "e", signDetails.label)}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="hidden group-hover:block cursor-pointer w-5 h-5"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                      />
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      on:click={() =>
-                        deletelabel("signDetails", signDetails.label)}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="hidden {signDetails.labelName == 'Fieldname'
-                        ? ''
-                        : 'group-hover:block'}  cursor-pointer w-5 h-5"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                      />
-                    </svg>
                   </label>
+                  <svg
+                    on:click={() => hideLabel("d", "e", signDetails.label)}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="hidden group-hover:block cursor-pointer w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                    />
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    on:click={() =>
+                      deletelabel("signDetails", signDetails.label)}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="hidden {signDetails.labelName == 'Fieldname'
+                      ? ''
+                      : 'group-hover:block'}  cursor-pointer w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                    />
+                  </svg>
                 </div>
                 <div
                   class="hidden items-center gap-2"
@@ -669,27 +734,46 @@
                     type="text"
                     class="field-input"
                   />
-                  <svg
-                    on:click={() =>
-                      updateLabel(
-                        "d",
-                        "e",
-                        "signatoryDetails",
-                        signDetails.label
-                      )}
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="cursor-pointer w-5 h-5 hover:p-1 hover:bg-green-500 hover:rounded-full"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M4.5 12.75l6 6 9-13.5"
-                    />
-                  </svg>
+                  <div class="pl-3">
+                    <svg
+                      on:click={() =>
+                        updateLabel(
+                          "d",
+                          "e",
+                          "signatoryDetails",
+                          signDetails.label
+                        )}
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="cursor-pointer w-5 h-5 hover:p-1 hover:bg-green-500 hover:rounded-full"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4.5 12.75l6 6 9-13.5"
+                      />
+                    </svg>
+                  </div>
+                  <div class="pl-3">
+                    <svg
+                      on:click={() => cancelLabel("d", "e", signDetails.label)}
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="cursor-pointer w-5 h-5 hover:p-1 hover:bg-red-500 hover:rounded-full"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </div>
               <div>
