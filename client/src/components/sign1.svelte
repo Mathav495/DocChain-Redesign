@@ -6,6 +6,7 @@
   // console.log(data1)
   // console.log('sign1')
   let initvalues
+  let oneTimePassword = ""
   let signPosition = ""
   let currentpage = 0,
     _PDFDOC,
@@ -764,6 +765,7 @@
               One Time Password
             </h1>
             <input
+              bind:value={oneTimePassword}
               type="text"
               placeholder="12345"
               class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
