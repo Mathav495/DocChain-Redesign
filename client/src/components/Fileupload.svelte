@@ -155,24 +155,20 @@
       }
 
       if (date) {
-        if (docTitle) {
-          options = {
-            title: docTitle,
-            expireOn: date,
-          }
-        } else {
-          options = {
-            expireOn: date,
-          }
-        }
+        docTitle
+          ? (options = {
+              title: docTitle,
+              expireOn: date,
+            })
+          : (options = {
+              expireOn: date,
+            })
       } else {
-        if (docTitle) {
-          options = {
-            title: docTitle,
-          }
-        } else {
-          options = {}
-        }
+        docTitle
+          ? (options = {
+              title: docTitle,
+            })
+          : (options = {})
       }
 
       console.log(documentID)
@@ -378,6 +374,7 @@
               <div class="flex">
                 <div class="flex group " id="z{receiver.label}">
                   <label
+                    on:click={() => hideLabel("z", "a", receiver.label)}
                     for="label{receiver.label}"
                     class="cursor-pointer text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
                   >
@@ -504,6 +501,7 @@
               <div class="flex">
                 <div class="flex group" id="b{docDetails.label}">
                   <label
+                    on:click={() => hideLabel("b", "c", docDetails.label)}
                     for="doclabel{docDetails.label}"
                     class="cursor-pointer text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
                   >
@@ -620,6 +618,7 @@
               <div class="flex">
                 <div class="flex group" id="d{signDetails.label}">
                   <label
+                    on:click={() => hideLabel("d", "e", signDetails.label)}
                     for="signlabel{signDetails.label}"
                     class="cursor-pointer text-sm text-black tracking-wide font-bold inline-flex items-center gap-1"
                   >
