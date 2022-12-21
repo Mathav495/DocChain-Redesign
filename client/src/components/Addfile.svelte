@@ -1,6 +1,7 @@
 <script>
   export let bloblink, MyFile
-  import { createEventDispatcher } from 'svelte'
+  export let pageNumber
+  import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
   import axios from 'axios'
   import { navigate } from 'svelte-routing'
@@ -19,6 +20,7 @@
   let documentID = localStorage.getItem('documentID')
   let bgcolor = localStorage.getItem('bgGradient')
   let displaypreview = false
+  let btnDisable = true
   /**
    * Submitting file for generating filehash
    */
@@ -167,8 +169,8 @@
 
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno)
-    console.log('Page loaded')
-    let viewport = page.getViewport({ scale: 2 })
+    console.log("Page loaded")
+    let viewport = page.getViewport({ scale: 1.03 })
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById('mycanvas')
@@ -183,6 +185,13 @@
     }
     await page.render(renderContext).promise
     // document.getElementById('pdf-preview').src = canvas.toDataURL();
+  }
+
+  let btns = true
+  $: if (pageNumber) {
+    btns = false
+    currentpage = pageNumber
+    showPage(currentpage)
   }
 
   const toClickinput = () => {
@@ -217,7 +226,20 @@
   }
 
   const signDoc = () => {
-    dispatch('steps')
+    dispatch("steps")
+  }
+
+  let fieldName, date
+  const showModal = async () => {
+    await loadLibrary("pdfPosition", "/lib/signPosition.js")
+    console.log(pdfPosition.position)
+    localStorage.setItem("position", pdfPosition.position)
+    date = new Date().toJSON()
+    fieldName = `Signer ${date}`
+    console.log(fieldName)
+    localStorage.setItem("fieldName", fieldName)
+    dispatch("mShow")
+    console.log("clicked")
   }
 </script>
 
@@ -273,10 +295,20 @@
   {/if}
 
   <!-- For pdf preview -->
-  <div class="{displaypreview && showpdf ? 'flex' : 'hidden'}  w-full lg:w-[38.5rem] flex-col rounded-md" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
-    <canvas id="mycanvas" class="border-2 rounded-md overflow-hidden" />
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <button
+    disabled
+    id="disableBtn"
+    on:click={showModal}
+    class="{displaypreview && showpdf
+      ? 'flex'
+      : 'hidden'}  w-full lg:w-[38.5rem] mx-auto flex-col rounded-md"
+    in:fade={{ duration: 2000 }}
+    out:fade={{ duration: 1000 }}
+  >
+    <canvas id="mycanvas" class="border-2 rounded-md w-full overflow-hidden" />
     <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
-    <div class="flex justify-center items-center gap-8 pt-3">
+    <div class="flex justify-center mx-auto items-center gap-8 pt-3">
       <button on:click={previouspage} disabled={!prevbtn}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" class="w-6 h-6 {!prevbtn ? 'stroke-gray-600' : 'stroke-black'}">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -291,7 +323,7 @@
         </svg>
       </button>
     </div>
-  </div>
+  </button>
 
   <!-- For image preview -->
   <div class="{displaypreview && !showpdf ? 'flex' : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center" in:fade={{ duration: 2000 }} out:fade={{ duration: 1000 }}>
@@ -302,12 +334,24 @@
     </div>
   </div>
 
-  <div class="{displaypreview ? 'flex' : 'hidden'} justify-between gap-3 pt-3 lg:w-[38.5rem]">
+
+  <div
+    class="{displaypreview
+      ? 'flex'
+      : 'hidden'} items-center justify-center gap-3 pt-3 lg:w-[38.5rem] btn"
+  >
     <div class="flex">
       <button on:click={ondisplaydropzone} class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide"> Choose Different file </button>
     </div>
     <div class="flex">
-      <button on:click={signDoc} class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide"> Sign Doc </button>
+
+      <button
+        id="autoClick1"
+        on:click={signDoc}
+        class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide"
+      >
+        Sign Doc
+      </button>
     </div>
     <div class="flex">
       <button on:click={() => (displayConfirm = true)} class="border-2 hover:text-white border-green-500 text-green-500 hover:bg-green-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide"> Confirm and Continue </button>

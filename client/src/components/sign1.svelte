@@ -1,10 +1,8 @@
 <script>
-  export let data1, file
-  export let totalPages
+  export let data1, file , modal , totalPages
+  import { createEventDispatcher } from "svelte"
+  const dispatch = createEventDispatcher()
   import axios from "axios"
-
-  // console.log(data1)
-  // console.log('sign1')
   let blob
   let download = false
   let borderBlue4 = false
@@ -16,33 +14,29 @@
   let SignFile
   let oneTimePassword = ""
   let signPosition = ""
-  let currentpage = 0,
-    _PDFDOC,
-    Reason = "for verification",
-    _total_pages = 0
-  const showPdf = async (url) => {
-    // console.log(url)
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js"
-    let loadingTask = pdfjsLib.getDocument(url)
-    loadingTask = loadingTask.promise
-    _PDFDOC = await loadingTask
-    _total_pages = _PDFDOC.numPages
-    currentpage = 1
-    showPage(1)
-  }
+  let  Reason = "for verification",
+ 
   let src
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
- 
-
   let switchIdForm = true
+  $: if (modal) {
+    nextBtn2()
+  }
+  let switchAccount = false,
+    steps = false,
+    modelHeading = false
   const switchId = () => {
-    if (switchIdForm == true) {
-      switchIdForm = false
-    } else {
-      switchIdForm = true
-    }
+    steps = true
+    modelHeading = true
+    switchAccount = true
+    details = false
+  }
+  const backBtn = () => {
+    modelHeading = false
+    steps = false
+    switchAccount = false
+    details = true
   }
 
   let details = true,
@@ -54,6 +48,7 @@
     SelectPageno = false,
     dot3 = true
   const nextBtn1 = () => {
+    document.getElementById("disableBtn").disabled = false
     details = false
     dot1 = true
     tick1 = false
@@ -67,18 +62,6 @@
     tick2 = true,
     tick3 = true,
     signPage = false
-  const nextBtn2 = (pageNo) => {
-    console.log(pageNo)
-    base64 = localStorage.getItem("base64")
-    showSignPage(base64, pageNo)
-    empty2 = true
-    dot3 = false
-    borderBlue2 = true
-    tick2 = false
-    dot2 = true
-    SelectPageno = false
-    signPage = true
-  }
   const backBtn1 = () => {
     empty2 = false
     dot3 = true
@@ -88,6 +71,20 @@
     dot2 = true
     tick2 = true
     empty = false
+  }
+  const nextBtn2 = () => {
+    empty = true
+    empty2 = true
+    dot1 = true
+    dot2 = true
+    dot3 = false
+    borderBlue1 = true
+    borderBlue2 = true
+    tick1 = false
+    tick2 = false
+    details = false
+    SelectPageno = false
+    signPage = true
   }
   const backBtn2 = () => {
     // console.log('back2')
@@ -114,8 +111,6 @@
     console.log("next4")
   }
   let pageNo
-  $: showPage(pageNo)
-
   let clr = "#FFFFFF"
   const chooseClr = () => {
     console.log(clr)
@@ -133,18 +128,15 @@
       }
     })
   }
-  let toggleBtn = true,
-    date
+  let toggleBtn = true
   const trigger = async () => {
-    document.getElementById("btnDisable").setAttribute("disabled", "true")
-    date = new Date().toJSON()
-    fieldName = `signer ${date}`
+    document.getElementById("btnDisable").disabled = true
     toggleBtn = false
-    await loadLibrary("pdf", "/lib/signPosition.js")
+    await loadLibrary("pdfPosition", "/lib/signPosition.js")
     console.log(pdfPosition)
     pdfPosition.init({
       triggerButtons: ".show-signature-overlay",
-      imageTarget: "mycanvas3",
+      imageTarget: "mycanvas",
       positionTextbox: "positions",
     })
   }
@@ -153,8 +145,10 @@
     ballwht = false,
     bgclr = false,
     ballblk = true,
-    bold = false
+    bold = false,
+    signBtn = true
   const signaturePlacement = () => {
+    signBtn = false
     if (pdfPosition.options.lockHorizontalCenter)
       pdfPosition.options.lockHorizontalCenter = false
     else pdfPosition.options.lockHorizontalCenter = true
@@ -248,16 +242,26 @@
     console.log(myFile)
     blob = URL.createObjectURL(data)
     console.log(blob)
+}
+  const hideModal = () => {
+    document.getElementsByClassName("btn")[0].classList.add("hidden")
+    dispatch("PageNo", pageNo)
   }
 </script>
 
-<div class="w-full h-auto bg-gray-300/80 p-4">
+<div class="w-full h-auto p-4">
   <nav aria-label="Progress">
     <ol
-      class="flex flex-col gap-4 mx-auto px-5 py-5 bg-blue-300 w-full lg:w-10/12 rounded-md"
+      class="flex flex-col gap-4 mx-auto px-5 py-5 bg-blue-300 w-full lg:w-9/12 xl:w-7/12 rounded-md"
     >
-      <h1 class="mx-auto text-xl text-white font-bold">VERIFY SIGN DETAILS</h1>
-      <div class="flex items-center justify-center ">
+      <h1
+        class:hidden={modelHeading}
+        class="mx-auto text-xl text-white font-bold"
+      >
+        VERIFY SIGN DETAILS
+      </h1>
+      <div class:hidden={steps} class="flex items-center justify-center ">
+
         <button class="relative pr-8 sm:pr-20">
           <!-- Completed Step -->
           <div class="absolute inset-0 flex items-center">
@@ -459,6 +463,54 @@
           </div>
         </button>
       </div>
+      {#if switchAccount}
+        <div class="flex flex-col gap-4">
+          <h1
+            class="text-white text-center text-lg tracking-wide font-semibold border-b border-white pb-4"
+          >
+            SWITCH ACCOUNT
+          </h1>
+          <form class="flex flex-col items-center justify-center gap-2">
+            <div class="flex gap-2 items-end">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
+                />
+              </svg>
+              <input
+                placeholder="Enter ID"
+                type="text"
+                class="w-52 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
+              />
+            </div>
+            <button
+              on:click={backBtn}
+              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-sm"
+            >
+              Switch
+            </button>
+          </form>
+          <div
+            class="flex items-center justify-between border-t border-white pt-4"
+          >
+            <button
+              on:click={backBtn}
+              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-sm"
+            >
+              back
+            </button>
+          </div>
+        </div>
+      {/if}
       {#if details}
         <div class="flex flex-col gap-4">
           <h1
@@ -467,69 +519,49 @@
             SIGNER DETAILS
           </h1>
           <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Name:</p>
-            <div
-              class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600"
-            >
+            <p class="text-base text-gray-600 w-40 font-semibold">Name</p>
+            <div class="py-2 pl-4 w-full text-base text-gray-600">
+
               {data1.signerDetails.name}
             </div>
           </div>
           <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Id:</p>
-            <div
-              class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600 overflow-auto"
-            >
+
+            <p class="text-base text-gray-600 w-40 font-semibold">Id</p>
+            <div class="py-2 ml-4 w-full text-base text-gray-600 overflow-auto">
               {data1.signerDetails.id}
             </div>
           </div>
           <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Email:</p>
-            <div
-              class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600"
-            >
+            <p class="text-base text-gray-600 w-40 font-semibold">Email</p>
+            <div class="py-2 pl-4 w-full text-base text-gray-600">
+
               {data1.signerDetails.email}
             </div>
           </div>
           <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Contact:</p>
-            <div
-              class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600"
-            >
+            <p class="text-base text-gray-600 w-40 font-semibold">Contact</p>
+            <div class="py-2 pl-4 w-full text-base text-gray-600">
               {data1.signerDetails.contact}
             </div>
           </div>
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-40 font-semibold">
-              Organisation:
+              Organisation
             </p>
-            <div
-              class="py-2 pl-4 bg-white rounded-md w-full text-base text-gray-600"
-            >
+            <div class="py-2 pl-4 w-full text-base text-gray-600">
               {data1.signerDetails.organisation}
             </div>
           </div>
           <div
             class="flex items-center justify-between border-t border-white pt-4"
           >
-            <div class="space-y-2">
-              <button
-                on:click={switchId}
-                class="bg-indigo-400 hover:bg-indigo-500 px-2 py-1 rounded-md border hover:border-indigo-700 border-indigo-600 text-white text-base"
-              >
-                Switch Account
-              </button>
-              <form class:hidden={switchIdForm} class="flex gap-2">
-                <input
-                  type="text"
-                  class="w-52 px-2 py-1 bg-white border border-gray-500 rounded-md"
-                />
-                <button
-                  class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-                >
-                  Switch
-                </button>
-              </form>
-            </div>
+            <button
+              on:click={switchId}
+              class="text-gray-100 hover:text-white text-base hover:underline"
+            >
+              Continue with another account
+            </button>
             <button
               on:click={nextBtn1}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
@@ -547,36 +579,57 @@
             SELECT PAGE NO
           </h1>
           <div>
-            <div class="flex flex-row gap-4">
-              <div class="w-96">
-                <p class="text-base text-gray-600 w-40 font-semibold">
-                  Select Page No:
+            <div class="flex flex-row gap-2 justify-between items-start">
+              <div class="w-auto flex gap-2 items-center">
+                <p class="text-base text-gray-600 w-auto font-semibold">
+                  Select Page No
                 </p>
                 <select
                   bind:value={pageNo}
                   name="1"
                   placeholder="Select Page No"
                   id="pageNo"
-                  class="py-2 pl-4 bg-white w-full rounded-md text-base text-gray-600 border-none"
+                  class="w-32 h-9 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
+
                 >
                   {#each totalPages as totalPage}
                     <option value={totalPage}>{totalPage}</option>
                   {/each}
                 </select>
               </div>
-              <div>
-                {#if (src = imageUrl)}
-                  <img
-                    class="w-auto h-auto rounded-md"
-                    src={imageUrl}
-                    alt="document"
-                  />
-                {:else}
-                  <canvas
-                    id="mycanvas2"
-                    class="border-2 rounded-md overflow-hidden w-full mx-auto h-auto"
-                  />
-                {/if}
+              <div class="flex flex-col w-auto gap-2">
+                <div>
+                  <button
+                    disabled={false}
+                    on:click={trigger}
+                    id="btnDisable"
+                    class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+                  >
+                    Select Signature Placement
+                  </button>
+                </div>
+                <div
+                  class:hidden={toggleBtn}
+                  class="flex items-center justify-start gap-5"
+                >
+                  <button
+                    on:click={signaturePlacement}
+                    id="posControls"
+                    class:justify-end={position}
+                    class:bg-indigo-600={bgclr}
+                    class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"
+                  >
+                    <button
+                      class:bg-white={ballwht}
+                      class:bg-black={ballblk}
+                      class="w-3 h-3  rounded-full"
+                    />
+                  </button>
+                  <p class:font-semibold={bold} class="text-base">
+                    Lock Horizontal control
+                  </p>
+                </div>
+
               </div>
             </div>
           </div>
@@ -590,9 +643,14 @@
               Back
             </button>
             <button
-              on:click={() => nextBtn2(pageNo)}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+              disabled={signBtn}
+              on:click={hideModal}
+              class="bg-indigo-600 disabled:cursor-not-allowed hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
+              SIGN
+            </button>
+            <button id="autoClick3" on:click={nextBtn2} class="hidden">
+
               Next
             </button>
           </div>
@@ -607,106 +665,32 @@
           </h1>
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-96 font-semibold">
-              Reason for Digital Signature:
+              Reason for Digital Signature
             </p>
             <input
               type="text"
               bind:value={Reason}
-              class="w-full border border-gray-400 px-2 py-1 rounded-md"
+              class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
             />
           </div>
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-96 font-semibold">
-              Signature Background color:
+              Signature Background color
             </p>
             <input
               on:input={chooseClr}
               bind:value={clr}
-              class="w-full border border-gray-500 bg-gray-100 px-2 py-1 rounded-md"
+              class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
               type="color"
               name="Identity"
               id="Identity"
             />
           </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-96 font-semibold">Field Name</p>
-            <input
-              type="text"
-              class="w-full border border-gray-400 px-2 py-1 rounded-md"
-              value={fieldName}
-              disabled
-            />
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-96 font-semibold">
-              QR Data (eg: Trust URL):
-            </p>
-            <input
-              type="text"
-              class="w-full border border-gray-400 px-2 py-1 rounded-md"
-              value={base64}
-              disabled
-            />
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-96 font-semibold">
-              Position Textbox
-            </p>
-            <input
-              bind:value={signPosition}
-              id="positions"
-              type="text"
-              class="w-full border border-gray-400 px-2 py-1 rounded-md"
-              disabled
-            />
 
-          </div>
-          <div class="flex flex-row items-start">
-            <div class="flex flex-col w-96 gap-2">
-              <div>
-                <button
-                  on:click={trigger}
-                  id="btnDisable"
-                  class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-                >
-                  Select Signature Placement
-                </button>
-              </div>
-
-              <div
-                class:hidden={toggleBtn}
-                class="flex items-center justify-start gap-5"
-              >
-                <button
-                  on:click={signaturePlacement}
-                  id="posControls"
-                  class:justify-end={position}
-                  class:bg-indigo-600={bgclr}
-                  class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"
-                >
-                  <div
-                    class:bg-white={ballwht}
-                    class:bg-black={ballblk}
-                    class="w-3 h-3  rounded-full"
-                  />
-                </button>
-                <p class:font-semibold={bold} class="text-base">
-                  Lock Horizontal control
-                </p>
-              </div>
-            </div>
-            <canvas
-              id="mycanvas3"
-              class="border-2 rounded-md overflow-hidden w-full mx-auto h-auto"
-            />
-          </div>
-
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
+          <div class="flex items-center justify-end border-t border-white pt-4">
             <button
               on:click={backBtn2}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+              class="bg-indigo-600 hidden hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
               Back
             </button>
