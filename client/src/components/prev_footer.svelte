@@ -1,22 +1,21 @@
 <script>
   import axios from "axios"
-  import { onMount } from "svelte"
-  import { createEventDispatcher } from "svelte"
   import { navigate } from "svelte-routing"
-  import ConfirmMsg from "./confirm_msg.svelte"
-  import SignidMsg from "./signid_msg.svelte"
   import QueueMsg from "./Queue_msg.svelte"
-  import Loading from "./Loading.svelte"
-  const dispatch = createEventDispatcher()
+  import SignidMsg from "./signid_msg.svelte"
+
   let load = false
   export let signmsg
   export let Queue_msg
-  export let loader = false
+  let errormsg
+  // export let loader = false
+  let loading = false
 
   signmsg = false
   Queue_msg = false
+  // let display = false
 
-  let issuerName, src
+  // let issuerName, src
 
   let token = localStorage.getItem("token")
   let fileHash = localStorage.getItem("filehash")
@@ -39,133 +38,112 @@
   let blob = localStorage.getItem("blobpdf")
   console.log(blob)
 
-  onMount(async () => {
-    const { data } = await axios.get(
-      "https://test.swagger.print2block.in/account/user",
-      {
-        headers: {
-          "x-access-token": token,
-        },
-      }
-    )
-    issuerName = data.userData.name
-    console.log(data.userData.name)
-  })
+  // onMount(async () => {
+  //   const { data } = await axios.get(
+  //     "https://test.swagger.print2block.in/account/user",
+  //     {
+  //       headers: {
+  //         "x-access-token": token,
+  //       },
+  //     }
+  //   )
+  //   issuerName = data.userData.name
+  //   console.log(data.userData.name)
+  // })
 
   // getting signature Id from the user
-  const getsignature = async () => {
-    load = true
-    signmsg = true
-    const { data } = await axios.get(
-      `https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`
-    )
-    console.log(data)
-    dispatch("signature", data)
-    setTimeout(() => {
-      signmsg = false
-    }, 1000)
-    console.log("sign created")
-    // success = true;
-    load = false
-    localStorage.setItem("signature", data)
-    let signature = localStorage.getItem("signature")
-    console.log(signature)
+  const getSignature = async () => {
+    try {
+      load = true
+      signmsg = true
+      const { data } = await axios.get(
+        `https://ecdsa.test.print2block.in/sign/5f52329ba0ae7d28650a9fe7${fileHash}${dataHash}`
+      )
+      console.log(data)
+      // dispatch("signature", data)
+      setTimeout(() => {
+        signmsg = false
+      }, 1000)
+      localStorage.setItem("signature", data)
+      let signature = localStorage.getItem("signature")
+      console.log(signature)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
-  const publishdoc = async () => {
-    load = true
-    loader = true
-    Queue_msg = true
-    let signature = localStorage.getItem("signature")
-    console.log("signature", signature)
-    let documentID = localStorage.getItem("documentID")
-    console.log("documentID", documentID)
-    const { data } = await axios.post(
-      "https://test.swagger.print2block.in/docs/publish",
-      {
-        documentID: documentID,
-        signature: signature,
-      },
-      {
-        headers: {
-          "x-access-token": token,
+  const publishDoc = async () => {
+    try {
+      // loading = true
+      Queue_msg = true
+      let signature = localStorage.getItem("signature")
+      console.log("signature", signature)
+      let documentID = localStorage.getItem("documentID")
+      console.log("documentID", documentID)
+      const { data } = await axios.post(
+        "https://test.swagger.print2block.in/docs/publish",
+        {
+          documentID: documentID,
+          signature: signature,
         },
-      }
-    )
-    console.log(data)
+        {
+          headers: {
+            "x-access-token": token,
+          },
+        }
+      )
 
-    console.log(data.state)
-    dispatch("push", data)
-    setTimeout(() => {
-      Queue_msg = false
-    }, 1000)
-    setTimeout(() => {
-      loader = false
-    }, 3000)
-    load = false
-    navigate(`/final`)
-    // }
+      setTimeout(() => {
+        Queue_msg = false
+      }, 1000)
+      // setTimeout(() => {
+      //   loading = false
+      // }, 5000)
+      // window.location.assign(proposedURL, "_blank")
+      window.open(proposedURL, "_blank").focus()
+    } catch (error) {
+      console.error(error)
+    }
+
+    // navigate(proposedURL)
   }
 
   const releaseDoc = async () => {
-    // let documentID = localStorage.getItem('documentID');
-    const { data } = await axios.get(
-      `https://test.swagger.print2block.in/docs/release?documentID=${documentID}`,
-      {
-        headers: {
-          "x-access-token": token,
-        },
+    try {
+      // let documentID = localStorage.getItem('documentID');
+      const { data } = await axios.get(
+        `https://test.swagger.print2block.in/docs/release?documentID=${documentID}`
+      )
+      console.log(data)
+      console.log(data.success)
+      if (data) {
+        navigate("/publish")
       }
-    )
-    console.log(data)
-    console.log(data.success)
-    if (data) {
-      navigate("/publish")
+    } catch (error) {
+      console.error(error)
     }
   }
 
   //disabling release button
-  // let disabled = false;
-  const disablerelease = () => {
+
+  const disableRelease = () => {
     document.getElementById("release").disabled = true
   }
 
-  window.addEventListener("click", function () {
-    const confirm = document.getElementById("confirm")
-    const sign = document.getElementById("sign")
-    const publish = document.getElementById("publish")
-    const signature = document.getElementById("Signature")
-    const publishdoc = document.getElementById("PublishDoc")
-    const confirmation = document.getElementById("Confirmation")
-    const loader = document.getElementById("loader")
-    // e.stopPropagation();
+  const onConfirm = () => {
+    document.getElementById("confirm").style.display = "none"
+    document.getElementById("sign").style.display = "inline-flex"
+    document.getElementById("Confirmation").style.display = "none"
+    document.getElementById("Signature").style.display = "inline-flex"
+  }
 
-    // whenever the enter button is clicked
+  const onSign = () => {
+    document.getElementById("sign").style.display = "none"
+    document.getElementById("publish").style.display = "inline-flex"
+    document.getElementById("Signature").style.display = "none"
+    document.getElementById("Publishdoc").style.display = "inline-flex"
+  }
 
-    confirm.addEventListener("click", () => {
-      console.log("confirm clicked")
-      // e.stopPropagation();
-      confirm.style.display = "none"
-      sign.style.display = "inline-flex"
-      signature.style.display = "inline-flex"
-      confirmation.style.display = "none"
-
-      // publish.style.display = 'none';
-      console.log("sign-triggered")
-    })
-    sign.addEventListener("click", () => {
-      // e.stopPropagation();
-      sign.style.display = "none"
-      confirm.style.display = "none"
-      publish.style.display = "inline-flex"
-      signature.style.display = "none"
-      publishdoc.style.display = "inline-flex"
-      setTimeout(() => {
-        loader.style.display = "block"
-      }, 3000)
-      console.log("publishing triggered")
-    })
-  })
   const hideSignmsg = () => {
     signmsg = false
   }
@@ -174,36 +152,24 @@
   }
 </script>
 
-<!-- {#if loader}
-  <Loading />
-{:else} -->
+<!-- {#if loading}
+  <Loader />
+{/if} -->
 {#if signmsg}
-  {#if (src = blobimage)}
-    <SignidMsg
-      position="absolute z-10 -bottom-20 right-0"
-      on:click={hideSignmsg}
-    />
-  {:else}
-    <SignidMsg
-      position="absolute z-20 bottom-24 right-0"
-      on:click={hideSignmsg}
-    />
-  {/if}
-{:else if Queue_msg}
-  {#if (src = blobimage)}
-    <QueueMsg
-      position="absolute z-10 -bottom-20 right-0"
-      on:click={hideQueuemsg}
-    />
-  {:else}
-    <QueueMsg
-      position="absolute z-20 bottom-24	 right-0"
-      on:click={hideQueuemsg}
-    />
-  {/if}
+  <SignidMsg
+    position="absolute z-20 bottom-24 right-0"
+    on:click={hideSignmsg}
+  />
 {/if}
+{#if Queue_msg}
+  <QueueMsg
+    position="absolute z-20 bottom-24	 right-0"
+    on:click={hideQueuemsg}
+  />
+{/if}
+
 <div
-  class="absolute w-5/6 mx-auto flex justify-center items-center z-10 bottom-0  inset-x-0"
+  class="absolute w-5/6 mx-auto flex justify-center items-center z-10 bottom-0 inset-x-0 "
 >
   <div
     class="container mx-auto bg-white flex flex-col items-center px-4 py-2 md:flex-row md:right-0 rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]"
@@ -221,7 +187,7 @@
         please verify document details,if needed to modify click <strong>
           Release
         </strong>
-         to generate new document
+        to generate new document
       </h1>
     </div>
     <div
@@ -238,11 +204,11 @@
         Clck <strong>Signature</strong>
         to generate your Signature.If needed to modify click
         <strong>Release</strong>
-         to generate new document
+        to generate new document
       </h1>
     </div>
     <div
-      id="PublishDoc"
+      id="Publishdoc"
       class="mb-6 flex w-full flex-col pr-0 text-center md:mb-0 md:w-auto md:pr-10 md:text-left  sm:text-left "
       style="display: none"
     >
@@ -255,12 +221,13 @@
         Clck <strong>Publish</strong>
         to publish your document to BlockChain. You cannot
         <strong>Release</strong>
-         after publishing the document
+        after publishing the document
       </h1>
     </div>
     <div
       class="mx-auto flex flex-shrink-0 items-center space-x-4 md:ml-auto md:mr-0"
     >
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <button
         class="inline-flex items-center rounded-lg border border-red-600 py-2 px-5 text-red-600 hover:bg-red-600 hover:text-white disabled:cursor-not-allowed disabled:bg-red-200"
         on:click|preventDefault={releaseDoc}
@@ -282,15 +249,17 @@
         </svg>
         <span class="title-font ml-2 text-base font-bold">Release</span>
       </button>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <button
         type="button"
-        class="inline-flex items-center rounded-lg border border-green-900 py-2 px-5 text-green-900 hover:bg-green-900 hover:text-white focus:outline-none"
+        class=" confirm inline-flex items-center rounded-lg border border-green-500 py-2 px-5 text-green-500 hover:bg-green-500 hover:text-white focus:outline-none "
         id="confirm"
+        on:click={onConfirm}
       >
         {#if load}
           <svg
             role="status"
-            class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-900"
+            class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-500"
             viewBox="0 0 24 24"
           />
         {:else}
@@ -311,16 +280,18 @@
         {/if}
         <span class="title-font ml-2 text-base font-bold">Confirm</span>
       </button>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <button
-        class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-5 hover:bg-green-900 hover:text-white focus:outline-none"
+        class="sign inline-flex items-center rounded-lg border border-green-500 text-green-500 py-2 px-5 hover:bg-green-500 hover:text-white focus:outline-none"
         style="display: none"
-        on:click|preventDefault|stopPropagation={getsignature}
+        on:click|preventDefault|stopPropagation={getSignature}
+        on:click={onSign}
         id="sign"
       >
         {#if load}
           <svg
             role="status"
-            class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-900"
+            class="mr-4 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-500"
             viewBox="0 0 24 24"
           />
         {:else}
@@ -341,17 +312,20 @@
         {/if}
         <span class="title-font ml-2 font-bold text-base">Signature</span>
       </button>
-      <button
-        class="inline-flex items-center rounded-lg border border-green-900 text-green-900 py-2 px-5 hover:bg-green-900 hover:text-white focus:outline-none"
+      <a
+        class="inline-flex items-center rounded-lg border border-green-500 text-green-500 py-2 px-5 hover:bg-green-500 hover:text-white focus:outline-none"
+        href={proposedURL}
+        target="_blank"
+        rel="noreferrer"
         style="display: none"
         id="publish"
-        on:click|once={disablerelease}
-        on:click|preventDefault|stopPropagation={publishdoc}
+        on:click|once={disableRelease}
+        on:click|preventDefault|stopPropagation={publishDoc}
       >
         {#if load}
           <svg
             role="status"
-            class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-900"
+            class="mr-3 h-5 w-5 animate-spin rounded-full border-4 border-white border-r-green-500"
             viewBox="0 0 24 24"
           />
         {:else}
@@ -371,8 +345,7 @@
           </svg>
         {/if}
         <span class="title-font ml-2 font-bold text-base">Publish</span>
-      </button>
+      </a>
     </div>
   </div>
 </div>
-<!-- {/if} -->
