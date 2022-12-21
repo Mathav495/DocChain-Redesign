@@ -841,10 +841,9 @@
               Back
             </button>
             <button
-              on:click={confirmRequest}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+              class="bg-red-600 hover:bg-red-800 px-2 py-1 rounded-md border border-red-400 text-white text-base"
             >
-              confirmRequest
+              close
             </button>
           </div>
         </div>
