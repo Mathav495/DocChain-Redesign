@@ -7,6 +7,7 @@
   // console.log('sign1')
   let initvalues
   let signreq
+  let SignFile
   let oneTimePassword = ""
   let signPosition = ""
   let currentpage = 0,
@@ -288,6 +289,7 @@
   }
 
   const confirmRequest = async () => {
+    console.log("confirmRequest")
     //get file name
     const { data } = await axios.post(
       "https://pdfsign.test.print2block.in/signature/confirm",
@@ -297,6 +299,8 @@
       }
     )
     console.log(data)
+    SignFile = data.signRequest.signedFile
+    console.log(SignFile)
   }
 </script>
 
