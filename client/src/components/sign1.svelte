@@ -1,94 +1,16 @@
 <script>
+  import { createEventDispatcher } from "svelte"
+  const dispatch = createEventDispatcher()
   export let data1
   export let totalPages
+  export let modal
+
+  $: if (modal) {
+    nextBtn2()
+  }
   // console.log(data1)
   // console.log('sign1')
 
-  let _PDFDOC
-  const showPdf = async (url) => {
-    // console.log(url)
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js"
-    let loadingTask = pdfjsLib.getDocument(url)
-    loadingTask = loadingTask.promise
-    _PDFDOC = await loadingTask
-    _total_pages = _PDFDOC.numPages
-    currentpage = 1
-    showPage(1)
-  }
-  let src
-  let base64, imageUrl, url, pdfUrl
-  base64 = localStorage.getItem("base64")
-  // console.log(base64)
-  url = base64.split(";base64,")
-  const findFile = async () => {
-    if (
-      url[0] == "data:image/png" ||
-      url[0] == "data:image/jpg" ||
-      url[0] == "data:image/jpeg"
-    ) {
-      // console.log('image uplpaded')
-      imageUrl = base64
-      // console.log(imageUrl)
-    } else if (url[0] == "data:application/pdf") {
-      // console.log('pdf uplpaded')
-      pdfUrl = base64
-      await showPdf(pdfUrl)
-      // console.log(pdfUrl)
-    } else {
-      // console.log('logged')
-    }
-  }
-  findFile()
-
-  const showPage = async (pageno) => {
-    let page = await _PDFDOC.getPage(pageno)
-    let viewport = page.getViewport({ scale: 2 })
-
-    // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById("mycanvas2")
-    let context = canvas.getContext("2d")
-    canvas.height = viewport.height
-    canvas.width = viewport.width
-
-    // Render PDF page into canvas context
-    let renderContext = {
-      canvasContext: context,
-      viewport: viewport,
-    }
-    await page.render(renderContext).promise
-    // document.getElementById('pdf-preview').src = canvas.toDataURL();
-  }
-  const showSignPage = async (base64, pageNo) => {
-    // console.log(base64)
-    console.log(pageNo)
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js"
-    let loadingTask = pdfjsLib.getDocument(base64)
-    loadingTask = loadingTask.promise
-    _PDFDOC = await loadingTask
-    _total_pages = _PDFDOC.numPages
-    currentpage = 1
-    signPageNo(pageNo)
-  }
-  const signPageNo = async (pageNo) => {
-    let page = await _PDFDOC.getPage(pageNo)
-    let viewport = page.getViewport({ scale: 1.135 })
-
-    // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById("mycanvas3")
-    let context = canvas.getContext("2d")
-    canvas.height = viewport.height
-    canvas.width = viewport.width
-
-    // Render PDF page into canvas context
-    let renderContext = {
-      canvasContext: context,
-      viewport: viewport,
-    }
-    await page.render(renderContext).promise
-    // document.getElementById('pdf-preview').src = canvas.toDataURL();
-  }
   let switchIdForm = true
   const switchId = () => {
     if (switchIdForm == true) {
@@ -120,18 +42,18 @@
     tick2 = true,
     tick3 = true,
     signPage = false
-  const nextBtn2 = (pageNo) => {
-    console.log(pageNo)
-    base64 = localStorage.getItem("base64")
-    showSignPage(base64, pageNo)
-    empty2 = true
-    dot3 = false
-    borderBlue2 = true
-    tick2 = false
-    dot2 = true
-    SelectPageno = false
-    signPage = true
-  }
+  // const nextBtn2 = (pageNo) => {
+  // console.log(pageNo)
+  // base64 = localStorage.getItem("base64")
+  // showSignPage(base64, pageNo)
+  // empty2 = true
+  // dot3 = false
+  // borderBlue2 = true
+  // tick2 = false
+  // dot2 = true
+  // SelectPageno = false
+  // signPage = true
+  // }
   const backBtn1 = () => {
     empty2 = false
     dot3 = true
@@ -141,6 +63,20 @@
     dot2 = true
     tick2 = true
     empty = false
+  }
+  const nextBtn2 = () => {
+    empty = true
+    empty2 = true
+    dot1 = true
+    dot2 = true
+    dot3 = false
+    borderBlue1 = true
+    borderBlue2 = true
+    tick1 = false
+    tick2 = false
+    details = false
+    SelectPageno = false
+    signPage = true
   }
   const backBtn2 = () => {
     // console.log('back2')
@@ -177,7 +113,6 @@
     console.log("next4")
   }
   let pageNo
-  $: showPage(pageNo)
   let clr = "#FFFFFF"
   const chooseClr = () => {
     console.log(clr)
@@ -202,27 +137,17 @@
     document.getElementById("btnDisable").setAttribute("disabled", "true")
     date = new Date().toJSON()
     fieldName = `Signer ${date}`
+    console.log(fieldName)
     toggleBtn = false
-    await loadLibrary("pdf", "/lib/signPosition.js")
+    await loadLibrary("pdfPosition", "/lib/signPosition.js")
     console.log(pdfPosition)
     pdfPosition.init({
       triggerButtons: ".show-signature-overlay",
-      imageTarget: "mycanvas3",
+      imageTarget: "mycanvas",
       positionTextbox: "positions",
     })
   }
 
-  // let bgclr = false,
-  //   ballblk = true
-  // const btnclr = () => {
-  //   if (ballblk) {
-  //     ballblk = false
-  //     ballwht = true
-  //   } else {
-  //     bgclr = false
-  //     ballblk = true
-  //   }
-  // }
   let position = false,
     ballwht = false,
     bgclr = false,
@@ -247,6 +172,12 @@
       bold = false
       // pdfPosition.options.lockHorizontalCenter = true;
     }
+  }
+
+  const hideModal = () => {
+    document.getElementById("disableBtn").disabled = false
+    document.getElementsByClassName("btn")[0].classList.add("hidden")
+    dispatch("PageNo", pageNo)
   }
 </script>
 
@@ -544,7 +475,7 @@
             SELECT PAGE NO
           </h1>
           <div>
-            <div class="flex flex-row gap-4">
+            <div class="flex flex-col gap-4">
               <div class="w-96">
                 <p class="text-base text-gray-600 w-40 font-semibold">
                   Select Page No:
@@ -561,19 +492,38 @@
                   {/each}
                 </select>
               </div>
-              <div>
-                {#if (src = imageUrl)}
-                  <img
-                    class="w-auto h-auto rounded-md"
-                    src={imageUrl}
-                    alt="document"
-                  />
-                {:else}
-                  <canvas
-                    id="mycanvas2"
-                    class="border-2 rounded-md overflow-hidden w-full mx-auto h-auto"
-                  />
-                {/if}
+              <div class="flex flex-col w-96 gap-2">
+                <div>
+                  <button
+                    on:click={trigger}
+                    id="btnDisable"
+                    class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+                  >
+                    Select Signature Placement
+                  </button>
+                </div>
+
+                <div
+                  class:hidden={toggleBtn}
+                  class="flex items-center justify-start gap-5"
+                >
+                  <button
+                    on:click={signaturePlacement}
+                    id="posControls"
+                    class:justify-end={position}
+                    class:bg-indigo-600={bgclr}
+                    class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"
+                  >
+                    <button
+                      class:bg-white={ballwht}
+                      class:bg-black={ballblk}
+                      class="w-3 h-3  rounded-full"
+                    />
+                  </button>
+                  <p class:font-semibold={bold} class="text-base">
+                    Lock Horizontal control
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -587,9 +537,12 @@
               Back
             </button>
             <button
-              on:click={() => nextBtn2(pageNo)}
+              on:click={hideModal}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
+              SIGN
+            </button>
+            <button id="autoClick3" on:click={nextBtn2} class="hidden">
               Next
             </button>
           </div>
@@ -641,7 +594,6 @@
             <input
               type="text"
               class="w-full border border-gray-400 px-2 py-1 rounded-md"
-              value={base64}
               disabled
             />
           </div>
@@ -649,59 +601,17 @@
             <p class="text-base text-gray-600 w-96 font-semibold">
               Position Textbox
             </p>
-            <input
+            <!-- <input
               id="positions"
               type="text"
               class="w-full border border-gray-400 px-2 py-1 rounded-md"
               disabled
-            />
+            /> -->
           </div>
-          <div class="flex flex-row items-start">
-            <div class="flex flex-col w-96 gap-2">
-              <div>
-                <button
-                  on:click={trigger}
-                  id="btnDisable"
-                  class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-                >
-                  Select Signature Placement
-                </button>
-              </div>
-
-              <div
-                class:hidden={toggleBtn}
-                class="flex items-center justify-start gap-5"
-              >
-                <button
-                  on:click={signaturePlacement}
-                  id="posControls"
-                  class:justify-end={position}
-                  class:bg-indigo-600={bgclr}
-                  class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"
-                >
-                  <button
-                    class:bg-white={ballwht}
-                    class:bg-black={ballblk}
-                    class="w-3 h-3  rounded-full"
-                  />
-                </button>
-                <p class:font-semibold={bold} class="text-base">
-                  Lock Horizontal control
-                </p>
-              </div>
-            </div>
-            <canvas
-              id="mycanvas3"
-              class="border-2 rounded-md overflow-hidden w-full mx-auto h-auto"
-            />
-          </div>
-
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
+          <div class="flex items-center justify-end border-t border-white pt-4">
             <button
               on:click={backBtn2}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+              class="bg-indigo-600 hidden hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
               Back
             </button>

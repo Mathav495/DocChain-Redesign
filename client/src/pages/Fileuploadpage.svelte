@@ -7,6 +7,8 @@
   import Header from "../components/Header.svelte"
   import Addfile from "../components/Addfile.svelte"
   import Sign1 from "../components/sign1.svelte"
+  import { dispatch_dev } from "svelte/internal"
+  import Loginpage from "./Loginpage.svelte"
 
   export let id
   let hideNavbar = true
@@ -42,8 +44,9 @@
     }
   }
 
-  let stepModal = false,
-    addfile = false,
+  let stepModal = false
+  $: console.log(stepModal)
+  let addfile = false,
     data1,
     signerId =
       "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3"
@@ -64,6 +67,20 @@
       totalPages.push(i)
     }
     console.log(totalPages)
+  }
+
+  let pageNumber = 0
+  const pageNum = (e) => {
+    pageNumber = e.detail
+    console.log(pageNumber)
+    stepModal = false
+  }
+
+  let modal = false
+  const showModal = async () => {
+    stepModal = true
+    console.log("click")
+    modal = true
   }
 </script>
 
@@ -94,13 +111,16 @@
     <div class="relative ">
       <Addfile
         {id}
+        {pageNumber}
         on:File
         on:steps={() => Modal(signerId)}
         on:totalPage={pageNumbers}
+        on:mShow={showModal}
       />
+
       {#if stepModal}
         <div class="absolute top-0 w-full h-full bg-gray-300/80">
-          <Sign1 {data1} {totalPages} />
+          <Sign1 {data1} {totalPages} on:PageNo={pageNum} {modal} />
         </div>
       {/if}
     </div>
