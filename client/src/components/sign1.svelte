@@ -315,6 +315,14 @@
     dot5 = false
     empty4 = true
   }
+
+  const pdfPreview = async () => {
+    console.log(SignFile)
+    const { data } = await axios.get(
+      `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+      { responseType: "blob" }
+    )
+  }
 </script>
 
 <div class="w-full h-auto bg-gray-300/80 p-4">
@@ -830,7 +838,10 @@
             <div
               class=" mt-5 w-1/2 flex justify-center bg-slate-100 rounded-lg"
             >
-              <button class="text-center text-lg font-semibold text-slate-800">
+              <button
+                on:click={pdfPreview}
+                class="text-center text-lg font-semibold text-slate-800"
+              >
                 click here!!! and Preview
               </button>
             </div>
