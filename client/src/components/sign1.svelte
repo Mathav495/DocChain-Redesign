@@ -820,21 +820,25 @@
         </div>
       {/if}
       {#if download}
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col  gap-4">
           <h1
             class="text-white text-lg tracking-wide font-semibold border-b border-white"
           >
             SIGN DETAILS
           </h1>
-          <div class="flex gap-3">
-            <h1 class="text-lg text-slate-800 font-semibold flex items-center">
-              click here!!!
-            </h1>
+          <div class="flex justify-center">
+            <div
+              class=" mt-5 w-1/2 flex justify-center bg-slate-100 rounded-lg"
+            >
+              <button class="text-center text-lg font-semibold text-slate-800">
+                click here!!! and Preview
+              </button>
+            </div>
           </div>
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          />
         </div>
+        <div
+          class="flex items-center justify-between border-t border-white pt-4"
+        />
       {/if}
     </ol>
   </nav>
