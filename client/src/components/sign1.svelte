@@ -6,6 +6,7 @@
   // console.log(data1)
   // console.log('sign1')
   let initvalues
+  let signreq
   let oneTimePassword = ""
   let signPosition = ""
   let currentpage = 0,
@@ -272,7 +273,7 @@
       }
     )
     console.log(data)
-    let signreq = data.signRequest.id
+    signreq = data.signRequest.id
     console.log(signreq)
     // modal = true
     //get signer id
@@ -284,6 +285,18 @@
     dot4 = false
     empty3 = true
     borderBlue3 = true
+  }
+
+  const confirmRequest = async () => {
+    //get file name
+    const { data } = await axios.post(
+      "https://pdfsign.test.print2block.in/signature/confirm",
+      {
+        requestid: signreq,
+        otp: oneTimePassword,
+      }
+    )
+    console.log(data)
   }
 </script>
 
@@ -781,7 +794,7 @@
               Back
             </button>
             <button
-              on:click={nextBtn4}
+              on:click={confirmRequest}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
               confirmRequest
