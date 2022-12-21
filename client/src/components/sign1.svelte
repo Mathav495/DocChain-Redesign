@@ -199,12 +199,12 @@
     })
   }
   let toggleBtn = true,
-    fieldName = "Signer",
+    fieldName = "",
     date
   const trigger = async () => {
     document.getElementById("btnDisable").setAttribute("disabled", "true")
     date = new Date().toJSON()
-    fieldName = `Signer ${date}`
+    fieldName = `${fieldName} ${date}`
     toggleBtn = false
     await loadLibrary("pdf", "/lib/signPosition.js")
     console.log(pdfPosition)
