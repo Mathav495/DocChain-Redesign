@@ -1,12 +1,15 @@
 <script>
-  export let data1
+  export let data1, file
   export let totalPages
+  import axios from "axios"
+
   // console.log(data1)
   // console.log('sign1')
+  let initvalues
   let signPosition = ""
   let currentpage = 0,
     _PDFDOC,
-    Reason = "",
+    Reason = "for verification",
     _total_pages = 0
   const showPdf = async (url) => {
     // console.log(url)
@@ -22,6 +25,8 @@
   let src
   let base64, imageUrl, url, pdfUrl
   base64 = localStorage.getItem("base64")
+  let docURL = localStorage.getItem("docURL")
+  console.log(docURL)
   // console.log(base64)
   url = base64.split(";base64,")
   const findFile = async () => {
@@ -46,7 +51,7 @@
 
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno)
-    let viewport = page.getViewport({ scale: 2 })
+    let viewport = page.getViewport({ scale: 0.5 })
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById("mycanvas2")
@@ -76,7 +81,7 @@
   }
   const signPageNo = async (pageNo) => {
     let page = await _PDFDOC.getPage(pageNo)
-    let viewport = page.getViewport({ scale: 1.135 })
+    let viewport = page.getViewport({ scale: 0.5 })
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById("mycanvas3")
@@ -159,16 +164,7 @@
     tick4 = true,
     dot4 = true,
     otp = false
-  const nextBtn3 = () => {
-    console.log("next3")
-    tick3 = false
-    dot3 = true
-    dot4 = false
-    empty3 = true
-    borderBlue3 = true
-    signPage = false
-    otp = true
-  }
+
   const backBtn3 = () => {
     borderBlue3 = false
     dot4 = true
@@ -199,12 +195,12 @@
     })
   }
   let toggleBtn = true,
-    fieldName = "",
+    fieldName = "signer",
     date
   const trigger = async () => {
     document.getElementById("btnDisable").setAttribute("disabled", "true")
     date = new Date().toJSON()
-    fieldName = `${fieldName} ${date}`
+    fieldName = `signer ${date}`
     toggleBtn = false
     await loadLibrary("pdf", "/lib/signPosition.js")
     console.log(pdfPosition)
@@ -250,6 +246,43 @@
       bold = false
       // pdfPosition.options.lockHorizontalCenter = true;
     }
+  }
+
+  const initiate = async () => {
+    console.log("initiate")
+    initvalues = {
+      signer:
+        "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
+      file: file,
+      signPage: pageNo,
+      signPosition: signPosition,
+      signField: fieldName,
+      reason: Reason,
+      signBGColor: clr,
+      url: docURL,
+    }
+    const { data } = await axios.post(
+      "https://pdfsign.test.print2block.in/signature/initiate",
+      initvalues,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    console.log(data)
+    let signreq = data.signRequest.id
+    console.log(signreq)
+    // modal = true
+    //get signer id
+    signPage = false
+    otp = true
+    console.log("next3")
+    tick3 = false
+    dot3 = true
+    dot4 = false
+    empty3 = true
+    borderBlue3 = true
   }
 </script>
 
@@ -683,7 +716,7 @@
                   class:bg-indigo-600={bgclr}
                   class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"
                 >
-                  <button
+                  <div
                     class:bg-white={ballwht}
                     class:bg-black={ballblk}
                     class="w-3 h-3  rounded-full"
@@ -709,8 +742,9 @@
             >
               Back
             </button>
+
             <button
-              on:click={nextBtn3}
+              on:click={initiate}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
               initiate

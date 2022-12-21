@@ -39,7 +39,13 @@
       <Signpage {file} id={params.id} on:blob={blobUrl} on:myFile={myfile} />
     </Route>
     <Route path="/add-file/:id" let:params>
-      <Fileuploadpage id={params.id} on:File={getFile} {bloblink} {MyFile} />
+      <Fileuploadpage
+        id={params.id}
+        on:File={getFile}
+        {bloblink}
+        {MyFile}
+        {file}
+      />
     </Route>
     <Route path="/add-data/:id" let:params>
       <Adddatapage id={params.id} />
