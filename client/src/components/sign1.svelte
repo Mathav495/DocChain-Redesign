@@ -5,6 +5,7 @@
 
   // console.log(data1)
   // console.log('sign1')
+  let blob
   let download = false
   let borderBlue4 = false
   let empty4 = false
@@ -322,6 +323,13 @@
       `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
       { responseType: "blob" }
     )
+    console.log(data)
+    const myFile = new File([data], SignFile, {
+      type: data.type,
+    })
+    console.log(myFile)
+    blob = URL.createObjectURL(data)
+    console.log(blob)
   }
 </script>
 
