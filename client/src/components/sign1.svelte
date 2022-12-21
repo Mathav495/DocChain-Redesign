@@ -759,6 +759,7 @@
           >
             SIGN DETAILS
           </h1>
+          hello
           <div
             class="flex items-center justify-between border-t border-white pt-4"
           >

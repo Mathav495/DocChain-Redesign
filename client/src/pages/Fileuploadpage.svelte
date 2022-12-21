@@ -8,10 +8,16 @@
   import Addfile from "../components/Addfile.svelte"
   import Sign1 from "../components/sign1.svelte"
 
-  export let id, file
+  export let id
   let hideNavbar = true
   const hideNav = () => {
     hideNavbar = true
+  }
+  let file
+  const getFile = (e) => {
+    console.log("file", e.detail)
+    file = e.detail
+    console.log(file)
   }
   console.log(id)
   const showNav = () => {
@@ -94,7 +100,7 @@
     <div class="relative ">
       <Addfile
         {id}
-        on:File
+        on:File={getFile}
         on:steps={() => Modal(signerId)}
         on:totalPage={pageNumbers}
       />
