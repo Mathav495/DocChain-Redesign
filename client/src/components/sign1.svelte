@@ -3,7 +3,7 @@
   export let totalPages
   // console.log(data1)
   // console.log('sign1')
-
+  let signPosition = ""
   let currentpage = 0,
     _PDFDOC,
     digitalSign = "",
@@ -653,6 +653,7 @@
               Position Textbox
             </p>
             <input
+              bind:value={signPosition}
               id="positions"
               type="text"
               class="w-full border border-gray-400 px-2 py-1 rounded-md"
