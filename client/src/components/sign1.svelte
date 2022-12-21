@@ -833,19 +833,7 @@
           </div>
           <div
             class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
-              on:click={backBtn3}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Back
-            </button>
-            <button
-              class="bg-red-600 hover:bg-red-800 px-2 py-1 rounded-md border border-red-400 text-white text-base"
-            >
-              close
-            </button>
-          </div>
+          />
         </div>
       {/if}
     </ol>
