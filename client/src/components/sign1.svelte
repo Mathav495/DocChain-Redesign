@@ -6,7 +6,7 @@
   let signPosition = ""
   let currentpage = 0,
     _PDFDOC,
-    digitalSign = "",
+    Reason = "",
     _total_pages = 0
   const showPdf = async (url) => {
     // console.log(url)
@@ -611,7 +611,7 @@
             </p>
             <input
               type="text"
-              bind:value={digitalSign}
+              bind:value={Reason}
               class="w-full border border-gray-400 px-2 py-1 rounded-md"
             />
           </div>
