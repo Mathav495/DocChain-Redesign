@@ -5,6 +5,10 @@
 
   // console.log(data1)
   // console.log('sign1')
+  let borderBlue4 = false
+  let empty4 = false
+  let dot5 = true
+  let tick5 = true
   let initvalues
   let signreq
   let SignFile
@@ -301,6 +305,12 @@
     console.log(data)
     SignFile = data.signRequest.signedFile
     console.log(SignFile)
+    tick4 = false
+    borderBlue4 = true
+    dot4 = true
+    tick4 = false
+    dot5 = false
+    empty4 = true
   }
 </script>
 
@@ -433,7 +443,10 @@
         <button class="relative pr-8 sm:pr-20">
           <!-- Upcoming Step -->
           <div class="absolute inset-0 flex items-center">
-            <div class="h-0.5 w-full bg-gray-200" />
+            <div
+              class:bg-indigo-600={borderBlue4}
+              class="h-0.5 w-full bg-gray-200"
+            />
           </div>
           <div
             class:hidden={empty3}
@@ -468,21 +481,19 @@
             <span class="sr-only">Step 2</span>
           </div>
         </button>
-
         <button class="relative">
           <!-- Upcoming Step -->
           <div class="absolute inset-0 flex items-center">
             <div class="h-0.5 w-full bg-gray-200" />
           </div>
           <div
-            href="#c"
+            class:hidden={empty4}
             class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
           >
             <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
           </div>
           <div
-            href="#c"
-            class:hidden={true}
+            class:hidden={dot5}
             class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
           >
             <span
@@ -490,8 +501,7 @@
             />
           </div>
           <div
-            href="#b"
-            class:hidden={true}
+            class:hidden={tick5}
             class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
           >
             <!-- Heroicon name: mini/check -->
