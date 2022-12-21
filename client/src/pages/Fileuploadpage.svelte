@@ -7,8 +7,6 @@
   import Header from "../components/Header.svelte"
   import Addfile from "../components/Addfile.svelte"
   import Sign1 from "../components/sign1.svelte"
-  import { dispatch_dev } from "svelte/internal"
-  import Loginpage from "./Loginpage.svelte"
 
   export let id
   let hideNavbar = true
