@@ -4,7 +4,6 @@
   import { createEventDispatcher } from "svelte"
   import { navigate } from "svelte-routing"
   const dispatch = createEventDispatcher()
-  export let file
   let otp = ""
   let SignFile
   let blob
@@ -29,7 +28,7 @@
 
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno)
-    let viewport = page.getViewport({ scale: 0.67 })
+    let viewport = page.getViewport({ scale: 2 })
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById("mycanvas1")
@@ -78,37 +77,9 @@
     })
   }
   let modal = false
-  const initiate = async () => {
-    console.log("initiate")
-    // modal = true;
 
-    initvalues = {
-      signer:
-        "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
-      file: file,
-      signPage: "0",
-      signPosition: "50, 315, 545, 400",
-      signField: "signature",
-      reason: "testing purpose",
-      signBGColor: "#32a4a8",
-      url: docURL,
-    }
-    const { data } = await axios.post(
-      "https://pdfsign.test.print2block.in/signature/initiate",
-      initvalues,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
-    console.log(data)
-    signreq = data.signRequest.id
-    console.log(signreq)
-    modal = true
-  }
   const ConfirmRequest = async () => {
-    //post method .to give the input field to call api
+    //get file name
     const { data } = await axios.post(
       "https://pdfsign.test.print2block.in/signature/confirm",
       {
@@ -116,7 +87,6 @@
         otp: otp,
       }
     )
-
     console.log(data)
     SignFile = data.signRequest.signedFile
     console.log(SignFile)
@@ -147,7 +117,7 @@
   const nextpage = () => {
     if (currentpage < _total_pages) {
       console.log("initial", currentpage)
-      showPage(currentpage + 1)
+      showPage(currentpage + 1) //showPage(2)
       currentpage++
       console.log("final", currentpage)
     }
@@ -182,10 +152,12 @@
       position = true
       bgclr = true
       bold = true
+      // pdfPosition.options.lockHorizontalCenter = false;
     } else {
       position = false
       bgclr = false
       bold = false
+      // pdfPosition.options.lockHorizontalCenter = true;
     }
   }
 
@@ -228,7 +200,7 @@
       </div>
     </div>
   {/if}
-  <div class="w-8/12 flex-col gap-10">
+  <div class="w-8/12 flex flex-col gap-10">
     <div>
       <span
         class="text-base rounded-md font-bold bg-black text-white px-1 tracking-wider"
@@ -347,9 +319,9 @@
       </div>
       <div class="flex items-center justify-start">
         <div class="mb-2 w-1/2">
-          <label for="Identity" class="text-lg font-semibold">
+          <lable for="Identity" class="text-lg font-semibold">
             Reason for Digital Signature
-          </label>
+          </lable>
         </div>
         <div class="flex items-center justify-start gap-5 w-1/2 px-4">
           <input
@@ -363,9 +335,9 @@
       </div>
       <div class="flex items-center justify-start">
         <div class="mb-2 w-1/2">
-          <label for="Identity" class="text-lg font-semibold">
+          <lable for="Identity" class="text-lg font-semibold">
             Signature Background color
-          </label>
+          </lable>
         </div>
         <div class="flex items-center justify-start gap-5 w-1/2 px-4">
           <input
@@ -380,9 +352,9 @@
       </div>
       <div class="flex items-center justify-start">
         <div class="mb-2 w-1/2">
-          <label for="Identity" class="text-lg font-semibold">
+          <lable for="Identity" class="text-lg font-semibold">
             QR Data (eg: Trust URL)
-          </label>
+          </lable>
         </div>
         <div class="flex items-center justify-start gap-5 w-1/2 px-4">
           <input
@@ -396,9 +368,9 @@
       </div>
       <div class="flex items-center justify-start">
         <div class="mb-2 w-1/2">
-          <label for="Identity" class="text-lg font-semibold">
+          <lable for="Identity" class="text-lg font-semibold">
             Position Textbox
-          </label>
+          </lable>
         </div>
         <div class="flex items-center justify-start gap-5 w-1/2 px-4">
           <input
@@ -426,17 +398,5 @@
         class="border-2 rounded-md overflow-hidden w-full h-full aspect-auto"
       />
     {/if}
-    <button
-      on:click={initiate}
-      class="flex mx-auto mb-5 mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-    >
-      initiate
-    </button>
   </div>
-  <button
-    on:click={initiate}
-    class="flex mx-auto mb-5 mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-  >
-    Initiate
-  </button>
 </div>

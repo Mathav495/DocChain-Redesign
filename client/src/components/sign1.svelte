@@ -1,14 +1,28 @@
 <script>
+  export let data1, file , modal , totalPages
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
-  export let data1
-  export let totalPages
-  export let modal
-
+  import axios from "axios"
+  let blob
+  let download = false
+  let borderBlue4 = false
+  let empty4 = false
+  let dot5 = true
+  let tick5 = true
+  let initvalues
+  let signreq
+  let SignFile
+  let oneTimePassword = ""
+  let signPosition = ""
+  let  Reason = "for verification",
+ 
+  let src
+  let docURL = localStorage.getItem("docURL")
+  console.log(docURL)
+  let switchIdForm = true
   $: if (modal) {
     nextBtn2()
   }
-  let src
   let switchAccount = false,
     steps = false,
     modelHeading = false
@@ -86,16 +100,6 @@
     tick4 = true,
     dot4 = true,
     otp = false
-  const nextBtn3 = () => {
-    console.log("next3")
-    tick3 = false
-    dot3 = true
-    dot4 = false
-    empty3 = true
-    borderBlue3 = true
-    signPage = false
-    otp = true
-  }
   const backBtn3 = () => {
     borderBlue3 = false
     dot4 = true
@@ -107,8 +111,6 @@
     console.log("next4")
   }
   let pageNo
-
- $: showPage(pageNo)
   let clr = "#FFFFFF"
   const chooseClr = () => {
     console.log(clr)
@@ -126,7 +128,6 @@
       }
     })
   }
-
   let toggleBtn = true
   const trigger = async () => {
     document.getElementById("btnDisable").disabled = true
@@ -168,6 +169,80 @@
     }
   }
 
+  const initiate = async () => {
+    console.log("initiate")
+    initvalues = {
+      signer:
+        "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
+      file: file,
+      signPage: pageNo,
+      signPosition: signPosition,
+      signField: fieldName,
+      reason: Reason,
+      signBGColor: clr,
+      url: docURL,
+    }
+    const { data } = await axios.post(
+      "https://pdfsign.test.print2block.in/signature/initiate",
+      initvalues,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    )
+    console.log(data)
+    signreq = data.signRequest.id
+    console.log(signreq)
+    // modal = true
+    //get signer id
+    signPage = false
+    otp = true
+    console.log("next3")
+    tick3 = false
+    dot3 = true
+    dot4 = false
+    empty3 = true
+    borderBlue3 = true
+  }
+
+  const confirmRequest = async () => {
+    console.log("confirmRequest")
+    //get file name
+    const { data } = await axios.post(
+      "https://pdfsign.test.print2block.in/signature/confirm",
+      {
+        requestid: signreq,
+        otp: oneTimePassword,
+      }
+    )
+    console.log(data)
+    SignFile = data.signRequest.signedFile
+    console.log(SignFile)
+    otp = false
+    download = true
+    tick4 = false
+    borderBlue4 = true
+    dot4 = true
+    tick4 = false
+    dot5 = false
+    empty4 = true
+  }
+
+  const pdfPreview = async () => {
+    console.log(SignFile)
+    const { data } = await axios.get(
+      `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+      { responseType: "blob" }
+    )
+    console.log(data)
+    const myFile = new File([data], SignFile, {
+      type: data.type,
+    })
+    console.log(myFile)
+    blob = URL.createObjectURL(data)
+    console.log(blob)
+}
   const hideModal = () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
     dispatch("PageNo", pageNo)
@@ -309,7 +384,11 @@
         <button class="relative pr-8 sm:pr-20">
           <!-- Upcoming Step -->
           <div class="absolute inset-0 flex items-center">
-            <div class="h-0.5 w-full bg-gray-200" />
+            <div
+              class:bg-indigo-600={borderBlue4}
+              class="h-0.5 w-full bg-gray-200"
+            />
+
           </div>
           <div
             class:hidden={empty3}
@@ -344,21 +423,20 @@
             <span class="sr-only">Step 2</span>
           </div>
         </button>
-
         <button class="relative">
           <!-- Upcoming Step -->
           <div class="absolute inset-0 flex items-center">
             <div class="h-0.5 w-full bg-gray-200" />
           </div>
           <div
-            href="#c"
+            class:hidden={empty4}
+
             class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
           >
             <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
           </div>
           <div
-            href="#c"
-            class:hidden={true}
+            class:hidden={dot5}
             class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
           >
             <span
@@ -366,8 +444,7 @@
             />
           </div>
           <div
-            href="#b"
-            class:hidden={true}
+            class:hidden={tick5}
             class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
           >
             <!-- Heroicon name: mini/check -->
@@ -592,7 +669,7 @@
             </p>
             <input
               type="text"
-              value="For verification"
+              bind:value={Reason}
               class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
             />
           </div>
@@ -609,6 +686,7 @@
               id="Identity"
             />
           </div>
+
           <div class="flex items-center justify-end border-t border-white pt-4">
             <button
               on:click={backBtn2}
@@ -617,7 +695,7 @@
               Back
             </button>
             <button
-              on:click={nextBtn3}
+              on:click={initiate}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
               Initiate
@@ -632,6 +710,18 @@
           >
             SIGN DETAILS
           </h1>
+          <div class="flex gap-3">
+            <h1 class="text-lg text-slate-800 font-semibold flex items-center">
+              One Time Password
+            </h1>
+            <input
+              bind:value={oneTimePassword}
+              type="text"
+              placeholder="12345"
+              class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
+            />
+          </div>
+
           <div
             class="flex items-center justify-between border-t border-white pt-4"
           >
@@ -642,13 +732,37 @@
               Back
             </button>
             <button
-              on:click={nextBtn4}
+              on:click={confirmRequest}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
-              Next
+              confirmRequest
             </button>
           </div>
         </div>
+      {/if}
+      {#if download}
+        <div class="flex flex-col  gap-4">
+          <h1
+            class="text-white text-lg tracking-wide font-semibold border-b border-white"
+          >
+            SIGN DETAILS
+          </h1>
+          <div class="flex justify-center">
+            <div
+              class=" mt-5 w-1/2 flex justify-center bg-slate-100 rounded-lg"
+            >
+              <button
+                on:click={pdfPreview}
+                class="text-center text-lg font-semibold text-slate-800"
+              >
+                click here!!! and Preview
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="flex items-center justify-between border-t border-white pt-4"
+        />
       {/if}
     </ol>
   </nav>

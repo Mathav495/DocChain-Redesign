@@ -13,6 +13,12 @@
   const hideNav = () => {
     hideNavbar = true
   }
+  let file
+  const getFile = (e) => {
+    console.log("file", e.detail)
+    file = e.detail
+    console.log(file)
+  }
   console.log(id)
   const showNav = () => {
     if (hideNavbar == false) {
@@ -109,8 +115,8 @@
     <div class="relative ">
       <Addfile
         {id}
+        on:File={getFile}
         {pageNumber}
-        on:File
         on:steps={() => Modal(signerId)}
         on:totalPage={pageNumbers}
         on:mShow={showModal}
@@ -118,7 +124,7 @@
 
       {#if stepModal}
         <div class="absolute top-0 w-full h-full bg-gray-300/80">
-          <Sign1 {data1} {totalPages} on:PageNo={pageNum} {modal} />
+          <Sign1 {data1} {file} {totalPages} on:PageNo={pageNum} {modal} />
         </div>
       {/if}
     </div>
