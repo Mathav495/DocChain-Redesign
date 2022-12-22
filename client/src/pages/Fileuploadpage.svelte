@@ -128,12 +128,12 @@
 
       {#if stepModal}
         <div
-          class="absolute inset-0 top-40 flex items-center justify-center w-auto bg-gray-300/90 h-full"
+          class="absolute inset-0 top-32 flex justify-center w-auto bg-gray-300/90 h-full"
         >
-          <div>
-            <div class="w-full lg:w-98 p-4">
-              <Sign1 {data1} {file} {totalPages} on:PageNo={pageNum} {modal} />
-            </div>
+          <!-- <div class="relative"> -->
+          <div class="w-full lg:w-98 pt-96 mx-auto">
+            <Sign1 {data1} {file} {totalPages} on:PageNo={pageNum} {modal} />
+            <!-- </div> -->
           </div>
         </div>
       {/if}
@@ -148,3 +148,9 @@
     <SmallScreenNavbar />
   </button>
 </div>
+
+<style>
+  .top-98 {
+    top: 30.8rem /* 384px */;
+  }
+</style>
