@@ -1,8 +1,9 @@
 <script>
-  export let data1, file , modal , totalPages
+  export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
   import axios from "axios"
+  import { navigate } from "svelte-routing"
   let blob
   let download = false
   let borderBlue4 = false
@@ -10,13 +11,12 @@
   let dot5 = true
   let tick5 = true
   let initvalues
-  let signreq
+  let signreq = ""
   let SignFile
   let oneTimePassword = ""
   let signPosition = ""
-  let  Reason = "for verification",
- 
-  let src
+  let Reason = "for verification"
+
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
   let switchIdForm = true
@@ -111,6 +111,8 @@
     console.log("next4")
   }
   let pageNo
+
+  $: console.log(pageNo)
   let clr = "#FFFFFF"
   const chooseClr = () => {
     console.log(clr)
@@ -170,18 +172,21 @@
   }
 
   const initiate = async () => {
+    document.getElementById("disableBtn").disabled = true
     console.log("initiate")
+    console.log(pdfPosition)
     initvalues = {
       signer:
         "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
       file: file,
-      signPage: pageNo,
-      signPosition: signPosition,
-      signField: fieldName,
+      signPage: localStorage.getItem("PageNo"),
+      signPosition: pdfPosition.lastposition.toString(),
+      signField: "Signer",
       reason: Reason,
-      signBGColor: clr,
+      signBGColor: "#FF0000",
       url: docURL,
     }
+    console.log(initvalues)
     const { data } = await axios.post(
       "https://pdfsign.test.print2block.in/signature/initiate",
       initvalues,
@@ -193,7 +198,7 @@
     )
     console.log(data)
     signreq = data.signRequest.id
-    console.log(signreq)
+    console.log(signreq, "signer id")
     // modal = true
     //get signer id
     signPage = false
@@ -218,7 +223,7 @@
     )
     console.log(data)
     SignFile = data.signRequest.signedFile
-    console.log(SignFile)
+    console.log(SignFile, "signed file")
     otp = false
     download = true
     tick4 = false
@@ -242,9 +247,17 @@
     console.log(myFile)
     blob = URL.createObjectURL(data)
     console.log(blob)
-}
+    dispatch("blob", blob)
+    dispatch("myFile", myFile)
+    // navigate(
+    //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
+    // )
+  }
+  let page
   const hideModal = () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
+    page = pageNo - 1
+    localStorage.setItem("PageNo", page)
     dispatch("PageNo", pageNo)
   }
 </script>
@@ -261,7 +274,6 @@
         VERIFY SIGN DETAILS
       </h1>
       <div class:hidden={steps} class="flex items-center justify-center ">
-
         <button class="relative pr-8 sm:pr-20">
           <!-- Completed Step -->
           <div class="absolute inset-0 flex items-center">
@@ -388,7 +400,6 @@
               class:bg-indigo-600={borderBlue4}
               class="h-0.5 w-full bg-gray-200"
             />
-
           </div>
           <div
             class:hidden={empty3}
@@ -430,7 +441,6 @@
           </div>
           <div
             class:hidden={empty4}
-
             class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
           >
             <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
@@ -521,12 +531,10 @@
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-40 font-semibold">Name</p>
             <div class="py-2 pl-4 w-full text-base text-gray-600">
-
               {data1.signerDetails.name}
             </div>
           </div>
           <div class="flex flex-row items-center">
-
             <p class="text-base text-gray-600 w-40 font-semibold">Id</p>
             <div class="py-2 ml-4 w-full text-base text-gray-600 overflow-auto">
               {data1.signerDetails.id}
@@ -535,7 +543,6 @@
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-40 font-semibold">Email</p>
             <div class="py-2 pl-4 w-full text-base text-gray-600">
-
               {data1.signerDetails.email}
             </div>
           </div>
@@ -590,7 +597,6 @@
                   placeholder="Select Page No"
                   id="pageNo"
                   class="w-32 h-9 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
-
                 >
                   {#each totalPages as totalPage}
                     <option value={totalPage}>{totalPage}</option>
@@ -629,7 +635,6 @@
                     Lock Horizontal control
                   </p>
                 </div>
-
               </div>
             </div>
           </div>
@@ -650,7 +655,6 @@
               SIGN
             </button>
             <button id="autoClick3" on:click={nextBtn2} class="hidden">
-
               Next
             </button>
           </div>
@@ -732,7 +736,7 @@
               Back
             </button>
             <button
-              on:click={confirmRequest}
+              on:click={confirmRequest(signreq)}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
               confirmRequest

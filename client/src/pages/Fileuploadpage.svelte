@@ -75,9 +75,8 @@
 
   let pageNumber = 0
   const pageNum = (e) => {
-    pageNumber = e.detail
-    console.log(pageNumber)
     stepModal = false
+    pageNumber = e.detail
   }
 
   let modal = false
@@ -85,6 +84,17 @@
     stepModal = true
     console.log("click")
     modal = true
+  }
+
+  let signedPdf
+  const signedFile = (e) => {
+    signedPdf = e.detail
+  }
+
+  let signedLink
+  const signedUrl = (e) => {
+    signedLink = e.detail
+    stepModal = false
   }
 </script>
 
@@ -114,9 +124,11 @@
     </div>
     <div class="relative ">
       <Addfile
-        {id}
-        on:File={getFile}
         {pageNumber}
+        {id}
+        {signedPdf}
+        {signedLink}
+        on:File={getFile}
         on:steps={() => Modal(signerId)}
         on:totalPage={pageNumbers}
         on:mShow={showModal}
@@ -124,7 +136,15 @@
 
       {#if stepModal}
         <div class="absolute top-0 w-full h-full bg-gray-300/80">
-          <Sign1 {data1} {file} {totalPages} on:PageNo={pageNum} {modal} />
+          <Sign1
+            {data1}
+            {file}
+            {totalPages}
+            on:PageNo={pageNum}
+            {modal}
+            on:myFile={signedFile}
+            on:blob={signedUrl}
+          />
         </div>
       {/if}
     </div>

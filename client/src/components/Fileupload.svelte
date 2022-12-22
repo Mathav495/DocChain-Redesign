@@ -507,10 +507,14 @@
               <div>
                 <input
                   name="label{receiver.label}"
+                  placeholder={receiver.labelName != "Fieldname"
+                    ? `Enter ${receiver.labelName}`
+                    : ""}
                   bind:value={receiver.inputvalue}
                   id="label{receiver.label}"
                   type="text"
-                  class="input-normal"
+                  disabled={receiver.labelName == "Fieldname"}
+                  class="input-normal disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -639,11 +643,15 @@
               </div>
               <div>
                 <input
+                  placeholder={docDetails.labelName != "Fieldname"
+                    ? `Enter ${docDetails.labelName}`
+                    : ""}
                   name="doclabel{docDetails.label}"
                   bind:value={docDetails.inputvalue}
                   id="doclabel{docDetails.label}"
                   type="text"
-                  class="input-normal"
+                  disabled={docDetails.labelName == "Fieldname"}
+                  class="input-normal disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -778,11 +786,15 @@
               </div>
               <div>
                 <input
+                placeholder={signDetails.labelName != "Fieldname"
+                    ? `Enter ${signDetails.labelName}`
+                    : ""}
                   name="signlabel{signDetails.label}"
                   id="signlabel{signDetails.label}"
                   bind:value={signDetails.inputvalue}
                   type="text"
-                  class="input-normal"
+                  disabled={signDetails.labelName == "Fieldname"}
+                  class="input-normal disabled:cursor-not-allowed"
                 />
               </div>
             </div>
