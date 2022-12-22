@@ -191,7 +191,7 @@
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno)
     console.log("Page loaded")
-    let viewport = page.getViewport({ scale: 1.03 })
+    let viewport = page.getViewport({ scale: 0.8 })
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById("mycanvas")
@@ -250,9 +250,9 @@
     dispatch("steps")
   }
   const showModal = async () => {
-    await loadLibrary("pdfPosition", "/lib/signPosition.js")
-    console.log(pdfPosition.position)
-    localStorage.setItem("position", pdfPosition.position)
+    // await loadLibrary("pdfPosition", "/lib/signPosition.js")
+    // console.log(pdfPosition.position)
+    // localStorage.setItem("position", pdfPosition.position)
     dispatch("mShow")
     console.log("clicked")
   }

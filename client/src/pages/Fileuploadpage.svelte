@@ -89,6 +89,7 @@
   }
   const bloblink = (e) => {
     blobLink = e.detail
+    console.log(bloblink)
     stepModal = false
   }
   const filePreview = (e) => {
@@ -136,6 +137,7 @@
       {#if stepModal}
         <div class="absolute top-0 w-full h-full bg-gray-300/80">
           <Sign1
+            {id}
             {data1}
             {file}
             {totalPages}

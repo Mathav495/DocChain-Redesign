@@ -17,11 +17,10 @@
   let oneTimePassword = ""
   let bgcolor = ""
   let fieldName, date
-  $: console.log(bgcolor)
+  console.log(bgcolor)
   let Reason = "for verification"
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
-  // let switchIdForm = true
   $: if (modal) {
     nextBtn2()
   }
@@ -126,8 +125,9 @@
   const trigger = async () => {
     document.getElementById("btnDisable").disabled = true
     toggleBtn = false
-    await loadLibrary("pdfPosition", "/lib/signPosition.js")
-    console.log(pdfPosition)
+    // console.log(pdfPosition)
+    await loadLibrary("pdf-position", "/lib/signPosition.js")
+    console.log("pdf position is", pdfPosition)
     pdfPosition.init({
       triggerButtons: ".show-signature-overlay",
       imageTarget: "mycanvas",
@@ -172,7 +172,7 @@
         "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
       file: file,
       signPage: localStorage.getItem("PageNo"),
-      signPosition: localStorage.getItem("position"),
+      signPosition: pdfPosition.position,
       signField: fieldName,
       reason: Reason,
       signBGColor: bgcolor,
@@ -201,9 +201,9 @@
     borderBlue3 = true
   }
   const confirmRequest = async () => {
+    document.getElementById("disableBtn").disabled = true
     console.log("confirmRequest")
     console.log(signerId)
-    console.log(oneTimePassword)
     //get file name
     const { data } = await axios.post(
       "https://pdfsign.test.print2block.in/signature/confirm",
@@ -237,11 +237,11 @@
     console.log(myFile)
     blob = URL.createObjectURL(data)
     console.log(blob)
-    navigate(
-      `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
-    )
-    // dispatch("blob", blob)
-    // dispatch("myFile", myFile)
+    // navigate(
+    //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
+    // )
+    dispatch("blob", blob)
+    dispatch("myFile", myFile)
     // const pdf = document.getElementById("pdf")
     // console.log(SignFile)
     // pdf.setAttribute(
