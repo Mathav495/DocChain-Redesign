@@ -1,5 +1,6 @@
 <script>
   export let data1, file, modal, totalPages
+  import { navigate } from "svelte-routing"
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
   import axios from "axios"
@@ -12,15 +13,15 @@
   let initvalues
   let signerId
   let SignFile
+  let pageNo = ""
   let oneTimePassword = ""
-  let signPosition = ""
+  let bgcolor = ""
+  let fieldName, date
+  $: console.log(bgcolor)
   let Reason = "for verification"
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
-  let fieldName = localStorage.getItem("fieldName")
-  console.log(fieldName)
-
-  let switchIdForm = true
+  // let switchIdForm = true
   $: if (modal) {
     nextBtn2()
   }
@@ -109,12 +110,6 @@
     otp = false
   }
 
-  let pageNo = ""
-  let clr = "#FFFFFF"
-  const chooseClr = () => {
-    console.log(clr)
-  }
-
   async function loadLibrary(id, location) {
     return new Promise((resolve) => {
       let elem = document.createElement("script")
@@ -169,18 +164,21 @@
   }
 
   const initiate = async () => {
+    date = new Date().toJSON()
+    fieldName = `Signer ${date}`
     console.log("initiate")
     initvalues = {
       signer:
         "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
       file: file,
-      signPage: pageNo,
-      signPosition: signPosition,
+      signPage: localStorage.getItem("PageNo"),
+      signPosition: localStorage.getItem("position"),
       signField: fieldName,
       reason: Reason,
-      signBGColor: clr,
+      signBGColor: bgcolor,
       url: docURL,
     }
+    console.log(initvalues)
     const { data } = await axios.post(
       "https://pdfsign.test.print2block.in/signature/initiate",
       initvalues,
@@ -202,8 +200,8 @@
     empty3 = true
     borderBlue3 = true
   }
-
   const confirmRequest = async () => {
+    console.log("confirmRequest")
     console.log(signerId)
     console.log(oneTimePassword)
     //get file name
@@ -226,7 +224,6 @@
     dot5 = false
     empty4 = true
   }
-
   const pdfPreview = async () => {
     console.log(SignFile)
     const { data } = await axios.get(
@@ -240,10 +237,22 @@
     console.log(myFile)
     blob = URL.createObjectURL(data)
     console.log(blob)
+    navigate(
+      `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
+    )
+    // dispatch("blob", blob)
+    // dispatch("myFile", myFile)
+    // const pdf = document.getElementById("pdf")
+    // console.log(SignFile)
+    // pdf.setAttribute(
+    //   "href",
+    //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
+    // )
   }
 
   const hideModal = () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
+    localStorage.setItem("PageNo", pageNo)
     dispatch("PageNo", pageNo)
   }
 </script>
@@ -668,8 +677,7 @@
               Signature Background color
             </p>
             <input
-              on:input={chooseClr}
-              bind:value={clr}
+              bind:value={bgcolor}
               class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
               type="color"
               name="Identity"

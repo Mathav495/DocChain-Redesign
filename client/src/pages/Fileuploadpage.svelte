@@ -9,6 +9,7 @@
   import Sign1 from "../components/sign1.svelte"
 
   export let id
+  let blobfile, blobLink
   let hideNavbar = true
   const hideNav = () => {
     hideNavbar = true
@@ -86,6 +87,14 @@
     console.log("click")
     modal = true
   }
+  const bloblink = (e) => {
+    blobLink = e.detail
+    stepModal = false
+  }
+  const filePreview = (e) => {
+    blobfile = e.detail
+    console.log(blobfile)
+  }
 </script>
 
 <svelte:head>
@@ -114,9 +123,11 @@
     </div>
     <div class="relative ">
       <Addfile
+        {pageNumber}
+        {blobLink}
+        {blobfile}
         {id}
         on:File={getFile}
-        {pageNumber}
         on:steps={() => Modal(signerId)}
         on:totalPage={pageNumbers}
         on:mShow={showModal}
@@ -124,7 +135,15 @@
 
       {#if stepModal}
         <div class="absolute top-0 w-full h-full bg-gray-300/80">
-          <Sign1 {data1} {file} {totalPages} on:PageNo={pageNum} {modal} />
+          <Sign1
+            {data1}
+            {file}
+            {totalPages}
+            on:PageNo={pageNum}
+            {modal}
+            on:blob={bloblink}
+            on:myFile={filePreview}
+          />
         </div>
       {/if}
     </div>
