@@ -19,7 +19,9 @@
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
   let switchIdForm = true
+  let NextBtn2 = true
   $: if (modal) {
+    NextBtn2 = false
     nextBtn1()
   }
   let switchAccount = false,
@@ -249,512 +251,500 @@
   }
 </script>
 
-<div class="w-full h-auto p-4">
-  <nav aria-label="Progress">
-    <ol
-      class="flex flex-col gap-4 mx-auto px-5 py-5 bg-blue-300 w-full lg:w-9/12 xl:w-7/12 rounded-md"
-    >
-      <h1
-        class:hidden={modelHeading}
-        class="mx-auto text-xl text-white font-bold"
+<!-- <div></div> -->
+<div
+  class="flex flex-col gap-4 mx-auto px-5 py-5 bg-blue-300 w-full rounded-md m-4"
+>
+  <h1 class:hidden={modelHeading} class="mx-auto text-xl text-white font-bold">
+    VERIFY SIGN DETAILS
+  </h1>
+  <div class:hidden={steps} class="flex items-center justify-center ">
+    <button class="relative pr-8 sm:pr-20">
+      <!-- Completed Step -->
+      <div class="absolute inset-0 flex items-center">
+        <div
+          class:bg-indigo-600={borderBlue1}
+          class="h-0.5 w-full bg-gray-200"
+        />
+      </div>
+      <div
+        class:hidden={dot1}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
       >
-        VERIFY SIGN DETAILS
+        <span
+          class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
+        />
+      </div>
+      <div
+        class:hidden={tick1}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
+      >
+        <!-- Heroicon name: mini/check -->
+        <svg
+          class="h-5 w-5 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+          />
+        </svg>
+      </div>
+    </button>
+
+    <button class="relative pr-8 sm:pr-20">
+      <!-- Completed Step -->
+      <div class="absolute inset-0 flex items-center">
+        <div
+          class:bg-indigo-600={borderBlue2}
+          class="h-0.5 w-full bg-gray-200"
+        />
+      </div>
+      <div
+        class:hidden={empty}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+      >
+        <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
+      </div>
+      <div
+        class:hidden={dot2}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+      >
+        <span
+          class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
+        />
+      </div>
+      <div
+        class:hidden={tick2}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
+      >
+        <!-- Heroicon name: mini/check -->
+        <svg
+          class="h-5 w-5 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+          />
+        </svg>
+        <span class="sr-only">Step 2</span>
+      </div>
+    </button>
+
+    <button class="relative pr-8 sm:pr-20">
+      <!-- Current Step -->
+      <div class="absolute inset-0 flex items-center">
+        <div
+          class:bg-indigo-600={borderBlue3}
+          class="h-0.5 w-full bg-gray-200"
+        />
+      </div>
+      <div
+        class:hidden={empty2}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+      >
+        <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
+      </div>
+      <div
+        class:hidden={dot3}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+      >
+        <span
+          class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
+        />
+      </div>
+      <div
+        class:hidden={tick3}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
+      >
+        <!-- Heroicon name: mini/check -->
+        <svg
+          class="h-5 w-5 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+          />
+        </svg>
+        <span class="sr-only">Step 2</span>
+      </div>
+    </button>
+
+    <button class="relative pr-8 sm:pr-20">
+      <!-- Upcoming Step -->
+      <div class="absolute inset-0 flex items-center">
+        <div
+          class:bg-indigo-600={borderBlue4}
+          class="h-0.5 w-full bg-gray-200"
+        />
+      </div>
+      <div
+        class:hidden={empty3}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+      >
+        <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
+      </div>
+      <div
+        class:hidden={dot4}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+      >
+        <span
+          class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
+        />
+      </div>
+      <div
+        class:hidden={tick4}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
+      >
+        <!-- Heroicon name: mini/check -->
+        <svg
+          class="h-5 w-5 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+          />
+        </svg>
+        <span class="sr-only">Step 2</span>
+      </div>
+    </button>
+    <button class="relative">
+      <!-- Upcoming Step -->
+      <div class="absolute inset-0 flex items-center">
+        <div class="h-0.5 w-full bg-gray-200" />
+      </div>
+      <div
+        class:hidden={empty4}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+      >
+        <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
+      </div>
+      <div
+        class:hidden={dot5}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+      >
+        <span
+          class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
+        />
+      </div>
+      <div
+        class:hidden={tick5}
+        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
+      >
+        <!-- Heroicon name: mini/check -->
+        <svg
+          class="h-5 w-5 text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+          />
+        </svg>
+        <span class="sr-only">Step 2</span>
+      </div>
+    </button>
+  </div>
+  {#if switchAccount}
+    <div class="flex flex-col gap-4">
+      <h1
+        class="text-white text-center text-lg tracking-wide font-semibold border-b border-white pb-4"
+      >
+        SWITCH ACCOUNT
       </h1>
-      <div class:hidden={steps} class="flex items-center justify-center ">
-        <button class="relative pr-8 sm:pr-20">
-          <!-- Completed Step -->
-          <div class="absolute inset-0 flex items-center">
-            <div
-              class:bg-indigo-600={borderBlue1}
-              class="h-0.5 w-full bg-gray-200"
-            />
-          </div>
-          <div
-            class:hidden={dot1}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+      <form class="flex flex-col items-center justify-center gap-2">
+        <div class="flex gap-2 items-end">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
           >
-            <span
-              class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
             />
-          </div>
-          <div
-            class:hidden={tick1}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
-          >
-            <!-- Heroicon name: mini/check -->
-            <svg
-              class="h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              />
-            </svg>
-          </div>
+          </svg>
+          <input
+            placeholder="Enter ID"
+            type="text"
+            class="w-52 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
+          />
+        </div>
+        <button
+          on:click={backBtn}
+          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-sm"
+        >
+          Switch
         </button>
-
-        <button class="relative pr-8 sm:pr-20">
-          <!-- Completed Step -->
-          <div class="absolute inset-0 flex items-center">
-            <div
-              class:bg-indigo-600={borderBlue2}
-              class="h-0.5 w-full bg-gray-200"
-            />
-          </div>
-          <div
-            class:hidden={empty}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
-          </div>
-          <div
-            class:hidden={dot2}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span
-              class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-            />
-          </div>
-          <div
-            class:hidden={tick2}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
-          >
-            <!-- Heroicon name: mini/check -->
-            <svg
-              class="h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              />
-            </svg>
-            <span class="sr-only">Step 2</span>
-          </div>
-        </button>
-
-        <button class="relative pr-8 sm:pr-20">
-          <!-- Current Step -->
-          <div class="absolute inset-0 flex items-center">
-            <div
-              class:bg-indigo-600={borderBlue3}
-              class="h-0.5 w-full bg-gray-200"
-            />
-          </div>
-          <div
-            class:hidden={empty2}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
-          </div>
-          <div
-            class:hidden={dot3}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span
-              class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-            />
-          </div>
-          <div
-            class:hidden={tick3}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
-          >
-            <!-- Heroicon name: mini/check -->
-            <svg
-              class="h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              />
-            </svg>
-            <span class="sr-only">Step 2</span>
-          </div>
-        </button>
-
-        <button class="relative pr-8 sm:pr-20">
-          <!-- Upcoming Step -->
-          <div class="absolute inset-0 flex items-center">
-            <div
-              class:bg-indigo-600={borderBlue4}
-              class="h-0.5 w-full bg-gray-200"
-            />
-          </div>
-          <div
-            class:hidden={empty3}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
-          </div>
-          <div
-            class:hidden={dot4}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span
-              class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-            />
-          </div>
-          <div
-            class:hidden={tick4}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
-          >
-            <!-- Heroicon name: mini/check -->
-            <svg
-              class="h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              />
-            </svg>
-            <span class="sr-only">Step 2</span>
-          </div>
-        </button>
-        <button class="relative">
-          <!-- Upcoming Step -->
-          <div class="absolute inset-0 flex items-center">
-            <div class="h-0.5 w-full bg-gray-200" />
-          </div>
-          <div
-            class:hidden={empty4}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
-          </div>
-          <div
-            class:hidden={dot5}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span
-              class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-            />
-          </div>
-          <div
-            class:hidden={tick5}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
-          >
-            <!-- Heroicon name: mini/check -->
-            <svg
-              class="h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              />
-            </svg>
-            <span class="sr-only">Step 2</span>
-          </div>
+      </form>
+      <div class="flex items-center justify-between border-t border-white pt-4">
+        <button
+          on:click={backBtn}
+          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-sm"
+        >
+          back
         </button>
       </div>
-      {#if switchAccount}
-        <div class="flex flex-col gap-4">
-          <h1
-            class="text-white text-center text-lg tracking-wide font-semibold border-b border-white pb-4"
-          >
-            SWITCH ACCOUNT
-          </h1>
-          <form class="flex flex-col items-center justify-center gap-2">
-            <div class="flex gap-2 items-end">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
+    </div>
+  {/if}
+  {#if details}
+    <div class="flex flex-col gap-4">
+      <h1
+        class="text-white text-lg tracking-wide font-semibold border-b border-white"
+      >
+        SIGNER DETAILS
+      </h1>
+      <div class="flex flex-row items-center">
+        <p class="text-base text-gray-600 w-40 font-semibold">Name</p>
+        <div class="py-2 pl-4 w-full text-base text-gray-600">
+          {data1.signerDetails.name}
+        </div>
+      </div>
+      <div class="flex flex-row items-center">
+        <p class="text-base text-gray-600 w-40 font-semibold">Id</p>
+        <div class="py-2 ml-4 w-full text-base text-gray-600 overflow-auto">
+          {data1.signerDetails.id}
+        </div>
+      </div>
+      <div class="flex flex-row items-center">
+        <p class="text-base text-gray-600 w-40 font-semibold">Email</p>
+        <div class="py-2 pl-4 w-full text-base text-gray-600">
+          {data1.signerDetails.email}
+        </div>
+      </div>
+      <div class="flex flex-row items-center">
+        <p class="text-base text-gray-600 w-40 font-semibold">Contact</p>
+        <div class="py-2 pl-4 w-full text-base text-gray-600">
+          {data1.signerDetails.contact}
+        </div>
+      </div>
+      <div class="flex flex-row items-center">
+        <p class="text-base text-gray-600 w-40 font-semibold">Organisation</p>
+        <div class="py-2 pl-4 w-full text-base text-gray-600">
+          {data1.signerDetails.organisation}
+        </div>
+      </div>
+      <div class="flex items-center justify-between border-t border-white pt-4">
+        <button
+          on:click={switchId}
+          class="text-gray-100 hover:text-white text-base hover:underline"
+        >
+          Continue with another account
+        </button>
+        <button
+          on:click={nextBtn1}
+          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  {/if}
+  {#if SelectPageno}
+    <div class="flex flex-col gap-4">
+      <h1
+        class="text-white text-lg tracking-wide font-semibold border-b border-white"
+      >
+        SELECT PAGE NO
+      </h1>
+      <div>
+        <div class="flex flex-row gap-2 justify-between items-start">
+          {#if totalPages.length > 1}
+            <div class="w-auto flex gap-2 items-center">
+              <p class="text-base text-gray-600 w-auto font-semibold">
+                Select Page No
+              </p>
+              <select
+                bind:value={pageNo}
+                name="1"
+                placeholder="Select Page No"
+                id="pageNo"
+                class="w-32 h-9 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
-                />
-              </svg>
-              <input
-                placeholder="Enter ID"
-                type="text"
-                class="w-52 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
-              />
+                {#each totalPages as totalPage}
+                  <option value={totalPage}>{totalPage}</option>
+                {/each}
+              </select>
             </div>
-            <button
-              on:click={backBtn}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-sm"
-            >
-              Switch
-            </button>
-          </form>
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
-              on:click={backBtn}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-sm"
-            >
-              back
-            </button>
-          </div>
-        </div>
-      {/if}
-      {#if details}
-        <div class="flex flex-col gap-4">
-          <h1
-            class="text-white text-lg tracking-wide font-semibold border-b border-white"
-          >
-            SIGNER DETAILS
-          </h1>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Name</p>
-            <div class="py-2 pl-4 w-full text-base text-gray-600">
-              {data1.signerDetails.name}
-            </div>
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Id</p>
-            <div class="py-2 ml-4 w-full text-base text-gray-600 overflow-auto">
-              {data1.signerDetails.id}
-            </div>
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Email</p>
-            <div class="py-2 pl-4 w-full text-base text-gray-600">
-              {data1.signerDetails.email}
-            </div>
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Contact</p>
-            <div class="py-2 pl-4 w-full text-base text-gray-600">
-              {data1.signerDetails.contact}
-            </div>
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">
-              Organisation
-            </p>
-            <div class="py-2 pl-4 w-full text-base text-gray-600">
-              {data1.signerDetails.organisation}
-            </div>
-          </div>
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
-              on:click={switchId}
-              class="text-gray-100 hover:text-white text-base hover:underline"
-            >
-              Continue with another account
-            </button>
-            <button
-              on:click={nextBtn1}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      {/if}
-      {#if SelectPageno}
-        <div class="flex flex-col gap-4">
-          <h1
-            class="text-white text-lg tracking-wide font-semibold border-b border-white"
-          >
-            SELECT PAGE NO
-          </h1>
-          <div>
-            <div class="flex flex-row gap-2 justify-between items-start">
-              {#if totalPages.length > 1}
-                <div class="w-auto flex gap-2 items-center">
-                  <p class="text-base text-gray-600 w-auto font-semibold">
-                    Select Page No
-                  </p>
-                  <select
-                    bind:value={pageNo}
-                    name="1"
-                    placeholder="Select Page No"
-                    id="pageNo"
-                    class="w-32 h-9 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
-                  >
-                    {#each totalPages as totalPage}
-                      <option value={totalPage}>{totalPage}</option>
-                    {/each}
-                  </select>
-                </div>
-              {/if}
-              <div class="flex flex-col w-auto gap-2">
-                <div>
-                  <button
-                    disabled={false}
-                    on:click={trigger}
-                    id="btnDisable"
-                    class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-                  >
-                    Click here
-                  </button>
-                </div>
-                <div
-                  class:hidden={toggleBtn}
-                  class="flex items-center justify-start gap-5"
-                >
-                  <button
-                    on:click={signaturePlacement}
-                    id="posControls"
-                    class:justify-end={position}
-                    class:bg-indigo-600={bgclr}
-                    class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"
-                  >
-                    <button
-                      class:bg-white={ballwht}
-                      class:bg-black={ballblk}
-                      class="w-3 h-3  rounded-full"
-                    />
-                  </button>
-                  <p class:font-semibold={bold} class="text-base">
-                    Lock Horizontal control
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
-              on:click={backBtn1}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Back
-            </button>
-            <button
-              disabled={signBtn}
-              on:click={hideModal}
-              class="bg-indigo-600 disabled:cursor-not-allowed hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              SIGN
-            </button>
-            <button id="autoClick3" on:click={nextBtn2}>Next</button>
-          </div>
-        </div>
-      {/if}
-      {#if signPage}
-        <div class="flex flex-col gap-4">
-          <h1
-            class="text-white text-lg tracking-wide font-semibold border-b border-white"
-          >
-            SIGN DETAILS
-          </h1>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-96 font-semibold">
-              Reason for Digital Signature
-            </p>
-            <input
-              type="text"
-              bind:value={Reason}
-              class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
-            />
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-96 font-semibold">
-              Signature Background color
-            </p>
-            <input
-              on:input={chooseClr}
-              bind:value={clr}
-              class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
-              type="color"
-              name="Identity"
-              id="Identity"
-            />
-          </div>
-
-          <div class="flex items-center justify-end border-t border-white pt-4">
-            <button
-              on:click={backBtn2}
-              class="bg-indigo-600 hidden hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Back
-            </button>
-            <button
-              on:click={initiate}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Initiate
-            </button>
-          </div>
-        </div>
-      {/if}
-      {#if otp}
-        <div class="flex flex-col gap-4">
-          <h1
-            class="text-white text-lg tracking-wide font-semibold border-b border-white"
-          >
-            SIGN DETAILS
-          </h1>
-          <div class="flex gap-3">
-            <h1 class="text-lg text-slate-800 font-semibold flex items-center">
-              One Time Password
-            </h1>
-            <input
-              bind:value={oneTimePassword}
-              type="text"
-              placeholder="12345"
-              class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
-            />
-          </div>
-
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
-              on:click={backBtn3}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Back
-            </button>
-            <button
-              on:click={confirmRequest}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              confirmRequest
-            </button>
-          </div>
-        </div>
-      {/if}
-      {#if download}
-        <div class="flex flex-col  gap-4">
-          <h1
-            class="text-white text-lg tracking-wide font-semibold border-b border-white"
-          >
-            SIGN DETAILS
-          </h1>
-          <div class="flex justify-center">
-            <div
-              class=" mt-5 w-1/2 flex justify-center bg-slate-100 rounded-lg"
-            >
+          {/if}
+          <div class="flex flex-col w-auto gap-2">
+            <div>
               <button
-                on:click={pdfPreview}
-                class="text-center text-lg font-semibold text-slate-800"
+                disabled={false}
+                on:click={trigger}
+                id="btnDisable"
+                class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
               >
-                click here!!! and Preview
+                Click here
               </button>
             </div>
+            <div
+              class:hidden={toggleBtn}
+              class="flex items-center justify-start gap-5"
+            >
+              <button
+                on:click={signaturePlacement}
+                id="posControls"
+                class:justify-end={position}
+                class:bg-indigo-600={bgclr}
+                class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"
+              >
+                <button
+                  class:bg-white={ballwht}
+                  class:bg-black={ballblk}
+                  class="w-3 h-3  rounded-full"
+                />
+              </button>
+              <p class:font-semibold={bold} class="text-base">
+                Lock Horizontal control
+              </p>
+            </div>
           </div>
         </div>
-        <div
-          class="flex items-center justify-between border-t border-white pt-4"
+      </div>
+      <div class="flex items-center justify-between border-t border-white pt-4">
+        <button
+          on:click={backBtn1}
+          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+        >
+          Back
+        </button>
+        <div class="flex gap-3">
+          <button
+            disabled={signBtn}
+            on:click={hideModal}
+            class="bg-indigo-600 disabled:cursor-not-allowed hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+          >
+            SIGN
+          </button>
+          <button
+            class:hidden={NextBtn2}
+            on:click={nextBtn2}
+            class="bg-indigo-600 disabled:cursor-not-allowed hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  {/if}
+  {#if signPage}
+    <div class="flex flex-col gap-4">
+      <h1
+        class="text-white text-lg tracking-wide font-semibold border-b border-white"
+      >
+        SIGN DETAILS
+      </h1>
+      <div class="flex flex-row items-center">
+        <p class="text-base text-gray-600 w-96 font-semibold">
+          Reason for Digital Signature
+        </p>
+        <input
+          type="text"
+          bind:value={Reason}
+          class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
         />
-      {/if}
-    </ol>
-  </nav>
+      </div>
+      <div class="flex flex-row items-center">
+        <p class="text-base text-gray-600 w-96 font-semibold">
+          Signature Background color
+        </p>
+        <input
+          on:input={chooseClr}
+          bind:value={clr}
+          class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
+          type="color"
+          name="Identity"
+          id="Identity"
+        />
+      </div>
+
+      <div class="flex items-center justify-end border-t border-white pt-4">
+        <button
+          on:click={backBtn2}
+          class="bg-indigo-600 hidden hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+        >
+          Back
+        </button>
+        <button
+          on:click={initiate}
+          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+        >
+          Initiate
+        </button>
+      </div>
+    </div>
+  {/if}
+  {#if otp}
+    <div class="flex flex-col gap-4">
+      <h1
+        class="text-white text-lg tracking-wide font-semibold border-b border-white"
+      >
+        SIGN DETAILS
+      </h1>
+      <div class="flex gap-3">
+        <h1 class="text-lg text-slate-800 font-semibold flex items-center">
+          One Time Password
+        </h1>
+        <input
+          bind:value={oneTimePassword}
+          type="text"
+          placeholder="12345"
+          class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
+        />
+      </div>
+
+      <div class="flex items-center justify-between border-t border-white pt-4">
+        <button
+          on:click={backBtn3}
+          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+        >
+          Back
+        </button>
+        <button
+          on:click={confirmRequest}
+          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+        >
+          confirmRequest
+        </button>
+      </div>
+    </div>
+  {/if}
+  {#if download}
+    <div class="flex flex-col  gap-4">
+      <h1
+        class="text-white text-lg tracking-wide font-semibold border-b border-white"
+      >
+        SIGN DETAILS
+      </h1>
+      <div class="flex justify-center">
+        <div class=" mt-5 w-1/2 flex justify-center bg-slate-100 rounded-lg">
+          <button
+            on:click={pdfPreview}
+            class="text-center text-lg font-semibold text-slate-800"
+          >
+            click here!!! and Preview
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="flex items-center justify-between border-t border-white pt-4" />
+  {/if}
 </div>

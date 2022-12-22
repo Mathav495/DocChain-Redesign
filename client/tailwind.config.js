@@ -3,6 +3,9 @@ const AnimateCss = require("animated-tailwindcss")
 module.exports = AnimateCss({
   content: ["./src/**/*.svelte"],
   theme: {
+    margin: {
+      98: "36rem",
+    },
     // screens: {
     //   sm: '640px',
     //   // => @media (min-width: 640px) { ... }
@@ -23,6 +26,7 @@ module.exports = AnimateCss({
       borderRadius: {
         2: "2rem",
       },
+
       fontSize: {
         md: "1.05rem",
       },
@@ -34,6 +38,7 @@ module.exports = AnimateCss({
         "3/10": "23%",
         "7/10": "77%",
         88: "22rem",
+        98: "40rem",
       },
       borderWidth: {
         6: "6px",
