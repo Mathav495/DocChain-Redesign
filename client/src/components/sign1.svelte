@@ -176,13 +176,14 @@
     document.getElementById("disableBtn").disabled = true
     console.log("initiate")
     console.log(pdfPosition)
+    let date = new Date().toJSON()
     initvalues = {
       signer:
         "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
       file: file,
       signPage: localStorage.getItem("PageNo"),
       signPosition: pdfPosition.lastposition.toString(),
-      signField: "Signer",
+      signField: `Signer ${date}`,
       reason: Reason,
       signBGColor: bgColor,
       url: docURL,
@@ -250,6 +251,7 @@
     console.log(blob)
     dispatch("blob", blob)
     dispatch("myFile", myFile)
+    document.getElementsByClassName("btn")[0].classList.remove("hidden")
     // navigate(
     //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
     // )
