@@ -1,7 +1,6 @@
 <script>
-  export let blobfile, blobLink, pageNumber
-  console.log(blobfile)
-  console.log(blobLink)
+  export let signedLink, signedPdf
+  export let pageNumber
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
   import axios from "axios"
@@ -152,9 +151,7 @@
     let loadingTask = pdfjsLib.getDocument(blob)
     loadingTask = loadingTask.promise
     _PDFDOC = await loadingTask
-    console.log(_PDFDOC)
     _total_pages = _PDFDOC.numPages
-    console.log(_total_pages)
     dispatch("totalPage", _total_pages)
     console.log(_total_pages)
     console.log(_PDFDOC)
@@ -167,11 +164,19 @@
    */
 
   const displaySignedPdf = async () => {
-    if (blobLink) {
-      console.log(blobLink)
+    if (signedLink) {
+      console.log(signedLink)
       displayDropzone = false
       try {
-        await showPdf(blobLink)
+        console.log(pdfjsLib)
+        let loadingTask = pdfjsLib.getDocument(signedLink)
+        loadingTask = loadingTask.promise
+        _PDFDOC = await loadingTask
+        _total_pages = _PDFDOC.numPages
+        console.log(_total_pages)
+        let hideCanvas = document.getElementById("createdCanvas")
+        hideCanvas.style.display = "none"
+        showPage(pageNumber)
       } catch (error) {
         console.error(error)
       }
@@ -179,19 +184,19 @@
       showpdf = true
     }
   }
-  $: if (blobfile) {
-    console.log(blobfile)
-    File = blobfile
+  $: if (signedPdf) {
+    console.log(signedPdf)
+    File = signedPdf
     console.log(File)
   }
-  $: if (blobLink) {
+  $: if (signedLink) {
     displaySignedPdf()
   }
 
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno)
     console.log("Page loaded")
-    let viewport = page.getViewport({ scale: 0.8 })
+    let viewport = page.getViewport({ scale: 1 })
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById("mycanvas")
@@ -249,10 +254,16 @@
   const signDoc = () => {
     dispatch("steps")
   }
+
+  let fieldName, date
   const showModal = async () => {
     // await loadLibrary("pdfPosition", "/lib/signPosition.js")
     // console.log(pdfPosition.position)
     // localStorage.setItem("position", pdfPosition.position)
+    // date = new Date().toJSON()
+    // fieldName = `Signer ${date}`
+    // console.log(fieldName)
+    // localStorage.setItem("fieldName", fieldName)
     dispatch("mShow")
     console.log("clicked")
   }

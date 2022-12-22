@@ -1,10 +1,9 @@
 <script>
   export let data1, file, modal, totalPages
-  import { navigate } from "svelte-routing"
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
   import axios from "axios"
-  let page
+  import { navigate } from "svelte-routing"
   let blob
   let download = false
   let borderBlue4 = false
@@ -12,16 +11,15 @@
   let dot5 = true
   let tick5 = true
   let initvalues
-  let signerId
+  let signreq = ""
   let SignFile
-  let pageNo = ""
   let oneTimePassword = ""
-  let bgcolor = ""
-  let fieldName, date
-  console.log(bgcolor)
+  let signPosition = ""
   let Reason = "for verification"
+
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
+  let switchIdForm = true
   $: if (modal) {
     nextBtn2()
   }
@@ -109,6 +107,16 @@
     signPage = true
     otp = false
   }
+  const nextBtn4 = () => {
+    console.log("next4")
+  }
+  let pageNo
+
+  $: console.log(pageNo)
+  let clr = "#FFFFFF"
+  const chooseClr = () => {
+    console.log(clr)
+  }
 
   async function loadLibrary(id, location) {
     return new Promise((resolve) => {
@@ -126,9 +134,8 @@
   const trigger = async () => {
     document.getElementById("btnDisable").disabled = true
     toggleBtn = false
-    // console.log(pdfPosition)
-    await loadLibrary("pdf-position", "/lib/signPosition.js")
-    console.log("pdf position is", pdfPosition)
+    await loadLibrary("pdfPosition", "/lib/signPosition.js")
+    console.log(pdfPosition)
     pdfPosition.init({
       triggerButtons: ".show-signature-overlay",
       imageTarget: "mycanvas",
@@ -165,18 +172,18 @@
   }
 
   const initiate = async () => {
-    date = new Date().toJSON()
-    fieldName = `Signer ${date}`
+    document.getElementById("disableBtn").disabled = true
     console.log("initiate")
+    console.log(pdfPosition)
     initvalues = {
       signer:
         "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
       file: file,
       signPage: localStorage.getItem("PageNo"),
-      signPosition: pdfPosition.position,
-      signField: fieldName,
+      signPosition: pdfPosition.lastposition.toString(),
+      signField: "Signer",
       reason: Reason,
-      signBGColor: bgcolor,
+      signBGColor: "#FF0000",
       url: docURL,
     }
     console.log(initvalues)
@@ -190,8 +197,10 @@
       }
     )
     console.log(data)
-    signerId = data.signRequest.id
-    console.log(signerId)
+    signreq = data.signRequest.id
+    console.log(signreq, "signer id")
+    // modal = true
+    //get signer id
     signPage = false
     otp = true
     console.log("next3")
@@ -201,21 +210,20 @@
     empty3 = true
     borderBlue3 = true
   }
+
   const confirmRequest = async () => {
-    document.getElementById("disableBtn").disabled = true
     console.log("confirmRequest")
-    console.log(signerId)
     //get file name
     const { data } = await axios.post(
       "https://pdfsign.test.print2block.in/signature/confirm",
       {
-        requestid: signerId,
+        requestid: signreq,
         otp: oneTimePassword,
       }
     )
     console.log(data)
     SignFile = data.signRequest.signedFile
-    console.log(SignFile)
+    console.log(SignFile, "signed file")
     otp = false
     download = true
     tick4 = false
@@ -225,50 +233,27 @@
     dot5 = false
     empty4 = true
   }
-  // const pdfPreview = async () => {
-  //   console.log(SignFile)
-  //   const { data } = await axios.get(
-  //     `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
-  //     { responseType: "blob" }
-  //   )
-  //   console.log(data)
-  //   const myFile = new File([data], SignFile, {
-  //     type: data.type,
-  //   })
-  //   console.log(myFile)
-  //   blob = URL.createObjectURL(data)
-  //   console.log(blob)
-  //   // navigate(
-  //   //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
-  //   // )
-  //   dispatch("blob", blob)
-  //   dispatch("myFile", myFile)
-  //   // const pdf = document.getElementById("pdf")
-  //   // console.log(SignFile)
-  //   // pdf.setAttribute(
-  //   //   "href",
-  //   //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
-  //   // )
-  // }
 
-  const filePreview = async () => {
-    console.log("filePreview")
+  const pdfPreview = async () => {
     console.log(SignFile)
     const { data } = await axios.get(
       `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
       { responseType: "blob" }
     )
     console.log(data)
-    // blob object convert to file
     const myFile = new File([data], SignFile, {
       type: data.type,
     })
     console.log(myFile)
-    // blob object convert to bloburl
     blob = URL.createObjectURL(data)
     console.log(blob)
+    dispatch("blob", blob)
+    dispatch("myFile", myFile)
+    // navigate(
+    //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
+    // )
   }
-
+  let page
   const hideModal = () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
     page = pageNo - 1
@@ -697,7 +682,8 @@
               Signature Background color
             </p>
             <input
-              bind:value={bgcolor}
+              on:input={chooseClr}
+              bind:value={clr}
               class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
               type="color"
               name="Identity"
@@ -750,7 +736,7 @@
               Back
             </button>
             <button
-              on:click={confirmRequest}
+              on:click={confirmRequest(signreq)}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
               confirmRequest
@@ -770,7 +756,7 @@
               class=" mt-5 w-1/2 flex justify-center bg-slate-100 rounded-lg"
             >
               <button
-                on:click={filePreview}
+                on:click={pdfPreview}
                 class="text-center text-lg font-semibold text-slate-800"
               >
                 click here!!! and Preview

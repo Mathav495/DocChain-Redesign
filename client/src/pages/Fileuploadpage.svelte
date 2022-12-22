@@ -9,7 +9,6 @@
   import Sign1 from "../components/sign1.svelte"
 
   export let id
-  let blobfile, blobLink
   let hideNavbar = true
   const hideNav = () => {
     hideNavbar = true
@@ -76,9 +75,8 @@
 
   let pageNumber = 0
   const pageNum = (e) => {
-    pageNumber = e.detail
-    console.log(pageNumber)
     stepModal = false
+    pageNumber = e.detail
   }
 
   let modal = false
@@ -87,14 +85,16 @@
     console.log("click")
     modal = true
   }
-  const bloblink = (e) => {
-    blobLink = e.detail
-    console.log(bloblink)
-    stepModal = false
+
+  let signedPdf
+  const signedFile = (e) => {
+    signedPdf = e.detail
   }
-  const filePreview = (e) => {
-    blobfile = e.detail
-    console.log(blobfile)
+
+  let signedLink
+  const signedUrl = (e) => {
+    signedLink = e.detail
+    stepModal = false
   }
 </script>
 
@@ -125,9 +125,9 @@
     <div class="relative ">
       <Addfile
         {pageNumber}
-        {blobLink}
-        {blobfile}
         {id}
+        {signedPdf}
+        {signedLink}
         on:File={getFile}
         on:steps={() => Modal(signerId)}
         on:totalPage={pageNumbers}
@@ -137,14 +137,13 @@
       {#if stepModal}
         <div class="absolute top-0 w-full h-full bg-gray-300/80">
           <Sign1
-            {id}
             {data1}
             {file}
             {totalPages}
             on:PageNo={pageNum}
             {modal}
-            on:blob={bloblink}
-            on:myFile={filePreview}
+            on:myFile={signedFile}
+            on:blob={signedUrl}
           />
         </div>
       {/if}
