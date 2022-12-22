@@ -14,6 +14,7 @@
   let signreq = ""
   let SignFile
   let oneTimePassword = ""
+  let bgColor = ""
   let signPosition = ""
   let Reason = "for verification"
 
@@ -183,7 +184,7 @@
       signPosition: pdfPosition.lastposition.toString(),
       signField: "Signer",
       reason: Reason,
-      signBGColor: "#FF0000",
+      signBGColor: bgColor,
       url: docURL,
     }
     console.log(initvalues)
@@ -682,8 +683,7 @@
               Signature Background color
             </p>
             <input
-              on:input={chooseClr}
-              bind:value={clr}
+              bind:value={bgColor}
               class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
               type="color"
               name="Identity"
