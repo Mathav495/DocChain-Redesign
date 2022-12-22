@@ -4,6 +4,7 @@
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
   import axios from "axios"
+  let page
   let blob
   let download = false
   let borderBlue4 = false
@@ -224,35 +225,54 @@
     dot5 = false
     empty4 = true
   }
-  const pdfPreview = async () => {
+  // const pdfPreview = async () => {
+  //   console.log(SignFile)
+  //   const { data } = await axios.get(
+  //     `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+  //     { responseType: "blob" }
+  //   )
+  //   console.log(data)
+  //   const myFile = new File([data], SignFile, {
+  //     type: data.type,
+  //   })
+  //   console.log(myFile)
+  //   blob = URL.createObjectURL(data)
+  //   console.log(blob)
+  //   // navigate(
+  //   //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
+  //   // )
+  //   dispatch("blob", blob)
+  //   dispatch("myFile", myFile)
+  //   // const pdf = document.getElementById("pdf")
+  //   // console.log(SignFile)
+  //   // pdf.setAttribute(
+  //   //   "href",
+  //   //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
+  //   // )
+  // }
+
+  const filePreview = async () => {
+    console.log("filePreview")
     console.log(SignFile)
     const { data } = await axios.get(
       `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
       { responseType: "blob" }
     )
     console.log(data)
+    // blob object convert to file
     const myFile = new File([data], SignFile, {
       type: data.type,
     })
     console.log(myFile)
+    // blob object convert to bloburl
     blob = URL.createObjectURL(data)
     console.log(blob)
-    // navigate(
-    //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
-    // )
-    dispatch("blob", blob)
-    dispatch("myFile", myFile)
-    // const pdf = document.getElementById("pdf")
-    // console.log(SignFile)
-    // pdf.setAttribute(
-    //   "href",
-    //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
-    // )
   }
 
   const hideModal = () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
-    localStorage.setItem("PageNo", pageNo)
+    page = pageNo - 1
+    localStorage.setItem("PageNo", page)
     dispatch("PageNo", pageNo)
   }
 </script>
@@ -750,7 +770,7 @@
               class=" mt-5 w-1/2 flex justify-center bg-slate-100 rounded-lg"
             >
               <button
-                on:click={pdfPreview}
+                on:click={filePreview}
                 class="text-center text-lg font-semibold text-slate-800"
               >
                 click here!!! and Preview
