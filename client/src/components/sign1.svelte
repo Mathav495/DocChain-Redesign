@@ -20,7 +20,7 @@
   console.log(docURL)
   let switchIdForm = true
   $: if (modal) {
-    nextBtn2()
+    nextBtn1()
   }
   let switchAccount = false,
     steps = false,
@@ -574,7 +574,7 @@
           </h1>
           <div>
             <div class="flex flex-row gap-2 justify-between items-start">
-              {#if totalPages > 1}
+              {#if totalPages.length > 1}
                 <div class="w-auto flex gap-2 items-center">
                   <p class="text-base text-gray-600 w-auto font-semibold">
                     Select Page No
@@ -643,9 +643,7 @@
             >
               SIGN
             </button>
-            <button id="autoClick3" on:click={nextBtn2} class="hidden">
-              Next
-            </button>
+            <button id="autoClick3" on:click={nextBtn2}>Next</button>
           </div>
         </div>
       {/if}

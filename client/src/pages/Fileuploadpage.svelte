@@ -81,7 +81,7 @@
   }
 
   let modal = false
-  const showModal = async () => {
+  const showModal = () => {
     stepModal = true
     console.log("click")
     modal = true
