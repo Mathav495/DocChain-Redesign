@@ -1,5 +1,5 @@
 <script>
-  export let data1, file , modal , totalPages
+  export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
   import axios from "axios"
@@ -10,15 +10,16 @@
   let dot5 = true
   let tick5 = true
   let initvalues
-  let signreq
+  let signerId
   let SignFile
   let oneTimePassword = ""
   let signPosition = ""
-  let  Reason = "for verification",
- 
-  let src
+  let Reason = "for verification"
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
+  let fieldName = localStorage.getItem("fieldName")
+  console.log(fieldName)
+
   let switchIdForm = true
   $: if (modal) {
     nextBtn2()
@@ -107,10 +108,8 @@
     signPage = true
     otp = false
   }
-  const nextBtn4 = () => {
-    console.log("next4")
-  }
-  let pageNo
+
+  let pageNo = ""
   let clr = "#FFFFFF"
   const chooseClr = () => {
     console.log(clr)
@@ -192,10 +191,8 @@
       }
     )
     console.log(data)
-    signreq = data.signRequest.id
-    console.log(signreq)
-    // modal = true
-    //get signer id
+    signerId = data.signRequest.id
+    console.log(signerId)
     signPage = false
     otp = true
     console.log("next3")
@@ -207,12 +204,13 @@
   }
 
   const confirmRequest = async () => {
-    console.log("confirmRequest")
+    console.log(signerId)
+    console.log(oneTimePassword)
     //get file name
     const { data } = await axios.post(
       "https://pdfsign.test.print2block.in/signature/confirm",
       {
-        requestid: signreq,
+        requestid: signerId,
         otp: oneTimePassword,
       }
     )
@@ -242,7 +240,8 @@
     console.log(myFile)
     blob = URL.createObjectURL(data)
     console.log(blob)
-}
+  }
+
   const hideModal = () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
     dispatch("PageNo", pageNo)
@@ -261,7 +260,6 @@
         VERIFY SIGN DETAILS
       </h1>
       <div class:hidden={steps} class="flex items-center justify-center ">
-
         <button class="relative pr-8 sm:pr-20">
           <!-- Completed Step -->
           <div class="absolute inset-0 flex items-center">
@@ -388,7 +386,6 @@
               class:bg-indigo-600={borderBlue4}
               class="h-0.5 w-full bg-gray-200"
             />
-
           </div>
           <div
             class:hidden={empty3}
@@ -430,7 +427,6 @@
           </div>
           <div
             class:hidden={empty4}
-
             class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
           >
             <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
@@ -521,12 +517,10 @@
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-40 font-semibold">Name</p>
             <div class="py-2 pl-4 w-full text-base text-gray-600">
-
               {data1.signerDetails.name}
             </div>
           </div>
           <div class="flex flex-row items-center">
-
             <p class="text-base text-gray-600 w-40 font-semibold">Id</p>
             <div class="py-2 ml-4 w-full text-base text-gray-600 overflow-auto">
               {data1.signerDetails.id}
@@ -535,7 +529,6 @@
           <div class="flex flex-row items-center">
             <p class="text-base text-gray-600 w-40 font-semibold">Email</p>
             <div class="py-2 pl-4 w-full text-base text-gray-600">
-
               {data1.signerDetails.email}
             </div>
           </div>
@@ -590,7 +583,6 @@
                   placeholder="Select Page No"
                   id="pageNo"
                   class="w-32 h-9 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
-
                 >
                   {#each totalPages as totalPage}
                     <option value={totalPage}>{totalPage}</option>
@@ -629,7 +621,6 @@
                     Lock Horizontal control
                   </p>
                 </div>
-
               </div>
             </div>
           </div>
@@ -650,7 +641,6 @@
               SIGN
             </button>
             <button id="autoClick3" on:click={nextBtn2} class="hidden">
-
               Next
             </button>
           </div>
