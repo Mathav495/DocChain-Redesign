@@ -6,6 +6,7 @@
   import { navigate } from "svelte-routing"
   import ErrorInfo from "./ErrorInfo.svelte"
   let blob
+  let conReq = true
   let download = false
   let init = true
   let borderBlue4 = false
@@ -219,6 +220,7 @@
       borderBlue3 = true
     } catch (error) {
       console.error(error)
+      init = true
     }
   }
   /**
@@ -226,6 +228,7 @@
    */
   const confirmRequest = async () => {
     console.log("confirmRequest")
+    conReq = false
     //get file name
     try {
       const { data } = await axios.post(
@@ -235,6 +238,7 @@
           otp: oneTimePassword,
         }
       )
+
       console.log(data)
       SignFile = data.signRequest.signedFile
       console.log(SignFile, "signed file")
@@ -247,6 +251,7 @@
       dot5 = false
       empty4 = true
     } catch (error) {
+      conReq = true
       console.error(error)
     }
   }
@@ -291,6 +296,7 @@
   }
 </script>
 
+<!-- svelte-ignore non-top-level-reactive-declaration -->
 <div class="w-full h-auto p-4">
   <nav aria-label="Progress">
     <ol
@@ -763,12 +769,14 @@
             >
               Back
             </button> -->
-            <button
-              on:click={confirmRequest(signreq)}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              confirmRequest
-            </button>
+            {#if conReq}
+              <button
+                on:click={confirmRequest(signreq)}
+                class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+              >
+                confirmRequest
+              </button>
+            {/if}
           </div>
         </div>
       {/if}
