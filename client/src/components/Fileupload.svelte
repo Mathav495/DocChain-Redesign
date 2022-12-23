@@ -1,18 +1,34 @@
 <script>
-  import HeaderFileupload from "./header_fileupload.svelte"
   import axios from "axios"
   import { createEventDispatcher } from "svelte"
   import { navigate } from "svelte-routing"
+  import HeaderFileupload from "./header_fileupload.svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
-  const dispatch = createEventDispatcher()
   export let id
-  let dateexpired = ""
-  let issuer = ""
-  let doctype = ""
-  let signatory = ""
-  let docTitle = ""
-  let valid, date, metaData, errormsg, options
+  const dispatch = createEventDispatcher()
+  let dateexpired = "",
+    issuer = "",
+    doctype = "",
+    signatory = "",
+    docTitle = ""
+  let error = {
+    dateexpired: "",
+    issuer: "",
+    doctype: "",
+    docTitle: "",
+    signatory: "",
+  }
+  let valid,
+    date,
+    metaData,
+    errormsg,
+    options,
+    receiver,
+    documentDetails,
+    signatoryDetails
 
+  let displayerror = false
+  let bgcolor = localStorage.getItem("bgGradient")
   let initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
 
   if (!initialMetadata) {
@@ -44,20 +60,6 @@
   }
 
   console.log(initialMetadata)
-  let receiver, documentDetails, signatoryDetails
-  let displayerror = false
-
-  let error = {
-    dateexpired: "",
-    issuer: "",
-    doctype: "",
-    docTitle: "",
-    signatory: "",
-  }
-  let token = localStorage.getItem("token")
-  let documentID = localStorage.getItem("documentID")
-  let bgcolor = localStorage.getItem("bgGradient")
-  console.log("id get from the params", id)
 
   /**
    * Submitting document metadata and generating datahash
@@ -181,31 +183,22 @@
           : (options = {})
       }
 
-      console.log(documentID)
       const { data } = await axios.post(
         "https://test.swagger.print2block.in/docs/add-data",
         {
-          documentID: documentID,
+          documentID: localStorage.getItem("documentID"),
           metadata: metaData,
           options: options,
         },
         {
           headers: {
-            "x-access-token": token,
+            "x-access-token": localStorage.getItem("token"),
           },
         }
       )
       console.log(data)
-      // let metadata = data.metadata;
       localStorage.setItem("metadata", data.metadata)
-      let metadata = JSON.parse(localStorage.getItem("metadata"))
-      console.log(metadata)
-      console.log(typeof metadata)
-      console.log(metadata.receiver.name)
       localStorage.setItem("options", data.options)
-      let option = JSON.parse(localStorage.getItem("options"))
-      console.log(option.title)
-      console.log(option.expireOn)
 
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem("docDetails"))
@@ -786,7 +779,7 @@
               </div>
               <div>
                 <input
-                placeholder={signDetails.labelName != "Fieldname"
+                  placeholder={signDetails.labelName != "Fieldname"
                     ? `Enter ${signDetails.labelName}`
                     : ""}
                   name="signlabel{signDetails.label}"

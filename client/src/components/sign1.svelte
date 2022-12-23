@@ -249,6 +249,13 @@
     console.log(blob)
     dispatch("blob", blob)
     dispatch("myFile", myFile)
+    let downloadPdf = document.createElement("a")
+    // downloadPdf.setAttribute("href", blob)
+    // downloadPdf.style.display = "none"
+    // downloadPdf.setAttribute("target", "_blank")
+    // downloadPdf.setAttribute("download", SignFile)
+    // downloadPdf.click()
+
     // navigate(
     //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
     // )

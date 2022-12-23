@@ -153,7 +153,7 @@
     _PDFDOC = await loadingTask
     _total_pages = _PDFDOC.numPages
     dispatch("totalPage", _total_pages)
-    console.log(_total_pages)
+    console.log("_total_pages", _total_pages)
     console.log(_PDFDOC)
     currentpage = 1
     showPage(1)
@@ -256,13 +256,6 @@
   }
 
   const showModal = async () => {
-    // await loadLibrary("pdfPosition", "/lib/signPosition.js")
-    // console.log(pdfPosition.position)
-    // localStorage.setItem("position", pdfPosition.position)
-    // date = new Date().toJSON()
-    // fieldName = `Signer ${date}`
-    // console.log(fieldName)
-    // localStorage.setItem("fieldName", fieldName)
     dispatch("mShow")
     console.log("clicked")
   }
