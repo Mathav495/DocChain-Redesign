@@ -4,8 +4,10 @@
   const dispatch = createEventDispatcher()
   import axios from "axios"
   import { navigate } from "svelte-routing"
+  import ErrorInfo from "./ErrorInfo.svelte"
   let blob
   let download = false
+  let init = true
   let borderBlue4 = false
   let empty4 = false
   let dot5 = true
@@ -178,6 +180,7 @@
     //get signer id
     document.getElementById("disableBtn").disabled = true
     console.log("initiate")
+    init = false
     console.log(pdfPosition)
     let date = new Date().toJSON()
     initvalues = {
@@ -252,6 +255,7 @@
    */
   const pdfPreview = async () => {
     console.log(SignFile)
+    // tryCatch used for error handling
     try {
       const { data } = await axios.get(
         `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
@@ -722,12 +726,14 @@
             >
               Back
             </button>
-            <button
-              on:click={initiate}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Initiate
-            </button>
+            {#if init}
+              <button
+                on:click={initiate}
+                class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+              >
+                Initiate
+              </button>
+            {/if}
           </div>
         </div>
       {/if}
@@ -750,15 +756,13 @@
             />
           </div>
 
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
+          <div class="flex items-center justify-end border-t border-white pt-4">
+            <!-- <button
               on:click={backBtn3}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
               Back
-            </button>
+            </button> -->
             <button
               on:click={confirmRequest(signreq)}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
