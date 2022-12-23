@@ -28,34 +28,53 @@
     signatoryDetails
 
   let displayerror = false
-  let bgcolor = localStorage.getItem("bgGradient")
   let initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
 
+  let formDataDetails = {
+    receiver: [
+      {
+        label: 0,
+        labelName: "Fieldname",
+        inputvalue: "",
+      },
+    ],
+    documentDetails: [
+      {
+        label: 0,
+        labelName: "Fieldname",
+        inputvalue: "",
+      },
+    ],
+    signatoryDetails: [
+      {
+        label: 0,
+        labelName: "Fieldname",
+        inputvalue: "",
+      },
+    ],
+  }
   if (!initialMetadata) {
-    let formDataDetails = {
-      receiver: [
-        {
-          label: 0,
-          labelName: "Fieldname",
-          inputvalue: "",
-        },
-      ],
-      documentDetails: [
-        {
-          label: 0,
-          labelName: "Fieldname",
-          inputvalue: "",
-        },
-      ],
-      signatoryDetails: [
-        {
-          label: 0,
-          labelName: "Fieldname",
-          inputvalue: "",
-        },
-      ],
-    }
     localStorage.setItem("formDataDetails", JSON.stringify(formDataDetails))
+    initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
+  } else {
+    receiver = initialMetadata.receiver
+    receiver.find((receiver) => {
+      receiver.inputvalue = ""
+    })
+    initialMetadata.receiver = receiver
+
+    documentDetails = initialMetadata.documentDetails
+    documentDetails.find((documentDetails) => {
+      documentDetails.inputvalue = ""
+    })
+    initialMetadata.documentDetails = documentDetails
+
+    signatoryDetails = initialMetadata.signatoryDetails
+    signatoryDetails.find((signatoryDetails) => {
+      signatoryDetails.inputvalue = ""
+    })
+    initialMetadata.signatoryDetails = signatoryDetails
+    localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
     initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
   }
 
@@ -118,52 +137,18 @@
     }
     if (valid) {
       console.log("valid")
-
-      // receiver data
-      receiver = initialMetadata.receiver
-
-      let rec_obj = new Object()
-      rec_obj.name = issuer
-      for (let i = 0; i < receiver.length; i++) {
-        if (receiver[i].labelName != "Fieldname" && receiver[i].inputvalue) {
-          rec_obj[receiver[i].labelName] = receiver[i].inputvalue
-        }
-      }
-      console.log(rec_obj, "rec_obj")
-
-      // document data
-      documentDetails = initialMetadata.documentDetails
-      let doc_obj = new Object()
-      doc_obj.type = doctype
-      for (let i = 0; i < documentDetails.length; i++) {
-        if (
-          documentDetails[i].labelName != "Fieldname" &&
-          documentDetails[i].inputvalue
-        ) {
-          doc_obj[documentDetails[i].labelName] = documentDetails[i].inputvalue
-        }
-      }
-      console.log(doc_obj, "doc_obj")
-
-      //signatory data
-      signatoryDetails = initialMetadata.signatoryDetails
-      let sign_obj = new Object()
-      sign_obj.signatory = signatory
-      for (let i = 0; i < signatoryDetails.length; i++) {
-        if (
-          signatoryDetails[i].labelName != "Fieldname" &&
-          signatoryDetails[i].inputvalue
-        ) {
-          sign_obj[signatoryDetails[i].labelName] =
-            signatoryDetails[i].inputvalue
-        }
-      }
-      console.log(sign_obj, "sign_obj")
-
       metaData = {
-        receiver: rec_obj,
-        document: doc_obj,
-        issuer: sign_obj,
+        receiver: updatedObject(initialMetadata.receiver, "name", issuer),
+        document: updatedObject(
+          initialMetadata.documentDetails,
+          "type",
+          doctype
+        ),
+        issuer: updatedObject(
+          initialMetadata.signatoryDetails,
+          "signatory",
+          signatory
+        ),
       }
 
       if (date) {
@@ -233,6 +218,23 @@
         }
       }
     }
+  }
+
+  const updatedObject = (data, key, value) => {
+    let updatedData = data
+    console.log(updatedData)
+    let createObj = new Object()
+    createObj[key] = value
+    for (let i = 0; i < updatedData.length; i++) {
+      if (
+        updatedData[i].labelName != "Fieldname" &&
+        updatedData[i].inputvalue
+      ) {
+        createObj[updatedData[i].labelName] = updatedData[i].inputvalue
+      }
+    }
+    console.log(createObj, "createObj")
+    return createObj
   }
 
   /**
@@ -374,11 +376,7 @@
 </script>
 
 <div class="space-y-3 flex flex-col justify-center items-center">
-  <HeaderFileupload {id} {bgcolor}>
-    <h1 slot="title" class="text-base text-white">
-      {docTitle ? docTitle : "Untitled Document"}
-    </h1>
-  </HeaderFileupload>
+  <HeaderFileupload {id} />
 
   <div
     class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-[38.5rem] p-4"
