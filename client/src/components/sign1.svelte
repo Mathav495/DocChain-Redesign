@@ -253,10 +253,10 @@
     dispatch("myFile", myFile)
     document.getElementsByClassName("btn")[0].classList.remove("hidden")
     let spdf = document.createElement("a")
-    spdf.setAttribute("href", blob)
+    spdf.href = blob
     spdf.style.display = "none"
-    spdf.setAttribute("target", "_blank")
-    spdf.setAttribute("download", SignFile)
+    spdf.target = "_blank"
+    spdf.download = SignFile
     spdf.click()
   }
   let page
