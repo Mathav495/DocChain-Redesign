@@ -252,9 +252,12 @@
     dispatch("blob", blob)
     dispatch("myFile", myFile)
     document.getElementsByClassName("btn")[0].classList.remove("hidden")
-    // navigate(
-    //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
-    // )
+    let spdf = document.createElement("a")
+    spdf.setAttribute("href", blob)
+    spdf.style.display = "none"
+    spdf.setAttribute("target", "_blank")
+    spdf.setAttribute("download", SignFile)
+    spdf.click()
   }
   let page
   const hideModal = () => {
