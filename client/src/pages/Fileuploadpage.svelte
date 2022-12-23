@@ -77,6 +77,7 @@
 
   let pageNumber = 0
   const pageNum = (e) => {
+    overflowHidden = false
     pageNumber = e.detail
     console.log(pageNumber)
     stepModal = false
@@ -116,7 +117,7 @@
     <div class="md:hidden block">
       <Header on:navShow={showNav} />
     </div>
-    <div class="relative">
+    <div>
       <Addfile
         {id}
         on:File={getFile}
@@ -125,13 +126,13 @@
         on:totalPage={pageNumbers}
         on:mShow={showModal}
       />
-
       {#if stepModal}
+        <!-- <div class="h-screen w-auto bg-red-900/20 absolute inset-0" /> -->
         <div
-          class="absolute inset-0 top-32 flex justify-center w-auto bg-gray-300/90 h-full"
+          class="absolute inset-0 flex justify-center w-screen bg-[#000000cc] h-screen"
         >
           <!-- <div class="relative"> -->
-          <div class="w-full lg:w-98 pt-96 mx-auto">
+          <div class="p-4 mx-auto">
             <Sign1 {data1} {file} {totalPages} on:PageNo={pageNum} {modal} />
             <!-- </div> -->
           </div>
@@ -148,9 +149,3 @@
     <SmallScreenNavbar />
   </button>
 </div>
-
-<style>
-  .top-98 {
-    top: 30.8rem /* 384px */;
-  }
-</style>

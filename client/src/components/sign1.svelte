@@ -253,31 +253,26 @@
 
 <!-- <div></div> -->
 <div
-  class="flex flex-col gap-4 mx-auto px-5 py-5 bg-blue-300 w-full rounded-md m-4"
+  class="flex flex-col gap-4 mx-auto px-5 py-5 bg-white w-96 sm:w-94 lg:w-98 rounded-md"
 >
-  <h1 class:hidden={modelHeading} class="mx-auto text-xl text-white font-bold">
+  <h1 class:hidden={modelHeading} class="mx-auto text-xl  font-bold">
     VERIFY SIGN DETAILS
   </h1>
   <div class:hidden={steps} class="flex items-center justify-center ">
     <button class="relative pr-8 sm:pr-20">
       <!-- Completed Step -->
       <div class="absolute inset-0 flex items-center">
-        <div
-          class:bg-indigo-600={borderBlue1}
-          class="h-0.5 w-full bg-gray-200"
-        />
+        <div class:bg-blue-600={borderBlue1} class="h-0.5 w-full bg-gray-200" />
       </div>
       <div
         class:hidden={dot1}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
       >
-        <span
-          class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-        />
+        <span class="h-2.5 w-2.5 rounded-full bg-blue-600 hover:bg-blue-800" />
       </div>
       <div
         class:hidden={tick1}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-800"
       >
         <!-- Heroicon name: mini/check -->
         <svg
@@ -297,28 +292,23 @@
     <button class="relative pr-8 sm:pr-20">
       <!-- Completed Step -->
       <div class="absolute inset-0 flex items-center">
-        <div
-          class:bg-indigo-600={borderBlue2}
-          class="h-0.5 w-full bg-gray-200"
-        />
+        <div class:bg-blue-600={borderBlue2} class="h-0.5 w-full bg-gray-200" />
       </div>
       <div
         class:hidden={empty}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
       >
-        <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
+        <span class=" rounded-full bg-blue-600 hover:bg-blue-800" />
       </div>
       <div
         class:hidden={dot2}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
       >
-        <span
-          class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-        />
+        <span class="h-2.5 w-2.5 rounded-full bg-blue-600 hover:bg-blue-800" />
       </div>
       <div
         class:hidden={tick2}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-800"
       >
         <!-- Heroicon name: mini/check -->
         <svg
@@ -339,28 +329,23 @@
     <button class="relative pr-8 sm:pr-20">
       <!-- Current Step -->
       <div class="absolute inset-0 flex items-center">
-        <div
-          class:bg-indigo-600={borderBlue3}
-          class="h-0.5 w-full bg-gray-200"
-        />
+        <div class:bg-blue-600={borderBlue3} class="h-0.5 w-full bg-gray-200" />
       </div>
       <div
         class:hidden={empty2}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
       >
-        <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
+        <span class=" rounded-full bg-blue-600 hover:bg-blue-800" />
       </div>
       <div
         class:hidden={dot3}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
       >
-        <span
-          class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-        />
+        <span class="h-2.5 w-2.5 rounded-full bg-blue-600 hover:bg-blue-800" />
       </div>
       <div
         class:hidden={tick3}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-800"
       >
         <!-- Heroicon name: mini/check -->
         <svg
@@ -381,28 +366,23 @@
     <button class="relative pr-8 sm:pr-20">
       <!-- Upcoming Step -->
       <div class="absolute inset-0 flex items-center">
-        <div
-          class:bg-indigo-600={borderBlue4}
-          class="h-0.5 w-full bg-gray-200"
-        />
+        <div class:bg-blue-600={borderBlue4} class="h-0.5 w-full bg-gray-200" />
       </div>
       <div
         class:hidden={empty3}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
       >
-        <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
+        <span class=" rounded-full bg-blue-600 hover:bg-blue-800" />
       </div>
       <div
         class:hidden={dot4}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
       >
-        <span
-          class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-        />
+        <span class="h-2.5 w-2.5 rounded-full bg-blue-600 hover:bg-blue-800" />
       </div>
       <div
         class:hidden={tick4}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-800"
       >
         <!-- Heroicon name: mini/check -->
         <svg
@@ -426,21 +406,19 @@
       </div>
       <div
         class:hidden={empty4}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
       >
-        <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
+        <span class=" rounded-full bg-blue-600 hover:bg-blue-800" />
       </div>
       <div
         class:hidden={dot5}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
       >
-        <span
-          class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-        />
+        <span class="h-2.5 w-2.5 rounded-full bg-blue-600 hover:bg-blue-800" />
       </div>
       <div
         class:hidden={tick5}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
+        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-800"
       >
         <!-- Heroicon name: mini/check -->
         <svg
@@ -461,7 +439,7 @@
   {#if switchAccount}
     <div class="flex flex-col gap-4">
       <h1
-        class="text-white text-center text-lg tracking-wide font-semibold border-b border-white pb-4"
+        class=" text-center text-lg tracking-wide font-semibold border-b border-gray-500 pb-4"
       >
         SWITCH ACCOUNT
       </h1>
@@ -489,15 +467,17 @@
         </div>
         <button
           on:click={backBtn}
-          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-sm"
+          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-sm"
         >
           Switch
         </button>
       </form>
-      <div class="flex items-center justify-between border-t border-white pt-4">
+      <div
+        class="flex items-center justify-between border-t border-gray-500 pt-4"
+      >
         <button
           on:click={backBtn}
-          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-sm"
+          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-sm"
         >
           back
         </button>
@@ -507,7 +487,7 @@
   {#if details}
     <div class="flex flex-col gap-4">
       <h1
-        class="text-white text-lg tracking-wide font-semibold border-b border-white"
+        class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
       >
         SIGNER DETAILS
       </h1>
@@ -541,16 +521,18 @@
           {data1.signerDetails.organisation}
         </div>
       </div>
-      <div class="flex items-center justify-between border-t border-white pt-4">
+      <div
+        class="flex items-center justify-between border-t border-gray-500 pt-4"
+      >
         <button
           on:click={switchId}
-          class="text-gray-100 hover:text-white text-base hover:underline"
+          class="hover:text-gray-700 text-base hover:underline"
         >
           Continue with another account
         </button>
         <button
           on:click={nextBtn1}
-          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
         >
           Next
         </button>
@@ -560,7 +542,7 @@
   {#if SelectPageno}
     <div class="flex flex-col gap-4">
       <h1
-        class="text-white text-lg tracking-wide font-semibold border-b border-white"
+        class="text-white text-lg tracking-wide font-semibold border-b border-gray-500"
       >
         SELECT PAGE NO
       </h1>
@@ -590,7 +572,7 @@
                 disabled={false}
                 on:click={trigger}
                 id="btnDisable"
-                class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+                class="show-signature-overlay bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
               >
                 Click here
               </button>
@@ -603,7 +585,7 @@
                 on:click={signaturePlacement}
                 id="posControls"
                 class:justify-end={position}
-                class:bg-indigo-600={bgclr}
+                class:bg-blue-600={bgclr}
                 class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"
               >
                 <button
@@ -619,10 +601,12 @@
           </div>
         </div>
       </div>
-      <div class="flex items-center justify-between border-t border-white pt-4">
+      <div
+        class="flex items-center justify-between border-t border-gray-500 pt-4"
+      >
         <button
           on:click={backBtn1}
-          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
         >
           Back
         </button>
@@ -630,14 +614,14 @@
           <button
             disabled={signBtn}
             on:click={hideModal}
-            class="bg-indigo-600 disabled:cursor-not-allowed hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+            class="bg-blue-600 disabled:cursor-not-allowed hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
           >
             SIGN
           </button>
           <button
             class:hidden={NextBtn2}
             on:click={nextBtn2}
-            class="bg-indigo-600 disabled:cursor-not-allowed hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+            class="bg-blue-600 disabled:cursor-not-allowed hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
           >
             Next
           </button>
@@ -648,7 +632,7 @@
   {#if signPage}
     <div class="flex flex-col gap-4">
       <h1
-        class="text-white text-lg tracking-wide font-semibold border-b border-white"
+        class="text-white text-lg tracking-wide font-semibold border-b border-gray-500"
       >
         SIGN DETAILS
       </h1>
@@ -676,16 +660,16 @@
         />
       </div>
 
-      <div class="flex items-center justify-end border-t border-white pt-4">
+      <div class="flex items-center justify-end border-t border-gray-500 pt-4">
         <button
           on:click={backBtn2}
-          class="bg-indigo-600 hidden hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+          class="bg-blue-600 hidden hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
         >
           Back
         </button>
         <button
           on:click={initiate}
-          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
         >
           Initiate
         </button>
@@ -695,7 +679,7 @@
   {#if otp}
     <div class="flex flex-col gap-4">
       <h1
-        class="text-white text-lg tracking-wide font-semibold border-b border-white"
+        class="text-white text-lg tracking-wide font-semibold border-b border-gray-500"
       >
         SIGN DETAILS
       </h1>
@@ -711,16 +695,18 @@
         />
       </div>
 
-      <div class="flex items-center justify-between border-t border-white pt-4">
+      <div
+        class="flex items-center justify-between border-t border-gray-500 pt-4"
+      >
         <button
           on:click={backBtn3}
-          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
         >
           Back
         </button>
         <button
           on:click={confirmRequest}
-          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
         >
           confirmRequest
         </button>
@@ -730,7 +716,7 @@
   {#if download}
     <div class="flex flex-col  gap-4">
       <h1
-        class="text-white text-lg tracking-wide font-semibold border-b border-white"
+        class="text-white text-lg tracking-wide font-semibold border-b border-gray-500"
       >
         SIGN DETAILS
       </h1>
@@ -745,6 +731,8 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center justify-between border-t border-white pt-4" />
+    <div
+      class="flex items-center justify-between border-t border-gray-500 pt-4"
+    />
   {/if}
 </div>
