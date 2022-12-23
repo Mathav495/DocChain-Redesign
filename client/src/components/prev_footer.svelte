@@ -3,6 +3,7 @@
   import { navigate } from "svelte-routing"
   import QueueMsg from "./Queue_msg.svelte"
   import SignidMsg from "./signid_msg.svelte"
+  import { fade } from "svelte/transition"
 
   let load = false
   export let signmsg
@@ -170,6 +171,8 @@
 
 <div
   class="absolute w-5/6 mx-auto flex justify-center items-center z-10 bottom-0 inset-x-0 "
+  in:fade={{ duration: 4500 }}
+  out:fade={{ duration: 100 }}
 >
   <div
     class="container mx-auto bg-white flex flex-col items-center px-4 py-2 md:flex-row md:right-0 rounded-lg shadow-[0_0_8px_0_rgba(0,0,0,0.15)]"

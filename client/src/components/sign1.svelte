@@ -14,8 +14,7 @@
   let SignFile
   let oneTimePassword = ""
   let signPosition = ""
-  let  Reason = "for verification",
- 
+  let  Reason = "for verification" 
   let src
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
