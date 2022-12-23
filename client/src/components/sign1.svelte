@@ -171,8 +171,11 @@
       // pdfPosition.options.lockHorizontalCenter = true;
     }
   }
-
+  /**
+   * function for initiate signature process
+   */
   const initiate = async () => {
+    //get signer id
     document.getElementById("disableBtn").disabled = true
     console.log("initiate")
     console.log(pdfPosition)
@@ -189,76 +192,92 @@
       url: docURL,
     }
     console.log(initvalues)
-    const { data } = await axios.post(
-      "https://pdfsign.test.print2block.in/signature/initiate",
-      initvalues,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
-    console.log(data)
-    signreq = data.signRequest.id
-    console.log(signreq, "signer id")
-    // modal = true
-    //get signer id
-    signPage = false
-    otp = true
-    console.log("next3")
-    tick3 = false
-    dot3 = true
-    dot4 = false
-    empty3 = true
-    borderBlue3 = true
-  }
+    try {
+      const { data } = await axios.post(
+        "https://pdfsign.test.print2block.in/signature/initiate",
+        initvalues,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      console.log(data)
+      signreq = data.signRequest.id
+      console.log(signreq, "signer id")
 
+      signPage = false
+      otp = true
+      console.log("next3")
+      tick3 = false
+      dot3 = true
+      dot4 = false
+      empty3 = true
+      borderBlue3 = true
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  /**
+   * function for confirm the sign request
+   */
   const confirmRequest = async () => {
     console.log("confirmRequest")
     //get file name
-    const { data } = await axios.post(
-      "https://pdfsign.test.print2block.in/signature/confirm",
-      {
-        requestid: signreq,
-        otp: oneTimePassword,
-      }
-    )
-    console.log(data)
-    SignFile = data.signRequest.signedFile
-    console.log(SignFile, "signed file")
-    otp = false
-    download = true
-    tick4 = false
-    borderBlue4 = true
-    dot4 = true
-    tick4 = false
-    dot5 = false
-    empty4 = true
+    try {
+      const { data } = await axios.post(
+        "https://pdfsign.test.print2block.in/signature/confirm",
+        {
+          requestid: signreq,
+          otp: oneTimePassword,
+        }
+      )
+      console.log(data)
+      SignFile = data.signRequest.signedFile
+      console.log(SignFile, "signed file")
+      otp = false
+      download = true
+      tick4 = false
+      borderBlue4 = true
+      dot4 = true
+      tick4 = false
+      dot5 = false
+      empty4 = true
+    } catch (error) {
+      console.error(error)
+    }
   }
-
+  /**
+   * function for downloading the signed pdf and preview
+   */
   const pdfPreview = async () => {
     console.log(SignFile)
-    const { data } = await axios.get(
-      `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
-      { responseType: "blob" }
-    )
-    console.log(data)
-    const myFile = new File([data], SignFile, {
-      type: data.type,
-    })
-    console.log(myFile)
-    blob = URL.createObjectURL(data)
-    console.log(blob)
-    dispatch("blob", blob)
-    dispatch("myFile", myFile)
-    document.getElementsByClassName("btn")[0].classList.remove("hidden")
-    let spdf = document.createElement("a")
-    spdf.href = blob
-    spdf.style.display = "none"
-    spdf.target = "_blank"
-    spdf.download = SignFile
-    spdf.click()
+    try {
+      const { data } = await axios.get(
+        `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+        { responseType: "blob" }
+      )
+      console.log(data)
+      const myFile = new File([data], SignFile, {
+        type: data.type,
+      })
+      console.log(myFile)
+      blob = URL.createObjectURL(data)
+      console.log(blob)
+      dispatch("blob", blob)
+      dispatch("myFile", myFile)
+      document.getElementsByClassName("btn")[0].classList.remove("hidden")
+      let spdf = document.createElement("a")
+      spdf.href = blob
+      spdf.style.display = "none"
+      spdf.target = "_blank"
+      spdf.download = SignFile
+      spdf.click()
+    } catch (error) {
+      console.error(error)
+    }
   }
+
   let page
   const hideModal = () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
