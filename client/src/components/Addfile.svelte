@@ -252,7 +252,6 @@
   }
 
   const signDoc = async () => {
-    loadLibrary("pdfPosition", "/lib/signPosition.js")
     console.log("after dispatch")
     dispatch("steps")
   }

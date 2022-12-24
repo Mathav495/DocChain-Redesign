@@ -11,13 +11,10 @@
   console.log(data1)
   let errormsg = ""
   let blob
+  let page
   let conReq = false
   let download = false
   let init = true
-  let borderBlue4 = false
-  let empty4 = false
-  let dot5 = true
-  let tick5 = true
   let initvalues
   let signreq = ""
   let SignFile
@@ -28,11 +25,11 @@
 
   /**
    * close modal
-  */
+   */
   const closeModal = () => {
     dispatch("clsModal")
   }
-  
+
   /**
    * change a modal to switch user account
    */
@@ -54,20 +51,23 @@
    * change a modal to page no selection and sign alignment selection modal
    */
   const nextBtn1 = async () => {
-    // console.log("nextBtn1")
-    console.log(document.querySelector(".show-signature-overlay"))
     document.getElementById("disableBtn").disabled = false
     details = false
     SelectPageno = true
-    // setTimeout(async () => {
-    //   console.log(pdfPosition)
-    //   pdfPosition.init({
-    //     triggerButtons: ".show-signature-overlay",
-    //     imageTarget: "mycanvas",
-    //     // positionTextbox: "#positions",
-    //   })
-    //   console.log(document.querySelector(".show-signature-overlay"))
-    // }, 1000)
+    tiggerPdfPositionLib()
+  }
+
+  /**
+   * load library
+   */
+  const tiggerPdfPositionLib = async () => {
+    await loadLibrary("pdfPosition", "/lib/signPosition.js")
+    console.log(pdfPosition)
+    pdfPosition.init({
+      triggerButtons: ".show-signature-overlay",
+      imageTarget: "mycanvas",
+    })
+    console.log(document.querySelector(".show-signature-overlay"))
   }
 
   /**
@@ -147,41 +147,53 @@
       init = true
     }
   }
+  /**
+   * horizontal lock toggle button
+   */
+  const signaturePlacement = async () => {
+    signBtn = false
+    if (pdfPosition.options.lockHorizontalCenter)
+      pdfPosition.options.lockHorizontalCenter = false
+    else pdfPosition.options.lockHorizontalCenter = true
+    if (position == false) {
+      position = true
+      bgclr = true
+      ballblk = false
+      ballwht = true
+      bold = true
+    } else {
+      position = false
+      ballblk = true
+      ballwht = false
+      bgclr = false
+      bold = false
+    }
+  }
+
+  /**
+   *modal hide for sign placement
+   */
+  const hideModal = () => {
+    document.getElementsByClassName("btn")[0].classList.add("hidden")
+    page = pageNo - 1
+    localStorage.setItem("PageNo", page)
+    dispatch("PageNo", pageNo)
+  }
 
   console.log(docURL)
   let switchAccount = false,
-    steps = false,
     modelHeading = false
 
-
-
   let details = true,
-    dot1 = false,
-    tick1 = true,
-    empty = false,
-    borderBlue1 = false,
-    dot2 = true,
-    SelectPageno = false,
-    dot3 = true
+    SelectPageno = false
   $: if (SelectPageno) {
     console.log(document.querySelector(".show-signature-overlay"))
   }
 
-  let empty2 = false,
-    borderBlue2 = false,
-    tick2 = true,
-    tick3 = true,
-    signPage = false
+  let signPage = false
 
-  let borderBlue3 = false,
-    empty3 = false,
-    tick4 = true,
-    dot4 = true,
-    otp = false
+  let otp = false
   const backBtn3 = () => {
-    borderBlue3 = false
-    dot4 = true
-    empty3 = false
     signPage = true
     otp = false
   }
@@ -208,19 +220,6 @@
       }
     })
   }
-  let toggleBtn = true
-  const trigger = () => {
-    console.log(document.querySelector(".show-signature-overlay"))
-    // toggleBtn = false
-    console.log("triggered")
-    // await loadLibrary("pdfPosition", "/lib/signPosition.js")
-    // console.log(pdfPosition)
-    // pdfPosition.init({
-    //   triggerButtons: ".show-signature-overlay",
-    //   imageTarget: "mycanvas",
-    //   // positionTextbox: "#positions",
-    // })
-  }
 
   let position = false,
     ballwht = false,
@@ -228,27 +227,6 @@
     ballblk = true,
     bold = false,
     signBtn = true
-  const signaturePlacement = async () => {
-    signBtn = false
-    if (pdfPosition.options.lockHorizontalCenter)
-      pdfPosition.options.lockHorizontalCenter = false
-    else pdfPosition.options.lockHorizontalCenter = true
-    if (position == false) {
-      position = true
-      bgclr = true
-      ballblk = false
-      ballwht = true
-      bold = true
-      // pdfPosition.options.lockHorizontalCenter = false;
-    } else {
-      position = false
-      ballblk = true
-      ballwht = false
-      bgclr = false
-      bold = false
-      // pdfPosition.options.lockHorizontalCenter = true;
-    }
-  }
 
   /**
    * function for confirm the sign request
@@ -315,13 +293,6 @@
     } catch (error) {
       console.error(error)
     }
-  }
-  let page
-  const hideModal = () => {
-    document.getElementsByClassName("btn")[0].classList.add("hidden")
-    page = pageNo - 1
-    localStorage.setItem("PageNo", page)
-    dispatch("PageNo", pageNo)
   }
 </script>
 
