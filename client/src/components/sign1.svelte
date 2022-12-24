@@ -6,7 +6,7 @@
   import { navigate } from "svelte-routing"
   import ErrorInfo from "./ErrorInfo.svelte"
   let blob
-  let conReq = true
+  let conReq = false
   let download = false
   let init = true
   let borderBlue4 = false
@@ -228,7 +228,7 @@
    */
   const confirmRequest = async () => {
     console.log("confirmRequest")
-    conReq = false
+    conReq = true
     //get file name
     try {
       const { data } = await axios.post(
@@ -251,7 +251,7 @@
       dot5 = false
       empty4 = true
     } catch (error) {
-      conReq = true
+      conReq = false
       console.error(error)
     }
   }
@@ -769,14 +769,14 @@
             >
               Back
             </button> -->
-            {#if conReq}
-              <button
-                on:click={confirmRequest(signreq)}
-                class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-              >
-                confirmRequest
-              </button>
-            {/if}
+
+            <button
+              disabled={conReq}
+              on:click={confirmRequest(signreq)}
+              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
+            >
+              confirmRequest
+            </button>
           </div>
         </div>
       {/if}
