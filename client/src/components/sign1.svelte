@@ -1,5 +1,6 @@
 <script>
   import axios from "axios"
+  import Loading from "./Loading.svelte"
   import { fade } from "svelte/transition"
   export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
@@ -197,6 +198,9 @@
       )
       console.log(data)
       signreq = data.signRequest.id
+      if (!signreq) {
+        init = false
+      }
       console.log(signreq, "signer id")
       // modal = true
       //get signer id
@@ -745,63 +749,70 @@
     </div>
   {/if}
   {#if signPage}
-    <div class="flex flex-col gap-4">
-      <div class="flex gap-2">
-        <button on:click={backBtn2} class="redBtn float-left">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
+    {#if init}
+      <div class="bg-white py-5">
+        <Loading />
+      </div>
+    {:else}
+      <div class="flex flex-col gap-4">
+        <div class="flex gap-2">
+          <button on:click={backBtn2} class="redBtn float-left">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
+              />
+            </svg>
+          </button>
+          <h1
+            class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
-            />
-          </svg>
-        </button>
-        <h1
-          class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
-        >
-          SIGN DETAILS
-        </h1>
-      </div>
-      <div class="flex flex-row items-center gap-2">
-        <p class="text-base text-gray-800 font-semibold">
-          Reason for Digital Signature
-        </p>
-        <input
-          type="text"
-          bind:value={Reason}
-          class="w-52 border-b-2 border-black outline-none"
-        />
-      </div>
-      <div class="flex flex-row items-center gap-2">
-        <p class="text-base text-gray-800 font-semibold">
-          Signature Background color
-        </p>
-        <input
-          bind:value={bgColor}
-          class="w-52 outline-none"
-          type="color"
-          name="Identity"
-          id="Identity"
-        />
-      </div>
+            SIGN DETAILS
+          </h1>
+        </div>
 
-      <div class="flex items-center justify-end pt-4">
-        <button
-          disabled={init}
-          on:click={initiate}
-          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
-        >
-          Initiate
-        </button>
+        <div class="flex flex-row items-center gap-2">
+          <p class="text-base text-gray-800 font-semibold">
+            Reason for Digital Signature
+          </p>
+          <input
+            type="text"
+            bind:value={Reason}
+            class="w-52 border-b-2 border-black outline-none"
+          />
+        </div>
+        <div class="flex flex-row items-center gap-2">
+          <p class="text-base text-gray-800 font-semibold">
+            Signature Background color
+          </p>
+          <input
+            bind:value={bgColor}
+            class="w-52 outline-none"
+            type="color"
+            name="Identity"
+            id="Identity"
+          />
+        </div>
+
+        <div class="flex items-center justify-end pt-4">
+          <button
+            disabled={init}
+            on:click={initiate}
+            class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
+          >
+            Initiate
+          </button>
+        </div>
       </div>
-    </div>
+    {/if}
   {/if}
   {#if otp}
     <div class="flex flex-col gap-4">
@@ -868,12 +879,8 @@
   {/if}
 </div>
 {#if errormsg}
-  <div in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }} class="mt-5">
-    <h1
-      class="text-xl font-semibold p-2 text-center rounded-lg bg-red-500 text-white"
-    >
-      {errormsg}
-    </h1>
+  <div class="mt-5">
+    <ErrorInfo {errormsg} />
   </div>
 {/if}
 

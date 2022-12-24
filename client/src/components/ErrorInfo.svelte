@@ -7,7 +7,7 @@
 <div
   in:fade={{ duration: 1000 }}
   out:fade={{ duration: 1000 }}
-  class="flex bg-[#e15858] justify-center items-center  gap-4 p-3 rounded-md {position}"
+  class="flex bg-[#e15858] justify-between items-center  gap-4 p-3 rounded-md {position}"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"

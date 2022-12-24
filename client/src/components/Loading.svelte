@@ -1,17 +1,7 @@
-<script>
-  import { onMount } from "svelte"
-  let loader
-  let component
-
-  onMount(async () => {
-    await new Promise((f) => setTimeout(f, 5000)) // simulate delay
-    component = (await loader()).default
-  })
-</script>
-
 <h5 class="loader" id="loader">
   <div
-    style="min-height: 100vh; align-items: center!important; justify-content: center!important; display: flex;"
+    class="min-h-[40]"
+    style="align-items: center!important; justify-content: center!important; display: flex;"
   >
     <div style="width: 150px;">
       <svg
@@ -46,9 +36,6 @@
 </h5>
 
 <style>
-  h5 {
-    background-color: aliceblue;
-  }
   #ring-1 {
     animation: loadRotate linear 2s infinite;
     -moz-animation: 2s linear 0s none infinite loadRotate;
