@@ -212,16 +212,16 @@
       console.log(data)
       signreq = data.signRequest.id
       console.log(signreq, "signer id")
-    // modal = true
-    //get signer id
-    signPage = false
-    otp = true
-    console.log("next3")
-    tick3 = false
-    dot3 = true
-    dot4 = false
-    empty3 = true
-    borderBlue3 = true
+      // modal = true
+      //get signer id
+      signPage = false
+      otp = true
+      console.log("next3")
+      tick3 = false
+      dot3 = true
+      dot4 = false
+      empty3 = true
+      borderBlue3 = true
     } catch (error) {
       console.error(error)
       init = true
@@ -261,7 +261,7 @@
       console.error(error)
     }
   }
-  
+
   /**
    * function for downloading the signed pdf and preview
    */
@@ -803,8 +803,8 @@
       </div>
 
       <div class="flex items-center justify-end pt-4">
-       {#if init}
-        <button on:click={initiate} class="blueBtn">Initiate</button>
+        {#if init}
+          <button on:click={initiate} class="blueBtn">Initiate</button>
         {/if}
       </div>
     </div>
@@ -849,34 +849,36 @@
   {/if}
   {#if download}
     <div class="flex w-full flex-col p-5">
-            <div class="cursor-pointer">
-              <div
-                class="flex items-center justify-center rounded-md border-blue-600 py-5"
+      <div class="cursor-pointer">
+        <div
+          class="flex items-center justify-center rounded-md border-blue-600 py-5"
+        >
+          <div class="space-y-1 text-center">
+            <div class="flex flex-col text-base">
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <svg
+                on:click={pdfPreview}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="mx-auto h-14 w-14"
               >
-                <div class="space-y-1 text-center">
-                  <div class="flex flex-col text-base">
-                      <!-- svelte-ignore a11y-click-events-have-key-events -->
-                      <svg
-                        on:click={pdfPreview}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="mx-auto h-14 w-14"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
-                        />
-                      </svg>
-                      <button on:click={pdfPreview} class="hover:underline">
-                        Click here to preview and download
-                      </button>
-                  </div>
-                </div>
-              </div>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+                />
+              </svg>
+              <button on:click={pdfPreview} class="hover:underline">
+                Click here to preview and download
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   {/if}
 </div>
 

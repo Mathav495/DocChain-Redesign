@@ -119,7 +119,6 @@
     <Logout on:theme={changeClr} />
   </div>
   <div
-    class:overflow-hidden={overflowHidden}
     class="lg:w-full md:w-6/8 w-full flex flex-col gap-4 bg-white text-gray-900
     rounded-md ml-2 md:ml-0 overflow-auto"
   >
@@ -142,13 +141,15 @@
           class="absolute inset-0 flex justify-center w-screen bg-[#000000cc] h-screen"
         >
           <div class="p-4 mx-auto">
-            <Sign1 {data1}
-            {file}
-            {totalPages}
-            on:PageNo={pageNum}
-            {modal}
-            on:myFile={signedFile}
-            on:blob={signedUrl}/>
+            <Sign1
+              {data1}
+              {file}
+              {totalPages}
+              on:PageNo={pageNum}
+              {modal}
+              on:myFile={signedFile}
+              on:blob={signedUrl}
+            />
           </div>
         </div>
       {/if}
