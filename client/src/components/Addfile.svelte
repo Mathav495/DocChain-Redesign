@@ -92,14 +92,6 @@
     let datum = [...formData][0]
     console.log(datum)
     File = datum[1]
-    if (
-      File.type == "image/png" ||
-      File.type == "image/jpg" ||
-      File.type == "image/jpeg" ||
-      File.type == "application/pdf"
-    ) {
-      dispatch("File", File)
-    }
     console.log(File)
     console.log(File.type)
     if (
@@ -252,6 +244,14 @@
   }
 
   const signDoc = () => {
+    if (
+      File.type == "image/png" ||
+      File.type == "image/jpg" ||
+      File.type == "image/jpeg" ||
+      File.type == "application/pdf"
+    ) {
+      dispatch("File", File)
+    }
     dispatch("steps")
   }
 
