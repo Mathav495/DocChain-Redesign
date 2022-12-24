@@ -16,9 +16,7 @@
   let displaypreview = false
   let nextbtn = true
   let prevbtn = true
-  let token = localStorage.getItem("token")
-  let documentID = localStorage.getItem("documentID")
-  let bgcolor = localStorage.getItem("bgGradient")
+  let btns = true
   let currentpage = 1
   /**
    * Submitting file for generating filehash
@@ -30,13 +28,13 @@
         const { data } = await axios.post(
           "https://test.swagger.print2block.in/docs/add-file",
           {
-            documentID: documentID,
+            documentID: localStorage.getItem("documentID"),
             file: File,
           },
           {
             headers: {
               "Content-Type": "multipart/form-data",
-              "x-access-token": token,
+              "x-access-token": localStorage.getItem("token"),
             },
           }
         )
@@ -136,6 +134,11 @@
     }
   }
 
+  /**
+   * Function for loading the library
+   * @param id {String} id for the newly creating script element
+   * @param location {String} path for the library
+   */
   const loadLibrary = async (id, location) => {
     return new Promise((resolve) => {
       let elem = document.createElement("script")
@@ -149,6 +152,10 @@
     })
   }
 
+  /**
+   * Function for loading the pdf document using pdfjs library
+   * @param blobPdf {String} blob url for the pdf to be previewed
+   */
   const showPdf = async (blobPdf) => {
     console.log("pdfjsLib", pdfjsLib)
     pdfjsLib.GlobalWorkerOptions.workerSrc = "/lib/pdf.worker.js"
@@ -184,15 +191,11 @@
       displayPdf = true
     }
   }
-  $: if (signedPdf) {
-    console.log(signedPdf)
-    File = signedPdf
-    console.log(File)
-  }
-  $: if (signedLink) {
-    displaySignedPdf()
-  }
 
+  /**
+   * Function for rendering the particular page of the document
+   * @param pageno {Number} Page Number of the pdf document
+   */
   const showPage = async (pageno) => {
     let page = await pdfDoc.getPage(pageno)
     console.log("Page loaded")
@@ -217,22 +220,30 @@
     pdfPreview.appendChild(canvas)
   }
 
-  let btns = true
+  $: if (signedPdf) {
+    console.log(signedPdf)
+    File = signedPdf
+    console.log(File)
+  }
+
+  $: if (signedLink) {
+    displaySignedPdf()
+  }
+
   $: if (pageNumber) {
-    let count = 0
-    count++
-    console.log("count", count)
     btns = false
     let pdfPreview = document.getElementById("pdfPreviewSection")
     pdfPreview.removeChild(pdfPreview.children[0])
     showPage(pageNumber)
   }
 
-  const toClickinput = () => {
-    console.log("clicked")
-    document.getElementById("file-upload").click()
-  }
+  $: nextbtn = currentpage < totalPages
 
+  $: prevbtn = currentpage > 1
+
+  /**
+   * Function to move to the next page
+   */
   const nextpage = () => {
     if (currentpage < totalPages) {
       console.log("nextbtn")
@@ -243,6 +254,10 @@
       showPage(currentpage)
     }
   }
+
+  /**
+   * Function to move to the previous page
+   */
   const previouspage = () => {
     if (currentpage > 1) {
       let pdfPreview = document.getElementById("pdfPreviewSection")
@@ -253,22 +268,12 @@
     }
   }
 
-  $: nextbtn = currentpage < totalPages
-
-  $: prevbtn = currentpage > 1
-
+  /**
+   * Function for hiding the display dropzone and show the displaypreview
+   */
   const ondisplaydropzone = () => {
     displayDropzone = true
     displaypreview = false
-  }
-
-  const signDoc = () => {
-    dispatch("steps")
-  }
-
-  const showModal = async () => {
-    dispatch("mShow")
-    console.log("clicked")
   }
 </script>
 
@@ -309,7 +314,7 @@
     </div>
   </div>
 
-  <HeaderFileupload {id} {bgcolor} />
+  <HeaderFileupload {id} />
 
   <form
     id="form"
@@ -325,7 +330,7 @@
         <div
           class="sm:col-span-6 cursor-pointer"
           id="dropzone"
-          on:click={toClickinput}
+          on:click={() => document.getElementById("file-upload").click()}
           in:fade={{ duration: 1500 }}
           out:fade={{ duration: 100 }}
         >
@@ -385,7 +390,7 @@
   <button
     disabled
     id="disableBtn"
-    on:click={showModal}
+    on:click={() => dispatch("mShow")}
     class="{displaypreview && displayPdf
       ? 'flex'
       : 'hidden'}  w-full lg:w-[38.5rem] mx-auto flex-col rounded-md"
@@ -470,7 +475,7 @@
     <div class="flex">
       <button
         id="autoClick1"
-        on:click={signDoc}
+        on:click={() => dispatch("steps")}
         class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide"
       >
         Sign Doc
