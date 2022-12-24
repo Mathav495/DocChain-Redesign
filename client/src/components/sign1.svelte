@@ -4,6 +4,7 @@
   import { createEventDispatcher } from "svelte"
   import Step1 from "./Step1.svelte"
   import Step2 from "./Step2.svelte"
+  import Step3 from "./Step3.svelte"
   const dispatch = createEventDispatcher()
   console.log(data1)
   let errormsg = ""
@@ -41,7 +42,7 @@
     details = true
   }
   /**
-   * change a modal to page no selection and sign alignment selection page
+   * change a modal to page no selection and sign alignment selection modal
    */
   const nextBtn1 = async () => {
     // console.log("nextBtn1")
@@ -60,12 +61,85 @@
     // }, 1000)
   }
 
-  console.log(docURL)
+  /**
+   * back to user detail modal
+   */
+  const backBtn1 = () => {
+    SelectPageno = false
+    details = true
+  }
+
+  /**
+   * change a modal to "sign reason" and "sign color" get modal
+   */
+  const nextBtn2 = () => {
+    details = false
+    SelectPageno = false
+    signPage = true
+  }
+
+  //after select the placement of sign
   let NextBtn2 = true
   $: if (modal) {
     NextBtn2 = false
     nextBtn1()
   }
+
+  /**
+   * back to page no selection and sign alignment selection modal
+   */
+  const backBtn2 = () => {
+    signPage = false
+    SelectPageno = true
+  }
+
+  /**
+   * function for initiate signature process
+   */
+  const initiate = async () => {
+    //get signer id
+    document.getElementById("disableBtn").disabled = true
+    console.log("initiate")
+    init = false
+    console.log(pdfPosition)
+    let date = new Date().toJSON()
+    initvalues = {
+      signer:
+        "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
+      file: file,
+      signPage: localStorage.getItem("PageNo"),
+      signPosition: pdfPosition.lastposition.toString(),
+      signField: `Signer ${date}`,
+      reason: Reason,
+      signBGColor: bgColor,
+      url: docURL,
+    }
+    console.log(initvalues)
+    try {
+      const { data } = await axios.post(
+        "https://pdfsign.test.print2block.in/signature/initiate",
+        initvalues,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      console.log(data)
+      signreq = data.signRequest.id
+      console.log(signreq, "signer id")
+      // modal = true
+      //get signer id
+      signPage = false
+      otp = true
+      console.log("next3")
+    } catch (error) {
+      console.error(error)
+      init = true
+    }
+  }
+
+  console.log(docURL)
   let switchAccount = false,
     steps = false,
     modelHeading = false
@@ -91,39 +165,7 @@
     tick2 = true,
     tick3 = true,
     signPage = false
-  const backBtn1 = () => {
-    empty2 = false
-    dot3 = true
-    borderBlue1 = false
-    SelectPageno = false
-    details = true
-    dot2 = true
-    tick2 = true
-    empty = false
-  }
-  const nextBtn2 = () => {
-    empty = true
-    empty2 = true
-    dot1 = true
-    dot2 = true
-    dot3 = false
-    borderBlue1 = true
-    borderBlue2 = true
-    tick1 = false
-    tick2 = false
-    details = false
-    SelectPageno = false
-    signPage = true
-  }
-  const backBtn2 = () => {
-    // console.log('back2')
-    borderBlue2 = false
-    empty2 = false
-    tick3 = true
-    dot3 = true
-    signPage = false
-    SelectPageno = true
-  }
+
   let borderBlue3 = false,
     empty3 = false,
     tick4 = true,
@@ -200,56 +242,7 @@
       // pdfPosition.options.lockHorizontalCenter = true;
     }
   }
-  /**
-   * function for initiate signature process
-   */
-  const initiate = async () => {
-    //get signer id
-    document.getElementById("disableBtn").disabled = true
-    console.log("initiate")
-    init = false
-    console.log(pdfPosition)
-    let date = new Date().toJSON()
-    initvalues = {
-      signer:
-        "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
-      file: file,
-      signPage: localStorage.getItem("PageNo"),
-      signPosition: pdfPosition.lastposition.toString(),
-      signField: `Signer ${date}`,
-      reason: Reason,
-      signBGColor: bgColor,
-      url: docURL,
-    }
-    console.log(initvalues)
-    try {
-      const { data } = await axios.post(
-        "https://pdfsign.test.print2block.in/signature/initiate",
-        initvalues,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      console.log(data)
-      signreq = data.signRequest.id
-      console.log(signreq, "signer id")
-      // modal = true
-      //get signer id
-      signPage = false
-      otp = true
-      console.log("next3")
-      tick3 = false
-      dot3 = true
-      dot4 = false
-      empty3 = true
-      borderBlue3 = true
-    } catch (error) {
-      console.error(error)
-      init = true
-    }
-  }
+
   /**
    * function for confirm the sign request
    */
@@ -326,40 +319,31 @@
 </script>
 
 <div
-  class="flex flex-col gap-4 mx-auto px-5 py-5 bg-white w-96 sm:w-94 lg:w-98 rounded-md"
+  class="relative flex flex-col gap-4 mx-auto px-5 py-5 bg-white w-96 sm:w-94 lg:w-98 rounded-md"
 >
+  <div class="absolute top-5 right-5">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      class="w-6 h-6"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
+        clip-rule="evenodd"
+      />
+    </svg>
+  </div>
   <h1 class:hidden={modelHeading} class="mx-auto text-xl  font-bold">
     Add Digital Signature
   </h1>
   {#if switchAccount}
     <div class="flex flex-col gap-4">
-      <h1 class="text-center text-lg tracking-wide font-semibold pb-4">
-        SWITCH ACCOUNT
-      </h1>
-      <form class="flex flex-col items-center justify-start gap-2">
-        <div class="relative flex items-center">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-5 h-5 fill-gray-400 mt-2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
-              />
-            </svg>
-          </span>
-          <input
-            placeholder="Enter ID"
-            type="text"
-            class="w-full mt-2 pl-9 placeholder:text-base bg-black focus:bg-black text-blue-500 rounded-md border border-gray-300 placeholder:text-blue-500 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
-          />
-        </div>
+      <h1 class="text-lg tracking-wide font-semibold pb-2">SWITCH ACCOUNT</h1>
+      <form class="w-full flex flex-col mx-auto">
+        <label class="font-bold text-lg text-start">ID</label>
+        <input placeholder="Enter ID" type="text" class="input-normal w-full" />
       </form>
       <div class="flex items-center justify-between">
         <button on:click={backBtn} class="redBtn">back</button>
@@ -470,17 +454,13 @@
     </div>
     <div class="flex flex-col gap-4">
       <div>
-        <div class="flex flex-col gap-2 justify-between items-start pt-2">
+        <div class="flex flex-col gap-2 items-start pt-2">
           {#if totalPages.length > 1}
             <div class="w-auto flex flex-row gap-4 items-center">
-              <p class="text-base text-gray-800 w-40 font-semibold">
+              <p class="text-base text-gray-800 w-36 font-semibold">
                 Select Page No
               </p>
-              <select
-                bind:value={pageNo}
-                id="pageNo"
-                class="w-16 p-2 placeholder:text-base bg-black focus:bg-black text-blue-500 rounded-md border border-gray-300 placeholder:text-blue-500 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
-              >
+              <select bind:value={pageNo} id="pageNo" class="input-normal w-16">
                 {#each totalPages as totalPage}
                   <option value={totalPage}>{totalPage}</option>
                 {/each}
@@ -488,24 +468,9 @@
             </div>
           {/if}
           <div class="relative flex flex-row w-full gap-4">
-            <p class="text-base text-gray-800 w-40 font-semibold">
-              Select sign flexible
-            </p>
-            <div class="flex items-center justify-start gap-5">
-              <button
-                on:click={signaturePlacement}
-                id="posControls"
-                class:justify-end={position}
-                class:bg-blue-500={bgclr}
-                class="w-8 h-5 border-2 rounded-full flex items-center px-0.5"
-              >
-                <button
-                  class:bg-white={ballwht}
-                  class:bg-black={ballblk}
-                  class="w-3 h-3 rounded-full"
-                />
-              </button>
-              <div class="w-auto group flex flex-row gap-4 -ml-3">
+            <div class="flex gap-1 w-36">
+              <p class="text-base text-gray-800 font-semibold">Align middle</p>
+              <div class="w-auto group flex flex-row gap-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -519,7 +484,7 @@
                   />
                 </svg>
                 <p
-                  class="w-auto absolute left-64 text-base hidden group-hover:block p-2 shadow-slide rounded-md bg-gray-200 text-black"
+                  class="w-auto absolute left-52 text-base hidden group-hover:block p-2 shadow-slide rounded-md bg-gray-200 text-black"
                 >
                   <strong>Click:</strong>
                   Horizontally lock your sign.
@@ -528,6 +493,21 @@
                   Anywhere to put you sign.
                 </p>
               </div>
+            </div>
+            <div class="flex items-center justify-start gap-2">
+              <button
+                on:click={signaturePlacement}
+                id="posControls"
+                class:justify-end={position}
+                class:bg-blue-500={bgclr}
+                class="w-8 h-5 border-2 rounded-full flex items-center px-0.5"
+              >
+                <button
+                  class:bg-white={ballwht}
+                  class:bg-black={ballblk}
+                  class="w-3 h-3 rounded-full"
+                />
+              </button>
             </div>
           </div>
         </div>
@@ -549,54 +529,31 @@
     </div>
   {/if}
   {#if signPage}
+    <div class="flex items-center justify-center mb-4">
+      <Step3 />
+    </div>
     <div class="flex flex-col gap-4">
-      <div class="flex gap-2">
-        <button on:click={backBtn2} class="redBtn float-left">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
-            />
-          </svg>
-        </button>
-        <h1
-          class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
-        >
-          SIGN DETAILS
-        </h1>
-      </div>
-      <div class="flex flex-row items-center gap-2">
-        <p class="text-base text-gray-800 font-semibold">
+      <div class="flex flex-row items-start gap-4">
+        <p class="w-52 text-base text-gray-800 font-semibold">
           Reason for Digital Signature
         </p>
-        <input
-          type="text"
-          bind:value={Reason}
-          class="w-52 border-b-2 border-black outline-none"
-        />
+        <textarea type="text" bind:value={Reason} class="input-normal" />
       </div>
-      <div class="flex flex-row items-center gap-2">
-        <p class="text-base text-gray-800 font-semibold">
+      <div class="flex flex-row items-center gap-4">
+        <p class="w-52 text-base text-gray-800 font-semibold">
           Signature Background color
         </p>
         <input
           bind:value={bgColor}
-          class="w-52 outline-none"
+          class="h-6 w-8"
           type="color"
           name="Identity"
           id="Identity"
         />
       </div>
 
-      <div class="flex items-center justify-end pt-4">
+      <div class="flex items-center justify-between pt-4">
+        <button on:click={backBtn2} class="redBtn float-left">Back</button>
         {#if init}
           <button on:click={initiate} class="blueBtn">Initiate</button>
         {/if}
@@ -604,6 +561,9 @@
     </div>
   {/if}
   {#if otp}
+    <div class="flex items-center justify-center mb-4">
+      <Step3 />
+    </div>
     <div class="flex flex-col gap-4">
       <h1
         class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
@@ -678,12 +638,15 @@
 
 <style lang="postcss">
   .blueBtn {
-    @apply w-14 rounded-md border-2 border-blue-600 px-2 py-1 text-sm font-semibold text-blue-700 hover:bg-blue-700 hover:text-white;
+    @apply w-20 rounded-md border-2 border-blue-600 px-2 py-1 text-sm font-semibold text-blue-700 hover:bg-blue-700 hover:text-white;
   }
   .redBtn {
-    @apply w-14 rounded-md border-2 border-red-600 px-2 py-1 text-sm font-semibold text-red-700 hover:bg-red-700 hover:text-white;
+    @apply w-20 rounded-md border-2 border-red-600 px-2 py-1 text-sm font-semibold text-red-700 hover:bg-red-700 hover:text-white;
   }
   .greenBtn {
-    @apply w-14 rounded-md border-2 border-green-600 px-2 py-1 text-sm font-semibold text-green-700 hover:bg-green-700 hover:text-white;
+    @apply w-20 rounded-md border-2 border-green-600 px-2 py-1 text-sm font-semibold text-green-700 hover:bg-green-700 hover:text-white;
+  }
+  .input-normal {
+    @apply h-9 rounded-md border-2 border-slate-200  bg-white px-2 py-1 text-base font-bold placeholder:font-semibold placeholder:text-slate-500  focus:outline-none focus:ring-2 focus:ring-slate-800;
   }
 </style>
