@@ -3,6 +3,7 @@
   export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
   import Step1 from "./Step1.svelte"
+  import Step2 from "./Step2.svelte"
   const dispatch = createEventDispatcher()
   console.log(data1)
   let errormsg = ""
@@ -29,6 +30,15 @@
     modelHeading = true
     switchAccount = true
     details = false
+  }
+
+  /**
+   * close switch id modal
+   */
+  const backBtn = () => {
+    modelHeading = false
+    switchAccount = false
+    details = true
   }
   /**
    * change a modal to page no selection and sign alignment selection page
@@ -62,12 +72,6 @@
 
   const closeModal = () => {
     dispatch("clsModal")
-  }
-  const backBtn = () => {
-    modelHeading = false
-    steps = false
-    switchAccount = false
-    details = true
   }
 
   let details = true,
@@ -332,7 +336,7 @@
       <h1 class="text-center text-lg tracking-wide font-semibold pb-4">
         SWITCH ACCOUNT
       </h1>
-      <form class="flex flex-col items-center justify-center gap-2">
+      <form class="flex flex-col items-center justify-start gap-2">
         <div class="relative flex items-center">
           <span class="absolute inset-y-0 left-0 flex items-center pl-2">
             <svg
@@ -353,7 +357,7 @@
           <input
             placeholder="Enter ID"
             type="text"
-            class="w-full mt-2 pl-9 placeholder:text-base bg-black focus:bg-black text-blue-500 rounded border border-gray-300 placeholder:text-blue-500 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
+            class="w-full mt-2 pl-9 placeholder:text-base bg-black focus:bg-black text-blue-500 rounded-md border border-gray-300 placeholder:text-blue-500 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
           />
         </div>
       </form>
@@ -385,7 +389,7 @@
           {data1.signerDetails.id}
         </div>
       </div>
-      <div class="flex items-start">
+      <div class="flex items-start gap-5">
         <div class="w-auto">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -462,7 +466,7 @@
   {/if}
   {#if SelectPageno}
     <div class="flex items-center justify-center mb-4">
-      <Step1 />
+      <Step2 />
     </div>
     <div class="flex flex-col gap-4">
       <div>
@@ -483,9 +487,9 @@
               </select>
             </div>
           {/if}
-          <div class="flex flex-row w-auto gap-4">
+          <div class="relative flex flex-row w-full gap-4">
             <p class="text-base text-gray-800 w-40 font-semibold">
-              Select sign alignment
+              Select sign flexible
             </p>
             <div class="flex items-center justify-start gap-5">
               <button
@@ -493,32 +497,54 @@
                 id="posControls"
                 class:justify-end={position}
                 class:bg-blue-500={bgclr}
-                class="w-16 h-8 border-2 rounded-md flex items-center px-0.5"
+                class="w-8 h-5 border-2 rounded-full flex items-center px-0.5"
               >
                 <button
                   class:bg-white={ballwht}
                   class:bg-black={ballblk}
-                  class="w-6 h-6 rounded-md"
+                  class="w-3 h-3 rounded-full"
                 />
               </button>
-              <p class:font-semibold={bold} class="text-base">
-                Lock Horizontal control
-              </p>
+              <div class="w-auto group flex flex-row gap-4 -ml-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 01-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 01-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 01-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584zM12 18a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <p
+                  class="w-auto absolute left-64 text-base hidden group-hover:block p-2 shadow-slide rounded-md bg-gray-200 text-black"
+                >
+                  <strong>Click:</strong>
+                  Horizontally lock your sign.
+                  <br />
+                  <strong>Undo:</strong>
+                  Anywhere to put you sign.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="flex gap-3 justify-between">
         <button on:click={backBtn1} class="redBtn float-left">Back</button>
-        <button
-          on:click={hideModal}
-          class="show-signature-overlay greenBtn disabled:cursor-not-allowed"
-        >
-          SIGN
-        </button>
-        <button class:hidden={NextBtn2} on:click={nextBtn2} class="blueBtn">
-          Next
-        </button>
+        <div class="flex gap-2">
+          <button
+            on:click={hideModal}
+            class="show-signature-overlay greenBtn disabled:cursor-not-allowed"
+          >
+            SIGN
+          </button>
+          <button class:hidden={NextBtn2} on:click={nextBtn2} class="blueBtn">
+            Next
+          </button>
+        </div>
       </div>
     </div>
   {/if}
@@ -652,12 +678,12 @@
 
 <style lang="postcss">
   .blueBtn {
-    @apply rounded-md border-2 border-blue-600 px-2 py-1 text-sm font-semibold text-blue-700 hover:bg-blue-700 hover:text-white;
+    @apply w-14 rounded-md border-2 border-blue-600 px-2 py-1 text-sm font-semibold text-blue-700 hover:bg-blue-700 hover:text-white;
   }
   .redBtn {
-    @apply rounded-md border-2 border-red-600 px-2 py-1 text-sm font-semibold text-red-700 hover:bg-red-700 hover:text-white;
+    @apply w-14 rounded-md border-2 border-red-600 px-2 py-1 text-sm font-semibold text-red-700 hover:bg-red-700 hover:text-white;
   }
   .greenBtn {
-    @apply rounded-md border-2 border-green-600 px-2 py-1 text-sm font-semibold text-green-700 hover:bg-green-700 hover:text-white;
+    @apply w-14 rounded-md border-2 border-green-600 px-2 py-1 text-sm font-semibold text-green-700 hover:bg-green-700 hover:text-white;
   }
 </style>
