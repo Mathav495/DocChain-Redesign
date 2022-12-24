@@ -1,11 +1,14 @@
 <script>
+  import axios from "axios"
   export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
+  import ErrorInfo from "./ErrorInfo.svelte"
   const dispatch = createEventDispatcher()
-  import axios from "axios"
-  import { navigate } from "svelte-routing"
+  let errormsg = ""
   let blob
+  let conReq = false
   let download = false
+  let init = true
   let borderBlue4 = false
   let empty4 = false
   let dot5 = true
@@ -14,9 +17,8 @@
   let signreq = ""
   let SignFile
   let oneTimePassword = ""
-  let signPosition = ""
+  let bgColor = ""
   let Reason = "for verification"
-
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
   let switchIdForm = true
@@ -170,35 +172,41 @@
       // pdfPosition.options.lockHorizontalCenter = true;
     }
   }
-
+  /**
+   * function for initiate signature process
+   */
   const initiate = async () => {
+    //get signer id
     document.getElementById("disableBtn").disabled = true
     console.log("initiate")
+    init = false
     console.log(pdfPosition)
+    let date = new Date().toJSON()
     initvalues = {
       signer:
         "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
       file: file,
       signPage: localStorage.getItem("PageNo"),
       signPosition: pdfPosition.lastposition.toString(),
-      signField: "Signer",
+      signField: `Signer ${date}`,
       reason: Reason,
-      signBGColor: "#FF0000",
+      signBGColor: bgColor,
       url: docURL,
     }
     console.log(initvalues)
-    const { data } = await axios.post(
-      "https://pdfsign.test.print2block.in/signature/initiate",
-      initvalues,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
-    console.log(data)
-    signreq = data.signRequest.id
-    console.log(signreq, "signer id")
+    try {
+      const { data } = await axios.post(
+        "https://pdfsign.test.print2block.in/signature/initiate",
+        initvalues,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      console.log(data)
+      signreq = data.signRequest.id
+      console.log(signreq, "signer id")
     // modal = true
     //get signer id
     signPage = false
@@ -209,56 +217,76 @@
     dot4 = false
     empty3 = true
     borderBlue3 = true
+    } catch (error) {
+      console.error(error)
+      init = true
+    }
   }
-
+  /**
+   * function for confirm the sign request
+   */
   const confirmRequest = async () => {
     console.log("confirmRequest")
+    conReq = true
     //get file name
-    const { data } = await axios.post(
-      "https://pdfsign.test.print2block.in/signature/confirm",
-      {
-        requestid: signreq,
-        otp: oneTimePassword,
+    try {
+      const { data } = await axios.post(
+        "https://pdfsign.test.print2block.in/signature/confirm",
+        {
+          requestid: signreq,
+          otp: oneTimePassword,
+        }
+      )
+      console.log(data)
+      if (data.message) {
+        errormsg = data.message
       }
-    )
-    console.log(data)
-    SignFile = data.signRequest.signedFile
-    console.log(SignFile, "signed file")
-    otp = false
-    download = true
-    tick4 = false
-    borderBlue4 = true
-    dot4 = true
-    tick4 = false
-    dot5 = false
-    empty4 = true
+      SignFile = data.signRequest.signedFile
+      console.log(SignFile, "signed file")
+      otp = false
+      download = true
+      tick4 = false
+      borderBlue4 = true
+      dot4 = true
+      tick4 = false
+      dot5 = false
+      empty4 = true
+    } catch (error) {
+      conReq = false
+      console.error(error)
+    }
   }
-
+  
+  /**
+   * function for downloading the signed pdf and preview
+   */
   const pdfPreview = async () => {
     console.log(SignFile)
-    const { data } = await axios.get(
-      `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
-      { responseType: "blob" }
-    )
-    console.log(data)
-    const myFile = new File([data], SignFile, {
-      type: data.type,
-    })
-    console.log(myFile)
-    blob = URL.createObjectURL(data)
-    console.log(blob)
-    dispatch("blob", blob)
-    dispatch("myFile", myFile)
-    let downloadPdf = document.createElement("a")
-    // downloadPdf.setAttribute("href", blob)
-    // downloadPdf.style.display = "none"
-    // downloadPdf.setAttribute("target", "_blank")
-    // downloadPdf.setAttribute("download", SignFile)
-    // downloadPdf.click()
-
-    // navigate(
-    //   `https://pdfsign.test.print2block.in/signature/download/${SignFile}`
-    // )
+    // tryCatch used for error handling
+    try {
+      const { data } = await axios.get(
+        `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+        { responseType: "blob" }
+      )
+      console.log(data)
+      const myFile = new File([data], SignFile, {
+        type: data.type,
+      })
+      console.log(myFile)
+      blob = URL.createObjectURL(data)
+      console.log(blob)
+      dispatch("blob", blob)
+      dispatch("myFile", myFile)
+      document.getElementsByClassName("btn")[0].classList.remove("hidden")
+      let spdf = document.createElement("a")
+      spdf.href = blob
+      spdf.style.display = "none"
+      spdf.target = "_blank"
+      spdf.download = SignFile
+      spdf.click()
+    } catch (error) {
+      console.error(error)
+    }
   }
   let page
   const hideModal = () => {
@@ -269,10 +297,11 @@
   }
 </script>
 
+<!-- svelte-ignore non-top-level-reactive-declaration -->
 <div class="w-full h-auto p-4">
   <nav aria-label="Progress">
     <ol
-      class="flex flex-col gap-4 mx-auto px-5 py-5 bg-blue-300 w-full lg:w-9/12 xl:w-7/12 rounded-md"
+      class="flex flex-col gap-4 mx-auto w-full lg:w-9/12 xl:w-7/12 px-5 py-5 bg-blue-300 rounded-md"
     >
       <h1
         class:hidden={modelHeading}
@@ -689,8 +718,7 @@
               Signature Background color
             </p>
             <input
-              on:input={chooseClr}
-              bind:value={clr}
+              bind:value={bgColor}
               class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
               type="color"
               name="Identity"
@@ -705,12 +733,14 @@
             >
               Back
             </button>
-            <button
-              on:click={initiate}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Initiate
-            </button>
+            {#if init}
+              <button
+                on:click={initiate}
+                class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+              >
+                Initiate
+              </button>
+            {/if}
           </div>
         </div>
       {/if}
@@ -733,18 +763,19 @@
             />
           </div>
 
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
+          <div class="flex items-center justify-end border-t border-white pt-4">
+            <!-- <button
               on:click={backBtn3}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
             >
               Back
-            </button>
+            </button> -->
+
             <button
+
+              disabled={conReq}
               on:click={confirmRequest(signreq)}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
+              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
             >
               confirmRequest
             </button>
@@ -758,16 +789,41 @@
           >
             SIGN DETAILS
           </h1>
-          <div class="flex justify-center">
-            <div
-              class=" mt-5 w-1/2 flex justify-center bg-slate-100 rounded-lg"
-            >
-              <button
-                on:click={pdfPreview}
-                class="text-center text-lg font-semibold text-slate-800"
+          <div class="flex w-full flex-col p-5">
+            <div class="cursor-pointer">
+              <div
+                class="flex items-center justify-center rounded-md border-blue-600 py-5"
               >
-                click here!!! and Preview
-              </button>
+                <div class="space-y-1 text-center">
+                  <div class="flex flex-col text-base">
+                    <label
+                      for="file-upload"
+                      class="relative cursor-pointer rounded-md font-semibold text-blue-800"
+                      id="dropzone"
+                    >
+                      <!-- svelte-ignore a11y-click-events-have-key-events -->
+                      <svg
+                        on:click={pdfPreview}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="mx-auto h-14 w-14"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+                        />
+                      </svg>
+                      <button on:click={pdfPreview} class="hover:underline">
+                        Click here to preview and download
+                      </button>
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
