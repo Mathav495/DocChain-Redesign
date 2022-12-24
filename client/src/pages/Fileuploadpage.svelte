@@ -48,13 +48,15 @@
     }
   }
 
-  let stepModal = false
+  let stepModal = false,
+    overflowHidden = false
   $: console.log(stepModal)
   let addfile = false,
     data1,
     signerId =
       "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3"
   const Modal = async (signerId) => {
+    overflowHidden = true
     const { data } = await axios.get(
       `https://pdfsign.test.print2block.in/blockchain/signer/get?signer=${signerId}`
     )
@@ -80,7 +82,7 @@
   }
 
   let modal = false
-  const showModal = async () => {
+  const showModal = () => {
     stepModal = true
     console.log("click")
     modal = true
@@ -117,12 +119,14 @@
     <Logout on:theme={changeClr} />
   </div>
   <div
-    class="lg:w-full md:w-6/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md ml-2 md:ml-0 overflow-auto"
+    class:overflow-hidden={overflowHidden}
+    class="lg:w-full md:w-6/8 w-full flex flex-col gap-4 bg-white text-gray-900
+    rounded-md ml-2 md:ml-0 overflow-auto"
   >
     <div class="md:hidden block">
       <Header on:navShow={showNav} />
     </div>
-    <div class="relative ">
+    <div>
       <Addfile
         {pageNumber}
         {id}
@@ -133,18 +137,19 @@
         on:totalPage={pageNumbers}
         on:mShow={showModal}
       />
-
       {#if stepModal}
-        <div class="absolute top-0 w-full h-full bg-gray-300/80">
-          <Sign1
-            {data1}
+        <div
+          class="absolute inset-0 flex justify-center w-screen bg-[#000000cc] h-screen"
+        >
+          <div class="p-4 mx-auto">
+            <Sign1 {data1}
             {file}
             {totalPages}
             on:PageNo={pageNum}
             {modal}
             on:myFile={signedFile}
-            on:blob={signedUrl}
-          />
+            on:blob={signedUrl}/>
+          </div>
         </div>
       {/if}
     </div>
