@@ -1,5 +1,5 @@
 <script>
-  export let bloblink, MyFile
+  export let signedLink, signedPdf
   export let pageNumber
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
@@ -153,7 +153,7 @@
     _PDFDOC = await loadingTask
     _total_pages = _PDFDOC.numPages
     dispatch("totalPage", _total_pages)
-    console.log(_total_pages)
+    console.log("_total_pages", _total_pages)
     console.log(_PDFDOC)
     currentpage = 1
     showPage(1)
@@ -164,22 +164,39 @@
    */
 
   const displaySignedPdf = async () => {
-    if (bloblink) {
+    if (signedLink) {
+      console.log(signedLink)
       displayDropzone = false
-      await showPdf(bloblink)
+      try {
+        console.log(pdfjsLib)
+        let loadingTask = pdfjsLib.getDocument(signedLink)
+        loadingTask = loadingTask.promise
+        _PDFDOC = await loadingTask
+        _total_pages = _PDFDOC.numPages
+        console.log(_total_pages)
+        let hideCanvas = document.getElementById("createdCanvas")
+        hideCanvas.style.display = "none"
+        showPage(pageNumber)
+      } catch (error) {
+        console.error(error)
+      }
       displaypreview = true
       showpdf = true
     }
-    if (MyFile) {
-      File = MyFile
-    }
   }
-  displaySignedPdf()
+  $: if (signedPdf) {
+    console.log(signedPdf)
+    File = signedPdf
+    console.log(File)
+  }
+  $: if (signedLink) {
+    displaySignedPdf()
+  }
 
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno)
     console.log("Page loaded")
-    let viewport = page.getViewport({ scale: 1.03 })
+    let viewport = page.getViewport({ scale: 1 })
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById("mycanvas")

@@ -1,52 +1,16 @@
 <script>
-  import HeaderFileupload from "./header_fileupload.svelte"
   import axios from "axios"
   import { createEventDispatcher } from "svelte"
   import { navigate } from "svelte-routing"
+  import HeaderFileupload from "./header_fileupload.svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
-  const dispatch = createEventDispatcher()
   export let id
-  let dateexpired = ""
-  let issuer = ""
-  let doctype = ""
-  let signatory = ""
-  let docTitle = ""
-  let valid, date, metaData, errormsg, options
-
-  let initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
-
-  if (!initialMetadata) {
-    let formDataDetails = {
-      receiver: [
-        {
-          label: 0,
-          labelName: "Fieldname",
-          inputvalue: "",
-        },
-      ],
-      documentDetails: [
-        {
-          label: 0,
-          labelName: "Fieldname",
-          inputvalue: "",
-        },
-      ],
-      signatoryDetails: [
-        {
-          label: 0,
-          labelName: "Fieldname",
-          inputvalue: "",
-        },
-      ],
-    }
-    localStorage.setItem("formDataDetails", JSON.stringify(formDataDetails))
-    initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
-  }
-
-  console.log(initialMetadata)
-  let receiver, documentDetails, signatoryDetails
-  let displayerror = false
-
+  const dispatch = createEventDispatcher()
+  let dateexpired = "",
+    issuer = "",
+    doctype = "",
+    signatory = "",
+    docTitle = ""
   let error = {
     dateexpired: "",
     issuer: "",
@@ -54,10 +18,67 @@
     docTitle: "",
     signatory: "",
   }
-  let token = localStorage.getItem("token")
-  let documentID = localStorage.getItem("documentID")
-  let bgcolor = localStorage.getItem("bgGradient")
-  console.log("id get from the params", id)
+  let valid,
+    date,
+    metaData,
+    errormsg,
+    options,
+    receiver,
+    documentDetails,
+    signatoryDetails
+
+  let displayerror = false
+  let initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
+
+  let formDataDetails = {
+    receiver: [
+      {
+        label: 0,
+        labelName: "Fieldname",
+        inputvalue: "",
+      },
+    ],
+    documentDetails: [
+      {
+        label: 0,
+        labelName: "Fieldname",
+        inputvalue: "",
+      },
+    ],
+    signatoryDetails: [
+      {
+        label: 0,
+        labelName: "Fieldname",
+        inputvalue: "",
+      },
+    ],
+  }
+  if (!initialMetadata) {
+    localStorage.setItem("formDataDetails", JSON.stringify(formDataDetails))
+    initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
+  } else {
+    receiver = initialMetadata.receiver
+    receiver.find((receiver) => {
+      receiver.inputvalue = ""
+    })
+    initialMetadata.receiver = receiver
+
+    documentDetails = initialMetadata.documentDetails
+    documentDetails.find((documentDetails) => {
+      documentDetails.inputvalue = ""
+    })
+    initialMetadata.documentDetails = documentDetails
+
+    signatoryDetails = initialMetadata.signatoryDetails
+    signatoryDetails.find((signatoryDetails) => {
+      signatoryDetails.inputvalue = ""
+    })
+    initialMetadata.signatoryDetails = signatoryDetails
+    localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
+    initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
+  }
+
+  console.log(initialMetadata)
 
   /**
    * Submitting document metadata and generating datahash
@@ -116,52 +137,18 @@
     }
     if (valid) {
       console.log("valid")
-
-      // receiver data
-      receiver = initialMetadata.receiver
-
-      let rec_obj = new Object()
-      rec_obj.name = issuer
-      for (let i = 0; i < receiver.length; i++) {
-        if (receiver[i].labelName != "Fieldname" && receiver[i].inputvalue) {
-          rec_obj[receiver[i].labelName] = receiver[i].inputvalue
-        }
-      }
-      console.log(rec_obj, "rec_obj")
-
-      // document data
-      documentDetails = initialMetadata.documentDetails
-      let doc_obj = new Object()
-      doc_obj.type = doctype
-      for (let i = 0; i < documentDetails.length; i++) {
-        if (
-          documentDetails[i].labelName != "Fieldname" &&
-          documentDetails[i].inputvalue
-        ) {
-          doc_obj[documentDetails[i].labelName] = documentDetails[i].inputvalue
-        }
-      }
-      console.log(doc_obj, "doc_obj")
-
-      //signatory data
-      signatoryDetails = initialMetadata.signatoryDetails
-      let sign_obj = new Object()
-      sign_obj.signatory = signatory
-      for (let i = 0; i < signatoryDetails.length; i++) {
-        if (
-          signatoryDetails[i].labelName != "Fieldname" &&
-          signatoryDetails[i].inputvalue
-        ) {
-          sign_obj[signatoryDetails[i].labelName] =
-            signatoryDetails[i].inputvalue
-        }
-      }
-      console.log(sign_obj, "sign_obj")
-
       metaData = {
-        receiver: rec_obj,
-        document: doc_obj,
-        issuer: sign_obj,
+        receiver: updatedObject(initialMetadata.receiver, "name", issuer),
+        document: updatedObject(
+          initialMetadata.documentDetails,
+          "type",
+          doctype
+        ),
+        issuer: updatedObject(
+          initialMetadata.signatoryDetails,
+          "signatory",
+          signatory
+        ),
       }
 
       if (date) {
@@ -181,31 +168,22 @@
           : (options = {})
       }
 
-      console.log(documentID)
       const { data } = await axios.post(
         "https://test.swagger.print2block.in/docs/add-data",
         {
-          documentID: documentID,
+          documentID: localStorage.getItem("documentID"),
           metadata: metaData,
           options: options,
         },
         {
           headers: {
-            "x-access-token": token,
+            "x-access-token": localStorage.getItem("token"),
           },
         }
       )
       console.log(data)
-      // let metadata = data.metadata;
       localStorage.setItem("metadata", data.metadata)
-      let metadata = JSON.parse(localStorage.getItem("metadata"))
-      console.log(metadata)
-      console.log(typeof metadata)
-      console.log(metadata.receiver.name)
       localStorage.setItem("options", data.options)
-      let option = JSON.parse(localStorage.getItem("options"))
-      console.log(option.title)
-      console.log(option.expireOn)
 
       if (data.dataHash) {
         let localdata = JSON.parse(localStorage.getItem("docDetails"))
@@ -240,6 +218,23 @@
         }
       }
     }
+  }
+
+  const updatedObject = (data, key, value) => {
+    let updatedData = data
+    console.log(updatedData)
+    let createObj = new Object()
+    createObj[key] = value
+    for (let i = 0; i < updatedData.length; i++) {
+      if (
+        updatedData[i].labelName != "Fieldname" &&
+        updatedData[i].inputvalue
+      ) {
+        createObj[updatedData[i].labelName] = updatedData[i].inputvalue
+      }
+    }
+    console.log(createObj, "createObj")
+    return createObj
   }
 
   /**
@@ -381,11 +376,15 @@
 </script>
 
 <div class="space-y-3 flex flex-col justify-center items-center">
-  <HeaderFileupload {id} {bgcolor}>
-    <h1 slot="title" class="text-base text-white">
-      {docTitle ? docTitle : "Untitled Document"}
-    </h1>
-  </HeaderFileupload>
+  {#if displayerror}
+      <ErrorInfo
+        {errormsg}
+        position="absolute top-4 right-4"
+        on:click={() => (displayerror = false)}
+      />
+
+  {/if}
+  <HeaderFileupload {id} />
 
   <div
     class="shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-lg bg-white  h-auto w-full lg:w-[38.5rem] p-4"
@@ -507,10 +506,14 @@
               <div>
                 <input
                   name="label{receiver.label}"
+                  placeholder={receiver.labelName != "Fieldname"
+                    ? `Enter ${receiver.labelName}`
+                    : ""}
                   bind:value={receiver.inputvalue}
                   id="label{receiver.label}"
                   type="text"
-                  class="input-normal"
+                  disabled={receiver.labelName == "Fieldname"}
+                  class="input-normal disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -639,11 +642,15 @@
               </div>
               <div>
                 <input
+                  placeholder={docDetails.labelName != "Fieldname"
+                    ? `Enter ${docDetails.labelName}`
+                    : ""}
                   name="doclabel{docDetails.label}"
                   bind:value={docDetails.inputvalue}
                   id="doclabel{docDetails.label}"
                   type="text"
-                  class="input-normal"
+                  disabled={docDetails.labelName == "Fieldname"}
+                  class="input-normal disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -778,11 +785,15 @@
               </div>
               <div>
                 <input
+                  placeholder={signDetails.labelName != "Fieldname"
+                    ? `Enter ${signDetails.labelName}`
+                    : ""}
                   name="signlabel{signDetails.label}"
                   id="signlabel{signDetails.label}"
                   bind:value={signDetails.inputvalue}
                   type="text"
-                  class="input-normal"
+                  disabled={signDetails.labelName == "Fieldname"}
+                  class="input-normal disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -842,12 +853,6 @@
       </div>
     </form>
   </div>
-
-  {#if displayerror}
-    <div class="mx-auto">
-      <ErrorInfo {errormsg} on:click={() => (displayerror = false)} />
-    </div>
-  {/if}
 </div>
 
 <style lang="postcss">
