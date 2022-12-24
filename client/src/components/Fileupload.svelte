@@ -74,6 +74,7 @@
       signatoryDetails.inputvalue = ""
     })
     initialMetadata.signatoryDetails = signatoryDetails
+
     localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
     initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
   }
@@ -220,6 +221,12 @@
     }
   }
 
+  /**
+   * function to update the object for metadata
+   * @param data {Array}  array of data stored in localstorage
+   * @param key  {String} key matches the key of the metadata object
+   * @param value {String} value matches the value for the respective key in metadata
+   */
   const updatedObject = (data, key, value) => {
     let updatedData = data
     console.log(updatedData)
@@ -353,36 +360,31 @@
       console.log(receiver)
       initialMetadata.receiver = receiver
       console.log(initialMetadata)
-      localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
-      initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
     } else if (dataToBeModified == "docDetails") {
       documentDetails = initialMetadata.documentDetails
       documentDetails = documentDetails.filter(
         (documentDetails) => documentDetails.label != value
       )
       initialMetadata.documentDetails = documentDetails
-      localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
-      initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
     } else if (dataToBeModified == "signDetails") {
       signatoryDetails = initialMetadata.signatoryDetails
       signatoryDetails = signatoryDetails.filter(
         (signatoryDetails) => signatoryDetails.label != value
       )
       initialMetadata.signatoryDetails = signatoryDetails
-      localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
-      initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
     }
+    localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
+    initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
   }
 </script>
 
 <div class="space-y-3 flex flex-col justify-center items-center">
   {#if displayerror}
-      <ErrorInfo
-        {errormsg}
-        position="absolute top-4 right-4"
-        on:click={() => (displayerror = false)}
-      />
-
+    <ErrorInfo
+      {errormsg}
+      position="absolute top-4 right-4"
+      on:click={() => (displayerror = false)}
+    />
   {/if}
   <HeaderFileupload {id} />
 

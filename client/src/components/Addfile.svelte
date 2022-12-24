@@ -6,11 +6,10 @@
   import axios from "axios"
   import { navigate } from "svelte-routing"
   import { fade } from "svelte/transition"
-
   import HeaderFileupload from "./header_fileupload.svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
   export let id
-  let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf, errormsg
+  let blobimage, pdfDoc, File, totalPages, showpdf, errormsg
   let displayConfirm = false
   let displayerror = false
   let displayDropzone = true
@@ -20,7 +19,7 @@
   let documentID = localStorage.getItem("documentID")
   let bgcolor = localStorage.getItem("bgGradient")
   let displaypreview = false
-  let btnDisable = true
+  let currentpage = 1
   /**
    * Submitting file for generating filehash
    */
@@ -83,7 +82,6 @@
   /**
    * Function for previewing image or pdf when uploaded
    */
-  let Imageurl, Pdfurl
   const ondisplay = async () => {
     console.log("displayed")
     const form = document.getElementById("form")
@@ -131,7 +129,7 @@
     }
   }
 
-  async function loadLibrary(id, location) {
+  const loadLibrary = async (id, location) => {
     return new Promise((resolve) => {
       let elem = document.createElement("script")
       elem.id = id
@@ -145,18 +143,16 @@
   }
 
   const showPdf = async (blob) => {
-    console.log(pdfjsLib)
-    // await pageloader()
+    console.log("pdfjsLib", pdfjsLib)
     pdfjsLib.GlobalWorkerOptions.workerSrc = "/lib/pdf.worker.js"
     let loadingTask = pdfjsLib.getDocument(blob)
     loadingTask = loadingTask.promise
-    _PDFDOC = await loadingTask
-    _total_pages = _PDFDOC.numPages
-    dispatch("totalPage", _total_pages)
-    console.log("_total_pages", _total_pages)
-    console.log(_PDFDOC)
-    currentpage = 1
-    showPage(1)
+    pdfDoc = await loadingTask
+    totalPages = pdfDoc.numPages
+    dispatch("totalPage", totalPages)
+    console.log("totalPages", totalPages)
+    console.log(pdfDoc)
+    showPage(currentpage)
   }
 
   /**
@@ -168,15 +164,13 @@
       console.log(signedLink)
       displayDropzone = false
       try {
-        console.log(pdfjsLib)
-        let loadingTask = pdfjsLib.getDocument(signedLink)
-        loadingTask = loadingTask.promise
-        _PDFDOC = await loadingTask
-        _total_pages = _PDFDOC.numPages
-        console.log(_total_pages)
         let hideCanvas = document.getElementById("createdCanvas")
         hideCanvas.style.display = "none"
-        showPage(pageNumber)
+        let pdfPreview = document.getElementById("pdfPreviewSection")
+        pdfPreview.textContent = ""
+        console.log(pdfPreview)
+        currentpage = pageNumber
+        await showPdf(signedLink)
       } catch (error) {
         console.error(error)
       }
@@ -194,12 +188,16 @@
   }
 
   const showPage = async (pageno) => {
-    let page = await _PDFDOC.getPage(pageno)
+    let page = await pdfDoc.getPage(pageno)
     console.log("Page loaded")
     let viewport = page.getViewport({ scale: 1 })
-
+    console.log("currentpage", currentpage)
     // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById("mycanvas")
+    let pdfPreview = document.getElementById("pdfPreviewSection")
+    let canvas = document.createElement("canvas")
+    canvas.className = "border-2 rounded-md w-full overflow-hidden"
+    canvas.setAttribute("id", "mycanvas")
+    console.log(canvas)
     let context = canvas.getContext("2d")
     canvas.height = viewport.height
     canvas.width = viewport.width
@@ -210,14 +208,18 @@
       viewport: viewport,
     }
     await page.render(renderContext).promise
-    // document.getElementById('pdf-preview').src = canvas.toDataURL();
+    pdfPreview.appendChild(canvas)
   }
 
   let btns = true
   $: if (pageNumber) {
+    let count = 0
+    count++
+    console.log("count", count)
     btns = false
-    currentpage = pageNumber
-    showPage(currentpage)
+    let pdfPreview = document.getElementById("pdfPreviewSection")
+    pdfPreview.removeChild(pdfPreview.children[0])
+    showPage(pageNumber)
   }
 
   const toClickinput = () => {
@@ -225,19 +227,26 @@
   }
 
   const nextpage = () => {
-    if (currentpage < _total_pages) {
+    if (currentpage < totalPages) {
+      console.log("nextbtn")
+      let pdfPreview = document.getElementById("pdfPreviewSection")
+      pdfPreview.removeChild(pdfPreview.children[0])
       currentpage++
+      console.log("currentpage next btn", currentpage)
       showPage(currentpage)
     }
   }
   const previouspage = () => {
     if (currentpage > 1) {
+      let pdfPreview = document.getElementById("pdfPreviewSection")
+      pdfPreview.removeChild(pdfPreview.children[0])
       currentpage--
+      console.log("currentpage prev btn", currentpage)
       showPage(currentpage)
     }
   }
 
-  $: nextbtn = currentpage < _total_pages
+  $: nextbtn = currentpage < totalPages
 
   $: prevbtn = currentpage > 1
 
@@ -381,8 +390,7 @@
     in:fade={{ duration: 2000 }}
     out:fade={{ duration: 1000 }}
   >
-    <canvas id="mycanvas" class="border-2 rounded-md w-full overflow-hidden" />
-    <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
+    <div id="pdfPreviewSection" />
     <div class="flex justify-center mx-auto items-center gap-8 pt-3">
       <button on:click={previouspage} disabled={!prevbtn}>
         <svg
@@ -400,7 +408,7 @@
         </svg>
       </button>
       <h1 class="text-lg text-black font-bold">
-        {currentpage} / {_total_pages}
+        {currentpage} / {totalPages}
       </h1>
       <button on:click={nextpage} disabled={!nextbtn}>
         <svg
@@ -435,7 +443,7 @@
         class="border-2 rounded-md shadow-[0_0_8px_0_rgba(0,0,0,0.15)] overflow-hidden"
       >
         <img
-          src={Imageurl}
+          src={blobimage}
           class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem]"
           id="File"
           alt="Preview"
