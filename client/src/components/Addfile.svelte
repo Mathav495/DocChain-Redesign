@@ -9,16 +9,16 @@
   import HeaderFileupload from "./header_fileupload.svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
   export let id
-  let blobimage, pdfDoc, File, totalPages, showpdf, errormsg
+  let blobimage, blobPdf, pdfDoc, File, totalPages, displayPdf, errormsg
   let displayConfirm = false
   let displayerror = false
   let displayDropzone = true
+  let displaypreview = false
   let nextbtn = true
   let prevbtn = true
   let token = localStorage.getItem("token")
   let documentID = localStorage.getItem("documentID")
   let bgcolor = localStorage.getItem("bgGradient")
-  let displaypreview = false
   let currentpage = 1
   /**
    * Submitting file for generating filehash
@@ -26,55 +26,58 @@
   const onSubmitFile = async () => {
     // console.log(File)
     if (File) {
-      const { data } = await axios.post(
-        "https://test.swagger.print2block.in/docs/add-file",
-        {
-          documentID: documentID,
-          file: File,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "x-access-token": token,
+      try {
+        const { data } = await axios.post(
+          "https://test.swagger.print2block.in/docs/add-file",
+          {
+            documentID: documentID,
+            file: File,
           },
-        }
-      )
-      console.log(data)
-      console.log(data.lastModifiedDate)
-      // dispatch('filehash', data.fileHash);
-      localStorage.setItem("filehash", data.fileHash)
-      let fileHash = localStorage.getItem("filehash")
-      console.log("filehash", fileHash)
-      if (data.fileHash) {
-        // For local storage
-        let localfile = JSON.parse(localStorage.getItem("docDetails"))
-        console.log("localfile", localfile)
-        localfile.find((localfile) => {
-          if (localfile.documentID == id) {
-            console.log(localfile)
-            console.log("same id", localfile.documentID)
-            console.log("filehash", localfile.filehash)
-            localfile.filehash = true
-            console.log(localfile)
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "x-access-token": token,
+            },
           }
-        })
-        console.log(localfile, "local")
-        localStorage.setItem("docDetails", JSON.stringify(localfile))
+        )
+        console.log(data)
+        // dispatch('filehash', data.fileHash);
+        localStorage.setItem("filehash", data.fileHash)
+        let fileHash = localStorage.getItem("filehash")
+        console.log("filehash", fileHash)
+        if (data.fileHash) {
+          // For local storage
+          let localfile = JSON.parse(localStorage.getItem("docDetails"))
+          console.log("localfile", localfile)
+          localfile.find((localfile) => {
+            if (localfile.documentID == id) {
+              console.log(localfile)
+              console.log("same id", localfile.documentID)
+              console.log("filehash", localfile.filehash)
+              localfile.filehash = true
+              console.log(localfile)
+            }
+          })
+          console.log(localfile, "local")
+          localStorage.setItem("docDetails", JSON.stringify(localfile))
 
-        //For navigating to next page
-        navigate(`/add-data/${id}`)
-      } else {
-        if (data.error) {
-          displayConfirm = false
-          displaypreview = false
-          displayDropzone = true
-          errormsg = data.errorCode
-          errormsg = errormsg.replaceAll("P2BCODE::", "")
-          displayerror = true
-          setTimeout(() => {
-            displayerror = false
-          }, 3000)
+          //For navigating to next page
+          navigate(`/add-data/${id}`)
+        } else {
+          if (data.error) {
+            displayConfirm = false
+            displaypreview = false
+            displayDropzone = true
+            errormsg = data.errorCode
+            errormsg = errormsg.replaceAll("P2BCODE::", "")
+            displayerror = true
+            setTimeout(() => {
+              displayerror = false
+            }, 3000)
+          }
         }
+      } catch (error) {
+        console.error(error)
       }
     }
   }
@@ -107,24 +110,28 @@
     ) {
       displaypreview = true
       displayDropzone = false
-      showpdf = false
+      displayPdf = false
       blobimage = URL.createObjectURL(File)
       console.log(blobimage)
       localStorage.setItem("blobimage", blobimage)
       return
     } else if (File.type == "application/pdf") {
-      showpdf = true
+      displayPdf = true
       await loadLibrary("pdfjs", "/lib/pdf.js")
-      let blob = URL.createObjectURL(File)
-      localStorage.setItem("blobpdf", blob)
-      console.log(blob)
-      await showPdf(blob)
+      blobPdf = URL.createObjectURL(File)
+      localStorage.setItem("blobpdf", blobPdf)
+      console.log(blobPdf)
+      try {
+        await showPdf(blobPdf)
+      } catch (error) {
+        console.error(error)
+      }
       displayDropzone = false
       displaypreview = true
       return
     } else {
       displaypreview = false
-      showpdf = false
+      displayPdf = false
       return
     }
   }
@@ -142,10 +149,10 @@
     })
   }
 
-  const showPdf = async (blob) => {
+  const showPdf = async (blobPdf) => {
     console.log("pdfjsLib", pdfjsLib)
     pdfjsLib.GlobalWorkerOptions.workerSrc = "/lib/pdf.worker.js"
-    let loadingTask = pdfjsLib.getDocument(blob)
+    let loadingTask = pdfjsLib.getDocument(blobPdf)
     loadingTask = loadingTask.promise
     pdfDoc = await loadingTask
     totalPages = pdfDoc.numPages
@@ -158,7 +165,6 @@
   /**
    * to display signed pdf in add file page
    */
-
   const displaySignedPdf = async () => {
     if (signedLink) {
       console.log(signedLink)
@@ -175,7 +181,7 @@
         console.error(error)
       }
       displaypreview = true
-      showpdf = true
+      displayPdf = true
     }
   }
   $: if (signedPdf) {
@@ -223,6 +229,7 @@
   }
 
   const toClickinput = () => {
+    console.log("clicked")
     document.getElementById("file-upload").click()
   }
 
@@ -255,11 +262,6 @@
     displaypreview = false
   }
 
-  const hideConfirmation = () => {
-    displayConfirm = false
-    ondisplaydropzone()
-  }
-
   const signDoc = () => {
     dispatch("steps")
   }
@@ -289,7 +291,7 @@
       <div class="flex gap-4 ml-0 lg:ml-auto items-end pt-3 lg:pt-0">
         <div>
           <button
-            on:click={hideConfirmation}
+            on:click={() => (displayConfirm = false)}
             class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3  py-1 text-base  font-bold tracking-wide"
           >
             Back
@@ -384,7 +386,7 @@
     disabled
     id="disableBtn"
     on:click={showModal}
-    class="{displaypreview && showpdf
+    class="{displaypreview && displayPdf
       ? 'flex'
       : 'hidden'}  w-full lg:w-[38.5rem] mx-auto flex-col rounded-md"
     in:fade={{ duration: 2000 }}
@@ -430,7 +432,7 @@
 
   <!-- For image preview -->
   <div
-    class="{displaypreview && !showpdf
+    class="{displaypreview && !displayPdf
       ? 'flex'
       : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center"
     in:fade={{ duration: 2000 }}
