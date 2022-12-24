@@ -91,14 +91,6 @@
     let datum = [...formData][0]
     console.log(datum)
     File = datum[1]
-    if (
-      File.type == "image/png" ||
-      File.type == "image/jpg" ||
-      File.type == "image/jpeg" ||
-      File.type == "application/pdf"
-    ) {
-      dispatch("File", File)
-    }
     console.log(File)
     console.log(File.type)
     if (
@@ -274,6 +266,18 @@
   const ondisplaydropzone = () => {
     displayDropzone = true
     displaypreview = false
+  }
+
+  const signDoc = () => {
+    if (
+      File.type == "image/png" ||
+      File.type == "image/jpg" ||
+      File.type == "image/jpeg" ||
+      File.type == "application/pdf"
+    ) {
+      dispatch("File", File)
+    }
+    dispatch("steps")
   }
 </script>
 
@@ -475,7 +479,7 @@
     <div class="flex">
       <button
         id="autoClick1"
-        on:click={() => dispatch("steps")}
+        on:click={signDoc}
         class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 rounded-md px-3 lg:px-3 py-1 text-sm lg:text-lg font-bold tracking-wide"
       >
         Sign Doc

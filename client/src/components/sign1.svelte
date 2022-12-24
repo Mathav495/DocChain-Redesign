@@ -186,6 +186,7 @@
     console.log("initiate")
     init = false
     console.log(pdfPosition)
+    console.log(file)
     let date = new Date().toJSON()
     initvalues = {
       signer:
