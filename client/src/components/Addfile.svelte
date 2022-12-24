@@ -22,8 +22,6 @@
   let bgcolor = localStorage.getItem("bgGradient")
   let displaypreview = false
   let btnDisable = true
-  let doc
-
   /**
    * Submitting file for generating filehash
    */
@@ -122,77 +120,32 @@
       reader.readAsDataURL(File)
       reader.onload = function (evt) {
         let base64 = evt.target.result
-        let doc = new jsPDF()
+        let doc = new jsPDF({
+          orientation: "l",
+          unit: "px",
+          format: [275, 183],
+          compress: true,
+        })
         let imgData = base64
         console.log("pdf initiated using jspdf")
         console.log(imgData)
-        doc.addImage(imgData, "JPEG", 5, 5, 200, 200)
-        doc.output("dataurl")
-        console.log(doc.output("dataurl"))
-        let url = doc.output("dataurl")
-        fetch(url)
-          .then((res) => res.blob())
-          .then((blobPdf) => {
-            console.log(blobPdf)
-            let blob1 = URL.createObjectURL(blobPdf)
-            localStorage.setItem("blopPdf", blob1)
-            console.log(blob1)
-            // .then((blob) => localStorage.setItem("blopPdf", blob))
-          })
+        doc.addImage(imgData, "PNG", 0, 0, 275, 183)
+        doc.output("bloburl")
+        console.log(doc.output("bloburl"))
+        // let url = doc.output("dataurlnewwindow")
+        // localStorage.setItem("")
+        // fetch(url)
+        //   .then((res) => res.blob())
+        //   .then((blobPdf) => {
+        //     // console.log(blobPdf)
+        //     let blob1 = URL.createObjectURL(blobPdf)
+        //     localStorage.setItem("blobPdf", blob1)
+        //     let blopdf = localStorage.getItem("blobPdf")
+        //     console.log(blopdf)
+        //     // console.log(blob1)
+        //     // .then((blob) => localStorage.setItem("blopPdf", blob))
+        //   })
       }
-
-      // let canvas = document.getElementById("Canvas")
-      // let reader = new FileReader()
-      // reader.readAsDataURL(File)
-      // let ctx = canvas.getContext("2d")
-      // document.getElementById("dropzone").addEventListener("change", (e) => {
-      //   reader.onload = function (event) {
-      //     let image = new Image()
-
-      //     image.onload = function () {
-      //       canvas.width = image.width
-      //       canvas.height = image.height
-      //       ctx.drawImage(image, 0, 0)
-      //     }
-
-      //     image.src = event.target.result
-      //   }
-      //   reader.readAsDataURL(e.target.files[0])
-      // })
-      // // function downloadPDF() {
-      // html2canvas(canvas).then((canvas) => {
-      //   var imgData = canvas.toDataURL("image/png")
-      //   let doc = new jsPDF()
-
-      //   // doc.addImage(imgData, "PNG", 0, 0)
-      //   doc.addImage(imgData, "JPEG", 5, 5, 200, 200)
-
-      //   doc.save("output.pdf")
-      // })
-      // }
-      // let canvas = document.getElementById("mycanvas")
-      // let ctx = canvas.getContext("2d")
-      // let reader = new FileReader()
-      // reader.onload = function (e) {
-      //   let image = new Image()
-      //   reader.readAsDataURL(e.target.files[0])
-      //   image.onload = () => {
-      //     canvas.width = image.width
-      //     canvas.height = image.height
-      //     ctx.drawImage(image, 0, 0)
-      //   }
-      //   image.src = e.target.result
-      //   console.log(image.src)
-      // }
-
-      // html2canvas(canvas).then((canvas) => {
-      //   var imgData = canvas.toDataURL("image/png")
-      //   let doc = new jsPDF()
-
-      //   doc.addImage(imgData, "PNG", 0, 0)
-
-      //   // doc.save("output.pdf")
-      // })
 
       return
     } else if (File.type == "application/pdf") {
@@ -211,8 +164,7 @@
       return
     }
   }
-  let blobPdf = localStorage.getItem("blobPdf")
-  console.log(blobPdf)
+
   async function loadLibrary(id, location) {
     return new Promise((resolve) => {
       let elem = document.createElement("script")
@@ -509,8 +461,7 @@
         class="border-2 rounded-md shadow-[0_0_8px_0_rgba(0,0,0,0.15)] overflow-hidden"
         id="file"
       >
-        <img
-          src={blobPdf}
+        <div
           class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem]"
           id="Canvas"
           alt="Preview"
