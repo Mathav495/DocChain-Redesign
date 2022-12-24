@@ -196,7 +196,7 @@
   const showPage = async (pageno) => {
     let page = await _PDFDOC.getPage(pageno)
     console.log("Page loaded")
-    let viewport = page.getViewport({ scale: 1 })
+    let viewport = page.getViewport({ scale: 1.03 })
 
     // Prepare canvas using PDF page dimensions
     let canvas = document.getElementById("mycanvas")
