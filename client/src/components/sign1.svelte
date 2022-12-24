@@ -1,5 +1,6 @@
 <script>
   import axios from "axios"
+  import { fade } from "svelte/transition"
   export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
@@ -867,7 +868,7 @@
   {/if}
 </div>
 {#if errormsg}
-  <div class="mt-5">
+  <div in:fade={{ duration: 1000 }} out:fade={{ duration: 1000 }} class="mt-5">
     <h1
       class="text-xl font-semibold p-2 text-center rounded-lg bg-red-500 text-white"
     >
