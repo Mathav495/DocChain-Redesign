@@ -122,6 +122,15 @@
       hideNavbar = false
     }
   }
+
+  /**
+   * close modal
+   */
+
+  const closeModal = () => {
+    stepModal = false
+    document.getElementsByClassName("btn")[0].classList.remove("hidden")
+  }
 </script>
 
 <svelte:head>
@@ -169,6 +178,7 @@
         >
           <div class="p-4 mx-auto">
             <Sign1
+              on:clsModal={closeModal}
               {data1}
               {file}
               {totalPages}

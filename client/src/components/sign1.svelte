@@ -5,6 +5,8 @@
   import Step1 from "./Step1.svelte"
   import Step2 from "./Step2.svelte"
   import Step3 from "./Step3.svelte"
+  import Step4 from "./Step4.svelte"
+  import Step5 from "./Step5.svelte"
   const dispatch = createEventDispatcher()
   console.log(data1)
   let errormsg = ""
@@ -25,6 +27,13 @@
   let docURL = localStorage.getItem("docURL")
 
   /**
+   * close modal
+  */
+  const closeModal = () => {
+    dispatch("clsModal")
+  }
+  
+  /**
    * change a modal to switch user account
    */
   const switchId = () => {
@@ -34,7 +43,7 @@
   }
 
   /**
-   * close switch id modal
+   * close switch id modal back to user card details
    */
   const backBtn = () => {
     modelHeading = false
@@ -144,9 +153,7 @@
     steps = false,
     modelHeading = false
 
-  const closeModal = () => {
-    dispatch("clsModal")
-  }
+
 
   let details = true,
     dot1 = false,
@@ -321,7 +328,7 @@
 <div
   class="relative flex flex-col gap-4 mx-auto px-5 py-5 bg-white w-96 sm:w-94 lg:w-98 rounded-md"
 >
-  <div class="absolute top-5 right-5">
+  <button on:click={closeModal} class="absolute top-5 right-5">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -334,7 +341,7 @@
         clip-rule="evenodd"
       />
     </svg>
-  </div>
+  </button>
   <h1 class:hidden={modelHeading} class="mx-auto text-xl  font-bold">
     Add Digital Signature
   </h1>
@@ -562,7 +569,7 @@
   {/if}
   {#if otp}
     <div class="flex items-center justify-center mb-4">
-      <Step3 />
+      <Step4 />
     </div>
     <div class="flex flex-col gap-4">
       <h1
@@ -602,6 +609,9 @@
     </div>
   {/if}
   {#if download}
+    <div class="flex items-center justify-center mb-4">
+      <Step5 />
+    </div>
     <div class="flex w-full flex-col p-5">
       <div class="cursor-pointer">
         <div

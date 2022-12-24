@@ -263,9 +263,7 @@
   }
 </script>
 
-<div
-  class="relative h-auto w-full flex flex-col items-center justify-center  p-4"
->
+<div class="relative h-auto w-full flex flex-col items-center justify-center">
   <div
     class="w-full h-full bg-[#000000cc] absolute  flex items-end justify-center p-4"
     class:hidden={!displayConfirm}
