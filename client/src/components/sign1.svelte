@@ -9,7 +9,7 @@
   let blob
   let conReq = false
   let download = false
-  let init = true
+  let init = false
   let borderBlue4 = false
   let empty4 = false
   let dot5 = true
@@ -18,7 +18,7 @@
   let signreq = ""
   let SignFile
   let oneTimePassword = ""
-  let bgColor = ""
+  let bgColor = "#FFFFFF"
   let Reason = "for verification"
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
@@ -169,7 +169,7 @@
     //get signer id
     document.getElementById("disableBtn").disabled = true
     console.log("initiate")
-    init = false
+    init = true
     console.log(pdfPosition)
     let date = new Date().toJSON()
     initvalues = {
@@ -209,7 +209,7 @@
       borderBlue3 = true
     } catch (error) {
       console.error(error)
-      init = true
+      init = false
     }
   }
   /**
@@ -230,7 +230,11 @@
       console.log(data)
       if (data.message) {
         errormsg = data.message
+        setTimeout(() => {
+          errormsg = ""
+        }, 2000)
       }
+
       SignFile = data.signRequest.signedFile
       console.log(SignFile, "signed file")
       otp = false
@@ -788,9 +792,13 @@
       </div>
 
       <div class="flex items-center justify-end pt-4">
-        {#if init}
-          <button on:click={initiate} class="blueBtn">Initiate</button>
-        {/if}
+        <button
+          disabled={init}
+          on:click={initiate}
+          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
+        >
+          Initiate
+        </button>
       </div>
     </div>
   {/if}
@@ -858,6 +866,15 @@
     </div>
   {/if}
 </div>
+{#if errormsg}
+  <div class="mt-5">
+    <h1
+      class="text-xl font-semibold p-2 text-center rounded-lg bg-red-500 text-white"
+    >
+      {errormsg}
+    </h1>
+  </div>
+{/if}
 
 <style lang="postcss">
   .blueBtn {
