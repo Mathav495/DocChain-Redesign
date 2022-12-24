@@ -107,24 +107,9 @@
     tick4 = true,
     dot4 = true,
     otp = false
-  const backBtn3 = () => {
-    borderBlue3 = false
-    dot4 = true
-    empty3 = false
-    signPage = true
-    otp = false
-  }
-  const nextBtn4 = () => {
-    console.log("next4")
-  }
   let pageNo
-
   $: console.log(pageNo)
   let clr = "#FFFFFF"
-  const chooseClr = () => {
-    console.log(clr)
-  }
-
   async function loadLibrary(id, location) {
     return new Promise((resolve) => {
       let elem = document.createElement("script")
@@ -828,19 +813,11 @@
         />
       </div>
 
-      <div
-        class="flex items-center justify-between border-t border-gray-500 pt-4"
-      >
-        <button
-          on:click={backBtn3}
-          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
-        >
-          Back
-        </button>
+      <div class="flex items-center justify-end border-t border-gray-500 pt-4">
         <button
           disabled={conReq}
-          on:click={confirmRequest}
-          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
+          on:click={confirmRequest(signreq)}
+          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
         >
           confirmRequest
         </button>
