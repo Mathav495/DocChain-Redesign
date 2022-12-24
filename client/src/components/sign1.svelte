@@ -1,10 +1,10 @@
 <script>
-  export let data1, file, modal, totalPages
-  import { createEventDispatcher } from "svelte"
-  const dispatch = createEventDispatcher()
   import axios from "axios"
-  import { navigate } from "svelte-routing"
+  import { createEventDispatcher } from "svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
+  export let data1, file, modal, totalPages
+  const dispatch = createEventDispatcher()
+  let errormsg = ""
   let blob
   let conReq = false
   let download = false
@@ -18,7 +18,6 @@
   let SignFile
   let oneTimePassword = ""
   let bgColor = ""
-  let signPosition = ""
   let Reason = "for verification"
 
   let docURL = localStorage.getItem("docURL")
@@ -240,6 +239,9 @@
       )
 
       console.log(data)
+      if (data.message) {
+        errormsg = data.message
+      }
       SignFile = data.signRequest.signedFile
       console.log(SignFile, "signed file")
       otp = false
@@ -300,7 +302,7 @@
 <div class="w-full h-auto p-4">
   <nav aria-label="Progress">
     <ol
-      class="flex flex-col gap-4 mx-auto px-5 py-5 bg-blue-300 w-full lg:w-9/12 xl:w-7/12 rounded-md"
+      class="flex flex-col gap-4 mx-auto w-full lg:w-9/12 xl:w-7/12 px-5 py-5 bg-blue-300 rounded-md"
     >
       <h1
         class:hidden={modelHeading}
