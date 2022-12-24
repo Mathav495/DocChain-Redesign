@@ -6,7 +6,7 @@
   import axios from "axios"
   import { navigate } from "svelte-routing"
   import { fade } from "svelte/transition"
-
+  import { jsPDF } from "jspdf"
   import HeaderFileupload from "./header_fileupload.svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
   export let id
@@ -21,6 +21,8 @@
   let bgcolor = localStorage.getItem("bgGradient")
   let displaypreview = false
   let btnDisable = true
+  let doc
+  window.jsPDF = window.jspdf.jsPDF
   /**
    * Submitting file for generating filehash
    */
@@ -115,11 +117,19 @@
       // localStorage.setItem("blobimage", blobimage)
 
       //converting input image file to Base64 String using filereader
-      let filereader = new FileReader()
-      filereader.readAsDataURL(File)
-      filereader.onload = function (evt) {
-        const base64 = evt.target.result
-        console.log(base64)
+      let reader = new FileReader()
+      reader.readAsDataURL(File)
+      reader.onload = function (evt) {
+        let base64 = evt.target.result
+        let doc = new jsPDF()
+        let imgData = base64
+        console.log("pdf initiated using jspdf")
+        console.log(imgData)
+        // doc.setFontSize(40)
+        // doc.text(30, 20, "Hello world!")
+        doc.addImage(imgData, "PNG", 5, 5, 200, 200)
+        doc.output("datauri")
+        // console.log("base64 of an image file :", base64)
       }
 
       return
@@ -427,17 +437,19 @@
       : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center"
     in:fade={{ duration: 2000 }}
     out:fade={{ duration: 1000 }}
+    id="img_prev"
   >
     <div
       class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem] justify-center items-center flex"
     >
       <div
         class="border-2 rounded-md shadow-[0_0_8px_0_rgba(0,0,0,0.15)] overflow-hidden"
+        id="file"
       >
         <img
-          src={Imageurl}
+          src={doc}
           class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem]"
-          id="File"
+          id="mycanvas"
           alt="Preview"
         />
       </div>

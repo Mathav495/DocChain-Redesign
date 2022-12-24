@@ -114,7 +114,7 @@
 </script>
 
 <div class="flex w-full flex-col pb-12">
-  {#if blobimage}
+  {#if (src = blobimage)}
     <img
       class="block shadow-[0_0_8px_0_rgba(0,0,0,0.15)] rounded-md mb-10 w-full "
       src={blobimage}
