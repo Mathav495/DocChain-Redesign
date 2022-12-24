@@ -35,8 +35,8 @@ module.exports = AnimateCss({
         "3/10": "23%",
         "7/10": "77%",
         88: "22rem",
-        94:"34rem",
-        98: "40rem",
+        94: "34rem",
+        98: "42rem",
       },
       borderWidth: {
         6: "6px",

@@ -2,7 +2,7 @@
   import axios from "axios"
   export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
-  import ErrorInfo from "./ErrorInfo.svelte"
+  import Step1 from "./Step1.svelte"
   const dispatch = createEventDispatcher()
   console.log(data1)
   let errormsg = ""
@@ -21,6 +21,35 @@
   let bgColor = ""
   let Reason = "for verification"
   let docURL = localStorage.getItem("docURL")
+
+  /**
+   * change a modal to switch user account
+   */
+  const switchId = () => {
+    modelHeading = true
+    switchAccount = true
+    details = false
+  }
+  /**
+   * change a modal to page no selection and sign alignment selection page
+   */
+  const nextBtn1 = async () => {
+    // console.log("nextBtn1")
+    console.log(document.querySelector(".show-signature-overlay"))
+    document.getElementById("disableBtn").disabled = false
+    details = false
+    SelectPageno = true
+    // setTimeout(async () => {
+    //   console.log(pdfPosition)
+    //   pdfPosition.init({
+    //     triggerButtons: ".show-signature-overlay",
+    //     imageTarget: "mycanvas",
+    //     // positionTextbox: "#positions",
+    //   })
+    //   console.log(document.querySelector(".show-signature-overlay"))
+    // }, 1000)
+  }
+
   console.log(docURL)
   let NextBtn2 = true
   $: if (modal) {
@@ -30,12 +59,7 @@
   let switchAccount = false,
     steps = false,
     modelHeading = false
-  const switchId = () => {
-    steps = true
-    modelHeading = true
-    switchAccount = true
-    details = false
-  }
+
   const closeModal = () => {
     dispatch("clsModal")
   }
@@ -54,16 +78,10 @@
     dot2 = true,
     SelectPageno = false,
     dot3 = true
-  const nextBtn1 = () => {
-    document.getElementById("disableBtn").disabled = false
-    details = false
-    dot1 = true
-    tick1 = false
-    empty = true
-    dot2 = false
-    SelectPageno = true
-    borderBlue1 = true
+  $: if (SelectPageno) {
+    console.log(document.querySelector(".show-signature-overlay"))
   }
+
   let empty2 = false,
     borderBlue2 = false,
     tick2 = true,
@@ -138,16 +156,17 @@
     })
   }
   let toggleBtn = true
-  const trigger = async () => {
-    document.getElementById("btnDisable").disabled = true
-    toggleBtn = false
-    await loadLibrary("pdfPosition", "/lib/signPosition.js")
-    console.log(pdfPosition)
-    pdfPosition.init({
-      triggerButtons: ".show-signature-overlay",
-      imageTarget: "mycanvas",
-      // positionTextbox: "#positions",
-    })
+  const trigger = () => {
+    console.log(document.querySelector(".show-signature-overlay"))
+    // toggleBtn = false
+    console.log("triggered")
+    // await loadLibrary("pdfPosition", "/lib/signPosition.js")
+    // console.log(pdfPosition)
+    // pdfPosition.init({
+    //   triggerButtons: ".show-signature-overlay",
+    //   imageTarget: "mycanvas",
+    //   // positionTextbox: "#positions",
+    // })
   }
 
   let position = false,
@@ -306,263 +325,73 @@
   class="flex flex-col gap-4 mx-auto px-5 py-5 bg-white w-96 sm:w-94 lg:w-98 rounded-md"
 >
   <h1 class:hidden={modelHeading} class="mx-auto text-xl  font-bold">
-    VERIFY SIGN DETAILS
+    Add Digital Signature
   </h1>
-  <div class:hidden={steps} class="flex items-center justify-center ">
-    <button class="relative pr-8 sm:pr-20">
-      <!-- Completed Step -->
-      <div class="absolute inset-0 flex items-center">
-        <div
-          class:bg-blue-700={borderBlue1}
-          class:bg-gray-200={!borderBlue1}
-          class="h-0.5 w-full"
-        />
-      </div>
-      <div
-        class:hidden={dot1}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
-      >
-        <span class="h-2.5 w-2.5 rounded-full bg-blue-600 hover:bg-blue-800" />
-      </div>
-      <div
-        class:hidden={tick1}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-800"
-      >
-        <!-- Heroicon name: mini/check -->
-        <svg
-          class="h-5 w-5 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-          />
-        </svg>
-      </div>
-    </button>
-
-    <button class="relative pr-8 sm:pr-20">
-      <!-- Completed Step -->
-      <div class="absolute inset-0 flex items-center">
-        <div
-          class:bg-blue-600={borderBlue2}
-          class:bg-gray-200={!borderBlue2}
-          class="h-0.5 w-full bg-gray-200"
-        />
-      </div>
-      <div
-        class:hidden={empty}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
-      >
-        <span class=" rounded-full bg-blue-600 hover:bg-blue-800" />
-      </div>
-      <div
-        class:hidden={dot2}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
-      >
-        <span class="h-2.5 w-2.5 rounded-full bg-blue-600 hover:bg-blue-800" />
-      </div>
-      <div
-        class:hidden={tick2}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-800"
-      >
-        <!-- Heroicon name: mini/check -->
-        <svg
-          class="h-5 w-5 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-          />
-        </svg>
-        <span class="sr-only">Step 2</span>
-      </div>
-    </button>
-
-    <button class="relative pr-8 sm:pr-20">
-      <!-- Current Step -->
-      <div class="absolute inset-0 flex items-center">
-        <div
-          class:bg-blue-600={borderBlue3}
-          class:bg-gray-200={!borderBlue3}
-          class="h-0.5 w-full bg-gray-200"
-        />
-      </div>
-      <div
-        class:hidden={empty2}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
-      >
-        <span class=" rounded-full bg-blue-600 hover:bg-blue-800" />
-      </div>
-      <div
-        class:hidden={dot3}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
-      >
-        <span class="h-2.5 w-2.5 rounded-full bg-blue-600 hover:bg-blue-800" />
-      </div>
-      <div
-        class:hidden={tick3}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-800"
-      >
-        <!-- Heroicon name: mini/check -->
-        <svg
-          class="h-5 w-5 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-          />
-        </svg>
-        <span class="sr-only">Step 2</span>
-      </div>
-    </button>
-
-    <button class="relative pr-8 sm:pr-20">
-      <!-- Upcoming Step -->
-      <div class="absolute inset-0 flex items-center">
-        <div
-          class:bg-blue-600={borderBlue4}
-          class:bg-gray-200={!borderBlue4}
-          class="h-0.5 w-full bg-gray-200"
-        />
-      </div>
-      <div
-        class:hidden={empty3}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
-      >
-        <span class=" rounded-full bg-blue-600 hover:bg-blue-800" />
-      </div>
-      <div
-        class:hidden={dot4}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
-      >
-        <span class="h-2.5 w-2.5 rounded-full bg-blue-600 hover:bg-blue-800" />
-      </div>
-      <div
-        class:hidden={tick4}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-800"
-      >
-        <!-- Heroicon name: mini/check -->
-        <svg
-          class="h-5 w-5 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-          />
-        </svg>
-        <span class="sr-only">Step 2</span>
-      </div>
-    </button>
-    <button class="relative">
-      <!-- Upcoming Step -->
-      <div class="absolute inset-0 flex items-center">
-        <div class="h-0.5 w-full bg-gray-200" />
-      </div>
-      <div
-        class:hidden={empty4}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
-      >
-        <span class=" rounded-full bg-blue-600 hover:bg-blue-800" />
-      </div>
-      <div
-        class:hidden={dot5}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-blue-600 bg-white"
-      >
-        <span class="h-2.5 w-2.5 rounded-full bg-blue-600 hover:bg-blue-800" />
-      </div>
-      <div
-        class:hidden={tick5}
-        class="relative flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 hover:bg-blue-800"
-      >
-        <!-- Heroicon name: mini/check -->
-        <svg
-          class="h-5 w-5 text-white"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-          />
-        </svg>
-        <span class="sr-only">Step 2</span>
-      </div>
-    </button>
-  </div>
   {#if switchAccount}
     <div class="flex flex-col gap-4">
       <h1 class="text-center text-lg tracking-wide font-semibold pb-4">
-        <button on:click={backBtn} class="redBtn float-left">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
-            />
-          </svg>
-        </button>
         SWITCH ACCOUNT
       </h1>
       <form class="flex flex-col items-center justify-center gap-2">
-        <div class="flex gap-2 items-end">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
-            />
-          </svg>
+        <div class="relative flex items-center">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5 fill-gray-400 mt-2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
+              />
+            </svg>
+          </span>
           <input
             placeholder="Enter ID"
             type="text"
-            class="w-52 px-2 py-1 border-b-2 border-black bg-white-300 outline-none"
+            class="w-full mt-2 pl-9 placeholder:text-base bg-black focus:bg-black text-blue-500 rounded border border-gray-300 placeholder:text-blue-500 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
           />
         </div>
-        <button on:click={backBtn} class="blueBtn">Switch</button>
       </form>
+      <div class="flex items-center justify-between">
+        <button on:click={backBtn} class="redBtn">back</button>
+        <button on:click={backBtn} class="blueBtn">Switch</button>
+      </div>
     </div>
   {/if}
   {#if details}
+    <div class="flex items-center justify-center mb-4">
+      <Step1 />
+    </div>
     <div class="flex flex-col gap-4">
-      <h1
-        class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
-      >
-        SIGNER DETAILS
-      </h1>
-      <div class="flex flex-row gap-4 items-center">
+      <div class="flex flex-row items-center gap-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-6 h-6 text-black"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.5 3.75a3 3 0 00-3 3v10.5a3 3 0 003 3h15a3 3 0 003-3V6.75a3 3 0 00-3-3h-15zm4.125 3a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm-3.873 8.703a4.126 4.126 0 017.746 0 .75.75 0 01-.351.92 7.47 7.47 0 01-3.522.877 7.47 7.47 0 01-3.522-.877.75.75 0 01-.351-.92zM15 8.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15zM14.25 12a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H15a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <div class="w-full text-base text-gray-800 break-all">
+          {data1.signerDetails.id}
+        </div>
+      </div>
+      <div class="flex items-start">
         <div class="w-auto">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            class="w-32 h-32"
+            class="w-36 h-36"
           >
             <path
               fill-rule="evenodd"
@@ -579,63 +408,44 @@
             {data1.signerDetails.location}
           </h4>
           <div class="text-base font-thin text-gray-800">
-            <div class="w-full text-sm text-gray-800 overflow-auto">
+            <div class="w-full text-sm text-gray-800">
               {data1.signerDetails.organisation}
             </div>
           </div>
-        </div>
-      </div>
-      <div class="flex flex-col justify-center">
-        <div class="flex flex-row items-center justify-start">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
-              clip-rule="evenodd"
-            />
-          </svg>
-          <div class="py-2 pl-4 w-full text-base text-gray-800">
-            {data1.signerDetails.contact}
+          <div class="flex flex-row items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <div class="pl-4 w-full text-base text-gray-800">
+              {data1.signerDetails.contact}
+            </div>
           </div>
-        </div>
-        <div class="flex flex-row items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"
-            />
-            <path
-              d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"
-            />
-          </svg>
-          <div class="py-2 ml-4 w-full text-base text-gray-800 overflow-auto">
-            {data1.signerDetails.email}
-          </div>
-        </div>
-        <div class="flex flex-row items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M4.5 3.75a3 3 0 00-3 3v10.5a3 3 0 003 3h15a3 3 0 003-3V6.75a3 3 0 00-3-3h-15zm4.125 3a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm-3.873 8.703a4.126 4.126 0 017.746 0 .75.75 0 01-.351.92 7.47 7.47 0 01-3.522.877 7.47 7.47 0 01-3.522-.877.75.75 0 01-.351-.92zM15 8.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15zM14.25 12a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H15a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15z"
-              clip-rule="evenodd"
-            />
-          </svg>
-          <div class="py-2 pl-4 w-full text-base text-gray-800 overflow-hidden">
-            {data1.signerDetails.id}
+          <div class="flex flex-row items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"
+              />
+              <path
+                d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"
+              />
+            </svg>
+            <div class="ml-4 w-full text-base text-gray-800 overflow-auto">
+              {data1.signerDetails.email}
+            </div>
           </div>
         </div>
       </div>
@@ -651,41 +461,21 @@
     </div>
   {/if}
   {#if SelectPageno}
+    <div class="flex items-center justify-center mb-4">
+      <Step1 />
+    </div>
     <div class="flex flex-col gap-4">
-      <div class="flex gap-2">
-        <button on:click={backBtn1} class="redBtn float-left">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
-            />
-          </svg>
-        </button>
-        <h1
-          class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
-        >
-          SELECT PAGE NO
-        </h1>
-      </div>
       <div>
         <div class="flex flex-col gap-2 justify-between items-start pt-2">
           {#if totalPages.length > 1}
             <div class="w-auto flex flex-row gap-4 items-center">
-              <p class="text-base text-gray-800 w-auto font-semibold mr-1">
+              <p class="text-base text-gray-800 w-40 font-semibold">
                 Select Page No
               </p>
               <select
                 bind:value={pageNo}
                 id="pageNo"
-                class="w-52 border-b-2 border-black bg-white-300 outline-none"
+                class="w-16 p-2 placeholder:text-base bg-black focus:bg-black text-blue-500 rounded-md border border-gray-300 placeholder:text-blue-500 focus:border-white focus:ring-1 focus:ring-white text-lg outline-none py-1 px-3 leading-8"
               >
                 {#each totalPages as totalPage}
                   <option value={totalPage}>{totalPage}</option>
@@ -694,43 +484,21 @@
             </div>
           {/if}
           <div class="flex flex-row w-auto gap-4">
-            <div>
-              <button
-                disabled={false}
-                on:click={trigger}
-                id="btnDisable"
-                class="blueBtn w-28 flex items-center justify-between"
-              >
-                <p>More</p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="w-4 h-4 inline-flex"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.72 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L11.69 12 4.72 5.03a.75.75 0 010-1.06zm6 0a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 010-1.06z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div
-              class:hidden={toggleBtn}
-              class="flex items-center justify-start gap-5"
-            >
+            <p class="text-base text-gray-800 w-40 font-semibold">
+              Select sign alignment
+            </p>
+            <div class="flex items-center justify-start gap-5">
               <button
                 on:click={signaturePlacement}
                 id="posControls"
                 class:justify-end={position}
-                class:bg-blue-600={bgclr}
-                class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"
+                class:bg-blue-500={bgclr}
+                class="w-16 h-8 border-2 rounded-md flex items-center px-0.5"
               >
                 <button
                   class:bg-white={ballwht}
                   class:bg-black={ballblk}
-                  class="w-3 h-3  rounded-full"
+                  class="w-6 h-6 rounded-md"
                 />
               </button>
               <p class:font-semibold={bold} class="text-base">
@@ -740,11 +508,11 @@
           </div>
         </div>
       </div>
-      <div class="flex gap-3 justify-end">
+      <div class="flex gap-3 justify-between">
+        <button on:click={backBtn1} class="redBtn float-left">Back</button>
         <button
-          disabled={signBtn}
           on:click={hideModal}
-          class="greenBtn disabled:cursor-not-allowed"
+          class="show-signature-overlay greenBtn disabled:cursor-not-allowed"
         >
           SIGN
         </button>
@@ -887,7 +655,7 @@
     @apply rounded-md border-2 border-blue-600 px-2 py-1 text-sm font-semibold text-blue-700 hover:bg-blue-700 hover:text-white;
   }
   .redBtn {
-    @apply rounded-md border-2 border-red-600 text-sm font-semibold text-red-700 hover:bg-red-700 hover:text-white;
+    @apply rounded-md border-2 border-red-600 px-2 py-1 text-sm font-semibold text-red-700 hover:bg-red-700 hover:text-white;
   }
   .greenBtn {
     @apply rounded-md border-2 border-green-600 px-2 py-1 text-sm font-semibold text-green-700 hover:bg-green-700 hover:text-white;
