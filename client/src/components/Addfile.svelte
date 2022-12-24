@@ -153,7 +153,7 @@
     _PDFDOC = await loadingTask
     _total_pages = _PDFDOC.numPages
     dispatch("totalPage", _total_pages)
-    console.log(_total_pages)
+    console.log("_total_pages", _total_pages)
     console.log(_PDFDOC)
     currentpage = 1
     showPage(1)

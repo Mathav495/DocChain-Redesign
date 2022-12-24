@@ -1,8 +1,8 @@
 <script>
   import axios from "axios"
+  export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
-  export let data1, file, modal, totalPages
   const dispatch = createEventDispatcher()
   let errormsg = ""
   let blob
@@ -19,7 +19,6 @@
   let oneTimePassword = ""
   let bgColor = ""
   let Reason = "for verification"
-
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
   let switchIdForm = true
@@ -208,15 +207,16 @@
       console.log(data)
       signreq = data.signRequest.id
       console.log(signreq, "signer id")
-
-      signPage = false
-      otp = true
-      console.log("next3")
-      tick3 = false
-      dot3 = true
-      dot4 = false
-      empty3 = true
-      borderBlue3 = true
+    // modal = true
+    //get signer id
+    signPage = false
+    otp = true
+    console.log("next3")
+    tick3 = false
+    dot3 = true
+    dot4 = false
+    empty3 = true
+    borderBlue3 = true
     } catch (error) {
       console.error(error)
       init = true
@@ -237,7 +237,6 @@
           otp: oneTimePassword,
         }
       )
-
       console.log(data)
       if (data.message) {
         errormsg = data.message
@@ -257,6 +256,7 @@
       console.error(error)
     }
   }
+  
   /**
    * function for downloading the signed pdf and preview
    */
@@ -288,7 +288,6 @@
       console.error(error)
     }
   }
-
   let page
   const hideModal = () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
@@ -773,6 +772,7 @@
             </button> -->
 
             <button
+
               disabled={conReq}
               on:click={confirmRequest(signreq)}
               class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
