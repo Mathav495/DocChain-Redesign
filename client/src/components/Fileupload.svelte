@@ -74,6 +74,7 @@
       signatoryDetails.inputvalue = ""
     })
     initialMetadata.signatoryDetails = signatoryDetails
+
     localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
     initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
   }
@@ -168,58 +169,68 @@
           : (options = {})
       }
 
-      const { data } = await axios.post(
-        "https://test.swagger.print2block.in/docs/add-data",
-        {
-          documentID: localStorage.getItem("documentID"),
-          metadata: metaData,
-          options: options,
-        },
-        {
-          headers: {
-            "x-access-token": localStorage.getItem("token"),
+      try{
+        const { data } = await axios.post(
+          "https://test.swagger.print2block.in/docs/add-data",
+          {
+            documentID: localStorage.getItem("documentID"),
+            metadata: metaData,
+            options: options,
           },
-        }
-      )
-      console.log(data)
-      localStorage.setItem("metadata", data.metadata)
-      localStorage.setItem("options", data.options)
-
-      if (data.dataHash) {
-        let localdata = JSON.parse(localStorage.getItem("docDetails"))
-        console.log("localdata", localdata)
-        localdata.find((localdata) => {
-          if (localdata.documentID == id) {
-            console.log(localdata)
-            console.log("same id", localdata.documentID)
-            console.log("datahash", localdata.datahash)
-            localdata.datahash = true
-            console.log(localdata)
+          {
+            headers: {
+              "x-access-token": localStorage.getItem("token"),
+            },
           }
-        })
-        console.log(localdata, "local")
-        localStorage.setItem("docDetails", JSON.stringify(localdata))
-      }
-      dispatch("datahash", data.dataHash)
-      localStorage.setItem("datahash", data.dataHash)
-      let dataHash = localStorage.getItem("datahash")
-      console.log("datahash", dataHash)
-      if (data.dataHash) {
-        errormsg = ""
-        navigate(`/preview/${id}`)
-      } else {
-        if (data.error) {
-          errormsg = data.errorCode
-          errormsg = errormsg.replaceAll("P2BCODE::", "")
-          displayerror = true
-          setTimeout(() => {
-            displayerror = false
-          }, 3000)
+        )
+        console.log(data)
+        localStorage.setItem("metadata", data.metadata)
+        localStorage.setItem("options", data.options)
+  
+        if (data.dataHash) {
+          let localdata = JSON.parse(localStorage.getItem("docDetails"))
+          console.log("localdata", localdata)
+          localdata.find((localdata) => {
+            if (localdata.documentID == id) {
+              console.log(localdata)
+              console.log("same id", localdata.documentID)
+              console.log("datahash", localdata.datahash)
+              localdata.datahash = true
+              console.log(localdata)
+            }
+          })
+          console.log(localdata, "local")
+          localStorage.setItem("docDetails", JSON.stringify(localdata))
         }
+        dispatch("datahash", data.dataHash)
+        localStorage.setItem("datahash", data.dataHash)
+        let dataHash = localStorage.getItem("datahash")
+        console.log("datahash", dataHash)
+        if (data.dataHash) {
+          errormsg = ""
+          navigate(`/preview/${id}`)
+        } else {
+          if (data.error) {
+            errormsg = data.errorCode
+            errormsg = errormsg.replaceAll("P2BCODE::", "")
+            displayerror = true
+            setTimeout(() => {
+              displayerror = false
+            }, 3000)
+          }
+        }
+      }catch(error){
+        console.error(error)
       }
     }
   }
 
+  /**
+   * function to update the object for metadata
+   * @param data {Array}  array of data stored in localstorage
+   * @param key  {String} key matches the key of the metadata object
+   * @param value {String} value matches the value for the respective key in metadata
+   */
   const updatedObject = (data, key, value) => {
     let updatedData = data
     console.log(updatedData)
@@ -327,8 +338,13 @@
     temp2.classList.remove("hidden")
   }
 
+  /**
+   * Function to cancel if the user mistakenly touches the edit button
+   * @param id1 {String} string value for finding the element(label component)
+   * @param id2 {String} string value for finding the element(input component)
+   * @param value {Number} label value for individual labelName
+   */
   const cancelLabel = (id1, id2, value) => {
-    console.log(id1, id2, value)
     let temp = document.getElementById(id1 + value)
     temp.classList.add("flex")
     temp.classList.remove("hidden")
@@ -336,7 +352,6 @@
     temp2.classList.remove("flex")
     temp2.classList.add("hidden")
     initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
-    console.log(initialMetadata)
   }
 
   /**
@@ -348,41 +363,33 @@
     console.log(dataToBeModified, value)
     if (dataToBeModified == "receiver") {
       receiver = initialMetadata.receiver
-      console.log(receiver)
       receiver = receiver.filter((receiver) => receiver.label != value)
-      console.log(receiver)
       initialMetadata.receiver = receiver
-      console.log(initialMetadata)
-      localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
-      initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
     } else if (dataToBeModified == "docDetails") {
       documentDetails = initialMetadata.documentDetails
       documentDetails = documentDetails.filter(
         (documentDetails) => documentDetails.label != value
       )
       initialMetadata.documentDetails = documentDetails
-      localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
-      initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
     } else if (dataToBeModified == "signDetails") {
       signatoryDetails = initialMetadata.signatoryDetails
       signatoryDetails = signatoryDetails.filter(
         (signatoryDetails) => signatoryDetails.label != value
       )
       initialMetadata.signatoryDetails = signatoryDetails
-      localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
-      initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
     }
+    localStorage.setItem("formDataDetails", JSON.stringify(initialMetadata))
+    initialMetadata = JSON.parse(localStorage.getItem("formDataDetails"))
   }
 </script>
 
 <div class="space-y-3 flex flex-col justify-center items-center">
   {#if displayerror}
-      <ErrorInfo
-        {errormsg}
-        position="absolute top-4 right-4"
-        on:click={() => (displayerror = false)}
-      />
-
+    <ErrorInfo
+      {errormsg}
+      position="absolute top-4 right-4"
+      on:click={() => (displayerror = false)}
+    />
   {/if}
   <HeaderFileupload {id} />
 

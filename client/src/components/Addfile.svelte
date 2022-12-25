@@ -6,76 +6,75 @@
   import axios from "axios"
   import { navigate } from "svelte-routing"
   import { fade } from "svelte/transition"
-
   import HeaderFileupload from "./header_fileupload.svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
   export let id
-  let currentpage, blobimage, _PDFDOC, File, _total_pages, showpdf, errormsg
+  let blobimage, blobPdf, pdfDoc, File, totalPages, displayPdf, errormsg
   let displayConfirm = false
   let displayerror = false
   let displayDropzone = true
+  let displaypreview = false
   let nextbtn = true
   let prevbtn = true
-  let token = localStorage.getItem("token")
-  let documentID = localStorage.getItem("documentID")
-  let bgcolor = localStorage.getItem("bgGradient")
-  let displaypreview = false
-  let btnDisable = true
+  let btns = true
+  let currentpage = 1
   /**
    * Submitting file for generating filehash
    */
   const onSubmitFile = async () => {
-    // console.log(File)
+    //Runs only if the file exits
     if (File) {
-      const { data } = await axios.post(
-        "https://test.swagger.print2block.in/docs/add-file",
-        {
-          documentID: documentID,
-          file: File,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "x-access-token": token,
+      try {
+        const { data } = await axios.post(
+          "https://test.swagger.print2block.in/docs/add-file",
+          {
+            documentID: localStorage.getItem("documentID"),
+            file: File,
           },
-        }
-      )
-      console.log(data)
-      console.log(data.lastModifiedDate)
-      // dispatch('filehash', data.fileHash);
-      localStorage.setItem("filehash", data.fileHash)
-      let fileHash = localStorage.getItem("filehash")
-      console.log("filehash", fileHash)
-      if (data.fileHash) {
-        // For local storage
-        let localfile = JSON.parse(localStorage.getItem("docDetails"))
-        console.log("localfile", localfile)
-        localfile.find((localfile) => {
-          if (localfile.documentID == id) {
-            console.log(localfile)
-            console.log("same id", localfile.documentID)
-            console.log("filehash", localfile.filehash)
-            localfile.filehash = true
-            console.log(localfile)
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "x-access-token": localStorage.getItem("token"),
+            },
           }
-        })
-        console.log(localfile, "local")
-        localStorage.setItem("docDetails", JSON.stringify(localfile))
+        )
+        console.log(data)
+        localStorage.setItem("filehash", data.fileHash)
 
-        //For navigating to next page
-        navigate(`/add-data/${id}`)
-      } else {
-        if (data.error) {
-          displayConfirm = false
-          displaypreview = false
-          displayDropzone = true
-          errormsg = data.errorCode
-          errormsg = errormsg.replaceAll("P2BCODE::", "")
-          displayerror = true
-          setTimeout(() => {
-            displayerror = false
-          }, 3000)
+        if (data.fileHash) {
+          // For local storage
+          let localfile = JSON.parse(localStorage.getItem("docDetails"))
+          console.log("localfile", localfile)
+          localfile.find((localfile) => {
+            if (localfile.documentID == id) {
+              console.log(localfile)
+              console.log("same id", localfile.documentID)
+              console.log("filehash", localfile.filehash)
+              localfile.filehash = true
+              console.log(localfile)
+            }
+          })
+          console.log(localfile, "local")
+          localStorage.setItem("docDetails", JSON.stringify(localfile))
+
+          //For navigating to next page
+          navigate(`/add-data/${id}`)
+        } else {
+          // Runs if error throws while the error msg presents
+          if (data.error) {
+            displayConfirm = false
+            displaypreview = false
+            displayDropzone = true
+            errormsg = data.errorCode
+            errormsg = errormsg.replaceAll("P2BCODE::", "")
+            displayerror = true
+            setTimeout(() => {
+              displayerror = false
+            }, 3000)
+          }
         }
+      } catch (error) {
+        console.error(error)
       }
     }
   }
@@ -83,7 +82,6 @@
   /**
    * Function for previewing image or pdf when uploaded
    */
-  let Imageurl, Pdfurl
   const ondisplay = async () => {
     console.log("displayed")
     const form = document.getElementById("form")
@@ -101,29 +99,38 @@
     ) {
       displaypreview = true
       displayDropzone = false
-      showpdf = false
+      displayPdf = false
       blobimage = URL.createObjectURL(File)
       console.log(blobimage)
       localStorage.setItem("blobimage", blobimage)
       return
     } else if (File.type == "application/pdf") {
-      showpdf = true
+      displayPdf = true
       await loadLibrary("pdfjs", "/lib/pdf.js")
-      let blob = URL.createObjectURL(File)
-      localStorage.setItem("blobpdf", blob)
-      console.log(blob)
-      await showPdf(blob)
+      blobPdf = URL.createObjectURL(File)
+      localStorage.setItem("blobpdf", blobPdf)
+      console.log(blobPdf)
+      try {
+        await showPdf(blobPdf)
+      } catch (error) {
+        console.error(error)
+      }
       displayDropzone = false
       displaypreview = true
       return
     } else {
       displaypreview = false
-      showpdf = false
+      displayPdf = false
       return
     }
   }
 
-  async function loadLibrary(id, location) {
+  /**
+   * Function for loading the library
+   * @param id {String} id for the newly creating script element
+   * @param location {String} path for the library
+   */
+  const loadLibrary = async (id, location) => {
     return new Promise((resolve) => {
       let elem = document.createElement("script")
       elem.id = id
@@ -136,62 +143,61 @@
     })
   }
 
-  const showPdf = async (blob) => {
-    console.log(pdfjsLib)
-    // await pageloader()
+  /**
+   * Function for loading the pdf document using pdfjs library
+   * @param blobPdf {String} blob url for the pdf to be previewed
+   */
+  const showPdf = async (blobPdf) => {
+    console.log("pdfjsLib", pdfjsLib)
     pdfjsLib.GlobalWorkerOptions.workerSrc = "/lib/pdf.worker.js"
-    let loadingTask = pdfjsLib.getDocument(blob)
+    let loadingTask = pdfjsLib.getDocument(blobPdf)
     loadingTask = loadingTask.promise
-    _PDFDOC = await loadingTask
-    _total_pages = _PDFDOC.numPages
-    dispatch("totalPage", _total_pages)
-    console.log("_total_pages", _total_pages)
-    console.log(_PDFDOC)
-    currentpage = 1
-    showPage(1)
+    pdfDoc = await loadingTask
+    totalPages = pdfDoc.numPages
+    dispatch("totalPage", totalPages)
+    console.log("totalPages", totalPages)
+    console.log(pdfDoc)
+    showPage(currentpage)
   }
 
   /**
    * to display signed pdf in add file page
    */
-
   const displaySignedPdf = async () => {
     if (signedLink) {
       console.log(signedLink)
       displayDropzone = false
       try {
-        console.log(pdfjsLib)
-        let loadingTask = pdfjsLib.getDocument(signedLink)
-        loadingTask = loadingTask.promise
-        _PDFDOC = await loadingTask
-        _total_pages = _PDFDOC.numPages
-        console.log(_total_pages)
         let hideCanvas = document.getElementById("createdCanvas")
         hideCanvas.style.display = "none"
-        showPage(pageNumber)
+        let pdfPreview = document.getElementById("pdfPreviewSection")
+        pdfPreview.textContent = ""
+        console.log(pdfPreview)
+        currentpage = pageNumber
+        await showPdf(signedLink)
       } catch (error) {
         console.error(error)
       }
       displaypreview = true
-      showpdf = true
+      displayPdf = true
     }
   }
-  $: if (signedPdf) {
-    console.log(signedPdf)
-    File = signedPdf
-    console.log(File)
-  }
-  $: if (signedLink) {
-    displaySignedPdf()
-  }
 
+  /**
+   * Function for rendering the particular page of the document
+   * @param pageno {Number} Page Number of the pdf document
+   */
   const showPage = async (pageno) => {
-    let page = await _PDFDOC.getPage(pageno)
+    let page = await pdfDoc.getPage(pageno)
     console.log("Page loaded")
     let viewport = page.getViewport({ scale: 1 })
-
+    console.log("currentpage", currentpage)
     // Prepare canvas using PDF page dimensions
-    let canvas = document.getElementById("mycanvas")
+    let pdfPreview = document.getElementById("pdfPreviewSection")
+    let canvas = document.createElement("canvas")
+    canvas.className = "border-2 rounded-md w-full overflow-hidden"
+    canvas.setAttribute("id", "mycanvas")
+    console.log(canvas)
     let context = canvas.getContext("2d")
     canvas.height = viewport.height
     canvas.width = viewport.width
@@ -202,47 +208,70 @@
       viewport: viewport,
     }
     await page.render(renderContext).promise
-    // document.getElementById('pdf-preview').src = canvas.toDataURL();
+    pdfPreview.appendChild(canvas)
   }
 
-  let btns = true
+  $: if (signedPdf) {
+    console.log(signedPdf)
+    File = signedPdf
+    console.log(File)
+  }
+
+  $: if (signedLink) {
+    displaySignedPdf()
+  }
+
   $: if (pageNumber) {
     btns = false
-    currentpage = pageNumber
-    showPage(currentpage)
+    let pdfPreview = document.getElementById("pdfPreviewSection")
+    pdfPreview.removeChild(pdfPreview.children[0])
+    showPage(pageNumber)
   }
 
-  const toClickinput = () => {
-    document.getElementById("file-upload").click()
-  }
-
-  const nextpage = () => {
-    if (currentpage < _total_pages) {
-      currentpage++
-      showPage(currentpage)
-    }
-  }
-  const previouspage = () => {
-    if (currentpage > 1) {
-      currentpage--
-      showPage(currentpage)
-    }
-  }
-
-  $: nextbtn = currentpage < _total_pages
+  $: nextbtn = currentpage < totalPages
 
   $: prevbtn = currentpage > 1
 
+  /**
+   * Function to move to the next page
+   */
+  const nextpage = () => {
+    if (currentpage < totalPages) {
+      console.log("nextbtn")
+      let pdfPreview = document.getElementById("pdfPreviewSection")
+      pdfPreview.removeChild(pdfPreview.children[0])
+      currentpage++
+      console.log("currentpage next btn", currentpage)
+      showPage(currentpage)
+    }
+  }
+
+  /**
+   * Function to move to the previous page
+   */
+  const previouspage = () => {
+    if (currentpage > 1) {
+      let pdfPreview = document.getElementById("pdfPreviewSection")
+      pdfPreview.removeChild(pdfPreview.children[0])
+      currentpage--
+      console.log("currentpage prev btn", currentpage)
+      showPage(currentpage)
+    }
+  }
+
+  /**
+   * Function for hiding the display dropzone and show the displaypreview
+   */
   const ondisplaydropzone = () => {
+    let pdfPreview = document.getElementById("pdfPreviewSection")
+    pdfPreview.textContent = ""
     displayDropzone = true
     displaypreview = false
   }
 
-  const hideConfirmation = () => {
-    displayConfirm = false
-    ondisplaydropzone()
-  }
-
+  /**
+   * Function for dispatching the file to the sign page
+   */
   const signDoc = () => {
     if (
       File.type == "image/png" ||
@@ -253,11 +282,6 @@
       dispatch("File", File)
     }
     dispatch("steps")
-  }
-
-  const showModal = async () => {
-    dispatch("mShow")
-    console.log("clicked")
   }
 </script>
 
@@ -280,7 +304,7 @@
       <div class="flex gap-4 ml-0 lg:ml-auto items-end pt-3 lg:pt-0">
         <div>
           <button
-            on:click={hideConfirmation}
+            on:click={() => (displayConfirm = false)}
             class="border-2 border-red-500 hover:bg-red-500 hover:text-white text-red-500 rounded-md px-3  py-1 text-base  font-bold tracking-wide"
           >
             Back
@@ -298,7 +322,7 @@
     </div>
   </div>
 
-  <HeaderFileupload {id} {bgcolor} />
+  <HeaderFileupload {id} />
 
   <form
     id="form"
@@ -314,7 +338,7 @@
         <div
           class="sm:col-span-6 cursor-pointer"
           id="dropzone"
-          on:click={toClickinput}
+          on:click={() => document.getElementById("file-upload").click()}
           in:fade={{ duration: 1500 }}
           out:fade={{ duration: 100 }}
         >
@@ -374,15 +398,14 @@
   <button
     disabled
     id="disableBtn"
-    on:click={showModal}
-    class="{displaypreview && showpdf
+    on:click={() => dispatch("mShow")}
+    class="{displaypreview && displayPdf
       ? 'flex'
       : 'hidden'}  w-full lg:w-[38.5rem] mx-auto flex-col rounded-md"
     in:fade={{ duration: 2000 }}
     out:fade={{ duration: 1000 }}
   >
-    <canvas id="mycanvas" class="border-2 rounded-md w-full overflow-hidden" />
-    <!-- <img src="" alt="sampleimage" id="pdf-preview" class="w-full max-h-[34rem] lg:max-h-[37rem]" /> -->
+    <div id="pdfPreviewSection" />
     <div class="flex justify-center mx-auto items-center gap-8 pt-3">
       <button on:click={previouspage} disabled={!prevbtn}>
         <svg
@@ -400,7 +423,7 @@
         </svg>
       </button>
       <h1 class="text-lg text-black font-bold">
-        {currentpage} / {_total_pages}
+        {currentpage} / {totalPages}
       </h1>
       <button on:click={nextpage} disabled={!nextbtn}>
         <svg
@@ -422,7 +445,7 @@
 
   <!-- For image preview -->
   <div
-    class="{displaypreview && !showpdf
+    class="{displaypreview && !displayPdf
       ? 'flex'
       : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center"
     in:fade={{ duration: 2000 }}
@@ -435,7 +458,7 @@
         class="border-2 rounded-md shadow-[0_0_8px_0_rgba(0,0,0,0.15)] overflow-hidden"
       >
         <img
-          src={Imageurl}
+          src={blobimage}
           class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem]"
           id="File"
           alt="Preview"

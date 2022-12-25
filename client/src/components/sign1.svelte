@@ -106,6 +106,7 @@
     dot4 = true,
     otp = false
   let pageNo = 1
+
   $: console.log(pageNo)
   let clr = "#FFFFFF"
   async function loadLibrary(id, location) {
@@ -175,6 +176,7 @@
     console.log("initiate")
     init = true
     console.log(pdfPosition)
+    console.log(file)
     let date = new Date().toJSON()
     // to give the input filed for initiate process
     initvalues = {
@@ -271,6 +273,7 @@
       console.error(error)
     }
   }
+
 
   /**
    * function for downloading the signedpdf.
