@@ -635,7 +635,7 @@
         <div class="flex items-center justify-between p-2 pt-4">
           <button
             on:click={pdfPreview}
-            class="flex items-center justify-center rounded border-2 border-red-500 py-1 px-2 text-lg font-bold text-red-500 hover:bg-red-600 hover:text-white focus:outline-none"
+            class="flex items-center justify-center rounded border-2 border-red-500 py-1 px-6 text-lg font-bold text-red-500 hover:bg-red-600 hover:text-white focus:outline-none"
           >
             close
           </button>
