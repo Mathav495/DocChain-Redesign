@@ -264,10 +264,15 @@
    * Function for hiding the display dropzone and show the displaypreview
    */
   const ondisplaydropzone = () => {
+    let pdfPreview = document.getElementById("pdfPreviewSection")
+    pdfPreview.textContent = ""
     displayDropzone = true
     displaypreview = false
   }
 
+  /**
+   * Function for dispatching the file to the sign page
+   */
   const signDoc = () => {
     if (
       File.type == "image/png" ||

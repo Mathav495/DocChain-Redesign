@@ -117,7 +117,7 @@
   const nextBtn4 = () => {
     console.log("next4")
   }
-  let pageNo
+  let pageNo = 1
 
   $: console.log(pageNo)
   let clr = "#FFFFFF"
@@ -283,6 +283,27 @@
       console.log(blob)
       dispatch("blob", blob)
       dispatch("myFile", myFile)
+      document.getElementsByClassName("btn")[0].classList.remove("hidden")
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const dwndPdf = async () => {
+    console.log(SignFile)
+    // tryCatch used for error handling
+    try {
+      const { data } = await axios.get(
+        `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+        { responseType: "blob" }
+      )
+      console.log(data)
+      const myFile = new File([data], SignFile, {
+        type: data.type,
+      })
+      console.log(myFile)
+      blob = URL.createObjectURL(data)
+      console.log(blob)
       document.getElementsByClassName("btn")[0].classList.remove("hidden")
       let spdf = document.createElement("a")
       spdf.href = blob
@@ -874,6 +895,22 @@
               </svg>
               <button on:click={pdfPreview} class="hover:underline">
                 Click here to preview and download
+              </button>
+            </div>
+            <div
+              class="flex items-center justify-between p-2 border-t border-gray-500 pt-4"
+            >
+              <button
+                on:click={pdfPreview}
+                class="bg-red-500 hover:bg-red-600 py-1 px-3 rounded-md border border-red-400 text-white text-base"
+              >
+                close
+              </button>
+              <button
+                on:click={dwndPdf}
+                class="bg-green-500 hover:bg-green-600 py-1 px-3  rounded-md border border-green-400 text-white text-base"
+              >
+                Download
               </button>
             </div>
           </div>
