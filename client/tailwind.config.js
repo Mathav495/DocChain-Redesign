@@ -23,6 +23,7 @@ module.exports = AnimateCss({
       borderRadius: {
         2: "2rem",
       },
+
       fontSize: {
         md: "1.05rem",
       },
@@ -34,6 +35,8 @@ module.exports = AnimateCss({
         "3/10": "23%",
         "7/10": "77%",
         88: "22rem",
+        94: "34rem",
+        98: "42rem",
       },
       borderWidth: {
         6: "6px",

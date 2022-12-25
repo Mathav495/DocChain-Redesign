@@ -1,5 +1,6 @@
 <script>
   import axios from "axios"
+  import { fade } from "svelte/transition"
   import Logo from "../components/Logo.svelte"
   import Logout from "../components/Logout.svelte"
   import Nav from "../components/Nav.svelte"
@@ -7,25 +8,19 @@
   import Header from "../components/Header.svelte"
   import Addfile from "../components/Addfile.svelte"
   import Sign1 from "../components/sign1.svelte"
-
+  import Headerlogo from "../components/Headerlogo.svelte"
   export let id
   let hideNavbar = true
+
   const hideNav = () => {
     hideNavbar = true
   }
   let file
+
   const getFile = (e) => {
     console.log("file", e.detail)
     file = e.detail
     console.log(file)
-  }
-  console.log(id)
-  const showNav = () => {
-    if (hideNavbar == false) {
-      hideNavbar = true
-    } else {
-      hideNavbar = false
-    }
   }
 
   let Black = true,
@@ -75,16 +70,67 @@
 
   let pageNumber = 0
   const pageNum = (e) => {
-    pageNumber = e.detail
-    console.log(pageNumber)
     stepModal = false
+    pageNumber = e.detail
   }
 
   let modal = false
-  const showModal = async () => {
+  /**
+   * Function to show the hidden modal
+   */
+  const showModal = () => {
     stepModal = true
     console.log("click")
     modal = true
+  }
+
+  let signedPdf
+  const signedFile = (e) => {
+    signedPdf = e.detail
+  }
+
+  let signedLink
+  const signedUrl = (e) => {
+    signedLink = e.detail
+    stepModal = false
+  }
+  let hide = false,
+    show = true,
+    headerHide = true
+  const HideNavbar = () => {
+    if (hide == false) {
+      hide = true
+      console.log("hide")
+      headerHide = false
+      show = false
+      // document.getElementById('header').classList.remove('md:mb-0');
+    } else {
+      hide = false
+      console.log("show")
+      headerHide = true
+      show = true
+      // document.getElementById('header').classList.add('md:mb-0');
+    }
+  }
+
+  /**
+   * This is the function to show and hide a samll screen navbar
+   */
+  const showNav = () => {
+    if (hideNavbar == false) {
+      hideNavbar = true
+    } else {
+      hideNavbar = false
+    }
+  }
+
+  /**
+   * close modal
+   */
+
+  const closeModal = () => {
+    stepModal = false
+    document.getElementsByClassName("btn")[0].classList.remove("hidden")
   }
 </script>
 
@@ -100,31 +146,49 @@
   id="file_upload"
 >
   <div
-    class="lg:w-88 md:w-2/8 hidden p-8 md:flex flex-col items-start justify-between"
+    class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between"
   >
-    <Logo />
+    <Logo on:Hide={HideNavbar} />
     <Nav />
     <Logout on:theme={changeClr} />
   </div>
   <div
-    class="lg:w-full md:w-6/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md ml-2 md:ml-0 overflow-auto"
+    transition:fade={{ x: 100, duration: 500 }}
+    class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto"
   >
-    <div class="md:hidden block">
+    <div class="lg:hidden block">
       <Header on:navShow={showNav} />
     </div>
-    <div class="relative ">
+    <div class:hidden={headerHide}>
+      <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
+    </div>
+    <div>
       <Addfile
-        {id}
-        on:File={getFile}
         {pageNumber}
+        {id}
+        {signedPdf}
+        {signedLink}
+        on:File={getFile}
         on:steps={() => Modal(signerId)}
         on:totalPage={pageNumbers}
         on:mShow={showModal}
       />
-
       {#if stepModal}
-        <div class="absolute top-0 w-full h-full bg-gray-300/80">
-          <Sign1 {data1} {file} {totalPages} on:PageNo={pageNum} {modal} />
+        <div
+          class="absolute inset-0 flex justify-center w-screen bg-[#000000cc] h-screen"
+        >
+          <div class="p-4 mx-auto">
+            <Sign1
+              on:clsModal={closeModal}
+              {data1}
+              {file}
+              {totalPages}
+              on:PageNo={pageNum}
+              {modal}
+              on:myFile={signedFile}
+              on:blob={signedUrl}
+            />
+          </div>
         </div>
       {/if}
     </div>

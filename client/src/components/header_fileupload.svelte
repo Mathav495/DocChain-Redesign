@@ -2,8 +2,9 @@
   import axios from "axios"
   import { onMount } from "svelte"
   import { fade } from "svelte/transition"
-  export let bgcolor, id
-  let token = localStorage.getItem("token")
+  export let id
+  let bgcolor = localStorage.getItem("bgGradient")
+
   let issuerName, randomPattern
   let qr = localStorage.getItem("qrcode")
   const patterns = [
@@ -15,15 +16,19 @@
   randomPattern = Math.floor(Math.random() * patterns.length)
   let bgpattern = patterns[randomPattern]
   onMount(async () => {
-    const { data } = await axios.get(
-      "https://test.swagger.print2block.in/account/user",
-      {
-        headers: {
-          "x-access-token": token,
-        },
-      }
-    )
-    issuerName = data.userData.name
+    try {
+      const { data } = await axios.get(
+        "https://test.swagger.print2block.in/account/user",
+        {
+          headers: {
+            "x-access-token": localStorage.getItem("token"),
+          },
+        }
+      )
+      issuerName = data.userData.name
+    } catch (error) {
+      console.error(error)
+    }
   })
 </script>
 
@@ -55,7 +60,6 @@
         {issuerName}
       </h1>
       <h1 class="text-xl font-bold font-mono text-white ">{id}</h1>
-      <!-- <h1 class="text-base font-semibold text-white "><slot name="title" /></h1> -->
     </div>
   </div>
 </div>

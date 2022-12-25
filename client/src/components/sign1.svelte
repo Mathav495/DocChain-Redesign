@@ -1,121 +1,120 @@
 <script>
-  export let data1, file , modal , totalPages
-  import { createEventDispatcher } from "svelte"
-  const dispatch = createEventDispatcher()
   import axios from "axios"
+  import Loading from "./Loading.svelte"
+  export let data1, file, modal, totalPages
+  import { createEventDispatcher } from "svelte"
+  import Step1 from "./Step1.svelte"
+  import Step2 from "./Step2.svelte"
+  import Step3 from "./Step3.svelte"
+  import Step4 from "./Step4.svelte"
+  import Step5 from "./Step5.svelte"
+  const dispatch = createEventDispatcher()
+  console.log(data1)
+  let errormsg = ""
   let blob
+  let page
+  let conReq = false
   let download = false
-  let borderBlue4 = false
-  let empty4 = false
-  let dot5 = true
-  let tick5 = true
+  let init = true
   let initvalues
-  let signreq
+  let signreq = ""
   let SignFile
   let oneTimePassword = ""
-  let signPosition = ""
-  let  Reason = "for verification" 
-  let src
+  let bgColor = "#FFFFFF"
+  let Reason = "for verification"
   let docURL = localStorage.getItem("docURL")
-  console.log(docURL)
-  let switchIdForm = true
-  $: if (modal) {
-    nextBtn2()
-  }
-  let switchAccount = false,
-    steps = false,
+  let pageNo = 1
+  let signPage = false
+  let otp = false
+    let switchAccount = false,
     modelHeading = false
+
+  let details = true,
+    SelectPageno = false
+  /**
+   * close modal
+   */
+  const closeModal = () => {
+    dispatch("clsModal")
+  }
+
+  /**
+   * change a modal to switch user account
+   */
   const switchId = () => {
-    steps = true
     modelHeading = true
     switchAccount = true
     details = false
   }
+
+  /**
+   * close switch id modal back to user card details
+   */
   const backBtn = () => {
     modelHeading = false
-    steps = false
     switchAccount = false
     details = true
   }
-
-  let details = true,
-    dot1 = false,
-    tick1 = true,
-    empty = false,
-    borderBlue1 = false,
-    dot2 = true,
-    SelectPageno = false,
-    dot3 = true
-  const nextBtn1 = () => {
+  /**
+   * change a modal to page no selection and sign alignment selection modal
+   */
+  const nextBtn1 = async () => {
     document.getElementById("disableBtn").disabled = false
     details = false
-    dot1 = true
-    tick1 = false
-    empty = true
-    dot2 = false
     SelectPageno = true
-    borderBlue1 = true
+    triggerPdfPositionLib()
   }
-  let empty2 = false,
-    borderBlue2 = false,
-    tick2 = true,
-    tick3 = true,
-    signPage = false
+
+  /**
+   * load library
+   */
+  const triggerPdfPositionLib = async () => {
+    await loadLibrary("pdfPosition", "/lib/signPosition.js")
+    console.log(pdfPosition)
+    pdfPosition.init({
+      triggerButtons: ".show-signature-overlay",
+      imageTarget: "mycanvas",
+    })
+    console.log(document.querySelector(".show-signature-overlay"))
+  }
+
+  /**
+   * back to user detail modal
+   */
   const backBtn1 = () => {
-    empty2 = false
-    dot3 = true
-    borderBlue1 = false
     SelectPageno = false
     details = true
-    dot2 = true
-    tick2 = true
-    empty = false
   }
+
+  /**
+   * change a modal to "sign reason" and "sign color" get modal
+   */
   const nextBtn2 = () => {
-    empty = true
-    empty2 = true
-    dot1 = true
-    dot2 = true
-    dot3 = false
-    borderBlue1 = true
-    borderBlue2 = true
-    tick1 = false
-    tick2 = false
     details = false
     SelectPageno = false
     signPage = true
   }
+  //after select the placement of sign
+  let NextBtn2 = true
+  $: if (modal) {
+    NextBtn2 = false
+    nextBtn1()
+  }
+
+  /**
+   * back to page no selection and sign alignment selection modal
+   */
   const backBtn2 = () => {
-    // console.log('back2')
-    borderBlue2 = false
-    empty2 = false
-    tick3 = true
-    dot3 = true
     signPage = false
     SelectPageno = true
   }
-  let borderBlue3 = false,
-    empty3 = false,
-    tick4 = true,
-    dot4 = true,
-    otp = false
-  const backBtn3 = () => {
-    borderBlue3 = false
-    dot4 = true
-    empty3 = false
-    signPage = true
-    otp = false
-  }
-  const nextBtn4 = () => {
-    console.log("next4")
-  }
-  let pageNo
-  let clr = "#FFFFFF"
-  const chooseClr = () => {
-    console.log(clr)
-  }
-
-  async function loadLibrary(id, location) {
+  $: console.log(pageNo)
+  /**
+   * Function for loading the library
+   * @param id {String} id for the newly creating script element
+   * @param location {String} path for the library
+   */
+  const loadLibrary = async (id, location) => {
     return new Promise((resolve) => {
       let elem = document.createElement("script")
       elem.id = id
@@ -127,26 +126,65 @@
       }
     })
   }
-  let toggleBtn = true
-  const trigger = async () => {
-    document.getElementById("btnDisable").disabled = true
-    toggleBtn = false
-    await loadLibrary("pdfPosition", "/lib/signPosition.js")
+
+  /**
+   * function for initiate signature process
+   */
+  const initiate = async () => {
+    //get signer id
+    document.getElementById("disableBtn").disabled = true
+    console.log("initiate")
+    init = true
     console.log(pdfPosition)
-    pdfPosition.init({
-      triggerButtons: ".show-signature-overlay",
-      imageTarget: "mycanvas",
-      positionTextbox: "positions",
-    })
+    console.log(file)
+    let date = new Date().toJSON()
+    // to give the input filed for initiate process
+    initvalues = {
+      signer:
+        "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
+      file: file,
+      signPage: localStorage.getItem("PageNo"),
+      signPosition: pdfPosition.lastposition.toString(),
+      signField: `Signer ${date}`,
+      reason: Reason,
+      signBGColor: bgColor,
+      url: docURL,
+    }
+    console.log(initvalues)
+    try {
+      const { data } = await axios.post(
+        "https://pdfsign.test.print2block.in/signature/initiate",
+        initvalues,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      console.log(data)
+      signreq = data.signRequest.id
+      if (!signreq) {
+        init = false
+      }
+      console.log(signreq, "signer id")
+      signPage = false
+      otp = true
+    } catch (error) {
+      console.error(error)
+      init = false
+    }
   }
 
-  let position = false,
+  /**
+   * horizontal lock toggle button
+   */
+     let position = false,
     ballwht = false,
     bgclr = false,
     ballblk = true,
     bold = false,
     signBtn = true
-  const signaturePlacement = () => {
+  const signaturePlacement = async () => {
     signBtn = false
     if (pdfPosition.options.lockHorizontalCenter)
       pdfPosition.options.lockHorizontalCenter = false
@@ -157,612 +195,468 @@
       ballblk = false
       ballwht = true
       bold = true
-      // pdfPosition.options.lockHorizontalCenter = false;
     } else {
       position = false
       ballblk = true
       ballwht = false
       bgclr = false
       bold = false
-      // pdfPosition.options.lockHorizontalCenter = true;
     }
   }
 
-  const initiate = async () => {
-    console.log("initiate")
-    initvalues = {
-      signer:
-        "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
-      file: file,
-      signPage: pageNo,
-      signPosition: signPosition,
-      signField: fieldName,
-      reason: Reason,
-      signBGColor: clr,
-      url: docURL,
-    }
-    const { data } = await axios.post(
-      "https://pdfsign.test.print2block.in/signature/initiate",
-      initvalues,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    )
-    console.log(data)
-    signreq = data.signRequest.id
-    console.log(signreq)
-    // modal = true
-    //get signer id
-    signPage = false
-    otp = true
-    console.log("next3")
-    tick3 = false
-    dot3 = true
-    dot4 = false
-    empty3 = true
-    borderBlue3 = true
+  /**
+   *modal hide for sign placement
+   */
+   let page
+  const hideModal = () => {
+    document.getElementsByClassName("btn")[0].classList.add("hidden")
+    page = pageNo - 1
+    localStorage.setItem("PageNo", page)
+    dispatch("PageNo", pageNo)
   }
+
+  /**
+   * Function for confirming the sign request using otp
+   */
 
   const confirmRequest = async () => {
     console.log("confirmRequest")
+    conReq = true
     //get file name
-    const { data } = await axios.post(
-      "https://pdfsign.test.print2block.in/signature/confirm",
-      {
-        requestid: signreq,
-        otp: oneTimePassword,
+    try {
+      const { data } = await axios.post(
+        "https://pdfsign.test.print2block.in/signature/confirm",
+        {
+          requestid: signreq,
+          otp: oneTimePassword,
+        }
+      )
+      console.log(data)
+      if (data.message) {
+        errormsg = data.message
+        setTimeout(() => {
+          errormsg = ""
+        }, 2000)
       }
-    )
-    console.log(data)
-    SignFile = data.signRequest.signedFile
-    console.log(SignFile)
-    otp = false
-    download = true
-    tick4 = false
-    borderBlue4 = true
-    dot4 = true
-    tick4 = false
-    dot5 = false
-    empty4 = true
+      SignFile = data.signRequest.signedFile
+      if (!SignFile) {
+        conReq = false
+      }
+      console.log(SignFile, "signed file")
+    } catch (error) {
+      conReq = false
+      console.error(error)
+    }
   }
+
+  /**
+   * function for signed pdf and preview
+   */
 
   const pdfPreview = async () => {
     console.log(SignFile)
-    const { data } = await axios.get(
-      `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
-      { responseType: "blob" }
-    )
-    console.log(data)
-    const myFile = new File([data], SignFile, {
-      type: data.type,
-    })
-    console.log(myFile)
-    blob = URL.createObjectURL(data)
-    console.log(blob)
-}
-  const hideModal = () => {
-    document.getElementsByClassName("btn")[0].classList.add("hidden")
-    dispatch("PageNo", pageNo)
+    // tryCatch used for error handling
+    try {
+      const { data } = await axios.get(
+        `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+        { responseType: "blob" }
+      )
+      console.log(data)
+      const myFile = new File([data], SignFile, {
+        type: data.type,
+      })
+      console.log(myFile)
+      blob = URL.createObjectURL(data)
+      console.log(blob)
+      dispatch("blob", blob)
+      dispatch("myFile", myFile)
+      document.getElementsByClassName("btn")[0].classList.remove("hidden")
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+
+  /**
+   * function for downloading the signedpdf.
+   */
+  const dwndPdf = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+        { responseType: "blob" }
+      )
+      console.log(data)
+      blob = URL.createObjectURL(data)
+      console.log(blob)
+      console.log(SignFile)
+      let spdf = document.createElement("a")
+      spdf.href = blob
+      spdf.style.display = "none"
+      spdf.target = "_blank"
+      spdf.download = SignFile
+      spdf.click()
+    } catch (error) {
+      console.error(error)
+    }
   }
 </script>
 
-<div class="w-full h-auto p-4">
-  <nav aria-label="Progress">
-    <ol
-      class="flex flex-col gap-4 mx-auto px-5 py-5 bg-blue-300 w-full lg:w-9/12 xl:w-7/12 rounded-md"
+<div
+  class="relative flex flex-col gap-4 mx-auto px-5 py-5 bg-white w-96 sm:w-94 lg:w-98 rounded-md"
+>
+  <button on:click={closeModal} class="absolute top-5 right-5">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      class="w-6 h-6"
     >
-      <h1
-        class:hidden={modelHeading}
-        class="mx-auto text-xl text-white font-bold"
-      >
-        VERIFY SIGN DETAILS
-      </h1>
-      <div class:hidden={steps} class="flex items-center justify-center ">
-
-        <button class="relative pr-8 sm:pr-20">
-          <!-- Completed Step -->
-          <div class="absolute inset-0 flex items-center">
-            <div
-              class:bg-indigo-600={borderBlue1}
-              class="h-0.5 w-full bg-gray-200"
-            />
-          </div>
-          <div
-            class:hidden={dot1}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span
-              class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-            />
-          </div>
-          <div
-            class:hidden={tick1}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
-          >
-            <!-- Heroicon name: mini/check -->
-            <svg
-              class="h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              />
-            </svg>
-          </div>
-        </button>
-
-        <button class="relative pr-8 sm:pr-20">
-          <!-- Completed Step -->
-          <div class="absolute inset-0 flex items-center">
-            <div
-              class:bg-indigo-600={borderBlue2}
-              class="h-0.5 w-full bg-gray-200"
-            />
-          </div>
-          <div
-            class:hidden={empty}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
-          </div>
-          <div
-            class:hidden={dot2}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span
-              class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-            />
-          </div>
-          <div
-            class:hidden={tick2}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
-          >
-            <!-- Heroicon name: mini/check -->
-            <svg
-              class="h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              />
-            </svg>
-            <span class="sr-only">Step 2</span>
-          </div>
-        </button>
-
-        <button class="relative pr-8 sm:pr-20">
-          <!-- Current Step -->
-          <div class="absolute inset-0 flex items-center">
-            <div
-              class:bg-indigo-600={borderBlue3}
-              class="h-0.5 w-full bg-gray-200"
-            />
-          </div>
-          <div
-            class:hidden={empty2}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
-          </div>
-          <div
-            class:hidden={dot3}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span
-              class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-            />
-          </div>
-          <div
-            class:hidden={tick3}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
-          >
-            <!-- Heroicon name: mini/check -->
-            <svg
-              class="h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              />
-            </svg>
-            <span class="sr-only">Step 2</span>
-          </div>
-        </button>
-
-        <button class="relative pr-8 sm:pr-20">
-          <!-- Upcoming Step -->
-          <div class="absolute inset-0 flex items-center">
-            <div
-              class:bg-indigo-600={borderBlue4}
-              class="h-0.5 w-full bg-gray-200"
-            />
-
-          </div>
-          <div
-            class:hidden={empty3}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
-          </div>
-          <div
-            class:hidden={dot4}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span
-              class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-            />
-          </div>
-          <div
-            class:hidden={tick4}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
-          >
-            <!-- Heroicon name: mini/check -->
-            <svg
-              class="h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              />
-            </svg>
-            <span class="sr-only">Step 2</span>
-          </div>
-        </button>
-        <button class="relative">
-          <!-- Upcoming Step -->
-          <div class="absolute inset-0 flex items-center">
-            <div class="h-0.5 w-full bg-gray-200" />
-          </div>
-          <div
-            class:hidden={empty4}
-
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span class=" rounded-full bg-indigo-600 hover:bg-indigo-800" />
-          </div>
-          <div
-            class:hidden={dot5}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full border-2 border-indigo-600 bg-white"
-          >
-            <span
-              class="h-2.5 w-2.5 rounded-full bg-indigo-600 hover:bg-indigo-800"
-            />
-          </div>
-          <div
-            class:hidden={tick5}
-            class="relative flex h-8 w-8 items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-800"
-          >
-            <!-- Heroicon name: mini/check -->
-            <svg
-              class="h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              />
-            </svg>
-            <span class="sr-only">Step 2</span>
-          </div>
-        </button>
+      <path
+        fill-rule="evenodd"
+        d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z"
+        clip-rule="evenodd"
+      />
+    </svg>
+  </button>
+  <h1 class:hidden={modelHeading} class="mx-auto text-xl  font-bold">
+    Add Digital Signature
+  </h1>
+  {#if switchAccount}
+    <div class="flex flex-col gap-4">
+      <h1 class="text-lg tracking-wide font-semibold pb-2">SWITCH ACCOUNT</h1>
+      <form class="w-full flex flex-col mx-auto">
+        <label class="font-bold text-lg text-start">ID</label>
+        <input placeholder="Enter ID" type="text" class="input-normal w-full" />
+      </form>
+      <div class="flex items-center justify-between">
+        <button on:click={backBtn} class="redBtn">back</button>
+        <button on:click={backBtn} class="blueBtn">Switch</button>
       </div>
-      {#if switchAccount}
-        <div class="flex flex-col gap-4">
-          <h1
-            class="text-white text-center text-lg tracking-wide font-semibold border-b border-white pb-4"
-          >
-            SWITCH ACCOUNT
-          </h1>
-          <form class="flex flex-col items-center justify-center gap-2">
-            <div class="flex gap-2 items-end">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
-                />
-              </svg>
-              <input
-                placeholder="Enter ID"
-                type="text"
-                class="w-52 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
-              />
-            </div>
-            <button
-              on:click={backBtn}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-sm"
-            >
-              Switch
-            </button>
-          </form>
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
-              on:click={backBtn}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-sm"
-            >
-              back
-            </button>
-          </div>
+    </div>
+  {/if}
+  {#if details}
+    <div class="flex items-center justify-center mb-4">
+      <Step1 />
+    </div>
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-row items-center gap-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-6 h-6 text-black"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.5 3.75a3 3 0 00-3 3v10.5a3 3 0 003 3h15a3 3 0 003-3V6.75a3 3 0 00-3-3h-15zm4.125 3a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm-3.873 8.703a4.126 4.126 0 017.746 0 .75.75 0 01-.351.92 7.47 7.47 0 01-3.522.877 7.47 7.47 0 01-3.522-.877.75.75 0 01-.351-.92zM15 8.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15zM14.25 12a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H15a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <div class="w-full text-base text-gray-800 break-all">
+          {data1.signerDetails.id}
         </div>
-      {/if}
-      {#if details}
-        <div class="flex flex-col gap-4">
-          <h1
-            class="text-white text-lg tracking-wide font-semibold border-b border-white"
+      </div>
+      <div class="flex items-start gap-5">
+        <div class="w-auto">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="w-36 h-36"
           >
-            SIGNER DETAILS
-          </h1>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Name</p>
-            <div class="py-2 pl-4 w-full text-base text-gray-600">
-
-              {data1.signerDetails.name}
+            <path
+              fill-rule="evenodd"
+              d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+        <div class="w-auto">
+          <h2 class="text-3xl font-extrabold text-gray-800">
+            {data1.signerDetails.name}
+          </h2>
+          <h4 class="text-xl fond-semibold text-gray-800">
+            {data1.signerDetails.location}
+          </h4>
+          <div class="text-base font-thin text-gray-800">
+            <div class="w-full text-sm text-gray-800">
+              {data1.signerDetails.organisation}
             </div>
           </div>
           <div class="flex flex-row items-center">
-
-            <p class="text-base text-gray-600 w-40 font-semibold">Id</p>
-            <div class="py-2 ml-4 w-full text-base text-gray-600 overflow-auto">
-              {data1.signerDetails.id}
-            </div>
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Email</p>
-            <div class="py-2 pl-4 w-full text-base text-gray-600">
-
-              {data1.signerDetails.email}
-            </div>
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">Contact</p>
-            <div class="py-2 pl-4 w-full text-base text-gray-600">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <div class="pl-4 w-full text-base text-gray-800">
               {data1.signerDetails.contact}
             </div>
           </div>
           <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-40 font-semibold">
-              Organisation
-            </p>
-            <div class="py-2 pl-4 w-full text-base text-gray-600">
-              {data1.signerDetails.organisation}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"
+              />
+              <path
+                d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"
+              />
+            </svg>
+            <div class="ml-4 w-full text-base text-gray-800 overflow-auto">
+              {data1.signerDetails.email}
             </div>
           </div>
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
-              on:click={switchId}
-              class="text-gray-100 hover:text-white text-base hover:underline"
-            >
-              Continue with another account
-            </button>
-            <button
-              on:click={nextBtn1}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Next
-            </button>
-          </div>
         </div>
-      {/if}
-      {#if SelectPageno}
-        <div class="flex flex-col gap-4">
-          <h1
-            class="text-white text-lg tracking-wide font-semibold border-b border-white"
-          >
-            SELECT PAGE NO
-          </h1>
-          <div>
-            <div class="flex flex-row gap-2 justify-between items-start">
-              <div class="w-auto flex gap-2 items-center">
-                <p class="text-base text-gray-600 w-auto font-semibold">
-                  Select Page No
+      </div>
+      <div class="flex items-center justify-between pt-4">
+        <button
+          on:click={switchId}
+          class="text-blue-700 text-base hover:underline"
+        >
+          Continue with another account
+        </button>
+        <button on:click={nextBtn1} class="blueBtn">Next</button>
+      </div>
+    </div>
+  {/if}
+  {#if SelectPageno}
+    <div class="flex items-center justify-center mb-4">
+      <Step2 />
+    </div>
+    <div class="flex flex-col gap-4">
+      <div>
+        <div class="flex flex-col gap-2 items-start pt-2">
+          {#if totalPages.length > 1}
+            <div class="w-auto flex flex-row gap-4 items-center">
+              <p class="text-base text-gray-800 w-36 font-semibold">
+                Select Page No
+              </p>
+              <select bind:value={pageNo} id="pageNo" class="input-normal w-16">
+                {#each totalPages as totalPage}
+                  <option value={totalPage}>{totalPage}</option>
+                {/each}
+              </select>
+            </div>
+          {/if}
+          <div class="relative flex flex-row w-full gap-4">
+            <div class="flex gap-1 w-36">
+              <p class="text-base text-gray-800 font-semibold">Align middle</p>
+              <div class="w-auto group flex flex-row gap-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 01-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 01-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 01-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584zM12 18a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <p
+                  class="w-auto absolute left-52 text-base hidden group-hover:block p-2 shadow-slide rounded-md bg-gray-200 text-black"
+                >
+                  <strong>Click:</strong>
+                  Horizontally lock your sign.
+                  <br />
+                  <strong>Undo:</strong>
+                  Anywhere to put you sign.
                 </p>
-                <select
-                  bind:value={pageNo}
-                  name="1"
-                  placeholder="Select Page No"
-                  id="pageNo"
-                  class="w-32 h-9 px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
-
-                >
-                  {#each totalPages as totalPage}
-                    <option value={totalPage}>{totalPage}</option>
-                  {/each}
-                </select>
-              </div>
-              <div class="flex flex-col w-auto gap-2">
-                <div>
-                  <button
-                    disabled={false}
-                    on:click={trigger}
-                    id="btnDisable"
-                    class="show-signature-overlay bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-                  >
-                    Select Signature Placement
-                  </button>
-                </div>
-                <div
-                  class:hidden={toggleBtn}
-                  class="flex items-center justify-start gap-5"
-                >
-                  <button
-                    on:click={signaturePlacement}
-                    id="posControls"
-                    class:justify-end={position}
-                    class:bg-indigo-600={bgclr}
-                    class="show-signature-overlay w-8 h-5 border-2 rounded-full flex items-center px-0.5"
-                  >
-                    <button
-                      class:bg-white={ballwht}
-                      class:bg-black={ballblk}
-                      class="w-3 h-3  rounded-full"
-                    />
-                  </button>
-                  <p class:font-semibold={bold} class="text-base">
-                    Lock Horizontal control
-                  </p>
-                </div>
-
               </div>
             </div>
-          </div>
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
-              on:click={backBtn1}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Back
-            </button>
-            <button
-              disabled={signBtn}
-              on:click={hideModal}
-              class="bg-indigo-600 disabled:cursor-not-allowed hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              SIGN
-            </button>
-            <button id="autoClick3" on:click={nextBtn2} class="hidden">
-
-              Next
-            </button>
-          </div>
-        </div>
-      {/if}
-      {#if signPage}
-        <div class="flex flex-col gap-4">
-          <h1
-            class="text-white text-lg tracking-wide font-semibold border-b border-white"
-          >
-            SIGN DETAILS
-          </h1>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-96 font-semibold">
-              Reason for Digital Signature
-            </p>
-            <input
-              type="text"
-              bind:value={Reason}
-              class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
-            />
-          </div>
-          <div class="flex flex-row items-center">
-            <p class="text-base text-gray-600 w-96 font-semibold">
-              Signature Background color
-            </p>
-            <input
-              on:input={chooseClr}
-              bind:value={clr}
-              class="w-full px-2 py-1 border-b-2 rounded-md border-black bg-white-300 outline-none"
-              type="color"
-              name="Identity"
-              id="Identity"
-            />
-          </div>
-
-          <div class="flex items-center justify-end border-t border-white pt-4">
-            <button
-              on:click={backBtn2}
-              class="bg-indigo-600 hidden hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Back
-            </button>
-            <button
-              on:click={initiate}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Initiate
-            </button>
-          </div>
-        </div>
-      {/if}
-      {#if otp}
-        <div class="flex flex-col gap-4">
-          <h1
-            class="text-white text-lg tracking-wide font-semibold border-b border-white"
-          >
-            SIGN DETAILS
-          </h1>
-          <div class="flex gap-3">
-            <h1 class="text-lg text-slate-800 font-semibold flex items-center">
-              One Time Password
-            </h1>
-            <input
-              bind:value={oneTimePassword}
-              type="text"
-              placeholder="12345"
-              class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
-            />
-          </div>
-
-          <div
-            class="flex items-center justify-between border-t border-white pt-4"
-          >
-            <button
-              on:click={backBtn3}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              Back
-            </button>
-            <button
-              on:click={confirmRequest}
-              class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 rounded-md border border-indigo-400 text-white text-base"
-            >
-              confirmRequest
-            </button>
-          </div>
-        </div>
-      {/if}
-      {#if download}
-        <div class="flex flex-col  gap-4">
-          <h1
-            class="text-white text-lg tracking-wide font-semibold border-b border-white"
-          >
-            SIGN DETAILS
-          </h1>
-          <div class="flex justify-center">
-            <div
-              class=" mt-5 w-1/2 flex justify-center bg-slate-100 rounded-lg"
-            >
+            <div class="flex items-center justify-start gap-2">
               <button
-                on:click={pdfPreview}
-                class="text-center text-lg font-semibold text-slate-800"
+                on:click={signaturePlacement}
+                id="posControls"
+                class:justify-end={position}
+                class:bg-blue-500={bgclr}
+                class="w-8 h-5 border-2 rounded-full flex items-center px-0.5"
               >
-                click here!!! and Preview
+                <button
+                  class:bg-white={ballwht}
+                  class:bg-black={ballblk}
+                  class="w-3 h-3 rounded-full"
+                />
               </button>
             </div>
           </div>
         </div>
-        <div
-          class="flex items-center justify-between border-t border-white pt-4"
+      </div>
+      <div class="flex gap-3 justify-between">
+        <button on:click={backBtn1} class="redBtn float-left">Back</button>
+        <div class="flex gap-2">
+          <button
+            on:click={hideModal}
+            class="show-signature-overlay greenBtn disabled:cursor-not-allowed"
+          >
+            SIGN
+          </button>
+          <button class:hidden={NextBtn2} on:click={nextBtn2} class="blueBtn">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  {/if}
+  {#if signPage}
+    {#if init}
+      <Loading />
+    {:else}
+    <div class="flex items-center justify-center mb-4">
+      <Step3 />
+    </div>
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-row items-start gap-4">
+        <p class="w-52 text-base text-gray-800 font-semibold">
+          Reason for Digital Signature
+        </p>
+        <textarea type="text" bind:value={Reason} class="input-normal" />
+      </div>
+      <div class="flex flex-row items-center gap-4">
+        <p class="w-52 text-base text-gray-800 font-semibold">
+          Signature Background color
+        </p>
+        <input
+          bind:value={bgColor}
+          class="h-6 w-8"
+          type="color"
+          name="Identity"
+          id="Identity"
         />
-      {/if}
-    </ol>
-  </nav>
+      </div>
+
+      <div class="flex items-center justify-between pt-4">
+        <button on:click={backBtn2} class="redBtn float-left">Back</button>
+          <button
+            disabled={init}
+            on:click={initiate}
+            class=" disabled:cursor-not-allowed blueBtn"
+          >
+            Initiate
+          </button>  
+    {/if}
+  {/if}
+  {#if otp}
+    {#if conReq}
+      <Loading />
+    {:else}
+    <div class="flex items-center justify-center mb-4">
+      <Step4 />
+    </div>
+      <div class="flex flex-col gap-4">
+        <h1
+          class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
+        >
+          SIGN DETAILS
+        </h1>
+        <div class="flex gap-3">
+          <h1 class="text-lg text-slate-800 font-semibold flex items-center">
+            One Time Password
+          </h1>
+          <input
+            bind:value={oneTimePassword}
+            type="text"
+            placeholder="12345"
+            class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
+          />
+        </div>
+
+        <div
+          class="flex items-center justify-end border-t border-gray-500 pt-4"
+        >
+          <button
+            disabled={conReq}
+            on:click={confirmRequest(signreq)}
+            class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
+          >
+            confirmRequest
+          </button>
+        </div>
+      </div>
+    {/if}
+  {/if}
+  {#if download}
+     <div class="flex items-center justify-center mb-4">
+      <Step5 />
+    </div>
+    <div class="flex flex-col gap-4">
+      <h1
+        class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
+      >
+        SIGN DETAILS
+      </h1>
+
+      <div class="flex flex-col text-base">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <svg
+          on:click={pdfPreview}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="mx-auto h-14 w-14"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+          />
+        </svg>
+        <button on:click={pdfPreview} class="hover:underline">
+          Click here to preview
+        </button>
+      </div>
+      <div
+        class="flex items-center justify-between p-2 border-t border-gray-500 pt-4"
+      >
+        <button
+          on:click={pdfPreview}
+          class="flex text-red-500 hover:text-white border-2 border-red-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-red-600 rounded text-lg font-bold"
+        >
+          close
+        </button>
+        <button
+          on:click={dwndPdf}
+          class="flex text-green-500 hover:text-white border-2 border-green-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg font-bold"
+        >
+          Download
+        </button>
+      </div>
+    </div>
+  {/if}
 </div>
+{#if errormsg}
+  <div class="mt-5">
+    <ErrorInfo {errormsg} />
+  </div>
+{/if}
+
+<style lang="postcss">
+  .blueBtn {
+    @apply w-20 rounded-md border-2 border-blue-600 px-2 py-1 text-sm font-semibold text-blue-700 hover:bg-blue-700 hover:text-white;
+  }
+  .redBtn {
+    @apply w-20 rounded-md border-2 border-red-600 px-2 py-1 text-sm font-semibold text-red-700 hover:bg-red-700 hover:text-white;
+  }
+  .greenBtn {
+    @apply w-20 rounded-md border-2 border-green-600 px-2 py-1 text-sm font-semibold text-green-700 hover:bg-green-700 hover:text-white;
+  }
+  .input-normal {
+    @apply h-9 rounded-md border-2 border-slate-200  bg-white px-2 py-1 text-base font-bold placeholder:font-semibold placeholder:text-slate-500  focus:outline-none focus:ring-2 focus:ring-slate-800;
+  }
+</style>

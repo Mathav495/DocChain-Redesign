@@ -48,19 +48,19 @@
   class:bg-black={Black}
   class:bg-yellow-700={Yellow}
   class:bg-red-700={Red}
-  class="relative text-white h-screen w-screen flex flex-row py-2 pr-2"
+  class="width1200px width1024px transform ease-in-out delay-1000 duration-1000 translate-x-6 overflow-auto"
 >
   <div
-    class="lg:w-88 md:w-3/8 hidden p-8 md:flex flex-col items-start justify-between"
+    class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between"
   >
     <Logo />
     <Nav />
     <Logout on:theme={changeClr} />
   </div>
   <div
-    class="lg:w-full md:w-5/8 w-full flex flex-col gap-4 bg-white text-gray-900 rounded-md p-4 ml-2 md:ml-0 overflow-auto"
+    class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto"
   >
-    <div class="md:hidden block">
+    <div class="lg:hidden block">
       <Header on:navShow={showNav} />
     </div>
     <Fileupload {id} />
@@ -69,7 +69,7 @@
   <button
     class:hidden={hideNavbar}
     on:click|self={hideNav}
-    class="bg-white/50 flex items-start justify-start md:hidden absolute inset-0 p-8"
+    class="bg-white/50 flex lg:hidden items-start justify-start absolute inset-0 p-8"
   >
     <SmallScreenNavbar />
   </button>
