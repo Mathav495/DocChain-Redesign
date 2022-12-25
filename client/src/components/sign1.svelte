@@ -586,9 +586,7 @@
           />
         </div>
 
-        <div
-          class="flex items-center justify-end border-t border-gray-500 pt-4"
-        >
+        <div class="flex items-center justify-end pt-4">
           <button
             disabled={conReq}
             on:click={confirmRequest(signreq)}
