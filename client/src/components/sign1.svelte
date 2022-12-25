@@ -109,7 +109,7 @@
     tick4 = true,
     dot4 = true,
     otp = false
-  let pageNo
+  let pageNo = 1
   $: console.log(pageNo)
   let clr = "#FFFFFF"
   async function loadLibrary(id, location) {
