@@ -3,9 +3,8 @@
   import { navigate } from "svelte-routing"
   import Tick from "../icons/Tick.svelte"
   import Pending from "../icons/Pending.svelte"
-  import { onMount } from "svelte"
-  let documentID,
-    ExistingId = ""
+  let documentID
+  let ExistingId = ""
   let token,
     qr,
     seconddata,
@@ -16,8 +15,10 @@
   token = localStorage.getItem("token")
   newData = JSON.parse(localStorage.getItem("docDetails"))
   console.log(newData)
-
-  const submitdocid = async () => {
+  /**
+   * Function for new id created
+   */
+  const submitDocId = async () => {
     const { data } = await axios.post(
       "https://test.swagger.print2block.in/docs/initiate/?qrcode=true",
       {
@@ -274,7 +275,7 @@
       </h1>
       <div>
         <button
-          on:click={submitdocid}
+          on:click={submitDocId}
           class="flex text-green-500 hover:text-white border-2 border-green-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg font-bold"
         >
           Generate Id
