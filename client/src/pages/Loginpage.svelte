@@ -61,6 +61,7 @@
     } else {
       error.Password = ""
     }
+    // form validation true condition
     if (valid) {
       loginData = {
         email: Email,
@@ -72,7 +73,7 @@
           loginData
         )
         console.log(data)
-
+        // data.success false consition
         if (!data.success) {
           console.log(data.errorCode)
           errormsg = "Invalid Username or Password"
@@ -80,6 +81,7 @@
           setTimeout(() => {
             display = false
           }, 2000)
+          // data.success true condition
         } else {
           localStorage.setItem("token", data.token)
           let token = localStorage.getItem("token")
