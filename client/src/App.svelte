@@ -9,7 +9,6 @@
   import Dashboardpage3 from "./pages/Dashboardpage3.svelte"
   import Adddatapage from "./pages/Adddatapage.svelte"
   import Fileuploadpage from "./pages/Fileuploadpage.svelte"
-  import Signpage from "./pages/Signpage.svelte"
   export let url = ""
   let file, MyFile, bloblink
   const getFile = (e) => {
@@ -35,9 +34,6 @@
     <Route path="/publish"><Publishdoc /></Route>
     <Route path="/dash2"><Dashboardpage2 /></Route>
     <Route path="/dash3"><Dashboardpage3 /></Route>
-    <Route path="/sign/:id" let:params>
-      <Signpage {file} id={params.id} on:blob={blobUrl} on:myFile={myfile} />
-    </Route>
     <Route path="/add-file/:id" let:params>
       <Fileuploadpage id={params.id} on:File={getFile} {bloblink} {MyFile} />
     </Route>

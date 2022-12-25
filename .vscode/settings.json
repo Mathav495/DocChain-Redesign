@@ -1,6 +1,0 @@
-{
-    "svelte.plugin.svelte.format.config.singleQuote": true,
-    "svelte.plugin.svelte.format.config.svelteStrictMode": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-}

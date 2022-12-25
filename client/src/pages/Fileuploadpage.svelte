@@ -1,5 +1,6 @@
 <script>
   import axios from "axios"
+  import { fade } from "svelte/transition"
   import Logo from "../components/Logo.svelte"
   import Logout from "../components/Logout.svelte"
   import Nav from "../components/Nav.svelte"
@@ -7,25 +8,19 @@
   import Header from "../components/Header.svelte"
   import Addfile from "../components/Addfile.svelte"
   import Sign1 from "../components/sign1.svelte"
-
+  import Headerlogo from "../components/Headerlogo.svelte"
   export let id
   let hideNavbar = true
+
   const hideNav = () => {
     hideNavbar = true
   }
   let file
+
   const getFile = (e) => {
     console.log("file", e.detail)
     file = e.detail
     console.log(file)
-  }
-  console.log(id)
-  const showNav = () => {
-    if (hideNavbar == false) {
-      hideNavbar = true
-    } else {
-      hideNavbar = false
-    }
   }
 
   let Black = true,
@@ -48,15 +43,13 @@
     }
   }
 
-  let stepModal = false,
-    overflowHidden = false
+  let stepModal = false
   $: console.log(stepModal)
   let addfile = false,
     data1,
     signerId =
       "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3"
   const Modal = async (signerId) => {
-    overflowHidden = true
     const { data } = await axios.get(
       `https://pdfsign.test.print2block.in/blockchain/signer/get?signer=${signerId}`
     )
@@ -82,6 +75,9 @@
   }
 
   let modal = false
+  /**
+   * Function to show the hidden modal
+   */
   const showModal = () => {
     stepModal = true
     console.log("click")
@@ -98,6 +94,44 @@
     signedLink = e.detail
     stepModal = false
   }
+  let hide = false,
+    show = true,
+    headerHide = true
+  const HideNavbar = () => {
+    if (hide == false) {
+      hide = true
+      console.log("hide")
+      headerHide = false
+      show = false
+      // document.getElementById('header').classList.remove('md:mb-0');
+    } else {
+      hide = false
+      console.log("show")
+      headerHide = true
+      show = true
+      // document.getElementById('header').classList.add('md:mb-0');
+    }
+  }
+
+  /**
+   * This is the function to show and hide a samll screen navbar
+   */
+  const showNav = () => {
+    if (hideNavbar == false) {
+      hideNavbar = true
+    } else {
+      hideNavbar = false
+    }
+  }
+
+  /**
+   * close modal
+   */
+
+  const closeModal = () => {
+    stepModal = false
+    document.getElementsByClassName("btn")[0].classList.remove("hidden")
+  }
 </script>
 
 <svelte:head>
@@ -112,18 +146,21 @@
   id="file_upload"
 >
   <div
-    class="lg:w-88 md:w-2/8 hidden p-8 md:flex flex-col items-start justify-between"
+    class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between"
   >
-    <Logo />
+    <Logo on:Hide={HideNavbar} />
     <Nav />
     <Logout on:theme={changeClr} />
   </div>
   <div
-    class="lg:w-full md:w-6/8 w-full flex flex-col gap-4 bg-white text-gray-900
-    rounded-md ml-2 md:ml-0 overflow-auto"
+    transition:fade={{ x: 100, duration: 500 }}
+    class="w-full flex flex-col bg-white text-gray-900 rounded-md  ml-4 overflow-auto"
   >
-    <div class="md:hidden block">
+    <div class="lg:hidden block p-4">
       <Header on:navShow={showNav} />
+    </div>
+    <div class:hidden={headerHide} class="p-4">
+      <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>
       <Addfile
@@ -142,6 +179,7 @@
         >
           <div class="p-4 mx-auto">
             <Sign1
+              on:clsModal={closeModal}
               {data1}
               {file}
               {totalPages}
