@@ -1,6 +1,6 @@
 <h5 class="loader" id="loader">
   <div
-    class="min-h-[40]"
+    class="min-h-[60]"
     style="align-items: center!important; justify-content: center!important; display: flex;"
   >
     <div style="width: 150px;">

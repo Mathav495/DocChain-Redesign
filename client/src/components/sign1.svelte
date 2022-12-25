@@ -241,6 +241,9 @@
       }
 
       SignFile = data.signRequest.signedFile
+      if (!SignFile) {
+        conReq = false
+      }
       console.log(SignFile, "signed file")
       otp = false
       download = true
@@ -277,12 +280,6 @@
       dispatch("blob", blob)
       dispatch("myFile", myFile)
       document.getElementsByClassName("btn")[0].classList.remove("hidden")
-      let spdf = document.createElement("a")
-      spdf.href = blob
-      spdf.style.display = "none"
-      spdf.target = "_blank"
-      spdf.download = SignFile
-      spdf.click()
     } catch (error) {
       console.error(error)
     }
@@ -293,6 +290,26 @@
     page = pageNo - 1
     localStorage.setItem("PageNo", page)
     dispatch("PageNo", pageNo)
+  }
+  const dwndPdf = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+        { responseType: "blob" }
+      )
+      console.log(data)
+      blob = URL.createObjectURL(data)
+      console.log(blob)
+      console.log(SignFile)
+      let spdf = document.createElement("a")
+      spdf.href = blob
+      spdf.style.display = "none"
+      spdf.target = "_blank"
+      spdf.download = SignFile
+      spdf.click()
+    } catch (error) {
+      console.error(error)
+    }
   }
 </script>
 
@@ -750,9 +767,7 @@
   {/if}
   {#if signPage}
     {#if init}
-      <div class="bg-white py-5">
-        <Loading />
-      </div>
+      <Loading />
     {:else}
       <div class="flex flex-col gap-4">
         <div class="flex gap-2">
@@ -815,65 +830,85 @@
     {/if}
   {/if}
   {#if otp}
+    {#if conReq}
+      <Loading />
+    {:else}
+      <div class="flex flex-col gap-4">
+        <h1
+          class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
+        >
+          SIGN DETAILS
+        </h1>
+        <div class="flex gap-3">
+          <h1 class="text-lg text-slate-800 font-semibold flex items-center">
+            One Time Password
+          </h1>
+          <input
+            bind:value={oneTimePassword}
+            type="text"
+            placeholder="12345"
+            class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
+          />
+        </div>
+
+        <div
+          class="flex items-center justify-end border-t border-gray-500 pt-4"
+        >
+          <button
+            disabled={conReq}
+            on:click={confirmRequest(signreq)}
+            class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
+          >
+            confirmRequest
+          </button>
+        </div>
+      </div>
+    {/if}
+  {/if}
+  {#if download}
     <div class="flex flex-col gap-4">
       <h1
         class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
       >
         SIGN DETAILS
       </h1>
-      <div class="flex gap-3">
-        <h1 class="text-lg text-slate-800 font-semibold flex items-center">
-          One Time Password
-        </h1>
-        <input
-          bind:value={oneTimePassword}
-          type="text"
-          placeholder="12345"
-          class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
-        />
-      </div>
 
-      <div class="flex items-center justify-end border-t border-gray-500 pt-4">
-        <button
-          disabled={conReq}
-          on:click={confirmRequest(signreq)}
-          class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
+      <div class="flex flex-col text-base">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <svg
+          on:click={pdfPreview}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="mx-auto h-14 w-14"
         >
-          confirmRequest
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+          />
+        </svg>
+        <button on:click={pdfPreview} class="hover:underline">
+          Click here to preview
         </button>
       </div>
-    </div>
-  {/if}
-  {#if download}
-    <div class="flex w-full flex-col p-5">
-      <div class="cursor-pointer">
-        <div
-          class="flex items-center justify-center rounded-md border-blue-600 py-5"
+      <div
+        class="flex items-center justify-between p-2 border-t border-gray-500 pt-4"
+      >
+        <button
+          on:click={pdfPreview}
+          class="flex text-red-500 hover:text-white border-2 border-red-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-red-600 rounded text-lg font-bold"
         >
-          <div class="space-y-1 text-center">
-            <div class="flex flex-col text-base">
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <svg
-                on:click={pdfPreview}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="mx-auto h-14 w-14"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
-                />
-              </svg>
-              <button on:click={pdfPreview} class="hover:underline">
-                Click here to preview and download
-              </button>
-            </div>
-          </div>
-        </div>
+          close
+        </button>
+        <button
+          on:click={dwndPdf}
+          class="flex text-green-500 hover:text-white border-2 border-green-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg font-bold"
+        >
+          Download
+        </button>
       </div>
     </div>
   {/if}
