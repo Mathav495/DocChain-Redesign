@@ -190,8 +190,9 @@
   const showPage = async (pageno) => {
     let page = await pdfDoc.getPage(pageno)
     console.log("Page loaded")
-    let viewport = page.getViewport({ scale: 1 })
+    let viewport = page.getViewport({ scale: 1.03 })
     console.log("currentpage", currentpage)
+
     // Prepare canvas using PDF page dimensions
     let pdfPreview = document.getElementById("pdfPreviewSection")
     let canvas = document.createElement("canvas")
@@ -285,9 +286,7 @@
   }
 </script>
 
-<div
-  class="relative h-auto w-full flex flex-col items-center justify-center  p-4"
->
+<div class="relative h-auto w-full flex flex-col items-center justify-center">
   <div
     class="w-full h-full bg-[#000000cc] absolute  flex items-end justify-center p-4"
     class:hidden={!displayConfirm}
