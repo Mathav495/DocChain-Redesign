@@ -11,6 +11,7 @@
   import Step5 from "./Step5.svelte"
   const dispatch = createEventDispatcher()
   console.log(data1)
+  let Preview = true
   let errormsg = ""
   let blob
   let page
@@ -266,6 +267,7 @@
 
   const pdfPreview = async () => {
     console.log(SignFile)
+    Preview = false
     // tryCatch used for error handling
     try {
       const { data } = await axios.get(
@@ -283,6 +285,7 @@
       dispatch("myFile", myFile)
       document.getElementsByClassName("btn")[0].classList.remove("hidden")
     } catch (error) {
+      Preview = true
       console.error(error)
     }
   }
@@ -291,6 +294,7 @@
    * function for downloading the signedpdf.
    */
   const dwndPdf = async () => {
+    Preview = false
     try {
       const { data } = await axios.get(
         `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
@@ -306,7 +310,9 @@
       spdf.target = "_blank"
       spdf.download = SignFile
       spdf.click()
+      Preview = true
     } catch (error) {
+      Preview = true
       console.error(error)
     }
   }
@@ -591,9 +597,9 @@
           <button
             disabled={conReq}
             on:click={confirmRequest(signreq)}
-            class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
+            class="flex items-center justify-center rounded border-2 border-green-500 py-1 px-2 text-lg font-bold text-green-500 hover:bg-green-600 hover:text-white focus:outline-none"
           >
-            confirmRequest
+            Confirm
           </button>
         </div>
       </div>
@@ -603,46 +609,47 @@
     <div class="flex items-center justify-center mb-4">
       <Step5 />
     </div>
+    {#if Preview}
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col text-base pt-5">
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <svg
+            on:click={pdfPreview}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            class="mx-auto h-14 w-14 stroke-slate-500"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+            />
+          </svg>
 
-    <div class="flex flex-col gap-4">
-      <div class="flex flex-col text-base pt-5">
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <svg
-          on:click={pdfPreview}
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          class="mx-auto h-14 w-14 stroke-slate-500"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
-          />
-        </svg>
-
-        <button on:click={pdfPreview} class="text-slate-600 hover:underline">
-          Click here to preview
-        </button>
+          <button on:click={pdfPreview} class="text-slate-600 hover:underline">
+            Click here to preview
+          </button>
+        </div>
+        <div class="flex items-center justify-between p-2 pt-4">
+          <button
+            on:click={pdfPreview}
+            class="flex items-center justify-center rounded border-2 border-red-500 py-1 px-2 text-lg font-bold text-red-500 hover:bg-red-600 hover:text-white focus:outline-none"
+          >
+            close
+          </button>
+          <button
+            on:click={dwndPdf}
+            class="flex items-center justify-center rounded border-2 border-green-500 py-1 px-2 text-lg font-bold text-green-500 hover:bg-green-600 hover:text-white focus:outline-none"
+          >
+            Download
+          </button>
+        </div>
       </div>
-      <div class="flex items-center justify-between p-2 pt-4">
-        <button
-          on:click={pdfPreview}
-          class="flex items-center justify-center rounded border-2 border-red-500 py-1 px-2 text-lg font-bold text-red-500 hover:bg-red-600 hover:text-white focus:outline-none"
-        >
-          close
-        </button>
-        <button
-          on:click={dwndPdf}
-          class="flex items-center justify-center rounded border-2 border-green-500 py-1 px-2 text-lg font-bold text-green-500 hover:bg-green-600 hover:text-white focus:outline-none"
-        >
-          Download
-        </button>
-      </div>
-    </div>
-  {:else}
-    <Loading />
+    {:else}
+      <Loading />
+    {/if}
   {/if}
 </div>
 {#if errormsg}
