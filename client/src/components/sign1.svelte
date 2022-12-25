@@ -1,5 +1,6 @@
 <script>
   import axios from "axios"
+  import Loading from "./Loading.svelte"
   export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
   import Step1 from "./Step1.svelte"
@@ -19,10 +20,17 @@
   let signreq = ""
   let SignFile
   let oneTimePassword = ""
-  let bgColor = ""
+  let bgColor = "#FFFFFF"
   let Reason = "for verification"
   let docURL = localStorage.getItem("docURL")
+  let pageNo = 1
+  let signPage = false
+  let otp = false
+    let switchAccount = false,
+    modelHeading = false
 
+  let details = true,
+    SelectPageno = false
   /**
    * close modal
    */
@@ -54,13 +62,13 @@
     document.getElementById("disableBtn").disabled = false
     details = false
     SelectPageno = true
-    tiggerPdfPositionLib()
+    triggerPdfPositionLib()
   }
 
   /**
    * load library
    */
-  const tiggerPdfPositionLib = async () => {
+  const triggerPdfPositionLib = async () => {
     await loadLibrary("pdfPosition", "/lib/signPosition.js")
     console.log(pdfPosition)
     pdfPosition.init({
@@ -86,7 +94,6 @@
     SelectPageno = false
     signPage = true
   }
-
   //after select the placement of sign
   let NextBtn2 = true
   $: if (modal) {
@@ -101,6 +108,24 @@
     signPage = false
     SelectPageno = true
   }
+  $: console.log(pageNo)
+  /**
+   * Function for loading the library
+   * @param id {String} id for the newly creating script element
+   * @param location {String} path for the library
+   */
+  const loadLibrary = async (id, location) => {
+    return new Promise((resolve) => {
+      let elem = document.createElement("script")
+      elem.id = id
+      elem.type = "application/javascript"
+      elem.src = location
+      document.body.appendChild(elem)
+      elem.onload = async function () {
+        resolve()
+      }
+    })
+  }
 
   /**
    * function for initiate signature process
@@ -109,9 +134,11 @@
     //get signer id
     document.getElementById("disableBtn").disabled = true
     console.log("initiate")
-    init = false
+    init = true
     console.log(pdfPosition)
+    console.log(file)
     let date = new Date().toJSON()
+    // to give the input filed for initiate process
     initvalues = {
       signer:
         "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
@@ -136,20 +163,27 @@
       )
       console.log(data)
       signreq = data.signRequest.id
+      if (!signreq) {
+        init = false
+      }
       console.log(signreq, "signer id")
-      // modal = true
-      //get signer id
       signPage = false
       otp = true
-      console.log("next3")
     } catch (error) {
       console.error(error)
-      init = true
+      init = false
     }
   }
+
   /**
    * horizontal lock toggle button
    */
+     let position = false,
+    ballwht = false,
+    bgclr = false,
+    ballblk = true,
+    bold = false,
+    signBtn = true
   const signaturePlacement = async () => {
     signBtn = false
     if (pdfPosition.options.lockHorizontalCenter)
@@ -173,6 +207,7 @@
   /**
    *modal hide for sign placement
    */
+   let page
   const hideModal = () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
     page = pageNo - 1
@@ -180,57 +215,10 @@
     dispatch("PageNo", pageNo)
   }
 
-  console.log(docURL)
-  let switchAccount = false,
-    modelHeading = false
-
-  let details = true,
-    SelectPageno = false
-  $: if (SelectPageno) {
-    console.log(document.querySelector(".show-signature-overlay"))
-  }
-
-  let signPage = false
-
-  let otp = false
-  const backBtn3 = () => {
-    signPage = true
-    otp = false
-  }
-  const nextBtn4 = () => {
-    console.log("next4")
-  }
-  let pageNo
-
-  $: console.log(pageNo)
-  let clr = "#FFFFFF"
-  const chooseClr = () => {
-    console.log(clr)
-  }
-
-  async function loadLibrary(id, location) {
-    return new Promise((resolve) => {
-      let elem = document.createElement("script")
-      elem.id = id
-      elem.type = "application/javascript"
-      elem.src = location
-      document.body.appendChild(elem)
-      elem.onload = async function () {
-        resolve()
-      }
-    })
-  }
-
-  let position = false,
-    ballwht = false,
-    bgclr = false,
-    ballblk = true,
-    bold = false,
-    signBtn = true
-
   /**
-   * function for confirm the sign request
+   * Function for confirming the sign request using otp
    */
+
   const confirmRequest = async () => {
     console.log("confirmRequest")
     conReq = true
@@ -246,17 +234,15 @@
       console.log(data)
       if (data.message) {
         errormsg = data.message
+        setTimeout(() => {
+          errormsg = ""
+        }, 2000)
       }
       SignFile = data.signRequest.signedFile
+      if (!SignFile) {
+        conReq = false
+      }
       console.log(SignFile, "signed file")
-      otp = false
-      download = true
-      tick4 = false
-      borderBlue4 = true
-      dot4 = true
-      tick4 = false
-      dot5 = false
-      empty4 = true
     } catch (error) {
       conReq = false
       console.error(error)
@@ -264,8 +250,9 @@
   }
 
   /**
-   * function for downloading the signed pdf and preview
+   * function for signed pdf and preview
    */
+
   const pdfPreview = async () => {
     console.log(SignFile)
     // tryCatch used for error handling
@@ -284,6 +271,25 @@
       dispatch("blob", blob)
       dispatch("myFile", myFile)
       document.getElementsByClassName("btn")[0].classList.remove("hidden")
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+
+  /**
+   * function for downloading the signedpdf.
+   */
+  const dwndPdf = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
+        { responseType: "blob" }
+      )
+      console.log(data)
+      blob = URL.createObjectURL(data)
+      console.log(blob)
+      console.log(SignFile)
       let spdf = document.createElement("a")
       spdf.href = blob
       spdf.style.display = "none"
@@ -507,6 +513,9 @@
     </div>
   {/if}
   {#if signPage}
+    {#if init}
+      <Loading />
+    {:else}
     <div class="flex items-center justify-center mb-4">
       <Step3 />
     </div>
@@ -532,15 +541,57 @@
 
       <div class="flex items-center justify-between pt-4">
         <button on:click={backBtn2} class="redBtn float-left">Back</button>
-        {#if init}
-          <button on:click={initiate} class="blueBtn">Initiate</button>
-        {/if}
-      </div>
-    </div>
+          <button
+            disabled={init}
+            on:click={initiate}
+            class=" disabled:cursor-not-allowed blueBtn"
+          >
+            Initiate
+          </button>  
+    {/if}
   {/if}
   {#if otp}
+    {#if conReq}
+      <Loading />
+    {:else}
     <div class="flex items-center justify-center mb-4">
       <Step4 />
+    </div>
+      <div class="flex flex-col gap-4">
+        <h1
+          class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
+        >
+          SIGN DETAILS
+        </h1>
+        <div class="flex gap-3">
+          <h1 class="text-lg text-slate-800 font-semibold flex items-center">
+            One Time Password
+          </h1>
+          <input
+            bind:value={oneTimePassword}
+            type="text"
+            placeholder="12345"
+            class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
+          />
+        </div>
+
+        <div
+          class="flex items-center justify-end border-t border-gray-500 pt-4"
+        >
+          <button
+            disabled={conReq}
+            on:click={confirmRequest(signreq)}
+            class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
+          >
+            confirmRequest
+          </button>
+        </div>
+      </div>
+    {/if}
+  {/if}
+  {#if download}
+     <div class="flex items-center justify-center mb-4">
+      <Step5 />
     </div>
     <div class="flex flex-col gap-4">
       <h1
@@ -548,74 +599,52 @@
       >
         SIGN DETAILS
       </h1>
-      <div class="flex gap-3">
-        <h1 class="text-lg text-slate-800 font-semibold flex items-center">
-          One Time Password
-        </h1>
-        <input
-          bind:value={oneTimePassword}
-          type="text"
-          placeholder="12345"
-          class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
-        />
-      </div>
 
+      <div class="flex flex-col text-base">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <svg
+          on:click={pdfPreview}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="mx-auto h-14 w-14"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+          />
+        </svg>
+        <button on:click={pdfPreview} class="hover:underline">
+          Click here to preview
+        </button>
+      </div>
       <div
-        class="flex items-center justify-between border-t border-gray-500 pt-4"
+        class="flex items-center justify-between p-2 border-t border-gray-500 pt-4"
       >
         <button
-          on:click={backBtn3}
-          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
+          on:click={pdfPreview}
+          class="flex text-red-500 hover:text-white border-2 border-red-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-red-600 rounded text-lg font-bold"
         >
-          Back
+          close
         </button>
         <button
-          disabled={conReq}
-          on:click={confirmRequest}
-          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
+          on:click={dwndPdf}
+          class="flex text-green-500 hover:text-white border-2 border-green-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg font-bold"
         >
-          confirmRequest
+          Download
         </button>
-      </div>
-    </div>
-  {/if}
-  {#if download}
-    <div class="flex items-center justify-center mb-4">
-      <Step5 />
-    </div>
-    <div class="flex w-full flex-col p-5">
-      <div class="cursor-pointer">
-        <div
-          class="flex items-center justify-center rounded-md border-blue-600 py-5"
-        >
-          <div class="space-y-1 text-center">
-            <div class="flex flex-col text-base">
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <svg
-                on:click={pdfPreview}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="mx-auto h-14 w-14"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
-                />
-              </svg>
-              <button on:click={pdfPreview} class="hover:underline">
-                Click here to preview and download
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   {/if}
 </div>
+{#if errormsg}
+  <div class="mt-5">
+    <ErrorInfo {errormsg} />
+  </div>
+{/if}
 
 <style lang="postcss">
   .blueBtn {

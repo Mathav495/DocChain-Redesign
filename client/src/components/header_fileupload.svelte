@@ -16,15 +16,19 @@
   randomPattern = Math.floor(Math.random() * patterns.length)
   let bgpattern = patterns[randomPattern]
   onMount(async () => {
-    const { data } = await axios.get(
-      "https://test.swagger.print2block.in/account/user",
-      {
-        headers: {
-          "x-access-token": localStorage.getItem("token"),
-        },
-      }
-    )
-    issuerName = data.userData.name
+    try {
+      const { data } = await axios.get(
+        "https://test.swagger.print2block.in/account/user",
+        {
+          headers: {
+            "x-access-token": localStorage.getItem("token"),
+          },
+        }
+      )
+      issuerName = data.userData.name
+    } catch (error) {
+      console.error(error)
+    }
   })
 </script>
 

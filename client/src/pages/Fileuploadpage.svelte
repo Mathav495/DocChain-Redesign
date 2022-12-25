@@ -1,5 +1,6 @@
 <script>
   import axios from "axios"
+  import { fade } from "svelte/transition"
   import Logo from "../components/Logo.svelte"
   import Logout from "../components/Logout.svelte"
   import Nav from "../components/Nav.svelte"
@@ -7,21 +8,20 @@
   import Header from "../components/Header.svelte"
   import Addfile from "../components/Addfile.svelte"
   import Sign1 from "../components/sign1.svelte"
-  import { fade } from "svelte/transition"
   import Headerlogo from "../components/Headerlogo.svelte"
-
   export let id
   let hideNavbar = true
+
   const hideNav = () => {
     hideNavbar = true
   }
   let file
+
   const getFile = (e) => {
     console.log("file", e.detail)
     file = e.detail
     console.log(file)
   }
-  console.log(id)
 
   let Black = true,
     Yellow = false,
@@ -43,15 +43,13 @@
     }
   }
 
-  let stepModal = false,
-    overflowHidden = false
+  let stepModal = false
   $: console.log(stepModal)
   let addfile = false,
     data1,
     signerId =
       "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3"
   const Modal = async (signerId) => {
-    overflowHidden = true
     const { data } = await axios.get(
       `https://pdfsign.test.print2block.in/blockchain/signer/get?signer=${signerId}`
     )
@@ -77,6 +75,9 @@
   }
 
   let modal = false
+  /**
+   * Function to show the hidden modal
+   */
   const showModal = () => {
     stepModal = true
     console.log("click")
