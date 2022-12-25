@@ -22,7 +22,7 @@
    * Submitting file for generating filehash
    */
   const onSubmitFile = async () => {
-    // console.log(File)
+    //Runs only if the file exits
     if (File) {
       try {
         const { data } = await axios.post(
@@ -39,10 +39,8 @@
           }
         )
         console.log(data)
-        // dispatch('filehash', data.fileHash);
         localStorage.setItem("filehash", data.fileHash)
-        let fileHash = localStorage.getItem("filehash")
-        console.log("filehash", fileHash)
+
         if (data.fileHash) {
           // For local storage
           let localfile = JSON.parse(localStorage.getItem("docDetails"))
@@ -62,6 +60,7 @@
           //For navigating to next page
           navigate(`/add-data/${id}`)
         } else {
+          // Runs if error throws while the error msg presents
           if (data.error) {
             displayConfirm = false
             displaypreview = false
