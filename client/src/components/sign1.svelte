@@ -176,6 +176,7 @@
     init = true
     console.log(pdfPosition)
     let date = new Date().toJSON()
+    // to give the input filed for initiate process
     initvalues = {
       signer:
         "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
