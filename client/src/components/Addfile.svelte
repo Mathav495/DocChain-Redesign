@@ -6,7 +6,6 @@
   import { navigate } from "svelte-routing"
   import { fade } from "svelte/transition"
   import { jsPDF } from "jspdf"
-  import html2canvas from "html2canvas"
   import HeaderFileupload from "./header_fileupload.svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
   let blobimage, blobPdf, pdfDoc, File, totalPages, displayPdf, errormsg
@@ -114,10 +113,10 @@
       displaypreview = true
       displayDropzone = false
       displayPdf = false
-      //converting input image file to Base64 String using filereader
+      // converting input image file to Base64 String using filereader
       let reader = new FileReader()
       reader.readAsDataURL(File)
-      // await sleep(2500)
+      await sleep(2500)
       reader.onload = async (evt) => {
         let base64 = evt.target.result
         let doc = new jsPDF({
@@ -232,12 +231,6 @@
     pdfDoc = await loadingTask
     totalPages = pdfDoc.numPages
     dispatch("totalPage", totalPages)
-    sTime = Date.now()
-    await showPage(1)
-    rTime = Date.now() - sTime
-    console.log("Render Time: ", rTime)
-    console.log("totalPages", totalPages)
-    console.log(pdfDoc)
     showPage(currentpage)
   }
 
@@ -250,10 +243,7 @@
       displayDropzone = false
       try {
         let hideCanvas = document.getElementById("createdCanvas")
-        hideCanvas.style.display = "none"
-        let pdfPreview = document.getElementById("pdfPreviewSection")
-        pdfPreview.textContent = ""
-        console.log(pdfPreview)
+        hideCanvas.remove()
         currentpage = pageNumber
         await showPdf(signedLink)
       } catch (error) {
@@ -276,6 +266,19 @@
 
     // Prepare canvas using PDF page dimensions
     let pdfPreview = document.getElementById("pdfPreviewSection")
+    console.log(pdfPreview, "before")
+    let libCanvas = document.getElementById("createdCanvas")
+    console.log(libCanvas)
+    console.log(pdfPreview.children.length)
+    if (pdfPreview.children.length > 0) {
+      for (let i = 0; i < pdfPreview.children.length; i++) {
+        if (pdfPreview.children[i] != libCanvas) {
+          let removedElement = pdfPreview.children[i]
+          removedElement.remove()
+          console.log(pdfPreview.children[i])
+        }
+      }
+    }
     let canvas = document.createElement("canvas")
     canvas.className = "border-2 rounded-md w-full overflow-hidden"
     canvas.setAttribute("id", "mycanvas")
@@ -291,6 +294,7 @@
     }
     await page.render(renderContext).promise
     pdfPreview.appendChild(canvas)
+    console.log(pdfPreview)
   }
 
   $: if (signedPdf) {
@@ -305,8 +309,6 @@
 
   $: if (pageNumber) {
     btns = false
-    let pdfPreview = document.getElementById("pdfPreviewSection")
-    pdfPreview.removeChild(pdfPreview.children[0])
     showPage(pageNumber)
   }
 
@@ -320,8 +322,6 @@
   const nextpage = () => {
     if (currentpage < totalPages) {
       console.log("nextbtn")
-      let pdfPreview = document.getElementById("pdfPreviewSection")
-      pdfPreview.removeChild(pdfPreview.children[0])
       currentpage++
       console.log("currentpage next btn", currentpage)
       showPage(currentpage)
@@ -333,8 +333,6 @@
    */
   const previouspage = () => {
     if (currentpage > 1) {
-      let pdfPreview = document.getElementById("pdfPreviewSection")
-      pdfPreview.removeChild(pdfPreview.children[0])
       currentpage--
       console.log("currentpage prev btn", currentpage)
       showPage(currentpage)
@@ -345,8 +343,6 @@
    * Function for hiding the display dropzone and show the displaypreview
    */
   const ondisplaydropzone = () => {
-    let pdfPreview = document.getElementById("pdfPreviewSection")
-    pdfPreview.textContent = ""
     displayDropzone = true
     displaypreview = false
   }
@@ -368,7 +364,7 @@
 </script>
 
 <div
-  class="relative h-auto w-full flex flex-col items-center justify-center  p-4"
+  class="relative h-auto w-full flex flex-col items-center justify-center p-4"
 >
   <div
     class="w-full h-full bg-[#000000cc] absolute  flex items-end justify-center p-4"
@@ -487,7 +483,7 @@
     in:fade={{ duration: 2000 }}
     out:fade={{ duration: 1000 }}
   >
-    <div id="pdfPreviewSection" />
+    <div id="pdfPreviewSection" class="mx-auto" />
     <div class="flex justify-center mx-auto items-center gap-8 pt-3">
       <button on:click={previouspage} disabled={!prevbtn}>
         <svg

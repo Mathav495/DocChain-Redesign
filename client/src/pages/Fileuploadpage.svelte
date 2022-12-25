@@ -154,12 +154,12 @@
   </div>
   <div
     transition:fade={{ x: 100, duration: 500 }}
-    class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto"
+    class="w-full flex flex-col bg-white text-gray-900 rounded-md  ml-4 overflow-auto"
   >
-    <div class="lg:hidden block">
+    <div class="lg:hidden block p-4">
       <Header on:navShow={showNav} />
     </div>
-    <div class:hidden={headerHide}>
+    <div class:hidden={headerHide} class="p-4">
       <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>

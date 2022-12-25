@@ -169,7 +169,7 @@
           : (options = {})
       }
 
-      try{
+      try {
         const { data } = await axios.post(
           "https://test.swagger.print2block.in/docs/add-data",
           {
@@ -186,7 +186,7 @@
         console.log(data)
         localStorage.setItem("metadata", data.metadata)
         localStorage.setItem("options", data.options)
-  
+
         if (data.dataHash) {
           let localdata = JSON.parse(localStorage.getItem("docDetails"))
           console.log("localdata", localdata)
@@ -219,7 +219,7 @@
             }, 3000)
           }
         }
-      }catch(error){
+      } catch (error) {
         console.error(error)
       }
     }
@@ -426,6 +426,7 @@
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
                 <div class="flex group " id="z{receiver.label}">
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <label
                     on:click={() => hideLabel("z", "a", receiver.label)}
                     for="label{receiver.label}"
@@ -433,6 +434,7 @@
                   >
                     {receiver.labelName}
                   </label>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <svg
                     on:click={() => hideLabel("z", "a", receiver.label)}
                     xmlns="http://www.w3.org/2000/svg"
@@ -448,6 +450,7 @@
                       d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                     />
                   </svg>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     on:click={() => deletelabel("receiver", receiver.label)}
@@ -474,6 +477,7 @@
                     class="field-input"
                   />
                   <div class="pl-3">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <svg
                       on:click={() =>
                         updateLabel("z", "a", "receiver", receiver.label)}
@@ -492,6 +496,7 @@
                     </svg>
                   </div>
                   <div class="pl-3">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <svg
                       on:click={() => cancelLabel("z", "a", receiver.label)}
                       xmlns="http://www.w3.org/2000/svg"
@@ -558,6 +563,7 @@
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
                 <div class="flex group" id="b{docDetails.label}">
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <label
                     on:click={() => hideLabel("b", "c", docDetails.label)}
                     for="doclabel{docDetails.label}"
@@ -565,6 +571,7 @@
                   >
                     {docDetails.labelName}
                   </label>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <svg
                     on:click={() => hideLabel("b", "c", docDetails.label)}
                     xmlns="http://www.w3.org/2000/svg"
@@ -580,6 +587,7 @@
                       d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                     />
                   </svg>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     on:click={() => deletelabel("docDetails", docDetails.label)}
@@ -606,6 +614,7 @@
                     class="field-input"
                   />
                   <div class="pl-3">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <svg
                       on:click={() =>
                         updateLabel(
@@ -629,6 +638,7 @@
                     </svg>
                   </div>
                   <div class="pl-3">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <svg
                       on:click={() => cancelLabel("b", "c", docDetails.label)}
                       xmlns="http://www.w3.org/2000/svg"
@@ -697,6 +707,7 @@
             <div class="flex flex-col w-full  space-y-2">
               <div class="flex">
                 <div class="flex group" id="d{signDetails.label}">
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <label
                     on:click={() => hideLabel("d", "e", signDetails.label)}
                     for="signlabel{signDetails.label}"
@@ -704,6 +715,7 @@
                   >
                     {signDetails.labelName}
                   </label>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <svg
                     on:click={() => hideLabel("d", "e", signDetails.label)}
                     xmlns="http://www.w3.org/2000/svg"
@@ -719,6 +731,7 @@
                       d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                     />
                   </svg>
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     on:click={() =>
@@ -749,6 +762,7 @@
                     class="field-input"
                   />
                   <div class="pl-3">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <svg
                       on:click={() =>
                         updateLabel(
@@ -772,6 +786,7 @@
                     </svg>
                   </div>
                   <div class="pl-3">
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <svg
                       on:click={() => cancelLabel("d", "e", signDetails.label)}
                       xmlns="http://www.w3.org/2000/svg"

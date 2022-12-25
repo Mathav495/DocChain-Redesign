@@ -3,6 +3,7 @@
   import Loading from "./Loading.svelte"
   export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
+  import ErrorInfo from "./ErrorInfo.svelte"
   import Step1 from "./Step1.svelte"
   import Step2 from "./Step2.svelte"
   import Step3 from "./Step3.svelte"
@@ -15,7 +16,7 @@
   let page
   let conReq = false
   let download = false
-  let init = true
+  let init = false
   let initvalues
   let signreq = ""
   let SignFile
@@ -62,20 +63,30 @@
     document.getElementById("disableBtn").disabled = false
     details = false
     SelectPageno = true
-    triggerPdfPositionLib()
+    console.log("clicked")
+    await triggerPdfPositionLib()
   }
 
+  const hideBtn1 = () => {
+    document.getElementById("disableBtn").disabled = false
+    details = false
+    SelectPageno = true
+  }
   /**
    * load library
    */
   const triggerPdfPositionLib = async () => {
+    let count = 1
     await loadLibrary("pdfPosition", "/lib/signPosition.js")
     console.log(pdfPosition)
     pdfPosition.init({
       triggerButtons: ".show-signature-overlay",
       imageTarget: "mycanvas",
+      // positionTextbox: "positions",
     })
-    console.log(document.querySelector(".show-signature-overlay"))
+    console.log(document.querySelector("#mycanvas"))
+    count++
+    console.log(count)
   }
 
   /**
@@ -90,7 +101,6 @@
    * change a modal to "sign reason" and "sign color" get modal
    */
   const nextBtn2 = () => {
-    details = false
     SelectPageno = false
     signPage = true
   }
@@ -98,7 +108,7 @@
   let NextBtn2 = true
   $: if (modal) {
     NextBtn2 = false
-    nextBtn1()
+    hideBtn1()
   }
 
   /**
@@ -241,6 +251,8 @@
       if (!SignFile) {
         conReq = false
       }
+      otp = false
+      download = true
       console.log(SignFile, "signed file")
     } catch (error) {
       conReq = false
@@ -320,6 +332,7 @@
   <h1 class:hidden={modelHeading} class="mx-auto text-xl  font-bold">
     Add Digital Signature
   </h1>
+
   {#if switchAccount}
     <div class="flex flex-col gap-4">
       <h1 class="text-lg tracking-wide font-semibold pb-2">SWITCH ACCOUNT</h1>
@@ -497,10 +510,7 @@
       <div class="flex gap-3 justify-between">
         <button on:click={backBtn1} class="redBtn float-left">Back</button>
         <div class="flex gap-2">
-          <button
-            on:click={hideModal}
-            class="show-signature-overlay greenBtn disabled:cursor-not-allowed"
-          >
+          <button on:click={hideModal} class="show-signature-overlay greenBtn">
             SIGN
           </button>
           <button class:hidden={NextBtn2} on:click={nextBtn2} class="blueBtn">
@@ -511,12 +521,12 @@
     </div>
   {/if}
   {#if signPage}
+    <div class="flex items-center justify-center mb-4">
+      <Step3 />
+    </div>
     {#if init}
       <Loading />
     {:else}
-      <div class="flex items-center justify-center mb-4">
-        <Step3 />
-      </div>
       <div class="flex flex-col gap-4">
         <div class="flex flex-row items-start gap-4">
           <p class="w-52 text-base text-gray-800 font-semibold">
@@ -551,12 +561,12 @@
     {/if}
   {/if}
   {#if otp}
+    <div class="flex items-center justify-center mb-4">
+      <Step4 />
+    </div>
     {#if conReq}
       <Loading />
     {:else}
-      <div class="flex items-center justify-center mb-4">
-        <Step4 />
-      </div>
       <div class="flex flex-col gap-4">
         <h1
           class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
