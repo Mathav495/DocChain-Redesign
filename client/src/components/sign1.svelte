@@ -1,5 +1,6 @@
 <script>
   import axios from "axios"
+  import Loading from "./Loading.svelte"
   export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
@@ -9,7 +10,7 @@
   let blob
   let conReq = false
   let download = false
-  let init = true
+  let init = false
   let borderBlue4 = false
   let empty4 = false
   let dot5 = true
@@ -18,7 +19,7 @@
   let signreq = ""
   let SignFile
   let oneTimePassword = ""
-  let bgColor = ""
+  let bgColor = "#FFFFFF"
   let Reason = "for verification"
   let docURL = localStorage.getItem("docURL")
   console.log(docURL)
@@ -35,9 +36,6 @@
     modelHeading = true
     switchAccount = true
     details = false
-  }
-  const closeModal = () => {
-    dispatch("clsModal")
   }
   const backBtn = () => {
     modelHeading = false
@@ -107,24 +105,10 @@
     tick4 = true,
     dot4 = true,
     otp = false
-  const backBtn3 = () => {
-    borderBlue3 = false
-    dot4 = true
-    empty3 = false
-    signPage = true
-    otp = false
-  }
-  const nextBtn4 = () => {
-    console.log("next4")
-  }
   let pageNo = 1
 
   $: console.log(pageNo)
   let clr = "#FFFFFF"
-  const chooseClr = () => {
-    console.log(clr)
-  }
-
   async function loadLibrary(id, location) {
     return new Promise((resolve) => {
       let elem = document.createElement("script")
@@ -174,8 +158,14 @@
       ballwht = false
       bgclr = false
       bold = false
-      // pdfPosition.options.lockHorizontalCenter = true;
     }
+  }
+  let page
+  const hideModal = () => {
+    document.getElementsByClassName("btn")[0].classList.add("hidden")
+    page = pageNo - 1
+    localStorage.setItem("PageNo", page)
+    dispatch("PageNo", pageNo)
   }
   /**
    * function for initiate signature process
@@ -184,10 +174,11 @@
     //get signer id
     document.getElementById("disableBtn").disabled = true
     console.log("initiate")
-    init = false
+    init = true
     console.log(pdfPosition)
     console.log(file)
     let date = new Date().toJSON()
+    // to give the input filed for initiate process
     initvalues = {
       signer:
         "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3",
@@ -212,25 +203,20 @@
       )
       console.log(data)
       signreq = data.signRequest.id
+      if (!signreq) {
+        init = false
+      }
       console.log(signreq, "signer id")
-      // modal = true
-      //get signer id
-      signPage = false
-      otp = true
-      console.log("next3")
-      tick3 = false
-      dot3 = true
-      dot4 = false
-      empty3 = true
-      borderBlue3 = true
     } catch (error) {
       console.error(error)
-      init = true
+      init = false
     }
   }
+
   /**
    * function for confirm the sign request
    */
+
   const confirmRequest = async () => {
     console.log("confirmRequest")
     conReq = true
@@ -246,17 +232,15 @@
       console.log(data)
       if (data.message) {
         errormsg = data.message
+        setTimeout(() => {
+          errormsg = ""
+        }, 2000)
       }
       SignFile = data.signRequest.signedFile
+      if (!SignFile) {
+        conReq = false
+      }
       console.log(SignFile, "signed file")
-      otp = false
-      download = true
-      tick4 = false
-      borderBlue4 = true
-      dot4 = true
-      tick4 = false
-      dot5 = false
-      empty4 = true
     } catch (error) {
       conReq = false
       console.error(error)
@@ -264,8 +248,9 @@
   }
 
   /**
-   * function for downloading the signed pdf and preview
+   * function for signed pdf and preview
    */
+
   const pdfPreview = async () => {
     console.log(SignFile)
     // tryCatch used for error handling
@@ -289,22 +274,20 @@
     }
   }
 
+
+  /**
+   * function for downloading the signedpdf.
+   */
   const dwndPdf = async () => {
-    console.log(SignFile)
-    // tryCatch used for error handling
     try {
       const { data } = await axios.get(
         `https://pdfsign.test.print2block.in/signature/download/${SignFile}`,
         { responseType: "blob" }
       )
       console.log(data)
-      const myFile = new File([data], SignFile, {
-        type: data.type,
-      })
-      console.log(myFile)
       blob = URL.createObjectURL(data)
       console.log(blob)
-      document.getElementsByClassName("btn")[0].classList.remove("hidden")
+      console.log(SignFile)
       let spdf = document.createElement("a")
       spdf.href = blob
       spdf.style.display = "none"
@@ -314,13 +297,6 @@
     } catch (error) {
       console.error(error)
     }
-  }
-  let page
-  const hideModal = () => {
-    document.getElementsByClassName("btn")[0].classList.add("hidden")
-    page = pageNo - 1
-    localStorage.setItem("PageNo", page)
-    dispatch("PageNo", pageNo)
   }
 </script>
 
@@ -777,148 +753,158 @@
     </div>
   {/if}
   {#if signPage}
-    <div class="flex flex-col gap-4">
-      <div class="flex gap-2">
-        <button on:click={backBtn2} class="redBtn float-left">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
+    {#if init}
+      <Loading />
+    {:else}
+      <div class="flex flex-col gap-4">
+        <div class="flex gap-2">
+          <button on:click={backBtn2} class="redBtn float-left">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
+              />
+            </svg>
+          </button>
+          <h1
+            class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
-            />
-          </svg>
-        </button>
+            SIGN DETAILS
+          </h1>
+        </div>
+
+        <div class="flex flex-row items-center gap-2">
+          <p class="text-base text-gray-800 font-semibold">
+            Reason for Digital Signature
+          </p>
+          <input
+            type="text"
+            bind:value={Reason}
+            class="w-52 border-b-2 border-black outline-none"
+          />
+        </div>
+        <div class="flex flex-row items-center gap-2">
+          <p class="text-base text-gray-800 font-semibold">
+            Signature Background color
+          </p>
+          <input
+            bind:value={bgColor}
+            class="w-52 outline-none"
+            type="color"
+            name="Identity"
+            id="Identity"
+          />
+        </div>
+
+        <div class="flex items-center justify-end pt-4">
+          <button
+            disabled={init}
+            on:click={initiate}
+            class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
+          >
+            Initiate
+          </button>
+        </div>
+      </div>
+    {/if}
+  {/if}
+  {#if otp}
+    {#if conReq}
+      <Loading />
+    {:else}
+      <div class="flex flex-col gap-4">
         <h1
           class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
         >
           SIGN DETAILS
         </h1>
-      </div>
-      <div class="flex flex-row items-center gap-2">
-        <p class="text-base text-gray-800 font-semibold">
-          Reason for Digital Signature
-        </p>
-        <input
-          type="text"
-          bind:value={Reason}
-          class="w-52 border-b-2 border-black outline-none"
-        />
-      </div>
-      <div class="flex flex-row items-center gap-2">
-        <p class="text-base text-gray-800 font-semibold">
-          Signature Background color
-        </p>
-        <input
-          bind:value={bgColor}
-          class="w-52 outline-none"
-          type="color"
-          name="Identity"
-          id="Identity"
-        />
-      </div>
+        <div class="flex gap-3">
+          <h1 class="text-lg text-slate-800 font-semibold flex items-center">
+            One Time Password
+          </h1>
+          <input
+            bind:value={oneTimePassword}
+            type="text"
+            placeholder="12345"
+            class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
+          />
+        </div>
 
-      <div class="flex items-center justify-end pt-4">
-        {#if init}
-          <button on:click={initiate} class="blueBtn">Initiate</button>
-        {/if}
+        <div
+          class="flex items-center justify-end border-t border-gray-500 pt-4"
+        >
+          <button
+            disabled={conReq}
+            on:click={confirmRequest(signreq)}
+            class="bg-indigo-600 hover:bg-indigo-800 px-2 py-1 disabled:cursor-not-allowed rounded-md border border-indigo-400 text-white text-base"
+          >
+            confirmRequest
+          </button>
+        </div>
       </div>
-    </div>
+    {/if}
   {/if}
-  {#if otp}
+  {#if download}
     <div class="flex flex-col gap-4">
       <h1
         class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
       >
         SIGN DETAILS
       </h1>
-      <div class="flex gap-3">
-        <h1 class="text-lg text-slate-800 font-semibold flex items-center">
-          One Time Password
-        </h1>
-        <input
-          bind:value={oneTimePassword}
-          type="text"
-          placeholder="12345"
-          class=" w-2/5 mt-2 pl-5 placeholder:text-base text-slate-800 rounded border focus:border-black focus:ring-1 focus:ring-black  text-lg outline-none py-1 px-3 leading-8"
-        />
-      </div>
 
+      <div class="flex flex-col text-base">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <svg
+          on:click={pdfPreview}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="mx-auto h-14 w-14"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+          />
+        </svg>
+        <button on:click={pdfPreview} class="hover:underline">
+          Click here to preview
+        </button>
+      </div>
       <div
-        class="flex items-center justify-between border-t border-gray-500 pt-4"
+        class="flex items-center justify-between p-2 border-t border-gray-500 pt-4"
       >
         <button
-          on:click={backBtn3}
-          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
+          on:click={pdfPreview}
+          class="flex text-red-500 hover:text-white border-2 border-red-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-red-600 rounded text-lg font-bold"
         >
-          Back
+          close
         </button>
         <button
-          disabled={conReq}
-          on:click={confirmRequest}
-          class="bg-blue-600 hover:bg-blue-800 px-2 py-1 rounded-md border border-blue-400 text-white text-base"
+          on:click={dwndPdf}
+          class="flex text-green-500 hover:text-white border-2 border-green-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg font-bold"
         >
-          confirmRequest
+          Download
         </button>
-      </div>
-    </div>
-  {/if}
-  {#if download}
-    <div class="flex w-full flex-col p-5">
-      <div class="cursor-pointer">
-        <div
-          class="flex items-center justify-center rounded-md border-blue-600 py-5"
-        >
-          <div class="space-y-1 text-center">
-            <div class="flex flex-col text-base">
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <svg
-                on:click={pdfPreview}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="mx-auto h-14 w-14"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
-                />
-              </svg>
-              <button on:click={pdfPreview} class="hover:underline">
-                Click here to preview and download
-              </button>
-            </div>
-            <div
-              class="flex items-center justify-between p-2 border-t border-gray-500 pt-4"
-            >
-              <button
-                on:click={pdfPreview}
-                class="bg-red-500 hover:bg-red-600 py-1 px-3 rounded-md border border-red-400 text-white text-base"
-              >
-                close
-              </button>
-              <button
-                on:click={dwndPdf}
-                class="bg-green-500 hover:bg-green-600 py-1 px-3  rounded-md border border-green-400 text-white text-base"
-              >
-                Download
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   {/if}
 </div>
+{#if errormsg}
+  <div class="mt-5">
+    <ErrorInfo {errormsg} />
+  </div>
+{/if}
 
 <style lang="postcss">
   .blueBtn {
