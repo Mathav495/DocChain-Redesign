@@ -574,11 +574,6 @@
       <Loading />
     {:else}
       <div class="flex flex-col gap-4">
-        <h1
-          class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
-        >
-          SIGN DETAILS
-        </h1>
         <div class="flex gap-3">
           <h1 class="text-lg text-slate-800 font-semibold flex items-center">
             One Time Password
