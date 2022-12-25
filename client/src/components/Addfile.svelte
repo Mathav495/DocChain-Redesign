@@ -1,6 +1,5 @@
 <script>
-  export let signedLink, signedPdf,pageNumber,id
-  export let pageNumber
+  export let signedLink, signedPdf, pageNumber, id
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
   import axios from "axios"

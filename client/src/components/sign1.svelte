@@ -26,7 +26,7 @@
   let pageNo = 1
   let signPage = false
   let otp = false
-    let switchAccount = false,
+  let switchAccount = false,
     modelHeading = false
 
   let details = true,
@@ -178,7 +178,7 @@
   /**
    * horizontal lock toggle button
    */
-     let position = false,
+  let position = false,
     ballwht = false,
     bgclr = false,
     ballblk = true,
@@ -207,7 +207,6 @@
   /**
    *modal hide for sign placement
    */
-   let page
   const hideModal = () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
     page = pageNo - 1
@@ -275,7 +274,6 @@
       console.error(error)
     }
   }
-
 
   /**
    * function for downloading the signedpdf.
@@ -516,47 +514,49 @@
     {#if init}
       <Loading />
     {:else}
-    <div class="flex items-center justify-center mb-4">
-      <Step3 />
-    </div>
-    <div class="flex flex-col gap-4">
-      <div class="flex flex-row items-start gap-4">
-        <p class="w-52 text-base text-gray-800 font-semibold">
-          Reason for Digital Signature
-        </p>
-        <textarea type="text" bind:value={Reason} class="input-normal" />
+      <div class="flex items-center justify-center mb-4">
+        <Step3 />
       </div>
-      <div class="flex flex-row items-center gap-4">
-        <p class="w-52 text-base text-gray-800 font-semibold">
-          Signature Background color
-        </p>
-        <input
-          bind:value={bgColor}
-          class="h-6 w-8"
-          type="color"
-          name="Identity"
-          id="Identity"
-        />
-      </div>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-row items-start gap-4">
+          <p class="w-52 text-base text-gray-800 font-semibold">
+            Reason for Digital Signature
+          </p>
+          <textarea type="text" bind:value={Reason} class="input-normal" />
+        </div>
+        <div class="flex flex-row items-center gap-4">
+          <p class="w-52 text-base text-gray-800 font-semibold">
+            Signature Background color
+          </p>
+          <input
+            bind:value={bgColor}
+            class="h-6 w-8"
+            type="color"
+            name="Identity"
+            id="Identity"
+          />
+        </div>
 
-      <div class="flex items-center justify-between pt-4">
-        <button on:click={backBtn2} class="redBtn float-left">Back</button>
+        <div class="flex items-center justify-between pt-4">
+          <button on:click={backBtn2} class="redBtn float-left">Back</button>
           <button
             disabled={init}
             on:click={initiate}
             class=" disabled:cursor-not-allowed blueBtn"
           >
             Initiate
-          </button>  
+          </button>
+        </div>
+      </div>
     {/if}
   {/if}
   {#if otp}
     {#if conReq}
       <Loading />
     {:else}
-    <div class="flex items-center justify-center mb-4">
-      <Step4 />
-    </div>
+      <div class="flex items-center justify-center mb-4">
+        <Step4 />
+      </div>
       <div class="flex flex-col gap-4">
         <h1
           class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
@@ -590,7 +590,7 @@
     {/if}
   {/if}
   {#if download}
-     <div class="flex items-center justify-center mb-4">
+    <div class="flex items-center justify-center mb-4">
       <Step5 />
     </div>
     <div class="flex flex-col gap-4">
