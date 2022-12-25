@@ -630,7 +630,7 @@
             on:click={pdfPreview}
             class="flex items-center justify-center rounded border-2 border-red-500 py-1 px-6 text-lg font-bold text-red-500 hover:bg-red-600 hover:text-white focus:outline-none"
           >
-            close
+            Close
           </button>
           <button
             on:click={dwndPdf}
