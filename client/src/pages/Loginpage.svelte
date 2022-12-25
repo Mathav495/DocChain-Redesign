@@ -32,12 +32,14 @@
     valid = true
     const mail = /\S+@\S+\.\S+/g
     const result1 = mail.test(Email)
+    // email validation for email id empty condition
     if (!Email) {
       error.Email = "Email can't be empty"
       setTimeout(() => {
         error.Email = ""
       }, 3000)
       valid = false
+      // email validation for invalid email id condition
     } else if (!result1) {
       error.Email = "Please enter valid mail id"
       Email = ""
@@ -47,12 +49,15 @@
     } else {
       error.Email = ""
     }
+    // password validation fo empty condition
+
     if (!Password) {
       error.Password = "Password can't be empty"
       setTimeout(() => {
         error.Password = ""
       }, 3000)
       valid = false
+      // password validation for invalid condition
     } else {
       error.Password = ""
     }
@@ -72,9 +77,9 @@
           console.log(data.errorCode)
           errormsg = "Invalid Username or Password"
           display = true
-          // setTimeout(() => {
-          //   display = false
-          // }, 2000)
+          setTimeout(() => {
+            display = false
+          }, 2000)
         } else {
           localStorage.setItem("token", data.token)
           let token = localStorage.getItem("token")
@@ -99,7 +104,9 @@
       type = "password"
     }
   }
-
+  /**
+   * function for hide the Errorinfo card when click the button
+   */
   const hideErrmsg = () => {
     display = false
   }
