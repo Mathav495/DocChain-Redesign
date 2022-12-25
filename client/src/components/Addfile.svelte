@@ -1,14 +1,15 @@
 <script>
-  export let signedLink, signedPdf
+  export let signedLink, signedPdf,pageNumber,id
   export let pageNumber
   import { createEventDispatcher } from "svelte"
   const dispatch = createEventDispatcher()
   import axios from "axios"
   import { navigate } from "svelte-routing"
   import { fade } from "svelte/transition"
+  import { jsPDF } from "jspdf"
+  import html2canvas from "html2canvas"
   import HeaderFileupload from "./header_fileupload.svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
-  export let id
   let blobimage, blobPdf, pdfDoc, File, totalPages, displayPdf, errormsg
   let displayConfirm = false
   let displayerror = false
@@ -16,8 +17,8 @@
   let displaypreview = false
   let nextbtn = true
   let prevbtn = true
-  let btns = true
   let currentpage = 1
+  let btns = true
   /**
    * Submitting file for generating filehash
    */
@@ -79,6 +80,20 @@
     }
   }
 
+  const loadingSVG =
+    '<div class="flex mx-auto border items-center rounded-md w-full aspect-square items-center justify-center"><div style="width: 150px;"><svg version="1.1" id="L7" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"><path fill="#173f5f" d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z" class="loader-ring-1"></path><path fill="#20639b" d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z" class="loader-ring-2"></path><path fill="#3caea3" d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5L82,35.7z" class="loader-ring-3"></path></svg><h4 style="text-align: center; font-size: 1.25rem; margin-top: 30px; ">Loading Document, Please wait...</h4></div></div>'
+
+  let rTime = 0,
+    sTime = 0
+
+  async function sleep(time) {
+    return new Promise((resolve) => {
+      setTimeout(function () {
+        resolve()
+      }, time)
+    })
+  }
+
   /**
    * Function for previewing image or pdf when uploaded
    */
@@ -100,9 +115,72 @@
       displaypreview = true
       displayDropzone = false
       displayPdf = false
-      blobimage = URL.createObjectURL(File)
-      console.log(blobimage)
-      localStorage.setItem("blobimage", blobimage)
+      //converting input image file to Base64 String using filereader
+      let reader = new FileReader()
+      reader.readAsDataURL(File)
+      // await sleep(2500)
+      reader.onload = async (evt) => {
+        let base64 = evt.target.result
+        let doc = new jsPDF({
+          orientation: "l",
+          unit: "px",
+          compress: true,
+        })
+        let width = doc.internal.pageSize.getWidth()
+        let height = doc.internal.pageSize.getHeight()
+        let imgData = base64
+        console.log("pdf initiated using jspdf")
+        console.log(imgData)
+        doc.addImage(imgData, "JPEG", 0, 0, width, height)
+        doc.output("bloburl")
+        // let url = doc.output("bloburl")
+        localStorage.setItem("ImageToPdfBlob", doc.output("bloburl"))
+        let PdfBlobFromImg = localStorage.getItem("ImageToPdfBlob")
+        console.log(PdfBlobFromImg)
+        const showPdf = async () => {
+          try {
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+              "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js"
+            console.log("pdfjs library loaded")
+            await sleep(1000)
+            let loadingTask = pdfjsLib.getDocument(PdfBlobFromImg)
+            loadingTask = loadingTask.promise
+            _PDFDOC = await loadingTask
+            _total_pages = _PDFDOC.numPages
+            console.log(_total_pages)
+            console.log(_PDFDOC)
+            currentpage = 1
+            sTime = Date.now()
+            await showPage(1)
+            rTime = Date.now() - sTime
+            console.log("Render Time: ", rTime)
+          } catch (e) {
+            console.error(e)
+          }
+        }
+
+        const showPage = async (pageno) => {
+          let page = await _PDFDOC.getPage(pageno)
+          console.log("pdf loaded")
+          let viewport = page.getViewport({ scale: 1.4 })
+
+          // Prepare canvas using PDF page dimensions
+          let canvas = document.getElementById("ImgToPdfBlob")
+          let context = canvas.getContext("2d")
+          canvas.height = viewport.height
+          canvas.width = viewport.width
+
+          // Render PDF page into canvas context
+          let renderContext = {
+            canvasContext: context,
+            viewport: viewport,
+          }
+          await page.render(renderContext).promise
+        }
+        if (PdfBlobFromImg) {
+          showPdf()
+        }
+      }
       return
     } else if (File.type == "application/pdf") {
       displayPdf = true
@@ -155,6 +233,10 @@
     pdfDoc = await loadingTask
     totalPages = pdfDoc.numPages
     dispatch("totalPage", totalPages)
+    sTime = Date.now()
+    await showPage(1)
+    rTime = Date.now() - sTime
+    console.log("Render Time: ", rTime)
     console.log("totalPages", totalPages)
     console.log(pdfDoc)
     showPage(currentpage)
@@ -286,7 +368,9 @@
   }
 </script>
 
-<div class="relative h-auto w-full flex flex-col items-center justify-center">
+<div
+  class="relative h-auto w-full flex flex-col items-center justify-center  p-4"
+>
   <div
     class="w-full h-full bg-[#000000cc] absolute  flex items-end justify-center p-4"
     class:hidden={!displayConfirm}
@@ -449,23 +533,24 @@
       : 'hidden'} flex w-full lg:w-[38.5rem] flex-col items-center justify-center"
     in:fade={{ duration: 2000 }}
     out:fade={{ duration: 1000 }}
+    id="img_prev"
   >
     <div
       class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem] justify-center items-center flex"
     >
       <div
         class="border-2 rounded-md shadow-[0_0_8px_0_rgba(0,0,0,0.15)] overflow-hidden"
+        id="file"
       >
-        <img
-          src={blobimage}
+        <canvas
           class="max-w-full min-w-[22.5rem] min-h-[24.6rem] max-h-[40rem]"
-          id="File"
+          id="ImgToPdfBlob"
           alt="Preview"
+          title="pdf"
         />
       </div>
     </div>
   </div>
-
   <div
     class="{displaypreview
       ? 'flex'
