@@ -205,6 +205,8 @@
         init = false
       }
       console.log(signreq, "signer id")
+      otp = false
+      modal = true
     } catch (error) {
       console.error(error)
       init = false
