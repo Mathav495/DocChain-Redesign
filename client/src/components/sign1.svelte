@@ -1,7 +1,6 @@
 <script>
   import axios from "axios"
   import Loading from "./Loading.svelte"
-  import { fade } from "svelte/transition"
   export let data1, file, modal, totalPages
   import { createEventDispatcher } from "svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
@@ -37,9 +36,6 @@
     modelHeading = true
     switchAccount = true
     details = false
-  }
-  const closeModal = () => {
-    dispatch("clsModal")
   }
   const backBtn = () => {
     modelHeading = false
@@ -161,8 +157,14 @@
       ballwht = false
       bgclr = false
       bold = false
-      // pdfPosition.options.lockHorizontalCenter = true;
     }
+  }
+  let page
+  const hideModal = () => {
+    document.getElementsByClassName("btn")[0].classList.add("hidden")
+    page = pageNo - 1
+    localStorage.setItem("PageNo", page)
+    dispatch("PageNo", pageNo)
   }
   /**
    * function for initiate signature process
@@ -202,24 +204,16 @@
         init = false
       }
       console.log(signreq, "signer id")
-      // modal = true
-      //get signer id
-      signPage = false
-      otp = true
-      console.log("next3")
-      tick3 = false
-      dot3 = true
-      dot4 = false
-      empty3 = true
-      borderBlue3 = true
     } catch (error) {
       console.error(error)
       init = false
     }
   }
+
   /**
    * function for confirm the sign request
    */
+
   const confirmRequest = async () => {
     console.log("confirmRequest")
     conReq = true
@@ -239,20 +233,11 @@
           errormsg = ""
         }, 2000)
       }
-
       SignFile = data.signRequest.signedFile
       if (!SignFile) {
         conReq = false
       }
       console.log(SignFile, "signed file")
-      otp = false
-      download = true
-      tick4 = false
-      borderBlue4 = true
-      dot4 = true
-      tick4 = false
-      dot5 = false
-      empty4 = true
     } catch (error) {
       conReq = false
       console.error(error)
@@ -260,8 +245,9 @@
   }
 
   /**
-   * function for downloading the signed pdf and preview
+   * function for signed pdf and preview
    */
+
   const pdfPreview = async () => {
     console.log(SignFile)
     // tryCatch used for error handling
@@ -284,13 +270,10 @@
       console.error(error)
     }
   }
-  let page
-  const hideModal = () => {
-    document.getElementsByClassName("btn")[0].classList.add("hidden")
-    page = pageNo - 1
-    localStorage.setItem("PageNo", page)
-    dispatch("PageNo", pageNo)
-  }
+
+  /**
+   * function for downloading the signedpdf.
+   */
   const dwndPdf = async () => {
     try {
       const { data } = await axios.get(
