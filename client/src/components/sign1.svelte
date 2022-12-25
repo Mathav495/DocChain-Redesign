@@ -603,14 +603,9 @@
     <div class="flex items-center justify-center mb-4">
       <Step5 />
     </div>
-    <div class="flex flex-col gap-4">
-      <h1
-        class="text-black text-lg tracking-wide font-semibold border-b border-gray-500"
-      >
-        SIGN DETAILS
-      </h1>
 
-      <div class="flex flex-col text-base">
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-col text-base pt-5">
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <svg
           on:click={pdfPreview}
@@ -618,36 +613,36 @@
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
-          stroke="currentColor"
-          class="mx-auto h-14 w-14"
+          class="mx-auto h-14 w-14 stroke-slate-500"
         >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M9 13.5l3 3m0 0l3-3m-3 3v-6m1.06-4.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+            d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
           />
         </svg>
-        <button on:click={pdfPreview} class="hover:underline">
+
+        <button on:click={pdfPreview} class="text-slate-600 hover:underline">
           Click here to preview
         </button>
       </div>
-      <div
-        class="flex items-center justify-between p-2 border-t border-gray-500 pt-4"
-      >
+      <div class="flex items-center justify-between p-2 pt-4">
         <button
           on:click={pdfPreview}
-          class="flex text-red-500 hover:text-white border-2 border-red-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-red-600 rounded text-lg font-bold"
+          class="flex items-center justify-center rounded border-2 border-red-500 py-1 px-2 text-lg font-bold text-red-500 hover:bg-red-600 hover:text-white focus:outline-none"
         >
           close
         </button>
         <button
           on:click={dwndPdf}
-          class="flex text-green-500 hover:text-white border-2 border-green-500  py-1 px-2  justify-center items-center focus:outline-none hover:bg-green-600 rounded text-lg font-bold"
+          class="flex items-center justify-center rounded border-2 border-green-500 py-1 px-2 text-lg font-bold text-green-500 hover:bg-green-600 hover:text-white focus:outline-none"
         >
           Download
         </button>
       </div>
     </div>
+  {:else}
+    <Loading />
   {/if}
 </div>
 {#if errormsg}
