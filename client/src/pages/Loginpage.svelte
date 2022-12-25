@@ -1,23 +1,23 @@
 <script>
-  import axios from 'axios'
-  import { navigate } from 'svelte-routing'
-  import ErrorInfo from '../components/ErrorInfo.svelte'
-  import Emailicon from '../icons/Emailicon.svelte'
-  import Eye from '../icons/Eye.svelte'
-  import Eyeslash from '../icons/Eyeslash.svelte'
-  import PasswordIcons from '../icons/Password.svelte'
-  let animate = document.querySelector('#particles-js')
+  import axios from "axios"
+  import { navigate } from "svelte-routing"
+  import ErrorInfo from "../components/ErrorInfo.svelte"
+  import Emailicon from "../icons/Emailicon.svelte"
+  import Eye from "../icons/Eye.svelte"
+  import Eyeslash from "../icons/Eyeslash.svelte"
+  import PasswordIcons from "../icons/Password.svelte"
+  let animate = document.querySelector("#particles-js")
   console.log(animate)
-  animate.style.display = 'block'
+  animate.style.display = "block"
   let loginData
-
+  let errormsg = ""
   let display = false
-  let type = 'password'
-  let Email = '',
-    Password = ''
+  let type = "password"
+  let Email = "",
+    Password = ""
   let error = {
-    Email: '',
-    Password: '',
+    Email: "",
+    Password: "",
   }
   /**
    * @type { boolean }
@@ -32,29 +32,29 @@
     valid = true
     const mail = /\S+@\S+\.\S+/g
     const result1 = mail.test(Email)
-    if (Email == '') {
+    if (!Email) {
       error.Email = "Email can't be empty"
       setTimeout(() => {
-        error.Email = ''
+        error.Email = ""
       }, 3000)
       valid = false
     } else if (!result1) {
-      error.Email = 'Please enter valid mail id'
-      Email = ''
+      error.Email = "Please enter valid mail id"
+      Email = ""
       setTimeout(() => {
-        error.Email = ''
+        error.Email = ""
       }, 3000)
     } else {
-      error.Email = ''
+      error.Email = ""
     }
-    if (Password == '') {
+    if (!Password) {
       error.Password = "Password can't be empty"
       setTimeout(() => {
-        error.Password = ''
+        error.Password = ""
       }, 3000)
       valid = false
     } else {
-      error.Password = ''
+      error.Password = ""
     }
     if (valid) {
       loginData = {
@@ -62,25 +62,28 @@
         password: Password,
       }
       try {
-        const { data } = await axios.post('https://test.swagger.print2block.in/auth/login', loginData)
+        const { data } = await axios.post(
+          "https://test.swagger.print2block.in/auth/login",
+          loginData
+        )
         console.log(data)
 
         if (!data.success) {
           console.log(data.errorCode)
+          errormsg = "Invalid Username or Password"
           display = true
-
-          setTimeout(() => {
-            display = false
-          }, 2000)
+          // setTimeout(() => {
+          //   display = false
+          // }, 2000)
         } else {
-          localStorage.setItem('token', data.token)
-          let token = localStorage.getItem('token')
+          localStorage.setItem("token", data.token)
+          let token = localStorage.getItem("token")
           console.log(token)
-          navigate('/dash')
+          navigate("/dash")
         }
       } catch (error) {
-        // display = true
-        alert('cannot connect to services')
+        display = true
+        errormsg = "Can't Connect to Services"
         console.error(error)
       }
     }
@@ -90,12 +93,13 @@
    * function for hide and show the password
    */
   const showPassword = () => {
-    if (type == 'password') {
-      type = 'text'
+    if (type == "password") {
+      type = "text"
     } else {
-      type = 'password'
+      type = "password"
     }
   }
+
   const hideErrmsg = () => {
     display = false
   }
@@ -106,6 +110,8 @@
 </svelte:head>
 <div class="absolute w-full top-0 left-0">
   <div class="w-full xl:w-1/3 p-10 h-screen bg-black/50">
+    <!-- logo -->
+
     <div class="flex gap-2 justify-center items-center xl:justify-start">
       <img class="animate-pulse" src="assets\icon1.png" alt="icon1" />
       <h1 class="text-2xl text-white tracking-wide font-normal pt-0.5">
@@ -113,12 +119,16 @@
       </h1>
     </div>
 
+    <!-- heading  -->
+
     <div class="pt-20 flex justify-center xl:justify-start">
       <h1 class="text-white text-4xl font-bold">Login</h1>
     </div>
-    <div class="flex justify-center xl:justify-start">
-      <form on:submit|preventDefault={onLogin} novalidate="novalidate">
-        <div class="w-96 pt-10 group">
+
+    <!-- 3rd form div -->
+    <div class="flex  justify-center xl:justify-start">
+      <form class="w-full md:w-1/2 lg:w-1/2 xl:w-full" novalidate="novalidate">
+        <div class="w-full pt-10 group">
           <label
             for="Email"
             class="text-xl relative block after:content-['*'] after:ml-1 after:text-red-500  text-gray-400 group-hover:text-white tracking-wide"
@@ -140,7 +150,7 @@
             />
           </div>
         </div>
-        <div class="w-96 pt-10 group">
+        <div class="w-full pt-10 group">
           <label
             for="Password"
             class="text-xl after:content-['*'] after:ml-1 group-hover:text-white  after:text-red-500 text-gray-400 tracking-wide"
@@ -197,20 +207,19 @@
         </h1>
         <div class="pt-5">
           <button
-            class="w-96 text-white font-medium active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 tracking-wider uppercase rounded text-lg"
+            on:click|preventDefault={onLogin}
+            class="w-full text-white font-medium active:bg-blue-900 bg-blue-700 border-0 py-2 px-8 focus:outline-none hover:bg-blue-800 tracking-wider uppercase rounded text-lg"
           >
             login
           </button>
         </div>
         <div class="pt-4">
           {#if display}
-            <ErrorInfo
-              errormsg="Invalid Username or Password"
-              on:click={hideErrmsg}
-            />
+            <ErrorInfo {errormsg} on:click={hideErrmsg} />
           {/if}
         </div>
       </form>
+
       <h1
         class="absolute bottom-0 pb-10 text-base font-medium tracking-wide text-neutral-400"
       >
