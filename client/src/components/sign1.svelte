@@ -612,7 +612,7 @@
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
-            class="mx-auto h-14 w-14 stroke-slate-500"
+            class="mx-auto h-14 w-14 stroke-slate-500 cursor-pointer"
           >
             <path
               stroke-linecap="round"
