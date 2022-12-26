@@ -16,7 +16,7 @@
   let nextbtn = true
   let prevbtn = true
   let currentpage = 1
-  let btns = true
+  let pageControls = false
   /**
    * Submitting file for generating filehash
    */
@@ -242,6 +242,7 @@
    * to display signed pdf in add file page
    */
   const displaySignedPdf = async () => {
+    pageControls = false
     if (signedLink) {
       console.log(signedLink)
       displayDropzone = false
@@ -313,7 +314,7 @@
   }
 
   $: if (pageNumber) {
-    btns = false
+    pageControls = true
     showPage(pageNumber)
   }
 
@@ -498,7 +499,15 @@
     out:fade={{ duration: 1000 }}
   >
     <div id="pdfPreviewSection" class="mx-auto" />
-    <div class="flex justify-center mx-auto items-center gap-8 pt-3">
+    {#if pageControls}
+      <div class="flex justify-center mx-auto items-center gap-8 pt-3">
+        {pageNumber}
+      </div>
+    {/if}
+    <div
+      class:hidden={pageControls}
+      class="flex justify-center mx-auto items-center gap-8 pt-3"
+    >
       <button on:click={previouspage} disabled={!prevbtn}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

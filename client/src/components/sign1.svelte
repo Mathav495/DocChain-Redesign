@@ -555,7 +555,7 @@
             </div>
           </div>
         </div>
-        <div class="flex gap-3 justify-end">
+        <div class="flex gap-3 justify-between">
           <!-- <button on:click={backBtn1} class="redBtn float-left">Back</button> -->
           <!-- <div class="flex gap-2"> -->
           <button
@@ -570,7 +570,7 @@
             on:click={triggerPdfPositionLib1}
             class="greenBtn"
           >
-            SIGN
+            RESIGN
           </button>
           <button class:hidden={NextBtn2} on:click={nextBtn2} class="blueBtn">
             Next
