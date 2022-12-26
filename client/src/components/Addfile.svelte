@@ -353,6 +353,7 @@
     displaypreview = false
     signedPdf = ""
     signedLink = ""
+    currentpage = 1
   }
 
   /**
