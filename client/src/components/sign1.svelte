@@ -20,6 +20,7 @@
   let init = false
   let loader2 = true
   let reSign = true
+  let Sign = false
   let initvalues
   let signreq = ""
   let SignFile
@@ -143,6 +144,7 @@
    * back to page no selection and sign alignment selection modal
    */
   const backBtn2 = () => {
+    Sign = true
     signPage = false
     SelectPageno = true
   }
@@ -556,7 +558,11 @@
         <div class="flex gap-3 justify-end">
           <!-- <button on:click={backBtn1} class="redBtn float-left">Back</button> -->
           <!-- <div class="flex gap-2"> -->
-          <button on:click={hideModal} class="show-signature-overlay greenBtn">
+          <button
+            class:hidden={Sign}
+            on:click={hideModal}
+            class="show-signature-overlay greenBtn"
+          >
             SIGN
           </button>
           <button
@@ -564,7 +570,7 @@
             on:click={triggerPdfPositionLib1}
             class="greenBtn"
           >
-            RESIGN
+            SIGN
           </button>
           <button class:hidden={NextBtn2} on:click={nextBtn2} class="blueBtn">
             Next
