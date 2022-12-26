@@ -384,13 +384,13 @@
 </script>
 
 <div class="space-y-3 flex flex-col justify-center items-center">
-  {#if displayerror}
+  <!-- {#if displayerror}
     <ErrorInfo
       {errormsg}
       position="absolute top-4 right-4"
       on:click={() => (displayerror = false)}
     />
-  {/if}
+  {/if} -->
   <HeaderFileupload {id} />
 
   <div

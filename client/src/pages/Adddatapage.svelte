@@ -1,10 +1,12 @@
 <script>
+  import { fade } from "svelte/transition"
   import Logo from "../components/Logo.svelte"
   import Logout from "../components/Logout.svelte"
   import Nav from "../components/Nav.svelte"
   import SmallScreenNavbar from "../components/Small_screen_navbar.svelte"
   import Header from "../components/Header.svelte"
   import Fileupload from "../components/Fileupload.svelte"
+  import Headerlogo from "../components/Headerlogo.svelte"
   export let id
   let hideNavbar = true
   const hideNav = () => {
@@ -38,6 +40,25 @@
       Gray = true
     }
   }
+
+  let hide = false,
+    show = true,
+    headerHide = true
+  const HideNavbar = () => {
+    if (hide == false) {
+      hide = true
+      console.log("hide")
+      headerHide = false
+      show = false
+      // document.getElementById('header').classList.remove('md:mb-0');
+    } else {
+      hide = false
+      console.log("show")
+      headerHide = true
+      show = true
+      // document.getElementById('header').classList.add('md:mb-0');
+    }
+  }
 </script>
 
 <svelte:head>
@@ -48,22 +69,34 @@
   class:bg-black={Black}
   class:bg-yellow-700={Yellow}
   class:bg-red-700={Red}
-  class="width1200px width1024px transform ease-in-out delay-1000 duration-1000 translate-x-6 overflow-auto"
+  class="relative text-white h-screen w-screen flex flex-row py-4 pr-4"
 >
   <div
-    class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between"
+    class:hidden={hide}
+    class:block={show}
+    class="width1200px width1024px transform ease-in-out delay-1000 duration-1000 translate-x-6 overflow-auto"
   >
-    <Logo />
-    <Nav />
-    <Logout on:theme={changeClr} />
+    <div
+      class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between"
+    >
+      <Logo on:Hide={HideNavbar} />
+      <Nav />
+      <Logout on:theme={changeClr} />
+    </div>
   </div>
   <div
+    transition:fade={{ x: 100, duration: 500 }}
     class="w-full flex flex-col bg-white text-gray-900 rounded-md p-4 ml-4 overflow-auto"
   >
     <div class="lg:hidden block">
       <Header on:navShow={showNav} />
     </div>
-    <Fileupload {id} />
+    <div class:hidden={headerHide}>
+      <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
+    </div>
+    <div>
+      <Fileupload {id} />
+    </div>
   </div>
   <!--small screen navbar-->
   <button

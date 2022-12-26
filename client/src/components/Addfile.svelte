@@ -374,7 +374,6 @@
   const afterSignPlacement = () => {
     let hideCanvas = document.getElementById("createdCanvas")
     hideCanvas.remove()
-
     dispatch("mShow")
   }
 </script>
