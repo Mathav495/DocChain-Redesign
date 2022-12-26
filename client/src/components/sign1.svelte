@@ -72,6 +72,9 @@
     document.getElementById("disableBtn").disabled = false
     details = false
     SelectPageno = true
+    setTimeout(() => {
+      document.querySelector(".show-signature-overlay").classList.add("hidden")
+    }, 5000)
   }
   /**
    * load library
@@ -86,6 +89,21 @@
       // positionTextbox: "positions",
     })
     console.log(document.querySelector("#mycanvas"))
+    count++
+    console.log(count)
+  }
+
+  const triggerPdfPositionLib1 = async () => {
+    let count = 1
+    await loadLibrary("pdfPosition", "/lib/signPosition.js")
+    console.log(pdfPosition)
+    pdfPosition.init({
+      triggerButtons: ".show-signature-overlay",
+      imageTarget: "mycanvas",
+      // positionTextbox: "positions",
+    })
+    console.log(document.querySelector("#mycanvas"))
+    document.querySelector(".show-signature-overlay").click()
     count++
     console.log(count)
   }
@@ -219,7 +237,7 @@
   /**
    *modal hide for sign placement
    */
-  const hideModal = () => {
+  const hideModal = async () => {
     document.getElementsByClassName("btn")[0].classList.add("hidden")
     page = pageNo - 1
     localStorage.setItem("PageNo", page)
@@ -519,6 +537,9 @@
         <div class="flex gap-2">
           <button on:click={hideModal} class="show-signature-overlay greenBtn">
             SIGN
+          </button>
+          <button on:click={triggerPdfPositionLib1} class="greenBtn">
+            RESIGN
           </button>
           <button class:hidden={NextBtn2} on:click={nextBtn2} class="blueBtn">
             Next

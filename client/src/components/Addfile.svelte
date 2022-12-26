@@ -246,8 +246,8 @@
       console.log(signedLink)
       displayDropzone = false
       try {
-        let hideCanvas = document.getElementById("createdCanvas")
-        hideCanvas.remove()
+        // let hideCanvas = document.getElementById("createdCanvas")
+        // hideCanvas.style.display = "none"
         currentpage = pageNumber
         await showPdf(signedLink)
       } catch (error) {
@@ -366,6 +366,13 @@
     }
     dispatch("steps")
   }
+
+  const afterSignPlacement = () => {
+    let hideCanvas = document.getElementById("createdCanvas")
+    hideCanvas.remove()
+
+    dispatch("mShow")
+  }
 </script>
 
 <div
@@ -481,7 +488,7 @@
   <button
     disabled
     id="disableBtn"
-    on:click={() => dispatch("mShow")}
+    on:click={afterSignPlacement}
     class="{displaypreview && displayPdf
       ? 'flex'
       : 'hidden'}  w-full lg:w-[38.5rem] mx-auto flex-col rounded-md"
