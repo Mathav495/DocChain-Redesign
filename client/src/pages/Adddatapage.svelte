@@ -5,7 +5,7 @@
   import Nav from "../components/Nav.svelte"
   import SmallScreenNavbar from "../components/Small_screen_navbar.svelte"
   import Header from "../components/Header.svelte"
-  import Fileupload from "../components/Fileupload.svelte"
+  import Dataupload from "../components/Dataupload.svelte"
   import Headerlogo from "../components/Headerlogo.svelte"
   export let id
   let hideNavbar = true
@@ -95,7 +95,7 @@
       <Headerlogo on:navShow={showNav} on:Hide={HideNavbar} />
     </div>
     <div>
-      <Fileupload {id} />
+      <Dataupload {id} />
     </div>
   </div>
   <!--small screen navbar-->
