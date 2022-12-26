@@ -60,12 +60,9 @@
     stepModal = true
     addfile = true
   }
-  let totalPages = []
+  let totalPages
   const pageNumbers = (e) => {
-    for (let i = 1; i <= e.detail; i++) {
-      totalPages.push(i)
-    }
-    console.log(totalPages)
+    totalPages = e.detail
   }
 
   let pageNumber = 0
@@ -87,6 +84,7 @@
   let signedPdf
   const signedFile = (e) => {
     signedPdf = e.detail
+    modal = false
   }
 
   let signedLink
@@ -146,11 +144,17 @@
   id="file_upload"
 >
   <div
-    class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between"
+    class:hidden={hide}
+    class:block={show}
+    class="width1200px width1024px transform ease-in-out delay-1000 duration-1000 translate-x-6 overflow-auto"
   >
-    <Logo on:Hide={HideNavbar} />
-    <Nav />
-    <Logout on:theme={changeClr} />
+    <div
+      class="h-full hidden pl-2 py-4 lg:flex flex-col items-start justify-between"
+    >
+      <Logo on:Hide={HideNavbar} />
+      <Nav />
+      <Logout on:theme={changeClr} />
+    </div>
   </div>
   <div
     transition:fade={{ x: 100, duration: 500 }}

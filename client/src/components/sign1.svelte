@@ -108,6 +108,7 @@
   //after select the placement of sign
   let NextBtn2 = true
   $: if (modal) {
+    console.log("This is the issue")
     NextBtn2 = false
     hideBtn1()
   }

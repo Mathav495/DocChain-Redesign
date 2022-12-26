@@ -230,7 +230,11 @@
     loadingTask = loadingTask.promise
     pdfDoc = await loadingTask
     totalPages = pdfDoc.numPages
-    dispatch("totalPage", totalPages)
+    let totalPagesArr = []
+    for (let i = 1; i <= totalPages; i++) {
+      totalPagesArr.push(i)
+    }
+    dispatch("totalPage", totalPagesArr)
     showPage(currentpage)
   }
 
@@ -270,15 +274,7 @@
     let libCanvas = document.getElementById("createdCanvas")
     console.log(libCanvas)
     console.log(pdfPreview.children.length)
-    if (pdfPreview.children.length > 0) {
-      for (let i = 0; i < pdfPreview.children.length; i++) {
-        if (pdfPreview.children[i] != libCanvas) {
-          let removedElement = pdfPreview.children[i]
-          removedElement.remove()
-          console.log(pdfPreview.children[i])
-        }
-      }
-    }
+
     let canvas = document.createElement("canvas")
     canvas.className = "border-2 rounded-md w-full overflow-hidden"
     canvas.setAttribute("id", "mycanvas")
@@ -294,6 +290,15 @@
     }
     await page.render(renderContext).promise
     pdfPreview.appendChild(canvas)
+    if (pdfPreview.children.length > 0) {
+      for (let i = 0; i < pdfPreview.children.length - 1; i++) {
+        if (pdfPreview.children[i] != libCanvas) {
+          let removedElement = pdfPreview.children[i]
+          removedElement.remove()
+          console.log(pdfPreview.children[i])
+        }
+      }
+    }
     console.log(pdfPreview)
   }
 
