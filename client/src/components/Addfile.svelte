@@ -17,6 +17,7 @@
   let prevbtn = true
   let currentpage = 1
   let pageControls = false
+  let _PDFDOC, _total_pages
   /**
    * Submitting file for generating filehash
    */
@@ -113,35 +114,55 @@
       displaypreview = true
       displayDropzone = false
       displayPdf = false
-      // converting input image file to Base64 String using filereader
+      //converting input image file to Base64 String using filereader
       let reader = new FileReader()
       reader.readAsDataURL(File)
-      await sleep(2500)
+      // await sleep(2500)
       reader.onload = async (evt) => {
         let base64 = evt.target.result
         let doc = new jsPDF({
-          orientation: "l",
+          // orientation: "l",
           unit: "px",
           compress: true,
         })
-        let width = doc.internal.pageSize.getWidth()
-        let height = doc.internal.pageSize.getHeight()
         let imgData = base64
+        const imgProps = doc.getImageProperties(imgData) //getting original image properties to know width and height
+        console.log(imgProps)
+
+        //computed width of pdf pagesize
+        const width = doc.internal.pageSize.getWidth()
+        //calculating ratio of the image using image width and pdf pagw width
+        const ratio = width / imgProps.width
+        //getting image height to the ratio height
+        const height = ratio * imgProps.height
+        // set the image height to the pdf page height
+        doc.internal.pageSize.height = height
+        // var ratio = canvas.width / canvas.height
+        // let width = doc.internal.pageSize.getWidth()
+        // let height = doc.internal.pageSize.getHeight()
+        // var height = width / ratio
         console.log("pdf initiated using jspdf")
-        console.log(imgData)
-        doc.addImage(imgData, "JPEG", 0, 0, width, height)
+        // console.log(imgData)
+        doc.addImage(imgData, "JPEG", 0, 0, width, height, "FAST")
         doc.output("bloburl")
-        // let url = doc.output("bloburl")
-        localStorage.setItem("ImageToPdfBlob", doc.output("bloburl"))
+        let url = doc.output("bloburl")
+
+        localStorage.setItem("ImageToPdfBlob", url)
         let PdfBlobFromImg = localStorage.getItem("ImageToPdfBlob")
         console.log(PdfBlobFromImg)
+        // console.log(doc.output("bloburl"))
+        console.log("pdf loaded")
+        // await loadLibrary("pdfjs", "/lib/pdf.js")
+        // await showPdf(doc.output("bloburl"))
+        // await showPage(1)
         const showPdf = async () => {
           try {
             pdfjsLib.GlobalWorkerOptions.workerSrc =
               "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.9.359/build/pdf.worker.min.js"
+
             console.log("pdfjs library loaded")
-            await sleep(1000)
-            let loadingTask = pdfjsLib.getDocument(PdfBlobFromImg)
+            // await sleep(1000)
+            let loadingTask = pdfjsLib.getDocument(url)
             loadingTask = loadingTask.promise
             _PDFDOC = await loadingTask
             _total_pages = _PDFDOC.numPages
@@ -160,7 +181,7 @@
         const showPage = async (pageno) => {
           let page = await _PDFDOC.getPage(pageno)
           console.log("pdf loaded")
-          let viewport = page.getViewport({ scale: 1.4 })
+          let viewport = page.getViewport({ scale: 1 })
 
           // Prepare canvas using PDF page dimensions
           let canvas = document.getElementById("ImgToPdfBlob")
@@ -174,10 +195,10 @@
             viewport: viewport,
           }
           await page.render(renderContext).promise
+          // document.getElementById('pdf-preview').src = canvas.toDataURL();
         }
-        if (PdfBlobFromImg) {
-          showPdf()
-        }
+        // if (PdfBlobFromImg) {
+        showPdf()
       }
       return
     } else if (File.type == "application/pdf") {
