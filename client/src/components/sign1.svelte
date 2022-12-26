@@ -1,7 +1,7 @@
 <script>
   import axios from "axios"
   import Loading from "./Loading.svelte"
-  export let data1, file, modal, totalPages
+  export let data1, file, modal, totalPages, detailsLoader
   import { createEventDispatcher } from "svelte"
   import ErrorInfo from "./ErrorInfo.svelte"
   import Step1 from "./Step1.svelte"
@@ -18,6 +18,8 @@
   let conReq = false
   let download = false
   let init = false
+  let loader2 = true
+  let reSign = true
   let initvalues
   let signreq = ""
   let SignFile
@@ -62,8 +64,10 @@
    */
   const nextBtn1 = async () => {
     document.getElementById("disableBtn").disabled = false
+    loader2 = false
     details = false
     SelectPageno = true
+    reSign = true
     console.log("clicked")
     await triggerPdfPositionLib()
   }
@@ -73,8 +77,11 @@
     details = false
     SelectPageno = true
     setTimeout(() => {
+      loader2 = false
+    }, 500)
+    setTimeout(() => {
       document.querySelector(".show-signature-overlay").classList.add("hidden")
-    }, 5000)
+    }, 501)
   }
   /**
    * load library
@@ -111,10 +118,10 @@
   /**
    * back to user detail modal
    */
-  const backBtn1 = () => {
-    SelectPageno = false
-    details = true
-  }
+  // const backBtn1 = () => {
+  //   SelectPageno = false
+  //   details = true
+  // }
 
   /**
    * change a modal to "sign reason" and "sign color" get modal
@@ -128,6 +135,7 @@
   $: if (modal) {
     console.log("This is the issue")
     NextBtn2 = false
+    reSign = false
     hideBtn1()
   }
 
@@ -375,170 +383,187 @@
     <div class="flex items-center justify-center mb-4">
       <Step1 />
     </div>
-    <div class="flex flex-col gap-4">
-      <div class="flex flex-row items-center gap-4">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          class="w-6 h-6 text-black"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M4.5 3.75a3 3 0 00-3 3v10.5a3 3 0 003 3h15a3 3 0 003-3V6.75a3 3 0 00-3-3h-15zm4.125 3a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm-3.873 8.703a4.126 4.126 0 017.746 0 .75.75 0 01-.351.92 7.47 7.47 0 01-3.522.877 7.47 7.47 0 01-3.522-.877.75.75 0 01-.351-.92zM15 8.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15zM14.25 12a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H15a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15z"
-            clip-rule="evenodd"
-          />
-        </svg>
-        <div class="w-full text-base text-gray-800 break-all">
-          {data1.signerDetails.id}
-        </div>
-      </div>
-      <div class="flex items-start gap-5">
-        <div class="w-auto">
+    {#if detailsLoader}
+      <Loading />
+    {:else}
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-row items-center gap-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            class="w-36 h-36"
+            class="w-6 h-6 text-black"
           >
             <path
               fill-rule="evenodd"
-              d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+              d="M4.5 3.75a3 3 0 00-3 3v10.5a3 3 0 003 3h15a3 3 0 003-3V6.75a3 3 0 00-3-3h-15zm4.125 3a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5zm-3.873 8.703a4.126 4.126 0 017.746 0 .75.75 0 01-.351.92 7.47 7.47 0 01-3.522.877 7.47 7.47 0 01-3.522-.877.75.75 0 01-.351-.92zM15 8.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15zM14.25 12a.75.75 0 01.75-.75h3.75a.75.75 0 010 1.5H15a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5h3.75a.75.75 0 000-1.5H15z"
               clip-rule="evenodd"
             />
           </svg>
-        </div>
-        <div class="w-auto">
-          <h2 class="text-3xl font-extrabold text-gray-800">
-            {data1.signerDetails.name}
-          </h2>
-          <h4 class="text-xl fond-semibold text-gray-800">
-            {data1.signerDetails.location}
-          </h4>
-          <div class="text-base font-thin text-gray-800">
-            <div class="w-full text-sm text-gray-800">
-              {data1.signerDetails.organisation}
-            </div>
+          <div class="w-full text-base text-gray-800 break-all">
+            {data1.signerDetails.id}
           </div>
-          <div class="flex flex-row items-center">
+        </div>
+        <div class="flex items-start gap-5">
+          <div class="w-auto">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              class="w-6 h-6"
+              class="w-36 h-36"
             >
               <path
                 fill-rule="evenodd"
-                d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
+                d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
                 clip-rule="evenodd"
               />
             </svg>
-            <div class="pl-4 w-full text-base text-gray-800">
-              {data1.signerDetails.contact}
-            </div>
           </div>
-          <div class="flex flex-row items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"
-              />
-              <path
-                d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"
-              />
-            </svg>
-            <div class="ml-4 w-full text-base text-gray-800 overflow-auto">
-              {data1.signerDetails.email}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="flex items-center justify-between pt-4">
-        <button
-          on:click={switchId}
-          class="text-blue-700 text-base hover:underline"
-        >
-          Continue with another account
-        </button>
-        <button on:click={nextBtn1} class="blueBtn">Next</button>
-      </div>
-    </div>
-  {/if}
-  {#if SelectPageno}
-    <div class="flex items-center justify-center mb-4">
-      <Step2 />
-    </div>
-    <div class="flex flex-col gap-4">
-      <div>
-        <div class="flex flex-col gap-2 items-start pt-2">
-          {#if totalPages.length > 1}
-            <div class="w-auto flex flex-row gap-4 items-center">
-              <p class="text-base text-gray-800 w-36 font-semibold">
-                Select Page No
-              </p>
-              <select bind:value={pageNo} id="pageNo" class="input-normal w-16">
-                {#each totalPages as totalPage}
-                  <option value={totalPage}>{totalPage}</option>
-                {/each}
-              </select>
-            </div>
-          {/if}
-          <div class="relative flex flex-row w-full gap-4">
-            <div class="flex gap-1 w-36">
-              <p class="text-base text-gray-800 font-semibold">Align middle</p>
-              <div class="w-auto group flex flex-row gap-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 01-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 01-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 01-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584zM12 18a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <p
-                  class="w-auto absolute left-52 text-base hidden group-hover:block p-2 shadow-slide rounded-md bg-gray-200 text-black"
-                >
-                  <strong>Click:</strong>
-                  Horizontally lock your sign.
-                  <br />
-                  <strong>Undo:</strong>
-                  Anywhere to put you sign.
-                </p>
+          <div class="w-auto">
+            <h2 class="text-3xl font-extrabold text-gray-800">
+              {data1.signerDetails.name}
+            </h2>
+            <h4 class="text-xl fond-semibold text-gray-800">
+              {data1.signerDetails.location}
+            </h4>
+            <div class="text-base font-thin text-gray-800">
+              <div class="w-full text-sm text-gray-800">
+                {data1.signerDetails.organisation}
               </div>
             </div>
-            <div class="flex items-center justify-start gap-2">
-              <button
-                on:click={signaturePlacement}
-                id="posControls"
-                class:justify-end={position}
-                class:bg-blue-500={bgclr}
-                class="w-8 h-5 border-2 rounded-full flex items-center px-0.5"
+            <div class="flex flex-row items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-6 h-6"
               >
-                <button
-                  class:bg-white={ballwht}
-                  class:bg-black={ballblk}
-                  class="w-3 h-3 rounded-full"
+                <path
+                  fill-rule="evenodd"
+                  d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
+                  clip-rule="evenodd"
                 />
-              </button>
+              </svg>
+              <div class="pl-4 w-full text-base text-gray-800">
+                {data1.signerDetails.contact}
+              </div>
+            </div>
+            <div class="flex flex-row items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"
+                />
+                <path
+                  d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"
+                />
+              </svg>
+              <div class="ml-4 w-full text-base text-gray-800 overflow-auto">
+                {data1.signerDetails.email}
+              </div>
             </div>
           </div>
         </div>
+        <div class="flex items-center justify-between pt-4">
+          <button
+            on:click={switchId}
+            class="text-blue-700 text-base hover:underline"
+          >
+            Continue with another account
+          </button>
+          <button on:click={nextBtn1} class="blueBtn">Next</button>
+        </div>
       </div>
-      <div class="flex gap-3 justify-between">
-        <button on:click={backBtn1} class="redBtn float-left">Back</button>
-        <div class="flex gap-2">
+    {/if}
+  {/if}
+  {#if SelectPageno}
+    {#if loader2}
+      <Loading />
+    {:else}
+      <div class="flex items-center justify-center mb-4">
+        <Step2 />
+      </div>
+      <div class="flex flex-col gap-4">
+        <div>
+          <div class="flex flex-col gap-2 items-start pt-2">
+            {#if totalPages.length > 1}
+              <div class="w-auto flex flex-row gap-4 items-center">
+                <p class="text-base text-gray-800 w-36 font-semibold">
+                  Select Page No
+                </p>
+                <select
+                  bind:value={pageNo}
+                  id="pageNo"
+                  class="input-normal w-16"
+                >
+                  {#each totalPages as totalPage}
+                    <option value={totalPage}>{totalPage}</option>
+                  {/each}
+                </select>
+              </div>
+            {/if}
+            <div class="relative flex flex-row w-full gap-4">
+              <div class="flex gap-1 w-36">
+                <p class="text-base text-gray-800 font-semibold">
+                  Align middle
+                </p>
+                <div class="w-auto group flex flex-row gap-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 01-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 01-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 01-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584zM12 18a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <p
+                    class="w-auto absolute left-52 text-base hidden group-hover:block p-2 shadow-slide rounded-md bg-gray-200 text-black"
+                  >
+                    <strong>Click:</strong>
+                    Horizontally lock your sign.
+                    <br />
+                    <strong>Undo:</strong>
+                    Anywhere to put you sign.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center justify-start gap-2">
+                <button
+                  on:click={signaturePlacement}
+                  id="posControls"
+                  class:justify-end={position}
+                  class:bg-blue-500={bgclr}
+                  class="w-8 h-5 border-2 rounded-full flex items-center px-0.5"
+                >
+                  <button
+                    class:bg-white={ballwht}
+                    class:bg-black={ballblk}
+                    class="w-3 h-3 rounded-full"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 justify-end">
+          <!-- <button on:click={backBtn1} class="redBtn float-left">Back</button> -->
+          <!-- <div class="flex gap-2"> -->
           <button on:click={hideModal} class="show-signature-overlay greenBtn">
             SIGN
           </button>
-          <button on:click={triggerPdfPositionLib1} class="greenBtn">
+          <button
+            class:hidden={reSign}
+            on:click={triggerPdfPositionLib1}
+            class="greenBtn"
+          >
             RESIGN
           </button>
           <button class:hidden={NextBtn2} on:click={nextBtn2} class="blueBtn">
@@ -546,7 +571,8 @@
           </button>
         </div>
       </div>
-    </div>
+      <!-- </div> -->
+    {/if}
   {/if}
   {#if signPage}
     <div class="flex items-center justify-center mb-4">

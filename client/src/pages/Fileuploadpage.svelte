@@ -47,9 +47,11 @@
   $: console.log(stepModal)
   let addfile = false,
     data1,
+    detailsLoader = true,
     signerId =
       "819f82006a4c49263fcde49372eb58589194cc759fcc2c8758d804f97021cbe3"
   const Modal = async (signerId) => {
+    stepModal = true
     const { data } = await axios.get(
       `https://pdfsign.test.print2block.in/blockchain/signer/get?signer=${signerId}`
     )
@@ -57,8 +59,8 @@
     data1 = data
     console.log(data1)
     console.log(data.signerDetails.email)
-    stepModal = true
     addfile = true
+    detailsLoader = false
   }
   let totalPages
   const pageNumbers = (e) => {
@@ -187,6 +189,7 @@
               {data1}
               {file}
               {totalPages}
+              {detailsLoader}
               on:PageNo={pageNum}
               {modal}
               on:myFile={signedFile}
