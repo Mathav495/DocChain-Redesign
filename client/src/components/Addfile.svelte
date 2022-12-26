@@ -350,6 +350,8 @@
   const ondisplaydropzone = () => {
     displayDropzone = true
     displaypreview = false
+    signedPdf = ""
+    signedLink = ""
   }
 
   /**

@@ -118,10 +118,10 @@
   /**
    * back to user detail modal
    */
-  const backBtn1 = () => {
-    SelectPageno = false
-    details = true
-  }
+  // const backBtn1 = () => {
+  //   SelectPageno = false
+  //   details = true
+  // }
 
   /**
    * change a modal to "sign reason" and "sign color" get modal
@@ -553,28 +553,25 @@
             </div>
           </div>
         </div>
-        <div class="flex gap-3 justify-between">
-          <button on:click={backBtn1} class="redBtn float-left">Back</button>
-          <div class="flex gap-2">
-            <button
-              on:click={hideModal}
-              class="show-signature-overlay greenBtn"
-            >
-              SIGN
-            </button>
-            <button
-              class:hidden={reSign}
-              on:click={triggerPdfPositionLib1}
-              class="greenBtn"
-            >
-              RESIGN
-            </button>
-            <button class:hidden={NextBtn2} on:click={nextBtn2} class="blueBtn">
-              Next
-            </button>
-          </div>
+        <div class="flex gap-3 justify-end">
+          <!-- <button on:click={backBtn1} class="redBtn float-left">Back</button> -->
+          <!-- <div class="flex gap-2"> -->
+          <button on:click={hideModal} class="show-signature-overlay greenBtn">
+            SIGN
+          </button>
+          <button
+            class:hidden={reSign}
+            on:click={triggerPdfPositionLib1}
+            class="greenBtn"
+          >
+            RESIGN
+          </button>
+          <button class:hidden={NextBtn2} on:click={nextBtn2} class="blueBtn">
+            Next
+          </button>
         </div>
       </div>
+      <!-- </div> -->
     {/if}
   {/if}
   {#if signPage}
